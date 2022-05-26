@@ -38,35 +38,103 @@
   }
 }
 
-
-
 /* DivTable.com */
-.divTable{
-	display: table;
-	width: 100%;
+.divTable {
+  display: table;
+  width: 100%;
 }
 .divTableRow {
-	display: table-row;
+  display: table-row;
 }
 .divTableHeading {
-	background-color: rgb(0, 0, 0);
-	display: table-header-group;
+  background-color: rgb(0, 0, 0);
+  display: table-header-group;
 }
-.divTableCell, .divTableHead {
-	border: 1px solid #000000;
-	display: table-cell;
-	padding: 100px 10px;
+.divTableCell,
+.divTableHead {
+  border: 1px solid #000000;
+  display: table-cell;
+  padding: 100px 10px;
 }
 .divTableHeading {
-	background-color: rgb(0, 0, 0);
-	display: table-header-group;
-	font-weight: bold;
+  background-color: rgb(0, 0, 0);
+  display: table-header-group;
+  font-weight: bold;
 }
 .divTableFoot {
-	background-color: rgb(0, 0, 0);
-	display: table-footer-group;
-	font-weight: bold;
+  background-color: rgb(0, 0, 0);
+  display: table-footer-group;
+  font-weight: bold;
 }
 .divTableBody {
-	display: table-row-group;
+  display: table-row-group;
+}
+
+.restaurant-header {
+  align-items: center;
+}
+
+.header {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+
+  text-align: center;
+
+  border: 2px solid #000000;
+  position: relative;
+  bottom: 0px;
+  right: 0px;
+  width: 1000px;
+  height: 60px;
+}
+
+.item {
+  text-align: center;
+
+  border: 2px solid #000000;
+  width: 200px;
+  height: 30px;
+
+  position: relative;
+  bottom: 0px;
+  right: 40px;
+}
+
+.button-add {
+  padding: 10px 88px;
+
+  position: relative;
+  bottom: 0px;
+  right: 0px;
+}
+
+.button-remove {
+  font-size: 10px;
+
+  position: absolute;
+  bottom: 6px;
+  right: 0px;
+}
+
+.column-add {
+  text-align: center;
+
+  border: 2px solid #000000;
+  width: 200px;
+  height: 30px;
+
+  position: relative;
+  bottom: 0px;
+  right: 0px;
+}
+
+.menu-header {
+  text-align: center;
+
+  border: 2px solid #000000;
+  width: 200px;
+  height: 30px;
 }
