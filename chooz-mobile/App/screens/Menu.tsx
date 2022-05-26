@@ -7,9 +7,11 @@ import {
   StatusBar,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 import { RowItem, RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors";
+import { RootStackParamList } from "../config/navigation";
 
 const openURL = ({ url }: { url: any }) => {
   return Linking.openURL(url).catch(() => {
@@ -17,15 +19,23 @@ const openURL = ({ url }: { url: any }) => {
   });
 };
 
-const Menu = () => {
+type MenuScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "MenuScreen"
+>;
+
+const Menu = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
       <ScrollView>
         <RowItem
           text="Themes"
+          onPress={() => {
+            navigation.push("ItemScreen");
+            console.log("Themes Pushed");
+          }}
           /*
-          onPress={() => alert("todo!")}
           rightIcon={
             <>
               <Entypo name="chevron-right" size={20} color={colors.blue} />
@@ -38,8 +48,8 @@ const Menu = () => {
 
         <RowItem
           text="React Native Basics"
+          onPress={() => alert("todo!")}
           /*
-          onPress={() => openURL()}
           rightIcon={
           <>
           <Entypo name="export" size={20} color={colors.blue} />}
@@ -51,8 +61,8 @@ const Menu = () => {
 
         <RowItem
           text="React Native by Example"
+          onPress={() => alert("todo!")}
           /*
-          onPress={() => openURL("https://youtube.com")}
           rightIcon={<Entypo name="export" size={20} color={colors.blue} />}
           */
         />
