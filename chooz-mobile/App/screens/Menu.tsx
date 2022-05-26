@@ -11,7 +11,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 
 import { RowItem, RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors";
-import { RootStackParamList } from "../config/navigation";
+import { MenuStackParamList } from "../config/navigation";
 
 const openURL = ({ url }: { url: any }) => {
   return Linking.openURL(url).catch(() => {
@@ -20,11 +20,15 @@ const openURL = ({ url }: { url: any }) => {
 };
 
 type MenuScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
+  MenuStackParamList,
   "MenuScreen"
 >;
 
-const Menu = ({ navigation }: { navigation: any }) => {
+type Props = {
+  navigation: MenuScreenNavigationProp;
+};
+
+const Menu = ({ navigation }: Props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.white} />

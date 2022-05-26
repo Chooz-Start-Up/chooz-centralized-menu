@@ -52,12 +52,12 @@ const ModalStackScreen = () => {
 };
 */
 
-export type RootStackParamList = {
+export type MenuStackParamList = {
   MenuScreen: undefined; // MUST UPDATE
   ItemScreen: undefined;
 };
 
-const MenuStack = createStackNavigator<RootStackParamList>();
+const MenuStack = createStackNavigator<MenuStackParamList>();
 const MenuStackScreen = () => {
   return (
     <MenuStack.Navigator>
