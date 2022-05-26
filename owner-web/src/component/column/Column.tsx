@@ -3,7 +3,8 @@ import { ColumnProps, ColumnState, UserDataAPI } from "./interface";
 import { Item } from "./Item";
 import axios from "axios";
 
-import { Button } from "@mui/material";
+import { Button, Container, Box, ThemeProvider } from "@mui/material";
+import { ItemBox, MenuBox } from "./MUITest";
 
 export class Column extends React.Component<ColumnProps, ColumnState> {
   constructor(props: ColumnProps) {
@@ -72,8 +73,28 @@ export class Column extends React.Component<ColumnProps, ColumnState> {
     ));
 
     return (
-      <div>
-        <header className="menu-header">{title}</header>
+      <>
+        <Box
+          sx={{
+            display: "grid",
+            gap: 1,
+            gridTemplateColumns: "repeat(1, 1fr)",
+          }}
+        >
+          <MenuBox>
+            1
+            {this.state.items.map((item) => (
+              <Item
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                deleteButton={this.handleMinusClick}
+              />
+            ))}
+          </MenuBox>
+        </Box>
+        {/* <header className="menu-header">{title}</header>
+
         <ul>
           {this.state.items.map((item) => (
             <Item
@@ -84,10 +105,11 @@ export class Column extends React.Component<ColumnProps, ColumnState> {
             />
           ))}
         </ul>
+         */}
         <button className="button-add" onClick={this.handleAddClick}>
           Add
         </button>
-      </div>
+      </>
     );
   }
 }
