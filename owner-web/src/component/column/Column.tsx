@@ -3,6 +3,8 @@ import { ColumnProps, ColumnState, UserDataAPI } from "./interface";
 import { Item } from "./Item";
 import axios from "axios";
 
+import { Button } from "@mui/material";
+
 export class Column extends React.Component<ColumnProps, ColumnState> {
   constructor(props: ColumnProps) {
     super(props);
@@ -11,13 +13,13 @@ export class Column extends React.Component<ColumnProps, ColumnState> {
       items: [],
     };
 
-    console.log("constructor");
+    console.log("Constructing Column..."); /////////////////////////////////////////////////////////////////////////////////////
   }
 
   handleAddClick = () => {
-    console.log("AddClick");
+    console.log("AddClick"); ////////////////////////////////////////////////////////////////////////////////////////////
 
-    console.log("Fetching Data...");
+    console.log("Fetching Data..."); ////////////////////////////////////////////////////////////////////////////////////
     axios
       .get(`https://reqres.in/api/users/${this.state.items.length + 1}`)
       .then((response) => {
@@ -26,10 +28,11 @@ export class Column extends React.Component<ColumnProps, ColumnState> {
         this.setState((state) => {
           console.log("Before Adding Item: ", state.items);
           const items = state.items.concat({
+            id: state.items.length,
             name: userDataAPI.data.first_name,
             deleteButton: this.handleMinusClick,
           });
-          console.log("After Adding Item: ", items);
+          console.log("After Adding Item: ", items); ////////////////////////////////////////////////////////////////////
           return {
             items,
           };
@@ -37,18 +40,22 @@ export class Column extends React.Component<ColumnProps, ColumnState> {
       });
   };
 
-  handleMinusClick = (name: string) => {
-    console.log("MinusClick on: ", name);
+  handleMinusClick = (id: number) => {
+    console.log("MinusClick on: ", id); //////////////////////////////////////////////////////////////////////////////////
 
     const array = this.state.items;
 
-    console.log("Before Removing Item: ", array);
+    console.log("Before Removing Item: ", array); ///////////////////////////////////////////////////////////////////////
 
     let newArray = array.filter(function logic(element) {
-      console.log(element.name !== name);
-      return element.name !== name;
+      console.log(element.id, "---", id);
+      return element.id !== id;
     });
-    console.log("After Removing Item: ", newArray);
+    for (let i = 0; i < newArray.length; i++) {
+      console.log("For loop update: ", newArray[i].id, " to ", i); ///////////////////////////////////////////////////////
+      newArray[i].id = i;
+    }
+    console.log("After Removing Item: ", newArray); ///////////////////////////////////////////////////////////////////////
 
     this.setState(() => {
       return {
@@ -58,7 +65,7 @@ export class Column extends React.Component<ColumnProps, ColumnState> {
   };
 
   render() {
-    console.log("Rendering...");
+    console.log("Rendering..."); //////////////////////////////////////////////////////////////////////////////////////////
     const { title } = this.props;
     const listItems = this.state.items.map((item) => (
       <li key={item.name}>{item.name}</li>
@@ -69,11 +76,16 @@ export class Column extends React.Component<ColumnProps, ColumnState> {
         <header className="menu-header">{title}</header>
         <ul>
           {this.state.items.map((item) => (
-            <Item name={item.name} deleteButton={this.handleMinusClick} />
+            <Item
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              deleteButton={this.handleMinusClick}
+            />
           ))}
         </ul>
         <button className="button-add" onClick={this.handleAddClick}>
-          Add1
+          Add
         </button>
       </div>
     );

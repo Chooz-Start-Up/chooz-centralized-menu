@@ -9,8 +9,9 @@ export interface ColumnState {
 }
 
 export interface ItemProps {
+  id: number;
   name: string;
-  deleteButton(name: string): any;
+  deleteButton(id: number): any;
 }
 
 export interface UserData {
