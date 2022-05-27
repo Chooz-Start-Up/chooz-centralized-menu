@@ -2,7 +2,12 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Box, Button, Grid, IconButton, ThemeProvider } from "@mui/material/";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ClearIcon from "@mui/icons-material/Clear";
+import { ItemProps, UserDataAPI } from "./interface";
+import axios from "axios";
+import { Container } from "@mui/system";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,52 +49,156 @@ export default function VerticalTabs() {
     setValue(newValue);
   };
 
-  return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        bgcolor: "background.paper",
-        display: "flex",
-        height: 224,
-      }}
-    >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
-      >
-        <Tab label="Item One" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item Four
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
-      </TabPanel>
-    </Box>
-  );
+  return <MenuTabs value={value} handleChange={handleChange} />;
 }
+
+export interface MenuTabsProps {
+  value: any;
+  handleChange: any;
+}
+
+export interface MenuTabsState {
+  items: CategoryItemProps[];
+}
+
+export interface CategoryItemProps {
+  id: number;
+  name: string;
+  handleDeleteClick(id: number): any;
+}
+
+export class MenuTabs extends React.Component<MenuTabsProps, MenuTabsState> {
+  constructor(props: MenuTabsProps) {
+    super(props);
+
+    this.state = {
+      items: [],
+    };
+  }
+
+  handleAddClick = () => {
+    console.log("AddClick"); ////////////////////////////////////////////////////////////////////////////////////////////
+
+    console.log("Fetching Data..."); ////////////////////////////////////////////////////////////////////////////////////
+    axios
+      .get(`https://reqres.in/api/users/${this.state.items.length + 1}`)
+      .then((response) => {
+        const userDataAPI = response.data as UserDataAPI;
+
+        this.setState((state) => {
+          console.log("Before Adding Item: ", state.items);
+          const items = state.items.concat({
+            id: state.items.length,
+            name: userDataAPI.data.first_name,
+            handleDeleteClick: this.handleDeleteClick,
+          });
+          console.log("After Adding Item: ", items); ////////////////////////////////////////////////////////////////////
+          return {
+            items,
+          };
+        });
+      });
+  };
+
+  handleDeleteClick = (id: number) => {
+    console.log("MinusClick on: ", id); //////////////////////////////////////////////////////////////////////////////////
+
+    const array = this.state.items;
+
+    console.log("Before Removing Item: ", array); ///////////////////////////////////////////////////////////////////////
+
+    let newArray = array.filter(function logic(element) {
+      console.log(element.id, "---", id);
+      return element.id !== id;
+    });
+    for (let i = 0; i < newArray.length; i++) {
+      console.log("For loop update: ", newArray[i].id, " to ", i); ///////////////////////////////////////////////////////
+      newArray[i].id = i;
+    }
+    console.log("After Removing Item: ", newArray); ///////////////////////////////////////////////////////////////////////
+
+    this.setState(() => {
+      return {
+        items: newArray,
+      };
+    });
+  };
+
+  render() {
+    const { value, handleChange } = this.props;
+    return (
+      <>
+        <Grid container spacing={0} bgcolor={"#ffebee"}>
+          <Grid item xs={3}>
+            <Box>
+              <Tabs
+                orientation="vertical"
+                variant="scrollable"
+                value={value}
+                onChange={handleChange}
+                aria-label="Vertical tabs example"
+                sx={{ borderRight: 1, borderColor: "divider" }}
+              >
+                {this.state.items.map((item) => (
+                  <Tab label={item.name} {...a11yProps(item.id)} />
+                ))}
+
+                <Button onClick={this.handleAddClick}>
+                  <AddCircleOutlineIcon />
+                </Button>
+              </Tabs>
+              {this.state.items.map((item, index) => (
+                <IconButton
+                  aria-label="delete"
+                  size="small"
+                  sx={{
+                    position: "relative",
+                    top: -80 - 48 * (this.state.items.length - 1 - index),
+                    right: -330 + 34 * index,
+                  }}
+                  onClick={() => this.handleDeleteClick(item.id)}
+                >
+                  <ClearIcon />
+                </IconButton>
+              ))}
+            </Box>
+          </Grid>
+          <Grid item xs={3}>
+            {this.state.items.map((item) => (
+              <TabPanel value={value} index={item.id}>
+                {item.name}
+              </TabPanel>
+            ))}
+          </Grid>
+          <Grid item xs={3}>
+            Item
+          </Grid>
+          <Grid item xs={3}>
+            Item Description
+          </Grid>
+        </Grid>
+      </>
+    );
+  }
+}
+
+// class DeleteButton extends React.Component<CategoryItemProps> {
+//   render() {
+//     const { id, name, handleDeleteClick } = this.props;
+//     return (
+//       <Box sx={{ height: 50 }}>
+//         <Tab label={name} {...a11yProps(id)} />
+//         <Container>
+//           <IconButton
+//             aria-label="delete"
+//             size="small"
+//             sx={{ position: "relative", bottom: "40px", left: "80px" }}
+//             onClick={() => handleDeleteClick(id)}
+//           >
+//             <ClearIcon />
+//           </IconButton>
+//         </Container>
+//       </Box>
+//     );
+//   }
+// }
