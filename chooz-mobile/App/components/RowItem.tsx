@@ -1,7 +1,14 @@
 import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import {
+  Platform,
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from "react-native";
 
 import colors from "../constants/colors";
+
 const styles = StyleSheet.create({
   row: {
     paddingHorizontal: 20,
@@ -17,7 +24,7 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: colors.border,
     height: StyleSheet.hairlineWidth,
-    marginLeft: 20,
+    marginLeft: Platform.OS === "ios" ? 20 : 0,
   },
 });
 
