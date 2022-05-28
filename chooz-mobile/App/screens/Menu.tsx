@@ -6,6 +6,8 @@ import {
   Alert,
   StatusBar,
   Text,
+  StyleSheet,
+  Dimensions,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import {
@@ -18,8 +20,17 @@ import { useNavigation } from "@react-navigation/native";
 import { RowItem, RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors.js";
 import { MenuStackParamList } from "../config/navigation";
+import HorizontalList from "../components/HorizontalList";
 
 type Props = NativeStackScreenProps<MenuStackParamList, "MenuScreen">;
+
+const screen = Dimensions.get("window");
+
+const styles = StyleSheet.create({
+  scrollView: {
+    height: screen.height,
+  },
+});
 
 const Menu: React.FC<Props> = () => {
   const navigation =
@@ -49,9 +60,10 @@ const Menu: React.FC<Props> = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
-      <ScrollView>
+      <HorizontalList />
+      <ScrollView style={styles.scrollView}>
         <List.Section>
           <List.Accordion
             title="Appetizers"

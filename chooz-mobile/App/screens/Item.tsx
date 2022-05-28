@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    //alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
@@ -47,7 +46,6 @@ const styles = StyleSheet.create({
   priceContainer: {},
   priceText: {
     fontSize: Platform.OS === "ios" ? 20 : 16,
-    //fontWeight: "bold",
   },
   headerText: {
     fontSize: Platform.OS === "ios" ? 17 : 14,
@@ -86,7 +84,6 @@ const Item = ({ route }: Props) => {
             )}
           </View>
           <RowSeparator />
-
           {description && (
             <View style={styles.itemContainer}>
               <Text style={styles.headerText}>Descriptions</Text>
@@ -96,7 +93,6 @@ const Item = ({ route }: Props) => {
             </View>
           )}
           <RowSeparator />
-
           {ingredients && (
             <View style={styles.itemContainer}>
               <Text style={styles.headerText}>Ingredients</Text>
