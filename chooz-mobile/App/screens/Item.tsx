@@ -2,7 +2,12 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Platform, Dimensions, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useNavigation, useRoute } from "@react-navigation/core";
+
 import { RowSeparator } from "../components/RowItem";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { MenuStackParamList } from "../config/navigation";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const screen = Dimensions.get("window");
 
@@ -36,16 +41,16 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   titleText: {
-    fontSize: Platform.OS === "ios" ? 28 : 24,
-    fontWeight: "bold",
+    fontSize: Platform.OS === "ios" ? 22 : 20,
+    //fontWeight: "bold",
   },
   priceContainer: {},
   priceText: {
-    fontSize: Platform.OS === "ios" ? 22 : 20,
-    fontWeight: "bold",
+    fontSize: Platform.OS === "ios" ? 20 : 16,
+    //fontWeight: "bold",
   },
   headerText: {
-    fontSize: Platform.OS === "ios" ? 22 : 20,
+    fontSize: Platform.OS === "ios" ? 17 : 14,
     fontWeight: "bold",
   },
   bodyContainer: {
@@ -55,40 +60,51 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   bodyText: {
-    fontSize: Platform.OS === "ios" ? 20 : 16,
+    fontSize: Platform.OS === "ios" ? 17 : 14,
   },
 });
 
-const Item = () => {
+type Props = NativeStackScreenProps<MenuStackParamList, "ItemScreen">;
+
+const Item = ({ route }: Props) => {
+  let itemName = route.params.itemName;
+  let price = route.params.price;
+  let description = route.params.description;
+  let ingredients = route.params.ingredients;
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <ScrollView>
         <View style={styles.content}>
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>Item 1</Text>
-            <View style={styles.priceContainer}>
-              <Text style={styles.priceText}>$0.00</Text>
-            </View>
+            <Text style={styles.titleText}>{itemName}</Text>
+            {price && (
+              <View style={styles.priceContainer}>
+                <Text style={styles.priceText}>${price}</Text>
+              </View>
+            )}
           </View>
           <RowSeparator />
-          <View style={styles.itemContainer}>
-            <Text style={styles.headerText}>Description</Text>
-            <View style={styles.bodyContainer}>
-              <Text style={styles.bodyText}>
-                This item is very yummy and is made with a lot of love
-              </Text>
+
+          {description && (
+            <View style={styles.itemContainer}>
+              <Text style={styles.headerText}>Descriptions</Text>
+              <View style={styles.bodyContainer}>
+                <Text style={styles.bodyText}>{description}</Text>
+              </View>
             </View>
-          </View>
+          )}
           <RowSeparator />
-          <View style={styles.itemContainer}>
-            <Text style={styles.headerText}>Ingredients</Text>
-            <View style={styles.bodyContainer}>
-              <Text style={styles.bodyText}>
-                These are the ingredients of Item 1
-              </Text>
+
+          {ingredients && (
+            <View style={styles.itemContainer}>
+              <Text style={styles.headerText}>Ingredients</Text>
+              <View style={styles.bodyContainer}>
+                <Text style={styles.bodyText}>{ingredients}</Text>
+              </View>
             </View>
-          </View>
+          )}
         </View>
       </ScrollView>
     </View>

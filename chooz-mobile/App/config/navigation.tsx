@@ -6,55 +6,20 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MenuScreen from "../screens/Menu";
 import ItemScreen from "../screens/Item";
 
-import colors from "../constants/colors";
-
 /*
-const MainStack = createStackNavigator();
-const MainStackScreen = () => {
-  return (
-    <MainStack.Navigator>
-      <MainStack.Screen
-        name="Menu"
-        component={Menu}
-        options={{ headerShown: false }}
-      />
-    </MainStack.Navigator>
-  );
-};
-
-const ModalStack = createStackNavigator();
-const ModalStackScreen = () => {
-  return (
-    <ModalStack.Navigator>
-      <ModalStack.Screen
-        name="Main"
-        component={MainStackScreen}
-        options={{ headerShown: false, presentation: "modal" }}
-      />
-      <MainStack.Screen
-        name="Item"
-        component={Item}
-        options={({ navigation, route }) => ({
-          title: route.params && route.params.title,
-          headerLeft: null,
-          headerRight: () => {
-            <TouchableOpacity
-              onPress={() => navigation.pop()}
-              style={{ paddingHorizontal: 10 }}
-            >
-              <Entypo name="cross" size={30} color={colors.blue} />
-            </TouchableOpacity>;
-          },
-        })}
-      />
-    </ModalStack.Navigator>
-  );
-};
+DEVELOPER NOTE 05/27:
+Eventually, MenuScreen and ItemScreen will 
+accept Menu and Item Objects as their parameters.
+Menu and Item will deal with the optional fields.
 */
-
 export type MenuStackParamList = {
-  MenuScreen: undefined; // MUST UPDATE
-  ItemScreen: undefined;
+  MenuScreen: undefined;
+  ItemScreen: {
+    itemName: String;
+    price?: Number;
+    description?: String;
+    ingredients?: String;
+  };
 };
 
 const MenuStack = createStackNavigator<MenuStackParamList>();
