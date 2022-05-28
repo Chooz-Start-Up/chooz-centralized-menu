@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
   },
   itemText: {
     textAlign: "center", // <-- the magic
-    //fontWeight: "bold",
     paddingTop: Platform.OS === "ios" ? 5 : 5,
     fontSize: Platform.OS === "ios" ? 17 : 16,
     marginTop: 0,
@@ -49,31 +48,20 @@ const HorizontalList = () => {
       style={styles.scrollView}
     >
       <View style={styles.item}>
-        <Text style={styles.itemText}>Test 1</Text>
+        <Text style={styles.itemText}>Breakfast</Text>
       </View>
-
-      <ColumnSeparator />
-
-      <View style={styles.item}>
-        <Text style={styles.itemText}>Test 1</Text>
-      </View>
-
       <ColumnSeparator />
       <View style={styles.item}>
-        <Text style={styles.itemText}>Test 1</Text>
+        <Text style={styles.itemText}>Lunch</Text>
       </View>
-
       <ColumnSeparator />
       <View style={styles.item}>
-        <Text style={styles.itemText}>Test 1</Text>
+        <Text style={styles.itemText}>Dinner</Text>
       </View>
-
       <ColumnSeparator />
       <View style={styles.item}>
-        <Text style={styles.itemText}>Test 1</Text>
+        <Text style={styles.itemText}>Drink</Text>
       </View>
-
-      <ColumnSeparator />
     </ScrollView>
   );
 };
