@@ -30,7 +30,7 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
 
   return (
     <>
-      <ListItemButton onClick={handleClickOpen}>
+      <ListItemButton selected={false} onClick={handleClickOpen}>
         <Grid item xs={5}></Grid>
         <AddCircleOutlineIcon />
       </ListItemButton>

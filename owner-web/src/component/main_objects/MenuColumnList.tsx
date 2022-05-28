@@ -1,9 +1,9 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
 import { Grid, List, ListItem, ListItemButton } from "@mui/material/";
 import { MenuColumnListProps, MenuColumnListState } from "./interface";
-import DeleteButtonWithWarningDialog from "../buttons/DeleteButtonWithWarningDialog";
 import AddButtonWithDialog from "../buttons/AddButtonWithDialog";
+import MenuListItemButton from "../buttons/MenuListItemButton";
+import { CategoryColumnList } from "./CategoryColumnList";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,
@@ -15,6 +15,7 @@ export class MenuColumnList extends React.Component<
     this.state = {
       addingMenuName: "",
       menuItems: [],
+      selectedMenuItemIndex: -1,
     };
   }
 
@@ -86,28 +87,27 @@ export class MenuColumnList extends React.Component<
     return this.state.addingMenuName === "" ? emptyTextfieldErrorMsg : "";
   };
 
+  setSelectedMenuIndex = (index: number): any => {
+    this.setState(() => {
+      return {
+        selectedMenuItemIndex: index,
+      };
+    });
+  };
+
   render() {
     return (
       <>
         <Grid container spacing={0} bgcolor={"#ffebee"}>
           <Grid item xs={3}>
-            <List>
+            <List component="nav">
               <Grid item xs={10}>
-                {this.state.menuItems.map((item) => (
-                  <ListItem disablePadding key={item.id}>
-                    <ListItemButton>
-                      <Grid item xs={10} textAlign="center">
-                        <Typography>{item.name}</Typography>
-                      </Grid>
-                      <Grid item xs={1}>
-                        <DeleteButtonWithWarningDialog
-                          deleteAction={this.handleDeleteClick}
-                          id={item.id}
-                        />
-                      </Grid>
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+                <MenuListItemButton
+                  // listLength={this.state.menuItems.length}
+                  menuItems={this.state.menuItems}
+                  handleDeleteClick={this.handleDeleteClick}
+                  setSelectedMenuIndex={this.setSelectedMenuIndex}
+                />
               </Grid>
               <Grid item xs={10}>
                 <ListItem disablePadding alignItems="center">
@@ -121,7 +121,19 @@ export class MenuColumnList extends React.Component<
               </Grid>
             </List>
           </Grid>
+
+          {this.state.selectedMenuItemIndex !== -1 && (
+            <Grid item xs={3}>
+              <CategoryColumnList
+                menuIndex={this.state.selectedMenuItemIndex}
+              />
+            </Grid>
+          )}
         </Grid>
+        {console.log(
+          "Currently Selected Menu Index: ",
+          this.state.selectedMenuItemIndex
+        )}
       </>
     );
   }

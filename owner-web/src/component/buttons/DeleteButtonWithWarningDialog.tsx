@@ -1,34 +1,15 @@
 import * as React from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import {
-  Box,
   Button,
   Dialog,
-  Divider,
-  Grid,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-  styled,
-  ThemeProvider,
   DialogTitle,
   DialogContent,
   DialogContentText,
-  TextField,
   DialogActions,
 } from "@mui/material/";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ClearIcon from "@mui/icons-material/Clear";
-import axios from "axios";
-import { Container } from "@mui/system";
-import InboxIcon from "@mui/icons-material/Inbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
+import { DeleteButtonWithWarningDialogProps } from "./interface";
 
 const DeleteButtonWithWarningDialog: React.FC<
   DeleteButtonWithWarningDialogProps

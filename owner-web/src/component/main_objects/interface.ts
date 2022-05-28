@@ -16,4 +16,11 @@ export interface MenuColumnListProps {}
 export interface MenuColumnListState {
   addingMenuName: string;
   menuItems: MenuItemProps[];
+  selectedMenuItemIndex: number;
 }
+
+export interface CategoryColumnListProps {
+  menuIndex: number;
+}
+
+export interface CategoryColumnListState {}

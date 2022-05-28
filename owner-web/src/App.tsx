@@ -1,12 +1,6 @@
 import React from "react";
 import "./App.css";
-import {
-  Box,
-  createTheme,
-  ThemeProvider,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Box, createTheme, ThemeProvider, Typography } from "@mui/material";
 import { MenuColumnList } from "./component/main_objects/MenuColumnList";
 
 const theme = createTheme({
