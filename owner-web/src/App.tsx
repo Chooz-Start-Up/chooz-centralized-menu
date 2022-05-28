@@ -9,15 +9,16 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { FormDialog } from "./component/column/ListTest";
 
-export const theme = createTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: "#f44336",
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#bgcolor",
+      main: "#ef5350",
     },
   },
 
@@ -47,7 +48,7 @@ class App extends React.Component {
             <Typography variant="h4">Resaurant</Typography>
           </Box>
 
-          <VerticalTabs />
+          <FormDialog />
         </ThemeProvider>
       </>
     );
