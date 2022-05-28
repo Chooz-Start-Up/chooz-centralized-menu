@@ -1,7 +1,5 @@
 import React from "react";
-import { Column } from "./component/column/Column";
 import "./App.css";
-import VerticalTabs from "./component/column/TabTest";
 import {
   Box,
   createTheme,
@@ -9,7 +7,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { FormDialog } from "./component/column/ListTest";
+import { MenuColumnList } from "./component/main_objects/MenuColumnList";
 
 const theme = createTheme({
   palette: {
@@ -48,7 +46,7 @@ class App extends React.Component {
             <Typography variant="h4">Resaurant</Typography>
           </Box>
 
-          <FormDialog />
+          <MenuColumnList />
         </ThemeProvider>
       </>
     );
