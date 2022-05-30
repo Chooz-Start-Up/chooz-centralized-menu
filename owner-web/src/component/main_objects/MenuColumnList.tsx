@@ -2,8 +2,10 @@ import * as React from "react";
 import { Grid, List, ListItem, ListItemButton } from "@mui/material/";
 import { MenuColumnListProps, MenuColumnListState } from "./interface";
 import AddButtonWithDialog from "../buttons/AddButtonWithDialog";
-import MenuListItemButton from "../buttons/MenuListItemButton";
+import ColumnListItemButton from "../buttons/ColumnListItemButton";
 import { CategoryColumnList } from "./CategoryColumnList";
+import { ItemColumnList } from "./ItemColumnList";
+import { ItemColumnPage } from "./ItemColumnPage";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,
@@ -13,25 +15,56 @@ export class MenuColumnList extends React.Component<
     super(props);
 
     this.state = {
-      addingMenuName: "",
+      addingItemName: "",
       menuItems: [],
-      selectedMenuItemIndex: -1,
+      selectedMenuIndex: -1,
+      selectedCategoryIndex: -1,
+      selectedItemIndex: -1,
     };
   }
 
-  handleAddClick = () => {
-    console.log("AddClick"); ////////////////////////////////////////////////////////////////////////////////////////////
+  validateMenuIndexBeforeRender = (): number => {
+    if (this.state.selectedMenuIndex < this.state.menuItems.length) {
+      return this.state.selectedMenuIndex;
+    } else {
+      return -1;
+    }
+  };
 
-    this.setState((state) => {
-      console.log("Before Adding Item: ", state.menuItems);
-      const items = state.menuItems.concat({
-        id: state.menuItems.length,
-        name: this.state.addingMenuName,
-        handleDeleteClick: this.handleDeleteClick,
+  validateCategoryIndexBeforeRender = (): number => {
+    if (
+      this.validateMenuIndexBeforeRender() !== -1 &&
+      this.state.selectedCategoryIndex <
+        this.state.menuItems[this.state.selectedMenuIndex].categoryItems.length
+    ) {
+      return this.state.selectedCategoryIndex;
+    } else {
+      return -1;
+    }
+  };
+  validateItemIndexBeforeRender = (): number => {
+    if (
+      this.validateMenuIndexBeforeRender() !== -1 &&
+      this.validateCategoryIndexBeforeRender() !== -1 &&
+      this.state.selectedItemIndex <
+        this.state.menuItems[this.state.selectedMenuIndex].categoryItems[
+          this.state.selectedCategoryIndex
+        ].items.length
+    ) {
+      return this.state.selectedItemIndex;
+    } else {
+      return -1;
+    }
+  };
+
+  handleMenuAddClick = () => {
+    this.setState(() => {
+      const items = this.state.menuItems.concat({
+        id: this.state.menuItems.length,
+        name: this.state.addingItemName,
+        handleDeleteClick: this.handleMenuDeleteClick,
         categoryItems: [],
       });
-
-      console.log("After Adding Item: ", items); ////////////////////////////////////////////////////////////////////
 
       return {
         menuItems: items,
@@ -39,37 +72,40 @@ export class MenuColumnList extends React.Component<
     });
   };
 
-  handleDeleteClick = (id: number) => {
-    console.log("MinusClick on: ", id); //////////////////////////////////////////////////////////////////////////////////
-
+  handleMenuDeleteClick = (id: number) => {
     const array = this.state.menuItems;
 
-    console.log("Before Removing Item: ", array); ///////////////////////////////////////////////////////////////////////
-
     let newArray = array.filter(function logic(element) {
-      console.log(element.id, "---", id);
       return element.id !== id;
     });
     for (let i = 0; i < newArray.length; i++) {
-      console.log("For loop update: ", newArray[i].id, " to ", i); ///////////////////////////////////////////////////////
       newArray[i].id = i;
     }
-    console.log("After Removing Item: ", newArray); ///////////////////////////////////////////////////////////////////////
 
     this.setState(() => {
       return {
+        selectedItemIndex: -1,
+        selectedCategoryIndex: -1,
+        selectedMenuIndex: -1,
         menuItems: newArray,
       };
     });
+    console.log(
+      this.state.selectedItemIndex,
+      " ",
+      this.state.selectedCategoryIndex,
+      " ",
+      this.state.selectedMenuIndex
+    );
   };
 
-  handleRetrieveText = (e: any) => {
+  handleMenuRetrieveText = (e: any) => {
     e.preventDefault();
-    console.log(this.state.addingMenuName);
-    this.handleAddClick();
+    console.log(this.state.addingItemName);
+    this.handleMenuAddClick();
     this.setState(() => {
       return {
-        addingMenuName: "",
+        addingItemName: "",
       };
     });
   };
@@ -77,20 +113,147 @@ export class MenuColumnList extends React.Component<
   updateText = (e: any) => {
     this.setState(() => {
       return {
-        addingMenuName: e.target.value,
+        addingItemName: e.target.value,
       };
     });
   };
 
   validateText = (): string => {
-    const emptyTextfieldErrorMsg: string = "Menu name cannot be empty.";
-    return this.state.addingMenuName === "" ? emptyTextfieldErrorMsg : "";
+    const emptyTextfieldErrorMsg: string = "Name field cannot be empty.";
+    return this.state.addingItemName === "" ? emptyTextfieldErrorMsg : "";
   };
 
   setSelectedMenuIndex = (index: number): any => {
     this.setState(() => {
       return {
-        selectedMenuItemIndex: index,
+        selectedMenuIndex: index,
+      };
+    });
+  };
+
+  setSelectedCategoryIndex = (index: number): any => {
+    this.setState(() => {
+      return {
+        selectedCategoryIndex: index,
+      };
+    });
+  };
+
+  setSelectedItemIndex = (index: number): any => {
+    this.setState(() => {
+      return {
+        selectedItemIndex: index,
+      };
+    });
+  };
+
+  handleCategoryAddClick = () => {
+    this.setState(() => {
+      const items = this.state.menuItems[
+        this.state.selectedMenuIndex
+      ].categoryItems.concat({
+        id: this.state.menuItems[this.state.selectedMenuIndex].categoryItems
+          .length,
+        name: this.state.addingItemName,
+        handleDeleteClick: this.handleCategoryDeleteClick,
+        items: [],
+      });
+
+      const updatingMenuItems = this.state.menuItems;
+      updatingMenuItems[this.state.selectedMenuIndex].categoryItems = items;
+
+      return {
+        menuItems: updatingMenuItems,
+      };
+    });
+  };
+  handleCategoryDeleteClick = (id: number) => {
+    const array =
+      this.state.menuItems[this.state.selectedMenuIndex].categoryItems;
+
+    let newArray = array.filter(function logic(element) {
+      console.log(element.id, "---", id);
+      return element.id !== id;
+    });
+    for (let i = 0; i < newArray.length; i++) {
+      newArray[i].id = i;
+    }
+
+    const updatingMenuItems = this.state.menuItems;
+    updatingMenuItems[this.state.selectedMenuIndex].categoryItems = newArray;
+
+    this.setState(() => {
+      return {
+        menuItems: updatingMenuItems,
+      };
+    });
+  };
+
+  handleCategoryRetrieveText = (e: any) => {
+    e.preventDefault();
+    console.log(this.state.addingItemName);
+    this.handleCategoryAddClick();
+    this.setState(() => {
+      return {
+        addingItemName: "",
+      };
+    });
+  };
+
+  handleItemAddClick = () => {
+    this.setState(() => {
+      const items = this.state.menuItems[
+        this.state.selectedMenuIndex
+      ].categoryItems[this.state.selectedCategoryIndex].items.concat({
+        id: this.state.menuItems[this.state.selectedMenuIndex].categoryItems[
+          this.state.selectedCategoryIndex
+        ].items.length,
+        name: this.state.addingItemName,
+        handleDeleteClick: this.handleItemDeleteClick,
+      });
+
+      const updatingMenuItems = this.state.menuItems;
+      updatingMenuItems[this.state.selectedMenuIndex].categoryItems[
+        this.state.selectedCategoryIndex
+      ].items = items;
+
+      return {
+        menuItems: updatingMenuItems,
+      };
+    });
+  };
+  handleItemDeleteClick = (id: number) => {
+    const array =
+      this.state.menuItems[this.state.selectedMenuIndex].categoryItems[
+        this.state.selectedCategoryIndex
+      ].items;
+
+    let newArray = array.filter(function logic(element) {
+      console.log(element.id, "---", id);
+      return element.id !== id;
+    });
+    for (let i = 0; i < newArray.length; i++) {
+      newArray[i].id = i;
+    }
+
+    const updatingMenuItems = this.state.menuItems;
+    updatingMenuItems[this.state.selectedMenuIndex].categoryItems[
+      this.state.selectedCategoryIndex
+    ].items = newArray;
+
+    this.setState(() => {
+      return {
+        menuItems: updatingMenuItems,
+      };
+    });
+  };
+  handleItemRetrieveText = (e: any) => {
+    e.preventDefault();
+    console.log(this.state.addingItemName);
+    this.handleItemAddClick();
+    this.setState(() => {
+      return {
+        addingItemName: "",
       };
     });
   };
@@ -101,19 +264,21 @@ export class MenuColumnList extends React.Component<
         <Grid container spacing={0} bgcolor={"#ffebee"}>
           <Grid item xs={3}>
             <List component="nav">
-              <Grid item xs={10}>
-                <MenuListItemButton
-                  // listLength={this.state.menuItems.length}
-                  menuItems={this.state.menuItems}
-                  handleDeleteClick={this.handleDeleteClick}
-                  setSelectedMenuIndex={this.setSelectedMenuIndex}
+              <Grid item xs={12}>
+                <ColumnListItemButton
+                  deleteDialogTitle="Are you sure you want to delete the menu?"
+                  deleteDialogLabel="All items in the menu will be deleted as well."
+                  items={this.state.menuItems}
+                  handleDeleteClick={this.handleMenuDeleteClick}
+                  setSelectedColumnIndex={this.setSelectedMenuIndex}
                 />
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={12}>
                 <ListItem disablePadding alignItems="center">
                   <AddButtonWithDialog
-                    addingMenuName={this.state.addingMenuName}
-                    handleRetrieveText={this.handleRetrieveText}
+                    title="Enter Menu Name"
+                    label="Menu Name"
+                    handleRetrieveText={this.handleMenuRetrieveText}
                     updateText={this.updateText}
                     validateText={this.validateText}
                   />
@@ -122,18 +287,44 @@ export class MenuColumnList extends React.Component<
             </List>
           </Grid>
 
-          {this.state.selectedMenuItemIndex !== -1 && (
+          {this.validateMenuIndexBeforeRender() !== -1 && (
             <Grid item xs={3}>
               <CategoryColumnList
-                menuIndex={this.state.selectedMenuItemIndex}
+                categoryItems={
+                  this.state.menuItems[this.state.selectedMenuIndex]
+                    .categoryItems
+                }
+                handleCategoryRetrieveText={this.handleCategoryRetrieveText}
+                handleCategoryDeleteClick={this.handleCategoryDeleteClick}
+                updateText={this.updateText}
+                validateText={this.validateText}
+                setSelectedCategoryIndex={this.setSelectedCategoryIndex}
               />
             </Grid>
           )}
+
+          {this.validateCategoryIndexBeforeRender() !== -1 && (
+            <Grid item xs={3}>
+              <ItemColumnList
+                itemItems={
+                  this.state.menuItems[this.state.selectedMenuIndex]
+                    .categoryItems[this.state.selectedCategoryIndex].items
+                }
+                handleItemRetrieveText={this.handleItemRetrieveText}
+                handleItemDeleteClick={this.handleItemDeleteClick}
+                updateText={this.updateText}
+                validateText={this.validateText}
+                setSelectedItemIndex={this.setSelectedItemIndex}
+              />
+            </Grid>
+          )}
+
+          {this.validateItemIndexBeforeRender() !== -1 && (
+            <Grid item xs={3}>
+              <ItemColumnPage />
+            </Grid>
+          )}
         </Grid>
-        {console.log(
-          "Currently Selected Menu Index: ",
-          this.state.selectedMenuItemIndex
-        )}
       </>
     );
   }

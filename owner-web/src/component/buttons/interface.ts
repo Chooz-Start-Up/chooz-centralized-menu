@@ -1,22 +1,24 @@
-import { MenuItemProps } from "../main_objects/interface";
+import { GeneralProps, MenuProps } from "../main_objects/interface";
 
 export interface AddButtonWithDialogProps {
-  addingMenuName: string;
+  title: string;
+  label: string;
   handleRetrieveText(e: any): any;
   updateText(e: any): any;
   validateText(): any;
 }
 
 export interface DeleteButtonWithWarningDialogProps {
+  title: string;
+  label: string;
   id: number;
   deleteAction(id: number): any;
 }
 
-export interface MenuListItemButtonProps {
-  // listLength: number;
-  menuItems: MenuItemProps[];
-  // id: number;
-  // name: string;
+export interface ColumnListGeneralButtonProps {
+  deleteDialogTitle: string;
+  deleteDialogLabel: string;
+  items: GeneralProps[];
   handleDeleteClick(id: number): any;
-  setSelectedMenuIndex(index: number): any;
+  setSelectedColumnIndex(index: number): any;
 }

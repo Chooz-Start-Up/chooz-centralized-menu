@@ -25,25 +25,24 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
     setOpen(false);
   };
 
-  const { addingMenuName, handleRetrieveText, updateText, validateText } =
-    props;
+  const { title, label, handleRetrieveText, updateText, validateText } = props;
 
   return (
     <>
       <ListItemButton selected={false} onClick={handleClickOpen}>
         <Grid item xs={5}></Grid>
-        <AddCircleOutlineIcon />
+        <AddCircleOutlineIcon fontSize="large" />
       </ListItemButton>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle color="primary">Enter Menu Name</DialogTitle>
+        <DialogTitle color="primary">{title}</DialogTitle>
         <DialogContent>
           <form onSubmit={handleRetrieveText} id="myform">
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="Menu Name"
+              label={label}
               variant="standard"
               error={validateText() !== ""}
               helperText={validateText()}
@@ -57,7 +56,7 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
             variant="contained"
             type="submit"
             form="myform"
-            disabled={addingMenuName === ""}
+            disabled={validateText() !== ""}
             onClick={handleClose}
           >
             Create

@@ -1,26 +1,55 @@
-export interface CatergoryItemProps {
+export interface GeneralProps {
   id: number;
   name: string;
   handleDeleteClick(id: number): any;
 }
 
-export interface MenuItemProps {
+export interface CategoryProps {
   id: number;
   name: string;
   handleDeleteClick(id: number): any;
-  categoryItems: CatergoryItemProps[];
+  items: ItemProps[];
+}
+
+export interface MenuProps {
+  id: number;
+  name: string;
+  handleDeleteClick(id: number): any;
+  categoryItems: CategoryProps[];
+}
+
+export interface ItemProps {
+  id: number;
+  name: string;
+  handleDeleteClick(id: number): any;
 }
 
 export interface MenuColumnListProps {}
 
 export interface MenuColumnListState {
-  addingMenuName: string;
-  menuItems: MenuItemProps[];
-  selectedMenuItemIndex: number;
+  addingItemName: string;
+  menuItems: MenuProps[];
+  selectedMenuIndex: number;
+  selectedCategoryIndex: number;
+  selectedItemIndex: number;
 }
 
 export interface CategoryColumnListProps {
-  menuIndex: number;
+  categoryItems: CategoryProps[];
+  handleCategoryRetrieveText(e: any): any;
+  handleCategoryDeleteClick(id: number): any;
+  updateText(e: any): any;
+  validateText(): any;
+  setSelectedCategoryIndex: any;
 }
 
-export interface CategoryColumnListState {}
+export interface ItemColumnListProps {
+  itemItems: ItemProps[];
+  handleItemRetrieveText(e: any): any;
+  handleItemDeleteClick(id: number): any;
+  updateText(e: any): any;
+  validateText(): any;
+  setSelectedItemIndex: any;
+}
+
+export interface ItemColumnPageProps {}

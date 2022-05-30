@@ -47,10 +47,10 @@ const DeleteButtonWithWarningDialog: React.FC<
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Are you sure you want to delete the menu?"}</DialogTitle>
+        <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            All items in the menu will be deleted as well.
+            {props.label}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
