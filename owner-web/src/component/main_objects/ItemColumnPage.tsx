@@ -3,15 +3,84 @@ import { Grid, List, ListItem, ListItemButton } from "@mui/material/";
 import { ItemColumnListProps, ItemColumnPageProps } from "./interface";
 import ColumnListItemButton from "../buttons/ColumnListItemButton";
 import AddButtonWithDialog from "../buttons/AddButtonWithDialog";
+import {
+  Box,
+  FilledInput,
+  FormControl,
+  FormHelperText,
+  Input,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+  Typography,
+  useFormControl,
+} from "@material-ui/core";
 
-export class ItemColumnPage extends React.Component<ItemColumnPageProps> {
-  render() {
-    return (
-      <>
-        <Grid item xs={12}>
-          Page
-        </Grid>
-      </>
-    );
-  }
-}
+const ItemColumnPage: React.FC<ItemColumnPageProps> = (
+  props: ItemColumnPageProps
+) => {
+  const onDescriptionChange = (e: any): any => {
+    props.item.description = e.target.value;
+    props.checkItemUpdate(props.item);
+    console.log("Description has updated: ", props.item.description);
+  };
+  const onPriceChange = (e: any): any => {
+    props.item.price = e.target.value;
+    props.checkItemUpdate(props.item);
+    console.log("Price has updated: ", props.item.price);
+  };
+  const onIngredientsChange = (e: any): any => {
+    props.item.ingredients = e.target.value;
+    props.checkItemUpdate(props.item);
+    console.log("Ingredients has updated: ", props.item.ingredients);
+  };
+
+  return (
+    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Grid item xs={12}>
+        <Typography variant="h5" align="center">
+          {props.item.name}
+        </Typography>
+
+        <Typography variant="h6" align="left">
+          Description
+        </Typography>
+        <TextField
+          id="description"
+          multiline
+          fullWidth
+          minRows={4}
+          variant="outlined"
+          defaultValue={props.item.description}
+          onChange={onDescriptionChange}
+        />
+        <Grid item xs={12}></Grid>
+        <Typography variant="h6" align="left">
+          Price
+        </Typography>
+        <Input
+          id="price"
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          defaultValue={props.item.price}
+          onChange={onPriceChange}
+        />
+
+        <Typography variant="h6" align="left">
+          Ingredients
+        </Typography>
+        <TextField
+          id="ingredient"
+          multiline
+          fullWidth
+          minRows={4}
+          variant="outlined"
+          defaultValue={props.item.ingredients}
+          onChange={onIngredientsChange}
+        />
+      </Grid>
+    </Box>
+  );
+};
+
+export default ItemColumnPage;

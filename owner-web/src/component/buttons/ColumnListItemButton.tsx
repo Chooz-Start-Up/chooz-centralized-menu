@@ -7,7 +7,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
   props: ColumnListGeneralButtonProps
 ) => {
   const { items, handleDeleteClick, setSelectedColumnIndex } = props;
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  // const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -15,7 +15,6 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
   ) => {
     if (index < items.length) {
       setSelectedColumnIndex(index);
-      setSelectedIndex(index);
     }
   };
 
@@ -24,7 +23,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
       {items.map((item) => (
         <ListItem key={item.id} disablePadding>
           <ListItemButton
-            selected={selectedIndex === item.id}
+            selected={setSelectedColumnIndex() === item.id}
             onClick={(event) => handleListItemClick(event, item.id)}
           >
             <Grid item xs={10} textAlign="center">

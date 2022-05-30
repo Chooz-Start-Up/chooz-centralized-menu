@@ -20,5 +20,5 @@ export interface ColumnListGeneralButtonProps {
   deleteDialogLabel: string;
   items: GeneralProps[];
   handleDeleteClick(id: number): any;
-  setSelectedColumnIndex(index: number): any;
+  setSelectedColumnIndex(index?: number): any;
 }

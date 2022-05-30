@@ -22,6 +22,9 @@ export interface ItemProps {
   id: number;
   name: string;
   handleDeleteClick(id: number): any;
+  description: string;
+  price: number;
+  ingredients: string;
 }
 
 export interface MenuColumnListProps {}
@@ -40,7 +43,7 @@ export interface CategoryColumnListProps {
   handleCategoryDeleteClick(id: number): any;
   updateText(e: any): any;
   validateText(): any;
-  setSelectedCategoryIndex: any;
+  setSelectedCategoryIndex(index: number): any;
 }
 
 export interface ItemColumnListProps {
@@ -49,7 +52,10 @@ export interface ItemColumnListProps {
   handleItemDeleteClick(id: number): any;
   updateText(e: any): any;
   validateText(): any;
-  setSelectedItemIndex: any;
+  setSelectedItemIndex(index: number): any;
 }
 
-export interface ItemColumnPageProps {}
+export interface ItemColumnPageProps {
+  item: ItemProps;
+  checkItemUpdate(item: ItemProps): any;
+}

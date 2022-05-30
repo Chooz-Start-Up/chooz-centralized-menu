@@ -1,11 +1,15 @@
 import * as React from "react";
 import { Grid, List, ListItem, ListItemButton } from "@mui/material/";
-import { MenuColumnListProps, MenuColumnListState } from "./interface";
+import {
+  ItemProps,
+  MenuColumnListProps,
+  MenuColumnListState,
+} from "./interface";
 import AddButtonWithDialog from "../buttons/AddButtonWithDialog";
 import ColumnListItemButton from "../buttons/ColumnListItemButton";
 import { CategoryColumnList } from "./CategoryColumnList";
 import { ItemColumnList } from "./ItemColumnList";
-import { ItemColumnPage } from "./ItemColumnPage";
+import ItemColumnPage from "./ItemColumnPage";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,
@@ -17,11 +21,22 @@ export class MenuColumnList extends React.Component<
     this.state = {
       addingItemName: "",
       menuItems: [],
-      selectedMenuIndex: -1,
-      selectedCategoryIndex: -1,
-      selectedItemIndex: -1,
+      selectedMenuIndex: 0,
+      selectedCategoryIndex: 0,
+      selectedItemIndex: 0,
     };
+
+    console.log("This is constuctor");
   }
+
+  // static getDerivedStateFromProps(
+  //   props: MenuColumnListProps,
+  //   state: MenuColumnListState
+  // ) {
+  //   console.log("This is getDerivedStateFromProps");
+
+  //   return state;
+  // }
 
   validateMenuIndexBeforeRender = (): number => {
     if (this.state.selectedMenuIndex < this.state.menuItems.length) {
@@ -99,7 +114,7 @@ export class MenuColumnList extends React.Component<
     );
   };
 
-  handleMenuRetrieveText = (e: any) => {
+  handleRetrieveText = (e: any) => {
     e.preventDefault();
     console.log(this.state.addingItemName);
     this.handleMenuAddClick();
@@ -123,28 +138,46 @@ export class MenuColumnList extends React.Component<
     return this.state.addingItemName === "" ? emptyTextfieldErrorMsg : "";
   };
 
-  setSelectedMenuIndex = (index: number): any => {
-    this.setState(() => {
-      return {
-        selectedMenuIndex: index,
-      };
-    });
+  setSelectedMenuIndex = (index?: number): any => {
+    if (index !== undefined) {
+      this.setState(() => {
+        console.log("Updating index to ", index);
+        return {
+          selectedMenuIndex: index,
+          selectedCategoryIndex: 0,
+          selectedItemIndex: 0,
+        };
+      });
+    } else {
+      return this.state.selectedMenuIndex;
+    }
   };
 
-  setSelectedCategoryIndex = (index: number): any => {
-    this.setState(() => {
-      return {
-        selectedCategoryIndex: index,
-      };
-    });
+  setSelectedCategoryIndex = (index?: number): any => {
+    if (index !== undefined) {
+      this.setState(() => {
+        console.log("From local setSelectedCategoryIndex");
+        return {
+          selectedCategoryIndex: index,
+          selectedItemIndex: 0,
+        };
+      });
+    } else {
+      return this.state.selectedCategoryIndex;
+    }
   };
 
   setSelectedItemIndex = (index: number): any => {
-    this.setState(() => {
-      return {
-        selectedItemIndex: index,
-      };
-    });
+    if (index !== undefined) {
+      this.setState(() => {
+        console.log("From local setSelectedItemIndex");
+        return {
+          selectedItemIndex: index,
+        };
+      });
+    } else {
+      return this.state.selectedItemIndex;
+    }
   };
 
   handleCategoryAddClick = () => {
@@ -210,6 +243,9 @@ export class MenuColumnList extends React.Component<
         ].items.length,
         name: this.state.addingItemName,
         handleDeleteClick: this.handleItemDeleteClick,
+        description: "",
+        price: 0,
+        ingredients: "",
       });
 
       const updatingMenuItems = this.state.menuItems;
@@ -258,7 +294,18 @@ export class MenuColumnList extends React.Component<
     });
   };
 
+  checkItemUpdate = (item: ItemProps) => {
+    this.setState(() => {
+      let newArray = this.state.menuItems;
+      newArray[this.state.selectedMenuIndex].categoryItems[
+        this.state.selectedCategoryIndex
+      ].items[this.state.selectedItemIndex] = item;
+      return { menuItems: newArray };
+    });
+  };
+
   render() {
+    console.log("This is render");
     return (
       <>
         <Grid container spacing={0} bgcolor={"#ffebee"}>
@@ -278,7 +325,7 @@ export class MenuColumnList extends React.Component<
                   <AddButtonWithDialog
                     title="Enter Menu Name"
                     label="Menu Name"
-                    handleRetrieveText={this.handleMenuRetrieveText}
+                    handleRetrieveText={this.handleRetrieveText}
                     updateText={this.updateText}
                     validateText={this.validateText}
                   />
@@ -321,7 +368,15 @@ export class MenuColumnList extends React.Component<
 
           {this.validateItemIndexBeforeRender() !== -1 && (
             <Grid item xs={3}>
-              <ItemColumnPage />
+              <ItemColumnPage
+                item={
+                  this.state.menuItems[this.state.selectedMenuIndex]
+                    .categoryItems[this.state.selectedCategoryIndex].items[
+                    this.state.selectedItemIndex
+                  ]
+                }
+                checkItemUpdate={this.checkItemUpdate}
+              />
             </Grid>
           )}
         </Grid>
