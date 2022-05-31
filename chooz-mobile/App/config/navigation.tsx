@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import MenuScreen from "../screens/Menu";
 import ItemScreen from "../screens/Item";
+import TestScreen from "../screens/Test";
 
 /*
 DEVELOPER NOTE 05/27:
@@ -20,12 +21,13 @@ export type MenuStackParamList = {
     description?: String;
     ingredients?: String;
   };
+  Test: undefined;
 };
 
 const MenuStack = createStackNavigator<MenuStackParamList>();
 const MenuStackScreen = () => {
   return (
-    <MenuStack.Navigator>
+    <MenuStack.Navigator initialRouteName="Test">
       <MenuStack.Screen
         name="MenuScreen"
         component={MenuScreen}
@@ -34,6 +36,15 @@ const MenuStackScreen = () => {
       <MenuStack.Screen
         name="ItemScreen"
         component={ItemScreen}
+        options={{
+          title: "",
+          headerShown: true,
+          presentation: "modal",
+        }}
+      />
+      <MenuStack.Screen
+        name="Test"
+        component={TestScreen}
         options={{
           title: "",
           headerShown: true,
