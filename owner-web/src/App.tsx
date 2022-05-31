@@ -1,6 +1,12 @@
 import React from "react";
 import "./App.css";
-import { Box, createTheme, ThemeProvider, Typography } from "@mui/material";
+import {
+  Box,
+  createTheme,
+  Paper,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import { MenuColumnList } from "./component/main_objects/MenuColumnList";
 
 const theme = createTheme({
@@ -16,7 +22,7 @@ const theme = createTheme({
 
   typography: {
     h4: {
-      fontSize: 24,
+      fontSize: 34,
       fontWeight: 300,
       color: "#ffffff",
       letterSpacing: "0.0075em",
@@ -32,15 +38,25 @@ class App extends React.Component {
     return (
       <>
         <ThemeProvider theme={theme}>
-          <Box
+          <Paper
             sx={{
-              bgcolor: "primary.main",
+              width: "100%",
+              height: "100vh",
+              bgcolor: "#ffebee",
             }}
           >
-            <Typography variant="h4">Resaurant</Typography>
-          </Box>
+            <Box>
+              <Box
+                sx={{
+                  bgcolor: "secondary.main",
+                }}
+              >
+                <Typography variant="h4">Resaurant</Typography>
+              </Box>
 
-          <MenuColumnList />
+              <MenuColumnList />
+            </Box>
+          </Paper>
         </ThemeProvider>
       </>
     );

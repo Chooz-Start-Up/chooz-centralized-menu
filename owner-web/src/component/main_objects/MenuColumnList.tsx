@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Grid, List, ListItem, ListItemButton } from "@mui/material/";
+import {
+  Box,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  Paper,
+} from "@mui/material/";
 import {
   ItemProps,
   MenuColumnListProps,
@@ -305,7 +313,13 @@ export class MenuColumnList extends React.Component<
   };
 
   render() {
-    console.log("This is render");
+    console.log(
+      this.state.selectedMenuIndex,
+      " ",
+      this.state.selectedCategoryIndex,
+      " ",
+      this.state.selectedItemIndex
+    );
     return (
       <>
         <Grid container spacing={0} bgcolor={"#ffebee"}>
@@ -333,41 +347,62 @@ export class MenuColumnList extends React.Component<
               </Grid>
             </List>
           </Grid>
-
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={{ height: "100vh" }}
+          />
           {this.validateMenuIndexBeforeRender() !== -1 && (
-            <Grid item xs={3}>
-              <CategoryColumnList
-                categoryItems={
-                  this.state.menuItems[this.state.selectedMenuIndex]
-                    .categoryItems
-                }
-                handleCategoryRetrieveText={this.handleCategoryRetrieveText}
-                handleCategoryDeleteClick={this.handleCategoryDeleteClick}
-                updateText={this.updateText}
-                validateText={this.validateText}
-                setSelectedCategoryIndex={this.setSelectedCategoryIndex}
+            <>
+              <Grid item xs={3}>
+                <CategoryColumnList
+                  categoryItems={
+                    this.state.menuItems[this.state.selectedMenuIndex]
+                      .categoryItems
+                  }
+                  handleCategoryRetrieveText={this.handleCategoryRetrieveText}
+                  handleCategoryDeleteClick={this.handleCategoryDeleteClick}
+                  updateText={this.updateText}
+                  validateText={this.validateText}
+                  setSelectedCategoryIndex={this.setSelectedCategoryIndex}
+                />
+              </Grid>
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                flexItem
+                sx={{ height: "100vh" }}
               />
-            </Grid>
+            </>
           )}
 
           {this.validateCategoryIndexBeforeRender() !== -1 && (
-            <Grid item xs={3}>
-              <ItemColumnList
-                itemItems={
-                  this.state.menuItems[this.state.selectedMenuIndex]
-                    .categoryItems[this.state.selectedCategoryIndex].items
-                }
-                handleItemRetrieveText={this.handleItemRetrieveText}
-                handleItemDeleteClick={this.handleItemDeleteClick}
-                updateText={this.updateText}
-                validateText={this.validateText}
-                setSelectedItemIndex={this.setSelectedItemIndex}
+            <>
+              <Grid item xs={3}>
+                <ItemColumnList
+                  itemItems={
+                    this.state.menuItems[this.state.selectedMenuIndex]
+                      .categoryItems[this.state.selectedCategoryIndex].items
+                  }
+                  handleItemRetrieveText={this.handleItemRetrieveText}
+                  handleItemDeleteClick={this.handleItemDeleteClick}
+                  updateText={this.updateText}
+                  validateText={this.validateText}
+                  setSelectedItemIndex={this.setSelectedItemIndex}
+                />
+              </Grid>
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                flexItem
+                sx={{ height: "100vh" }}
               />
-            </Grid>
+            </>
           )}
 
           {this.validateItemIndexBeforeRender() !== -1 && (
-            <Grid item xs={3}>
+            <Grid item xs={2.9}>
               <ItemColumnPage
                 item={
                   this.state.menuItems[this.state.selectedMenuIndex]

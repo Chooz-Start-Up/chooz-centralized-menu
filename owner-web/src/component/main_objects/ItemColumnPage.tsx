@@ -36,6 +36,15 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
     console.log("Ingredients has updated: ", props.item.ingredients);
   };
 
+  console.log(
+    "Current Data: ",
+    props.item.description,
+    " ",
+    props.item.price,
+    " ",
+    props.item.ingredients
+  );
+
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <Grid item xs={12}>
@@ -52,7 +61,7 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
           fullWidth
           minRows={4}
           variant="outlined"
-          defaultValue={props.item.description}
+          value={props.item.description}
           onChange={onDescriptionChange}
         />
         <Grid item xs={12}></Grid>
@@ -62,7 +71,7 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
         <Input
           id="price"
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
-          defaultValue={props.item.price}
+          value={props.item.price}
           onChange={onPriceChange}
         />
 
@@ -75,7 +84,7 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
           fullWidth
           minRows={4}
           variant="outlined"
-          defaultValue={props.item.ingredients}
+          value={props.item.ingredients}
           onChange={onIngredientsChange}
         />
       </Grid>
