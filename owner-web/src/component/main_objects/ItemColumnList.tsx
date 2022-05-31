@@ -12,7 +12,12 @@ export class ItemColumnList extends React.Component<ItemColumnListProps> {
           <Grid item xs={12}>
             <ColumnListItemButton
               deleteDialogTitle="Are you sure you want to delete the item?"
-              deleteDialogLabel="All items information will be deleted."
+              deleteDialogLabel="All item information will be deleted."
+              editDialogTitle="Enter New Item Name"
+              editDialogLabel="New Item Name"
+              handleEditRetrieveText={this.props.handleItemEditRetrieveText}
+              updateText={this.props.updateText}
+              validateText={this.props.validateText}
               items={this.props.itemItems}
               handleDeleteClick={this.props.handleItemDeleteClick}
               setSelectedColumnIndex={this.props.setSelectedItemIndex}
@@ -23,7 +28,7 @@ export class ItemColumnList extends React.Component<ItemColumnListProps> {
               <AddButtonWithDialog
                 title="Enter Item Name"
                 label="Item Name"
-                handleRetrieveText={this.props.handleItemRetrieveText}
+                handleAddRetrieveText={this.props.handleItemAddRetrieveText}
                 updateText={this.props.updateText}
                 validateText={this.props.validateText}
               />

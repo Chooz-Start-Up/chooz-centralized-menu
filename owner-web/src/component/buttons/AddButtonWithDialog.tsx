@@ -25,7 +25,8 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
     setOpen(false);
   };
 
-  const { title, label, handleRetrieveText, updateText, validateText } = props;
+  const { title, label, handleAddRetrieveText, updateText, validateText } =
+    props;
 
   return (
     <>
@@ -37,7 +38,7 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle color="primary">{title}</DialogTitle>
         <DialogContent>
-          <form onSubmit={handleRetrieveText} id="myform">
+          <form onSubmit={handleAddRetrieveText} id="myform">
             <TextField
               autoFocus
               margin="dense"

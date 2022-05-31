@@ -13,6 +13,11 @@ export class CategoryColumnList extends React.Component<CategoryColumnListProps>
             <ColumnListItemButton
               deleteDialogTitle="Are you sure you want to delete the category?"
               deleteDialogLabel="All items in the category will be deleted as well."
+              editDialogTitle="Enter New Category Name"
+              editDialogLabel="New Category Name"
+              handleEditRetrieveText={this.props.handleCategoryEditRetrieveText}
+              updateText={this.props.updateText}
+              validateText={this.props.validateText}
               items={this.props.categoryItems}
               handleDeleteClick={this.props.handleCategoryDeleteClick}
               setSelectedColumnIndex={this.props.setSelectedCategoryIndex}
@@ -23,7 +28,7 @@ export class CategoryColumnList extends React.Component<CategoryColumnListProps>
               <AddButtonWithDialog
                 title="Enter Category Name"
                 label="Category Name"
-                handleRetrieveText={this.props.handleCategoryRetrieveText}
+                handleAddRetrieveText={this.props.handleCategoryAddRetrieveText}
                 updateText={this.props.updateText}
                 validateText={this.props.validateText}
               />

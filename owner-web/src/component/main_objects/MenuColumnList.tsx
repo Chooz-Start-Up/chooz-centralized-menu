@@ -46,6 +46,7 @@ export class MenuColumnList extends React.Component<
   //   return state;
   // }
 
+  // Validator to hide or show columns
   validateMenuIndexBeforeRender = (): number => {
     if (this.state.selectedMenuIndex < this.state.menuItems.length) {
       return this.state.selectedMenuIndex;
@@ -53,7 +54,6 @@ export class MenuColumnList extends React.Component<
       return -1;
     }
   };
-
   validateCategoryIndexBeforeRender = (): number => {
     if (
       this.validateMenuIndexBeforeRender() !== -1 &&
@@ -80,6 +80,62 @@ export class MenuColumnList extends React.Component<
     }
   };
 
+  // Column list selectors
+  setSelectedMenuIndex = (index?: number): any => {
+    if (index !== undefined) {
+      this.setState(() => {
+        console.log("Updating index to ", index);
+        return {
+          selectedMenuIndex: index,
+          selectedCategoryIndex: 0,
+          selectedItemIndex: 0,
+        };
+      });
+    } else {
+      return this.state.selectedMenuIndex;
+    }
+  };
+  setSelectedCategoryIndex = (index?: number): any => {
+    if (index !== undefined) {
+      this.setState(() => {
+        console.log("From local setSelectedCategoryIndex");
+        return {
+          selectedCategoryIndex: index,
+          selectedItemIndex: 0,
+        };
+      });
+    } else {
+      return this.state.selectedCategoryIndex;
+    }
+  };
+  setSelectedItemIndex = (index: number): any => {
+    if (index !== undefined) {
+      this.setState(() => {
+        console.log("From local setSelectedItemIndex");
+        return {
+          selectedItemIndex: index,
+        };
+      });
+    } else {
+      return this.state.selectedItemIndex;
+    }
+  };
+
+  // Generic textfield updater
+  updateText = (e: any) => {
+    console.log("Text in textfield: ", e.target.value);
+    this.setState(() => {
+      return {
+        addingItemName: e.target.value,
+      };
+    });
+  };
+  validateText = (): string => {
+    const emptyTextfieldErrorMsg: string = "Name field cannot be empty.";
+    return this.state.addingItemName === "" ? emptyTextfieldErrorMsg : "";
+  };
+
+  // Menu-specific helper methods and button event handlers
   handleMenuAddClick = () => {
     this.setState(() => {
       const items = this.state.menuItems.concat({
@@ -94,7 +150,16 @@ export class MenuColumnList extends React.Component<
       };
     });
   };
-
+  handleMenuAddRetrieveText = (e: any) => {
+    e.preventDefault();
+    console.log(this.state.addingItemName);
+    this.handleMenuAddClick();
+    this.setState(() => {
+      return {
+        addingItemName: "",
+      };
+    });
+  };
   handleMenuDeleteClick = (id: number) => {
     const array = this.state.menuItems;
 
@@ -121,11 +186,21 @@ export class MenuColumnList extends React.Component<
       this.state.selectedMenuIndex
     );
   };
+  handleMenuEditClick = () => {
+    this.setState(() => {
+      const items = this.state.menuItems;
 
-  handleRetrieveText = (e: any) => {
+      items[this.state.selectedMenuIndex].name = this.state.addingItemName;
+
+      return {
+        menuItems: items,
+      };
+    });
+  };
+  handleMenuEditRetrieveText = (e: any) => {
     e.preventDefault();
     console.log(this.state.addingItemName);
-    this.handleMenuAddClick();
+    this.handleMenuEditClick();
     this.setState(() => {
       return {
         addingItemName: "",
@@ -133,61 +208,7 @@ export class MenuColumnList extends React.Component<
     });
   };
 
-  updateText = (e: any) => {
-    this.setState(() => {
-      return {
-        addingItemName: e.target.value,
-      };
-    });
-  };
-
-  validateText = (): string => {
-    const emptyTextfieldErrorMsg: string = "Name field cannot be empty.";
-    return this.state.addingItemName === "" ? emptyTextfieldErrorMsg : "";
-  };
-
-  setSelectedMenuIndex = (index?: number): any => {
-    if (index !== undefined) {
-      this.setState(() => {
-        console.log("Updating index to ", index);
-        return {
-          selectedMenuIndex: index,
-          selectedCategoryIndex: 0,
-          selectedItemIndex: 0,
-        };
-      });
-    } else {
-      return this.state.selectedMenuIndex;
-    }
-  };
-
-  setSelectedCategoryIndex = (index?: number): any => {
-    if (index !== undefined) {
-      this.setState(() => {
-        console.log("From local setSelectedCategoryIndex");
-        return {
-          selectedCategoryIndex: index,
-          selectedItemIndex: 0,
-        };
-      });
-    } else {
-      return this.state.selectedCategoryIndex;
-    }
-  };
-
-  setSelectedItemIndex = (index: number): any => {
-    if (index !== undefined) {
-      this.setState(() => {
-        console.log("From local setSelectedItemIndex");
-        return {
-          selectedItemIndex: index,
-        };
-      });
-    } else {
-      return this.state.selectedItemIndex;
-    }
-  };
-
+  // Category-specific helper methods and button event handlers
   handleCategoryAddClick = () => {
     this.setState(() => {
       const items = this.state.menuItems[
@@ -205,6 +226,16 @@ export class MenuColumnList extends React.Component<
 
       return {
         menuItems: updatingMenuItems,
+      };
+    });
+  };
+  handleCategoryAddRetrieveText = (e: any) => {
+    e.preventDefault();
+    console.log(this.state.addingItemName);
+    this.handleCategoryAddClick();
+    this.setState(() => {
+      return {
+        addingItemName: "",
       };
     });
   };
@@ -229,11 +260,23 @@ export class MenuColumnList extends React.Component<
       };
     });
   };
+  handleCategoryEditClick = () => {
+    this.setState(() => {
+      const items = this.state.menuItems;
 
-  handleCategoryRetrieveText = (e: any) => {
+      items[this.state.selectedMenuIndex].categoryItems[
+        this.state.selectedCategoryIndex
+      ].name = this.state.addingItemName;
+
+      return {
+        menuItems: items,
+      };
+    });
+  };
+  handleCategoryEditRetrieveText = (e: any) => {
     e.preventDefault();
     console.log(this.state.addingItemName);
-    this.handleCategoryAddClick();
+    this.handleCategoryEditClick();
     this.setState(() => {
       return {
         addingItemName: "",
@@ -241,6 +284,7 @@ export class MenuColumnList extends React.Component<
     });
   };
 
+  // Item-specific helper methods and button event handlers
   handleItemAddClick = () => {
     this.setState(() => {
       const items = this.state.menuItems[
@@ -263,6 +307,16 @@ export class MenuColumnList extends React.Component<
 
       return {
         menuItems: updatingMenuItems,
+      };
+    });
+  };
+  handleItemAddRetrieveText = (e: any) => {
+    e.preventDefault();
+    console.log(this.state.addingItemName);
+    this.handleItemAddClick();
+    this.setState(() => {
+      return {
+        addingItemName: "",
       };
     });
   };
@@ -291,10 +345,23 @@ export class MenuColumnList extends React.Component<
       };
     });
   };
-  handleItemRetrieveText = (e: any) => {
+  handleItemEditClick = () => {
+    this.setState(() => {
+      const items = this.state.menuItems;
+
+      items[this.state.selectedMenuIndex].categoryItems[
+        this.state.selectedCategoryIndex
+      ].items[this.state.selectedItemIndex].name = this.state.addingItemName;
+
+      return {
+        menuItems: items,
+      };
+    });
+  };
+  handleItemEditRetrieveText = (e: any) => {
     e.preventDefault();
     console.log(this.state.addingItemName);
-    this.handleItemAddClick();
+    this.handleItemEditClick();
     this.setState(() => {
       return {
         addingItemName: "",
@@ -302,6 +369,7 @@ export class MenuColumnList extends React.Component<
     });
   };
 
+  // Item Page helper method to update fields real time
   checkItemUpdate = (item: ItemProps) => {
     this.setState(() => {
       let newArray = this.state.menuItems;
@@ -329,8 +397,13 @@ export class MenuColumnList extends React.Component<
                 <ColumnListItemButton
                   deleteDialogTitle="Are you sure you want to delete the menu?"
                   deleteDialogLabel="All items in the menu will be deleted as well."
+                  editDialogTitle="Enter New Menu Name"
+                  editDialogLabel="New Menu Name"
                   items={this.state.menuItems}
                   handleDeleteClick={this.handleMenuDeleteClick}
+                  handleEditRetrieveText={this.handleMenuEditRetrieveText}
+                  updateText={this.updateText}
+                  validateText={this.validateText}
                   setSelectedColumnIndex={this.setSelectedMenuIndex}
                 />
               </Grid>
@@ -339,7 +412,7 @@ export class MenuColumnList extends React.Component<
                   <AddButtonWithDialog
                     title="Enter Menu Name"
                     label="Menu Name"
-                    handleRetrieveText={this.handleRetrieveText}
+                    handleAddRetrieveText={this.handleMenuAddRetrieveText}
                     updateText={this.updateText}
                     validateText={this.validateText}
                   />
@@ -361,8 +434,13 @@ export class MenuColumnList extends React.Component<
                     this.state.menuItems[this.state.selectedMenuIndex]
                       .categoryItems
                   }
-                  handleCategoryRetrieveText={this.handleCategoryRetrieveText}
+                  handleCategoryAddRetrieveText={
+                    this.handleCategoryAddRetrieveText
+                  }
                   handleCategoryDeleteClick={this.handleCategoryDeleteClick}
+                  handleCategoryEditRetrieveText={
+                    this.handleCategoryEditRetrieveText
+                  }
                   updateText={this.updateText}
                   validateText={this.validateText}
                   setSelectedCategoryIndex={this.setSelectedCategoryIndex}
@@ -385,8 +463,9 @@ export class MenuColumnList extends React.Component<
                     this.state.menuItems[this.state.selectedMenuIndex]
                       .categoryItems[this.state.selectedCategoryIndex].items
                   }
-                  handleItemRetrieveText={this.handleItemRetrieveText}
+                  handleItemAddRetrieveText={this.handleItemAddRetrieveText}
                   handleItemDeleteClick={this.handleItemDeleteClick}
+                  handleItemEditRetrieveText={this.handleItemEditRetrieveText}
                   updateText={this.updateText}
                   validateText={this.validateText}
                   setSelectedItemIndex={this.setSelectedItemIndex}
@@ -402,7 +481,7 @@ export class MenuColumnList extends React.Component<
           )}
 
           {this.validateItemIndexBeforeRender() !== -1 && (
-            <Grid item xs={2.9}>
+            <Grid padding={5} item xs={2.9}>
               <ItemColumnPage
                 item={
                   this.state.menuItems[this.state.selectedMenuIndex]

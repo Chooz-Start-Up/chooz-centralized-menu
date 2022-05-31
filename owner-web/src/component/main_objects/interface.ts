@@ -39,8 +39,9 @@ export interface MenuColumnListState {
 
 export interface CategoryColumnListProps {
   categoryItems: CategoryProps[];
-  handleCategoryRetrieveText(e: any): any;
+  handleCategoryAddRetrieveText(e: any): any;
   handleCategoryDeleteClick(id: number): any;
+  handleCategoryEditRetrieveText(e: any): any;
   updateText(e: any): any;
   validateText(): any;
   setSelectedCategoryIndex(index: number): any;
@@ -48,8 +49,9 @@ export interface CategoryColumnListProps {
 
 export interface ItemColumnListProps {
   itemItems: ItemProps[];
-  handleItemRetrieveText(e: any): any;
+  handleItemAddRetrieveText(e: any): any;
   handleItemDeleteClick(id: number): any;
+  handleItemEditRetrieveText(e: any): any;
   updateText(e: any): any;
   validateText(): any;
   setSelectedItemIndex(index: number): any;
