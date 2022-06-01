@@ -1,42 +1,56 @@
-import * as React from "react";
-import { Box, TextField } from "@material-ui/core";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Typography from "@material-ui/core/Typography";
+import AdbIcon from "@mui/icons-material/Adb";
 
-interface TestProp {}
+const useWidth = () => {
+  const [width, setWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const onResize = () => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return width;
+};
 
-interface TestState {
-  text: string;
-}
+export default function App() {
+  const width = useWidth();
 
-class Test extends React.Component<TestProp, TestState> {
-  constructor(props: TestProp) {
-    super(props);
-    this.state = { text: "" };
-  }
-
-  onChange = (e: any): any => {
-    this.setState({ text: e.target.value });
-  };
-
-  render() {
-    console.log("Current text: ", this.state.text);
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <TextField
-          id="description"
-          variant="outlined"
-          defaultValue={this.state.text}
-          onChange={this.onChange}
-        />
-
-        <TextField id="ingredient" variant="outlined" value={this.state.text} />
-      </Box>
-    );
-  }
+  return (
+    <div>
+      <Accordion>
+        <AccordionSummary expandIcon={<AdbIcon />}>
+          <Typography noWrap style={{ width: width * 0.8 }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget. 1
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<AdbIcon />}>
+          <Typography noWrap style={{ width: width * 0.8 }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget. 2
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    </div>
+  );
 }

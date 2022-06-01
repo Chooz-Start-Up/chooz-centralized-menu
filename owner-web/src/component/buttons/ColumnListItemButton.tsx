@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Grid, ListItem, ListItemButton, Typography } from "@mui/material/";
+import {
+  Box,
+  Grid,
+  ListItem,
+  ListItemButton,
+  Typography,
+} from "@mui/material/";
 import { ColumnListGeneralButtonProps } from "./interface";
 import DeleteButtonWithWarningDialog from "./DeleteButtonWithWarningDialog";
 import EditButtonWithDialog from "./EditButtonWithDialog";
@@ -39,15 +45,18 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
             selected={setSelectedColumnIndex() === item.id}
             onClick={(event) => handleListItemClick(event, item.id)}
           >
-            <Grid item xs={10} textAlign="center">
-              <Typography>{item.name}</Typography>
+            <Grid container maxWidth={140}>
+              <Typography sx={{ textOverflow: "ellipsis", overflow: "hidden" }}>
+                {item.name}
+              </Typography>
             </Grid>
 
             {setSelectedColumnIndex() === item.id && (
-              <Grid item xs={1.5}>
+              <Grid item xs={2}>
                 <EditButtonWithDialog
                   title={editDialogTitle}
                   label={editDialogLabel}
+                  value={item.name}
                   handleEditRetrieveText={handleEditRetrieveText}
                   updateText={updateText}
                   validateText={validateText}
@@ -56,7 +65,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
             )}
 
             {setSelectedColumnIndex() === item.id && (
-              <Grid item xs={1}>
+              <Grid item xs={1.5}>
                 <DeleteButtonWithWarningDialog
                   title={deleteDialogTitle}
                   label={deleteDialogLabel}

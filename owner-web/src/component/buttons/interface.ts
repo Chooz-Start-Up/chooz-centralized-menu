@@ -31,6 +31,7 @@ export interface ColumnListGeneralButtonProps {
 export interface EditButtonWithDialogProps {
   title: string;
   label: string;
+  value: string;
   handleEditRetrieveText(e: any): any;
   updateText(e: any): any;
   validateText(): any;

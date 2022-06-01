@@ -44,7 +44,7 @@ const ChoozAppBar = () => {
 
   return (
     <AppBar position="static">
-      <Grid direction="row" alignItems="center">
+      <Grid>
         <Toolbar disableGutters>
           <Grid container paddingLeft={3}>
             <AdbIcon
