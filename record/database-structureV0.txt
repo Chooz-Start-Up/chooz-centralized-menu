@@ -1,0 +1,44 @@
+database-structureV0
+NoSql Firebase - Realtime Database
+Justin Galang
+05/31/21
+
+{
+	"restaurantUser":
+	{
+		"id": String,
+		"name": String,
+		"restaurants": Restaurant[]
+	}
+	"restaurant":
+	{
+		"id": String,
+		"restaurantName": String,
+		"address": String,
+		"operatingHours": Time
+		"menus": Menu[]
+	}
+	"menu":
+	{
+		"id": String,
+		"title": String,
+		"categories": Category[],
+	}
+	"category": 
+	{
+		"id": String,
+		"title": String,
+		"items": Item[],
+	}
+	"item":
+	{
+		"id": String,
+		"title": String,
+		"price": Float,
+		"description": String,
+		"ingredients": String,
+	}
+}
+
+
+

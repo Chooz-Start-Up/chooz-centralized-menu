@@ -6,6 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MenuScreen from "../screens/Menu";
 import ItemScreen from "../screens/Item";
 import TestScreen from "../screens/Test";
+import RestaurantScreen from "../screens/Restauarant";
 
 /*
 DEVELOPER NOTE 05/27:
@@ -13,7 +14,14 @@ Eventually, MenuScreen and ItemScreen will
 accept Menu and Item Objects as their parameters.
 Menu and Item will deal with the optional fields.
 */
-export type MenuStackParamList = {
+export type RestaurantStackParamList = {
+  RestaurantScreen: {
+    restaurantName: String;
+    description?: String;
+    hours?: String;
+    phone?: String;
+    address?: String;
+  };
   MenuScreen: undefined;
   ItemScreen: {
     itemName: String;
@@ -24,10 +32,10 @@ export type MenuStackParamList = {
   Test: undefined;
 };
 
-const MenuStack = createStackNavigator<MenuStackParamList>();
+const MenuStack = createStackNavigator<RestaurantStackParamList>();
 const MenuStackScreen = () => {
   return (
-    <MenuStack.Navigator initialRouteName="Test">
+    <MenuStack.Navigator initialRouteName="RestaurantScreen">
       <MenuStack.Screen
         name="MenuScreen"
         component={MenuScreen}
@@ -49,6 +57,14 @@ const MenuStackScreen = () => {
           title: "",
           headerShown: true,
           presentation: "modal",
+        }}
+      />
+      <MenuStack.Screen
+        name="RestaurantScreen"
+        component={RestaurantScreen}
+        options={{
+          title: "Restaurant Name",
+          headerShown: true,
         }}
       />
     </MenuStack.Navigator>

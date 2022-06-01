@@ -19,10 +19,10 @@ import { useNavigation } from "@react-navigation/native";
 
 import { RowItem, RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors.js";
-import { MenuStackParamList } from "../config/navigation";
+import { RestaurantStackParamList } from "../config/navigation";
 import HorizontalList from "../components/HorizontalList";
 
-type Props = NativeStackScreenProps<MenuStackParamList, "MenuScreen">;
+type Props = NativeStackScreenProps<RestaurantStackParamList, "MenuScreen">;
 
 const screen = Dimensions.get("window");
 
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 
 const Menu: React.FC<Props> = () => {
   const navigation =
-    useNavigation<NativeStackNavigationProp<MenuStackParamList>>();
+    useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
   const [expanded, setExpanded] = React.useState(true);
   const handlePress = () => setExpanded(!expanded);
@@ -43,9 +43,8 @@ const Menu: React.FC<Props> = () => {
   DEVELOPER NOTE 05/27:
   openItem() will accept an Item object
   */
-
   let openItem = (
-    screen: keyof MenuStackParamList,
+    screen: keyof RestaurantStackParamList,
     itemName: String,
     price?: Number,
     description?: String,

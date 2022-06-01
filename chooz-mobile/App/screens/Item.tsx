@@ -6,7 +6,7 @@ import { useNavigation, useRoute } from "@react-navigation/core";
 
 import { RowSeparator } from "../components/RowItem";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { MenuStackParamList } from "../config/navigation";
+import { RestaurantStackParamList } from "../config/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const screen = Dimensions.get("window");
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = NativeStackScreenProps<MenuStackParamList, "ItemScreen">;
+type Props = NativeStackScreenProps<RestaurantStackParamList, "ItemScreen">;
 
 const Item = ({ route }: Props) => {
   let itemName = route.params.itemName;

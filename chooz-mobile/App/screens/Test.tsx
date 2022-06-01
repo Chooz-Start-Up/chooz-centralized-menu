@@ -2,13 +2,10 @@ import React from "react";
 import * as Firebase from "firebase/app";
 import "firebase/firestore";
 
-//import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase, ref, onValue, get } from "firebase/database";
 
 import { View, Text } from "react-native";
-
-//import "dotenv/config";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-kfMual2cl0xa7JMtW4WAZkEXr7l2iVo",
