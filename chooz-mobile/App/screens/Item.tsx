@@ -2,10 +2,8 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Platform, Dimensions, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useNavigation, useRoute } from "@react-navigation/core";
 
 import { RowSeparator } from "../components/RowItem";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { RestaurantStackParamList } from "../config/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 

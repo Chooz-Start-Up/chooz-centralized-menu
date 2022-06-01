@@ -1,7 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 import MenuScreen from "../screens/Menu";
 import ItemScreen from "../screens/Item";
@@ -39,6 +38,22 @@ const MenuStackScreen = () => {
   return (
     <MenuStack.Navigator initialRouteName="RestaurantListScreen">
       <MenuStack.Screen
+        name="RestaurantListScreen"
+        component={RestaurantListScreen}
+        options={{
+          title: "Chooz",
+          headerShown: true,
+        }}
+      />
+      <MenuStack.Screen
+        name="RestaurantScreen"
+        component={RestaurantScreen}
+        options={{
+          title: "Restaurant Name",
+          headerShown: true,
+        }}
+      />
+      <MenuStack.Screen
         name="MenuScreen"
         component={MenuScreen}
         options={{ title: "Restaurant Name" }}
@@ -59,22 +74,6 @@ const MenuStackScreen = () => {
           title: "",
           headerShown: true,
           presentation: "modal",
-        }}
-      />
-      <MenuStack.Screen
-        name="RestaurantScreen"
-        component={RestaurantScreen}
-        options={{
-          title: "Restaurant Name",
-          headerShown: true,
-        }}
-      />
-      <MenuStack.Screen
-        name="RestaurantListScreen"
-        component={RestaurantListScreen}
-        options={{
-          title: "Chooz",
-          headerShown: true,
         }}
       />
     </MenuStack.Navigator>

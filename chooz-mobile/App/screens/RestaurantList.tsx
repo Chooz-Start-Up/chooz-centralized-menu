@@ -5,7 +5,6 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 
-import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import { List } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";

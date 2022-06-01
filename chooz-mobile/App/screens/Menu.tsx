@@ -2,8 +2,6 @@ import React from "react";
 import {
   SafeAreaView,
   ScrollView,
-  Linking,
-  Alert,
   StatusBar,
   Text,
   StyleSheet,
@@ -83,6 +81,7 @@ const Menu: React.FC<Props> = () => {
               right={() => <Text>$0.00</Text>}
               description={"this is a test description."}
             />
+            <RowSeparator />
             <List.Item
               title="Item 2"
               onPress={() => {
@@ -107,6 +106,7 @@ const Menu: React.FC<Props> = () => {
               right={() => <Text>$0.00</Text>}
               description={"this is a test description."}
             />
+            <RowSeparator />
             <List.Item
               title="Item 4"
               onPress={() => {
@@ -116,6 +116,7 @@ const Menu: React.FC<Props> = () => {
               right={() => <Text>$0.00</Text>}
               description={"this is a test description."}
             />
+            <RowSeparator />
           </List.Accordion>
         </List.Section>
       </ScrollView>

@@ -2,8 +2,7 @@ import React from "react";
 import * as Firebase from "firebase/app";
 import "firebase/firestore";
 
-import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, onValue, get } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 import { View, Text } from "react-native";
 
