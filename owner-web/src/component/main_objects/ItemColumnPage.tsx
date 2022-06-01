@@ -12,6 +12,7 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Paper,
   TextField,
   Typography,
   useFormControl,
@@ -46,12 +47,13 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
   );
 
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-      <Grid item xs={12}>
+    <>
+      <Box>
         <Typography variant="h5" align="center">
           {props.item.name}
         </Typography>
-
+      </Box>
+      <Box marginTop={1}>
         <Typography variant="h6" align="left">
           Description
         </Typography>
@@ -64,7 +66,8 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
           value={props.item.description}
           onChange={onDescriptionChange}
         />
-        <Grid item xs={12}></Grid>
+      </Box>
+      <Box marginTop={1}>
         <Typography variant="h6" align="left">
           Price
         </Typography>
@@ -74,7 +77,8 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
           value={props.item.price}
           onChange={onPriceChange}
         />
-
+      </Box>
+      <Box marginTop={1}>
         <Typography variant="h6" align="left">
           Ingredients
         </Typography>
@@ -87,8 +91,8 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
           value={props.item.ingredients}
           onChange={onIngredientsChange}
         />
-      </Grid>
-    </Box>
+      </Box>
+    </>
   );
 };
 

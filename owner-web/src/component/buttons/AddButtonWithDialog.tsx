@@ -32,7 +32,7 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
     <>
       <ListItemButton selected={false} onClick={handleClickOpen}>
         <Grid item xs={5}></Grid>
-        <AddCircleOutlineIcon fontSize="large" />
+        <AddCircleOutlineIcon fontSize="large" sx={{ color: "#ef5350" }} />
       </ListItemButton>
 
       <Dialog open={open} onClose={handleClose}>

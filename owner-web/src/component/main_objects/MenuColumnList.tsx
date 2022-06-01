@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemButton,
   Paper,
+  Typography,
 } from "@mui/material/";
 import {
   ItemProps,
@@ -390,8 +391,26 @@ export class MenuColumnList extends React.Component<
     );
     return (
       <>
-        <Grid container spacing={0} bgcolor={"#ffebee"}>
-          <Grid item xs={3}>
+        <Grid container spacing={0} bgcolor={"white"}>
+          <Grid
+            item
+            xs={2}
+            borderRight={1}
+            borderColor="grey.300"
+            height="100vh"
+            minHeight={460}
+          >
+            <Box maxHeight={25}>
+              <Typography
+                align="center"
+                bgcolor="#f59795"
+                color="white"
+                variant="h5"
+              >
+                Menu
+              </Typography>
+            </Box>
+
             <List component="nav">
               <Grid item xs={12}>
                 <ColumnListItemButton
@@ -420,15 +439,27 @@ export class MenuColumnList extends React.Component<
               </Grid>
             </List>
           </Grid>
-          <Divider
-            orientation="vertical"
-            variant="middle"
-            flexItem
-            sx={{ height: "100vh" }}
-          />
-          {this.validateMenuIndexBeforeRender() !== -1 && (
-            <>
-              <Grid item xs={3}>
+
+          <Grid
+            item
+            xs={2}
+            borderRight={1}
+            borderColor="grey.300"
+            height="100vh"
+            minHeight={460}
+          >
+            <Box maxHeight={25}>
+              <Typography
+                align="center"
+                bgcolor="#f59795"
+                color="white"
+                variant="h5"
+              >
+                Category
+              </Typography>
+            </Box>
+            {this.validateMenuIndexBeforeRender() !== -1 && (
+              <>
                 <CategoryColumnList
                   categoryItems={
                     this.state.menuItems[this.state.selectedMenuIndex]
@@ -445,19 +476,30 @@ export class MenuColumnList extends React.Component<
                   validateText={this.validateText}
                   setSelectedCategoryIndex={this.setSelectedCategoryIndex}
                 />
-              </Grid>
-              <Divider
-                orientation="vertical"
-                variant="middle"
-                flexItem
-                sx={{ height: "100vh" }}
-              />
-            </>
-          )}
+              </>
+            )}
+          </Grid>
 
-          {this.validateCategoryIndexBeforeRender() !== -1 && (
-            <>
-              <Grid item xs={3}>
+          <Grid
+            item
+            xs={2}
+            borderRight={1}
+            borderColor="grey.300"
+            height="100vh"
+            minHeight={460}
+          >
+            <Box maxHeight={25}>
+              <Typography
+                align="center"
+                bgcolor="#f59795"
+                color="white"
+                variant="h5"
+              >
+                Item
+              </Typography>
+            </Box>
+            {this.validateCategoryIndexBeforeRender() !== -1 && (
+              <>
                 <ItemColumnList
                   itemItems={
                     this.state.menuItems[this.state.selectedMenuIndex]
@@ -470,29 +512,35 @@ export class MenuColumnList extends React.Component<
                   validateText={this.validateText}
                   setSelectedItemIndex={this.setSelectedItemIndex}
                 />
-              </Grid>
-              <Divider
-                orientation="vertical"
-                variant="middle"
-                flexItem
-                sx={{ height: "100vh" }}
-              />
-            </>
-          )}
+              </>
+            )}
+          </Grid>
 
-          {this.validateItemIndexBeforeRender() !== -1 && (
-            <Grid padding={5} item xs={2.9}>
-              <ItemColumnPage
-                item={
-                  this.state.menuItems[this.state.selectedMenuIndex]
-                    .categoryItems[this.state.selectedCategoryIndex].items[
-                    this.state.selectedItemIndex
-                  ]
-                }
-                checkItemUpdate={this.checkItemUpdate}
-              />
-            </Grid>
-          )}
+          <Grid item xs={6}>
+            <Box maxHeight={25}>
+              <Typography
+                align="center"
+                bgcolor="#f59795"
+                color="white"
+                variant="h5"
+              >
+                Item Detail
+              </Typography>
+            </Box>
+            {this.validateItemIndexBeforeRender() !== -1 && (
+              <Box width="95%" marginLeft={2} marginTop={2}>
+                <ItemColumnPage
+                  item={
+                    this.state.menuItems[this.state.selectedMenuIndex]
+                      .categoryItems[this.state.selectedCategoryIndex].items[
+                      this.state.selectedItemIndex
+                    ]
+                  }
+                  checkItemUpdate={this.checkItemUpdate}
+                />
+              </Box>
+            )}
+          </Grid>
         </Grid>
       </>
     );
