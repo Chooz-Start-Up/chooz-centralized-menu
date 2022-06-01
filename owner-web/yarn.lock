@@ -1209,7 +1209,7 @@
 
 "@emotion/react@^11.9.0":
   version "11.9.0"
-  resolved "https://registry.npmjs.org/@emotion/react/-/react-11.9.0.tgz"
+  resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.9.0.tgz#b6d42b1db3bd7511e7a7c4151dc8bc82e14593b8"
   integrity sha512-lBVSF5d0ceKtfKCDQJveNAtkC7ayxpVlgOohLgXqRwqWr9bOf4TZAFFyIcNngnV6xK6X4x2ZeXq7vliHkoVkxQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
@@ -1238,7 +1238,7 @@
 
 "@emotion/styled@^11.8.1":
   version "11.8.1"
-  resolved "https://registry.npmjs.org/@emotion/styled/-/styled-11.8.1.tgz"
+  resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-11.8.1.tgz#856f6f63aceef0eb783985fa2322e2bf66d04e17"
   integrity sha512-OghEVAYBZMpEquHZwuelXcRjRJQOVayvbmNR0zr174NHdmMgrNkLC6TljKC5h9lZLkN5WGrdUcrKlOJ4phhoTQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
