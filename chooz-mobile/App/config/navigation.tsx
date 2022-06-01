@@ -1,12 +1,17 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Entypo } from "@expo/vector-icons";
 
 import MenuScreen from "../screens/Menu";
 import ItemScreen from "../screens/Item";
 import TestScreen from "../screens/Test";
 import RestaurantScreen from "../screens/Restaurant";
 import RestaurantListScreen from "../screens/RestaurantList";
+import { Button } from "react-native-paper";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import colors from "../constants/colors";
+import { Platform } from "react-native";
 
 /*
 DEVELOPER NOTE 05/27:
@@ -33,41 +38,58 @@ export type RestaurantStackParamList = {
   Test: undefined;
 };
 
-const MenuStack = createStackNavigator<RestaurantStackParamList>();
-const MenuStackScreen = () => {
+const RestaurantStack = createStackNavigator<RestaurantStackParamList>();
+const RestaurantStackScreen = () => {
   return (
-    <MenuStack.Navigator initialRouteName="RestaurantListScreen">
-      <MenuStack.Screen
+    <RestaurantStack.Navigator initialRouteName="RestaurantListScreen">
+      <RestaurantStack.Screen
         name="RestaurantListScreen"
         component={RestaurantListScreen}
         options={{
           title: "Chooz",
           headerShown: true,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => alert("Search not yet implemented.")}
+              style={{ paddingHorizontal: 15 }}
+            >
+              <Entypo name="magnifying-glass" size={30} color={colors.blue} />
+            </TouchableOpacity>
+          ),
         }}
       />
-      <MenuStack.Screen
+      <RestaurantStack.Screen
         name="RestaurantScreen"
         component={RestaurantScreen}
         options={{
           title: "Restaurant Name",
           headerShown: true,
+          presentation: "card",
+          headerLeftLabelVisible: false,
         }}
       />
-      <MenuStack.Screen
+      <RestaurantStack.Screen
         name="MenuScreen"
         component={MenuScreen}
-        options={{ title: "Restaurant Name" }}
+        options={{
+          title: "Restaurant Name",
+          gestureEnabled: true,
+          gestureDirection: Platform.OS === "ios" ? "horizontal" : "vertical",
+          presentation: "card",
+          headerLeftLabelVisible: false,
+        }}
       />
-      <MenuStack.Screen
+      <RestaurantStack.Screen
         name="ItemScreen"
         component={ItemScreen}
         options={{
           title: "",
           headerShown: true,
+          headerLeftLabelVisible: false,
           presentation: "modal",
         }}
       />
-      <MenuStack.Screen
+      <RestaurantStack.Screen
         name="Test"
         component={TestScreen}
         options={{
@@ -76,14 +98,14 @@ const MenuStackScreen = () => {
           presentation: "modal",
         }}
       />
-    </MenuStack.Navigator>
+    </RestaurantStack.Navigator>
   );
 };
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <MenuStackScreen />
+      <RestaurantStackScreen />
     </NavigationContainer>
   );
 };

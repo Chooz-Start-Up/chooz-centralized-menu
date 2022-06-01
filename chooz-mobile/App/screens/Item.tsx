@@ -7,8 +7,6 @@ import { RowSeparator } from "../components/RowItem";
 import { RestaurantStackParamList } from "../config/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-const screen = Dimensions.get("window");
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

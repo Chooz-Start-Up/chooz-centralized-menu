@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
   portal: {},
   fab: {
     position: "absolute",
-    margin: 16,
+    margin: 5,
     right: 0,
-    top: Platform.OS === "ios" ? screen.height * 0.085 : screen.height * 0.075,
+    top: Platform.OS === "ios" ? screen.height * 0.1 : screen.height * 0.09,
     //bottom: screen.height - 5,
     //bottom: 0,
   },
