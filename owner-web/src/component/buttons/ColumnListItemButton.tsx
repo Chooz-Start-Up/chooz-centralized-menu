@@ -56,7 +56,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
                 <EditButtonWithDialog
                   title={editDialogTitle}
                   label={editDialogLabel}
-                  value={item.name}
+                  textValue={item.name}
                   handleEditRetrieveText={handleEditRetrieveText}
                   updateText={updateText}
                   validateText={validateText}

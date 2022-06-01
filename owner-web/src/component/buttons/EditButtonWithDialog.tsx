@@ -29,7 +29,7 @@ const EditButtonWithDialog: React.FC<EditButtonWithDialogProps> = (
   const {
     title,
     label,
-    value,
+    textValue,
     handleEditRetrieveText,
     updateText,
     validateText,
@@ -61,7 +61,7 @@ const EditButtonWithDialog: React.FC<EditButtonWithDialogProps> = (
               error={validateText() !== ""}
               helperText={validateText()}
               onChange={updateText}
-              defaultValue={value}
+              defaultValue={textValue}
             />
           </form>
         </DialogContent>
