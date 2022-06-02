@@ -1,4 +1,4 @@
-import { GeneralProps, MenuProps } from "../main_objects/interface";
+import { GeneralProps, MenuProps } from "../edit_page_components/interface";
 
 export interface AddButtonWithDialogProps {
   title: string;
@@ -35,4 +35,14 @@ export interface EditButtonWithDialogProps {
   handleEditRetrieveText(e: any): any;
   updateText(e: any): any;
   validateText(): any;
+}
+
+export interface PublishButtonProps {
+  isPublished: boolean;
+  onPublishClick(): any;
+}
+
+export interface AccessQRButtonProps {
+  isPublished: boolean;
+  onQRClick(): any;
 }
