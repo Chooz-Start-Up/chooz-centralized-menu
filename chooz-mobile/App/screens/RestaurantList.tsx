@@ -25,29 +25,36 @@ const styles = StyleSheet.create({
   },
 });
 
-const RestauarantList: React.FC<Props> = () => {
+const RestauarantList: React.FC<Props> = ({ route }: Props) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
+  let restaurantList = route.params.restaurantList;
+
+  // console.log("Within Restaurant List Screen: " + restaurantList);
 
   return (
     <ScrollView style={styles.scrollView}>
       <List.Section>
+        <RowSeparator />
+        {restaurantList.map(function (restaurant, i) {
+          //console.log("Testing restaurant:" + restaurant.restaurantName);
+          <List.Item
+            //key={restaurant.id}
+            title={restaurant.restaurantName}
+            description={"This is a test description"}
+            left={(props: any) => <List.Icon {...props} icon="folder" />}
+            onPress={() =>
+              navigation.navigate("RestaurantScreen", {
+                restaurantName: "Restaurant Test",
+              })
+            }
+          />;
+        })}
         <List.Item
           title={"Restaurant"}
           description={"This is a test description"}
           left={(props: any) => <List.Icon {...props} icon="book" />}
           right={(props: any) => <List.Icon {...props} icon="" />}
-          onPress={() =>
-            navigation.navigate("RestaurantScreen", {
-              restaurantName: "Restaurant Name",
-            })
-          }
-        />
-        <RowSeparator />
-        <List.Item
-          title={"Restaurant"}
-          description={"This is a test description"}
-          left={(props: any) => <List.Icon {...props} icon="folder" />}
           onPress={() =>
             navigation.navigate("RestaurantScreen", {
               restaurantName: "Restaurant Name",

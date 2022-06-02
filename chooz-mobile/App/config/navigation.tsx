@@ -2,16 +2,20 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Entypo } from "@expo/vector-icons";
+import { Platform } from "react-native";
+import { ref, onValue } from "firebase/database";
 
 import MenuScreen from "../screens/Menu";
 import ItemScreen from "../screens/Item";
 import TestScreen from "../screens/Test";
 import RestaurantScreen from "../screens/Restaurant";
 import RestaurantListScreen from "../screens/RestaurantList";
-import { Button } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../constants/colors";
-import { Platform } from "react-native";
+import { db } from "../data/database";
+import { Restaurant } from "../util/Restaurant";
+
+const reference = ref(db, "restaurantList/");
 
 /*
 DEVELOPER NOTE 05/27:
@@ -19,8 +23,11 @@ Eventually, MenuScreen and ItemScreen will
 accept Menu and Item Objects as their parameters.
 Menu and Item will deal with the optional fields.
 */
+
 export type RestaurantStackParamList = {
-  RestaurantListScreen: undefined;
+  RestaurantListScreen: {
+    restaurantList: Restaurant[];
+  };
   RestaurantScreen: {
     restaurantName: String;
     description?: String;
@@ -35,16 +42,32 @@ export type RestaurantStackParamList = {
     description?: String;
     ingredients?: String;
   };
-  Test: undefined;
+  TestScreen: undefined;
 };
 
 const RestaurantStack = createStackNavigator<RestaurantStackParamList>();
 const RestaurantStackScreen = () => {
+  let restaurantList: Restaurant[] = [];
+  onValue(reference, (snapshot) => {
+    const raw_data = snapshot.val();
+    const data = JSON.stringify(raw_data);
+    // console.log("Data as string: ");
+    // console.log(data);
+
+    const ref = JSON.parse(data);
+
+    let keys = Object.keys(ref);
+    keys.forEach(function (key: any) {
+      restaurantList.push(ref[key]);
+    });
+    //console.log("Within Navigation: " + restaurantList);
+  });
   return (
-    <RestaurantStack.Navigator initialRouteName="Test">
+    <RestaurantStack.Navigator initialRouteName="TestScreen">
       <RestaurantStack.Screen
         name="RestaurantListScreen"
         component={RestaurantListScreen}
+        initialParams={{ restaurantList }}
         options={{
           title: "Chooz",
           headerShown: true,
@@ -90,7 +113,7 @@ const RestaurantStackScreen = () => {
         }}
       />
       <RestaurantStack.Screen
-        name="Test"
+        name="TestScreen"
         component={TestScreen}
         options={{
           title: "",

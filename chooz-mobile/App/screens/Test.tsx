@@ -6,6 +6,7 @@ import { View, Text } from "react-native";
 //import database from "@react-native-firebase/database";
 
 import { Restaurant } from "../util/Restaurant";
+import { db } from "../data/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-kfMual2cl0xa7JMtW4WAZkEXr7l2iVo",
@@ -19,40 +20,55 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = Firebase.initializeApp(firebaseConfig);
-const db = getDatabase();
 
 const reference = ref(db, "restaurantList/");
 
 const TestDB = () => {
-  // database()
-  //   .ref("restaurantList")
-  //   .once("value")
-  //   .then((snapshot) => {
-  //     console.log("Restaurant List", snapshot.val());
-  //   });
-
+  /*
+  DEV NOTES (06/02)
+  This is reading from db using realtime changes - 
+  I tried changing it to one-time read because it could 
+  limit the total reads but ran into alot of errors
+  */
   let restaurantObj: Restaurant = new Restaurant();
-  //Realtime Changes
-  onValue(reference, (snapshot) => {
-    const raw_data = snapshot.val();
-    const data = JSON.stringify(raw_data);
-    console.log("Data as string: ");
-    console.log(data);
+  let restaurantObj2: Restaurant = new Restaurant();
+  let i = "Test";
 
-    console.log("Ref Object: ");
+  let result: Restaurant[] = [new Restaurant(), new Restaurant()];
+  onValue(reference, (snapshot) => {
+    //Retrieve Restaurant List
+    //raw_data is snapshot value
+    const raw_data = snapshot.val();
+
+    //data is snapshot as string
+    const data = JSON.stringify(raw_data);
+    // console.log("Data as string: ");
+    // console.log(data);
+
+    //ref is list of objects parsed from data
     const ref = JSON.parse(data);
 
-    let result: any[] = [];
+    //keys are the keys of the objects in the list
     let keys = Object.keys(ref);
+
     keys.forEach(function (key: any) {
-      result.push(ref[key]);
+      result[0] = new Restaurant(ref[key].id, ref[key].title);
+      // console.log("DATA FROM TEST: " + JSON.stringify(key.title));
     });
-    console.log(result[0]);
+    // console.log("DATA FROM TEST: " + JSON.stringify(result[0].title));
+    // restaurantObj = new Restaurant(result[0].id, result[0].title);
+    // restaurantObj2 = new Restaurant(result[1].id, result[1].title);
   });
+  restaurantObj.restaurantName = result[0].restaurantName;
+  restaurantObj2.restaurantName = result[0].restaurantName;
+  // restaurantObj.restaurantName = result[0].title;
+  // restaurantObj2.restaurantName = result[1].title;
+
   return (
     <View>
-      <Text>Restaurant ID: {restaurantObj.id}</Text>
-      <Text>Restaurant Name: {restaurantObj.restaurantName}</Text>
+      <Text>Restaurant Object 1: {restaurantObj.restaurantName}</Text>
+      <Text>Restaurant Object 2: {restaurantObj2.restaurantName}</Text>
+      {console.log("INSIDE BLOCK")}
     </View>
   );
 };
