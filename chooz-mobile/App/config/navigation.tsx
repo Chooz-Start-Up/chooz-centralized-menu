@@ -41,7 +41,7 @@ export type RestaurantStackParamList = {
 const RestaurantStack = createStackNavigator<RestaurantStackParamList>();
 const RestaurantStackScreen = () => {
   return (
-    <RestaurantStack.Navigator initialRouteName="RestaurantListScreen">
+    <RestaurantStack.Navigator initialRouteName="Test">
       <RestaurantStack.Screen
         name="RestaurantListScreen"
         component={RestaurantListScreen}

@@ -1,10 +1,10 @@
 import React from "react";
 import * as Firebase from "firebase/app";
 import "firebase/firestore";
-
 import { getDatabase, ref, onValue } from "firebase/database";
-
 import { View, Text } from "react-native";
+
+import { Restaurant } from "../util/Restaurant";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-kfMual2cl0xa7JMtW4WAZkEXr7l2iVo",
@@ -19,17 +19,41 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = Firebase.initializeApp(firebaseConfig);
 const db = getDatabase();
-const starCountRef = ref(db, "restaurants/restaurantA/menus/menu1/categories/");
-onValue(starCountRef, (snapshot) => {
-  const data = snapshot.val();
-  console.log("First Category: ");
-  console.log(data);
-});
+
+// const reference = database()
+//   .ref("/restaurantList")
+//   .on("value", (snapshot: any) => {
+//     console.log("RestaurantList: ", snapshot.val());
+//   });
+
+const reference = ref(db, "restaurantList/");
 
 const TestDB = () => {
+  let restaurantObj: Restaurant = new Restaurant();
+  onValue(reference, (snapshot) => {
+    const raw_data = snapshot.val();
+    const data = JSON.stringify(raw_data);
+    console.log("Data as string: ");
+    console.log(data);
+
+    console.log("Ref Object: ");
+    const ref = JSON.parse(data);
+    //console.log(ref[0]);
+    // console.log(ref.title);
+    // restaurantObj.id = ref.id;
+    // restaurantObj.restaurantName = ref.title;
+
+    let result: any[] = [];
+    let keys = Object.keys(ref);
+    keys.forEach(function (key: any) {
+      result.push(ref[key]);
+    });
+    console.log(result[0]);
+  });
   return (
     <View>
-      <Text></Text>
+      <Text>Restaurant ID: {restaurantObj.id}</Text>
+      <Text>Restaurant Name: {restaurantObj.restaurantName}</Text>
     </View>
   );
 };
