@@ -3,6 +3,7 @@ import * as Firebase from "firebase/app";
 import "firebase/firestore";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { View, Text } from "react-native";
+//import database from "@react-native-firebase/database";
 
 import { Restaurant } from "../util/Restaurant";
 
@@ -20,16 +21,18 @@ const firebaseConfig = {
 const app = Firebase.initializeApp(firebaseConfig);
 const db = getDatabase();
 
-// const reference = database()
-//   .ref("/restaurantList")
-//   .on("value", (snapshot: any) => {
-//     console.log("RestaurantList: ", snapshot.val());
-//   });
-
 const reference = ref(db, "restaurantList/");
 
 const TestDB = () => {
+  // database()
+  //   .ref("restaurantList")
+  //   .once("value")
+  //   .then((snapshot) => {
+  //     console.log("Restaurant List", snapshot.val());
+  //   });
+
   let restaurantObj: Restaurant = new Restaurant();
+  //Realtime Changes
   onValue(reference, (snapshot) => {
     const raw_data = snapshot.val();
     const data = JSON.stringify(raw_data);
@@ -38,10 +41,6 @@ const TestDB = () => {
 
     console.log("Ref Object: ");
     const ref = JSON.parse(data);
-    //console.log(ref[0]);
-    // console.log(ref.title);
-    // restaurantObj.id = ref.id;
-    // restaurantObj.restaurantName = ref.title;
 
     let result: any[] = [];
     let keys = Object.keys(ref);

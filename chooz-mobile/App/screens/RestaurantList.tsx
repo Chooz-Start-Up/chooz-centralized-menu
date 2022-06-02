@@ -35,8 +35,8 @@ const RestauarantList: React.FC<Props> = () => {
         <List.Item
           title={"Restaurant"}
           description={"This is a test description"}
-          left={(props) => <List.Icon {...props} icon="book" />}
-          right={(props) => <List.Icon {...props} icon="" />}
+          left={(props: any) => <List.Icon {...props} icon="book" />}
+          right={(props: any) => <List.Icon {...props} icon="" />}
           onPress={() =>
             navigation.navigate("RestaurantScreen", {
               restaurantName: "Restaurant Name",
@@ -47,7 +47,7 @@ const RestauarantList: React.FC<Props> = () => {
         <List.Item
           title={"Restaurant"}
           description={"This is a test description"}
-          left={(props) => <List.Icon {...props} icon="folder" />}
+          left={(props: any) => <List.Icon {...props} icon="folder" />}
           onPress={() =>
             navigation.navigate("RestaurantScreen", {
               restaurantName: "Restaurant Name",
