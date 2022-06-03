@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Firebase from "firebase/app";
 import "firebase/firestore";
-import { getDatabase, ref, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  get,
+  child,
+  DatabaseReference,
+} from "firebase/database";
 import { View, Text } from "react-native";
 //import database from "@react-native-firebase/database";
 
-import { Restaurant } from "../util/Restaurant";
+import { IRestaurant, Restaurant } from "../util/Restaurant";
 import { db } from "../data/database";
+import { getRestaurantList } from "../util/RestaurantApi";
+import { SafeAreaView } from "react-native-safe-area-context";
+import RestauarantList from "./RestaurantList";
+import Item from "./Item";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-kfMual2cl0xa7JMtW4WAZkEXr7l2iVo",
@@ -21,55 +32,52 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = Firebase.initializeApp(firebaseConfig);
 
-const reference = ref(db, "restaurantList/");
+const dbRef = ref(getDatabase());
 
 const TestDB = () => {
-  /*
-  DEV NOTES (06/02)
-  This is reading from db using realtime changes - 
-  I tried changing it to one-time read because it could 
-  limit the total reads but ran into alot of errors
-  */
-  let restaurantObj: Restaurant = new Restaurant();
-  let restaurantObj2: Restaurant = new Restaurant();
-  let i = "Test";
+  const [restaurantList, setRestaurantList] = useState<Array<IRestaurant>>();
+  const [isLoading, setLoading] = useState(true);
 
-  let result: Restaurant[] = [new Restaurant(), new Restaurant()];
-  onValue(reference, (snapshot) => {
-    //Retrieve Restaurant List
-    //raw_data is snapshot value
-    const raw_data = snapshot.val();
+  useEffect(() => {
+    console.log("USE EFFECT");
+    get(child(dbRef, "restaurantList"))
+      .then((snapshot) => {
+        let objList: Restaurant[] = [];
+        if (snapshot.exists()) {
+          snapshot.forEach(function (item) {
+            let itemVal = item.val();
+            objList.push(new Restaurant(itemVal.id, itemVal.restaurantName));
+          });
 
-    //data is snapshot as string
-    const data = JSON.stringify(raw_data);
-    // console.log("Data as string: ");
-    // console.log(data);
-
-    //ref is list of objects parsed from data
-    const ref = JSON.parse(data);
-
-    //keys are the keys of the objects in the list
-    let keys = Object.keys(ref);
-
-    keys.forEach(function (key: any) {
-      result[0] = new Restaurant(ref[key].id, ref[key].title);
-      // console.log("DATA FROM TEST: " + JSON.stringify(key.title));
-    });
-    // console.log("DATA FROM TEST: " + JSON.stringify(result[0].title));
-    // restaurantObj = new Restaurant(result[0].id, result[0].title);
-    // restaurantObj2 = new Restaurant(result[1].id, result[1].title);
-  });
-  restaurantObj.restaurantName = result[0].restaurantName;
-  restaurantObj2.restaurantName = result[0].restaurantName;
-  // restaurantObj.restaurantName = result[0].title;
-  // restaurantObj2.restaurantName = result[1].title;
+          setRestaurantList(objList);
+          setLoading(false);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
-    <View>
-      <Text>Restaurant Object 1: {restaurantObj.restaurantName}</Text>
-      <Text>Restaurant Object 2: {restaurantObj2.restaurantName}</Text>
-      {console.log("INSIDE BLOCK")}
-    </View>
+    <SafeAreaView>
+      {isLoading && (
+        <View style={{ justifyContent: "center" }}>
+          <Text style={{ fontSize: 50 }}>LOADING</Text>
+        </View>
+      )}
+      {!isLoading &&
+        restaurantList?.map(({ id, restaurantName }) => {
+          return (
+            <View key={id}>
+              <Text key={id}>
+                Restaurant Object {id}: {restaurantName}
+              </Text>
+            </View>
+          );
+        })}
+    </SafeAreaView>
   );
 };
 

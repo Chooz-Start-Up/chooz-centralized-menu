@@ -25,9 +25,7 @@ Menu and Item will deal with the optional fields.
 */
 
 export type RestaurantStackParamList = {
-  RestaurantListScreen: {
-    restaurantList: Restaurant[];
-  };
+  RestaurantListScreen: undefined;
   RestaurantScreen: {
     restaurantName: String;
     description?: String;
@@ -42,7 +40,7 @@ export type RestaurantStackParamList = {
     description?: String;
     ingredients?: String;
   };
-  TestScreen: undefined;
+  Test: undefined;
 };
 
 const RestaurantStack = createStackNavigator<RestaurantStackParamList>();
@@ -51,8 +49,8 @@ const RestaurantStackScreen = () => {
   onValue(reference, (snapshot) => {
     const raw_data = snapshot.val();
     const data = JSON.stringify(raw_data);
-    // console.log("Data as string: ");
-    // console.log(data);
+    console.log("Data as string: ");
+    console.log(data);
 
     const ref = JSON.parse(data);
 
@@ -60,14 +58,12 @@ const RestaurantStackScreen = () => {
     keys.forEach(function (key: any) {
       restaurantList.push(ref[key]);
     });
-    //console.log("Within Navigation: " + restaurantList);
   });
   return (
-    <RestaurantStack.Navigator initialRouteName="TestScreen">
+    <RestaurantStack.Navigator initialRouteName="RestaurantListScreen">
       <RestaurantStack.Screen
         name="RestaurantListScreen"
         component={RestaurantListScreen}
-        initialParams={{ restaurantList }}
         options={{
           title: "Chooz",
           headerShown: true,
@@ -113,7 +109,7 @@ const RestaurantStackScreen = () => {
         }}
       />
       <RestaurantStack.Screen
-        name="TestScreen"
+        name="Test"
         component={TestScreen}
         options={{
           title: "",
