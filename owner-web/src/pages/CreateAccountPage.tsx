@@ -35,14 +35,13 @@ class CreateAccountPage extends React.Component<
             display="flex"
             justifyContent="center"
             alignItems="center"
-            paddingTop="1%"
             height="100vh"
             bgcolor="#ffd7db"
           >
             <Box
               boxShadow={5}
-              width="30%"
-              height="90%"
+              width="450"
+              height="575"
               bgcolor="white"
               textAlign="center"
             >
@@ -85,7 +84,7 @@ class CreateAccountPage extends React.Component<
 
               <Button variant="outlined" sx={{ width: "70%", fontSize: 20 }}>
                 <img src={GoogleIcon} width="10%" height="10%" />
-                <Typography marginLeft={2}>Continue with Google</Typography>
+                <Typography marginLeft={1}>Continue with Google</Typography>
               </Button>
 
               <Button
@@ -93,7 +92,7 @@ class CreateAccountPage extends React.Component<
                 sx={{ width: "70%", fontSize: 20, marginTop: 1 }}
               >
                 <img src={FacebookIcon} width="10%" height="10%" />
-                <Typography marginLeft={2}>Continue with Facebook</Typography>
+                <Typography marginLeft={1}>Continue with Facebook</Typography>
               </Button>
 
               <Typography sx={{ marginTop: 4 }}>

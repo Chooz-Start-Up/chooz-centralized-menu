@@ -32,14 +32,13 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            paddingTop="1%"
             height="100vh"
             bgcolor="#ffd7db"
           >
             <Box
               boxShadow={5}
-              width="30%"
-              height="90%"
+              width="450"
+              height="575"
               bgcolor="white"
               textAlign="center"
             >
