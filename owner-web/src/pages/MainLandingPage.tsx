@@ -22,8 +22,6 @@ class MenuEditPage extends React.Component<
     this.state = {};
   }
 
-  onClick = () => {};
-
   render() {
     const { isLoggedin } = this.props;
 
@@ -43,10 +41,11 @@ class MenuEditPage extends React.Component<
 
           <Grid container justifyContent="center">
             <Button
-              size="small"
+              size="large"
               variant="contained"
               href="/edit"
               sx={{
+                borderRadius: 8,
                 bgcolor: "red",
                 "&:hover": {
                   background: "red.800",

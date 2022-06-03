@@ -32,14 +32,9 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
 
   return (
     <>
-      <Tooltip title="QR code will be available after publish">
-        <IconButton
-          // disabled={!isPublished}
-
-          onClick={handleClickOpen}
-        >
+      <Tooltip title="Access QR Code">
+        <IconButton onClick={handleClickOpen}>
           <QrCode2Icon fontSize="large" />
-          {/* <QrCode2Icon fontSize="medium" /> */}
         </IconButton>
       </Tooltip>
 
@@ -62,9 +57,12 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
 
       <Dialog
         open={open && isPublished}
-        keepMounted
+        // keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
+        sx={{
+          minHeight: "500px",
+        }}
       >
         <DialogTitle>Scan the QR Code</DialogTitle>
         <DialogContent>

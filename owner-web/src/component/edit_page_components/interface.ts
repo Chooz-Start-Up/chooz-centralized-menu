@@ -61,3 +61,5 @@ export interface ItemColumnPageProps {
   item: ItemProps;
   checkItemUpdate(item: ItemProps): any;
 }
+
+export interface ProfilePanelProps {}

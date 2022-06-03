@@ -8,13 +8,14 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import TabPanel from "../component/edit_page_components/TabPanel";
+import TabPanel from "../component/buttons/TabPanel";
 import { MenuColumnList } from "../component/edit_page_components/MenuColumnList";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
 import PublishButton from "../component/buttons/PublishButton";
 import AccessQRButton from "../component/buttons/AccessQRButton";
 import { MenuEditPageProp, MenuEditPageState } from "./interface";
 import { choozTheme } from "./theme";
+import ProfilePanel from "../component/edit_page_components/ProfilePanel";
 
 class MenuEditPage extends React.Component<
   MenuEditPageProp,
@@ -71,7 +72,7 @@ class MenuEditPage extends React.Component<
               <Tab label="Edit Menu" {...this.tabPanelProps(1)} />
             </Tabs>
             <TabPanel value={this.state.tabIndex} index={0}>
-              Profile yet implemented
+              <ProfilePanel />
             </TabPanel>
             <TabPanel value={this.state.tabIndex} index={1}>
               <Paper
@@ -87,35 +88,30 @@ class MenuEditPage extends React.Component<
                       bgcolor: "#ef5350",
                     }}
                   >
-                    <Grid container>
-                      <Grid item xs={10} paddingTop={0.75} paddingLeft={30}>
-                        <Typography variant="h4">Resaurant</Typography>
-                      </Grid>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        paddingLeft: "45%",
+                        // m: 1,
+                      }}
+                    >
+                      <Typography variant="h4">Resaurant</Typography>
 
-                      <Grid
-                        item
-                        xs={0.5}
-                        // marginBottom={0.9}
-                        paddingLeft={this.state.isPublished ? 2.75 : 4}
+                      <Box
+                        alignSelf="right"
+                        marginRight={this.state.isPublished ? 1.75 : 3}
                       >
                         <AccessQRButton
                           isPublished={this.state.isPublished}
                           onQRClick={this.onQRClick}
                         />
-                      </Grid>
-
-                      <Grid
-                        item
-                        xs={0.5}
-                        paddingTop={1.2}
-                        paddingLeft={this.state.isPublished ? 4.75 : 6}
-                      >
                         <PublishButton
                           isPublished={this.state.isPublished}
                           onPublishClick={this.onPublishClick}
                         />
-                      </Grid>
-                    </Grid>
+                      </Box>
+                    </Box>
                   </Box>
 
                   <MenuColumnList />

@@ -18,7 +18,7 @@ import AddButtonWithDialog from "../buttons/AddButtonWithDialog";
 import ColumnListItemButton from "../buttons/ColumnListItemButton";
 import { CategoryColumnList } from "./CategoryColumnList";
 import { ItemColumnList } from "./ItemColumnList";
-import ItemColumnPage from "./ItemColumnPage";
+import ItemColumnPage from "./ItemColumnDisplay";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,

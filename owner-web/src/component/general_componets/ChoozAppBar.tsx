@@ -41,14 +41,14 @@ const ChoozAppBar: React.FC<ChoozAppBarProps> = (props: ChoozAppBarProps) => {
 
           {!isLoggedin && (
             <Grid container paddingRight={3} justifyContent="flex-end">
-              <Button onClick={handleLogin} sx={{ p: 0 }}>
+              <Button href="/login/" onClick={handleLogin} sx={{ p: 0 }}>
                 <Typography color="white">Login</Typography>
               </Button>
             </Grid>
           )}
           {isLoggedin && (
             <Grid container paddingRight={3} justifyContent="flex-end">
-              <Button onClick={handleLogout} sx={{ p: 0 }}>
+              <Button href="/preview/" onClick={handleLogout} sx={{ p: 0 }}>
                 <Typography color="white">Logout</Typography>
               </Button>
             </Grid>
