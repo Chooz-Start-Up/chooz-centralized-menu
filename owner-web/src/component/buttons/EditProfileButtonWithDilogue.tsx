@@ -26,6 +26,7 @@ const EditProfileButtonWithDialog: React.FC<
     restaurantNameUpdate,
     descriptionUpdate,
     addressUpdate,
+    phoneNumberUpdate,
     hoursUpdate,
 
     onSaveClick,
@@ -34,6 +35,7 @@ const EditProfileButtonWithDialog: React.FC<
     restaurantNameValidationText,
     descriptionValidationText,
     addressValidationText,
+    phoneNumberValidationText,
   } = props;
 
   let [
@@ -41,12 +43,14 @@ const EditProfileButtonWithDialog: React.FC<
     originalRestaurantName,
     originalDescription,
     originalAddress,
+    originalPhoneNumber,
     originalHours,
   ] = [
     ownerNameUpdate(),
     restaurantNameUpdate(),
     descriptionUpdate(),
     addressUpdate(),
+    phoneNumberUpdate(),
     hoursUpdate(),
   ];
 
@@ -135,13 +139,17 @@ const EditProfileButtonWithDialog: React.FC<
   const onAddressChange = (event: any) => {
     addressUpdate(event.target.value);
   };
+  const onPhoneNumberChange = (event: any) => {
+    phoneNumberUpdate(event.target.value);
+  };
 
   const canClickSave = (): boolean => {
     return (
       ownerNameValidationText === "" &&
       restaurantNameValidationText === "" &&
       descriptionValidationText === "" &&
-      addressValidationText === ""
+      addressValidationText === "" &&
+      phoneNumberValidationText === ""
     );
   };
 
@@ -225,6 +233,21 @@ const EditProfileButtonWithDialog: React.FC<
               helperText={addressValidationText}
               onChange={onAddressChange}
               defaultValue={originalAddress}
+            />
+          </Box>
+
+          <Box>
+            <TextField
+              fullWidth
+              margin="normal"
+              required
+              id="phoneNumber"
+              label="Phone Number"
+              variant="standard"
+              error={phoneNumberValidationText !== ""}
+              helperText={phoneNumberValidationText}
+              onChange={onPhoneNumberChange}
+              defaultValue={originalPhoneNumber}
             />
           </Box>
 

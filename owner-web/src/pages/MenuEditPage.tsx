@@ -97,9 +97,9 @@ class MenuEditPage extends React.Component<
                         paddingLeft: "45%",
                       }}
                     >
-                      <Typography marginTop={1} variant="h4">
-                        Resaurant
-                      </Typography>
+                      <Box paddingTop={0.5}>
+                        <Typography variant="h4">Restaurant</Typography>
+                      </Box>
 
                       <Box
                         alignSelf="right"

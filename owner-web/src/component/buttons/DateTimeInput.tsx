@@ -97,13 +97,16 @@ class DateTimeInput extends React.Component<
         generatedTimeString += " 12:" + splittedStartTime[1] + " PM";
       } else if (openHour === 0) {
         generatedTimeString += " 12:" + splittedStartTime[1] + " AM";
-      } else {
+      } else if (openHour < 12) {
         generatedTimeString +=
           " " +
           openHour.toString().padStart(2, "0") +
           ":" +
           splittedStartTime[1] +
           " AM";
+      } else {
+        generatedTimeString += " Closed";
+        return generatedTimeString;
       }
 
       generatedTimeString += " -";
@@ -122,13 +125,15 @@ class DateTimeInput extends React.Component<
         generatedTimeString += " 12:" + splittedCloseTime[1] + " PM";
       } else if (closeHour === 0) {
         generatedTimeString += " 12:" + splittedCloseTime[1] + " AM";
-      } else {
+      } else if (closeHour < 12) {
         generatedTimeString +=
           " " +
           closeHour.toString().padStart(2, "0") +
           ":" +
           splittedCloseTime[1] +
           " AM";
+      } else {
+        return this.state.date + " Closed";
       }
     } else {
       generatedTimeString += " Closed";
@@ -158,6 +163,7 @@ class DateTimeInput extends React.Component<
         this.props.updateTimeString(this.generateTimeString());
       }
     );
+    console.log("Open Time Changed");
   };
 
   onCloseTimeChange = (event: any) => {
@@ -169,6 +175,7 @@ class DateTimeInput extends React.Component<
         this.props.updateTimeString(this.generateTimeString());
       }
     );
+    console.log("Close Time Changed");
   };
 
   render() {

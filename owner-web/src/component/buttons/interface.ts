@@ -52,6 +52,7 @@ export interface EditProfileButtonWithDialogProps {
   restaurantNameUpdate(text?: string): any;
   descriptionUpdate(text?: string): any;
   addressUpdate(text?: string): any;
+  phoneNumberUpdate(text?: string): any;
   hoursUpdate(text?: string): any;
 
   onSaveClick(): any;
@@ -60,6 +61,7 @@ export interface EditProfileButtonWithDialogProps {
   restaurantNameValidationText: string;
   descriptionValidationText: string;
   addressValidationText: string;
+  phoneNumberValidationText: string;
 }
 
 export interface DateTimeInputProps {

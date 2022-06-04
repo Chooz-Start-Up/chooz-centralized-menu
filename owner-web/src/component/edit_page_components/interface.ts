@@ -69,16 +69,19 @@ export interface ProfilePanelState {
   restaurantName: string;
   description: string;
   address: string;
+  phoneNumber: string;
   hours: string;
   //
   newOwnerName: string;
   newRestaurantName: string;
   newDescription: string;
   newAddress: string;
+  newPhoneNumber: string;
   newHours: string;
   //
   ownerNameValidationText: string;
   restaurantNameValidationText: string;
   descriptionValidationText: string;
   addressValidationText: string;
+  phoneNumberValidationText: string;
 }

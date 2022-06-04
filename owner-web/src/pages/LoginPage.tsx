@@ -6,6 +6,11 @@ import {
   Typography,
   TextField,
   Divider,
+  InputAdornment,
+  IconButton,
+  FormControl,
+  InputLabel,
+  Input,
 } from "@mui/material";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
 import { LoginPageProps, LoginPageState } from "./interface";
@@ -13,6 +18,7 @@ import { choozTheme } from "./theme";
 import AdbIcon from "@mui/icons-material/Adb";
 import GoogleIcon from "../component/icon_images/icons8-google-48.png";
 import FacebookIcon from "../component/icon_images/icons8-facebook-48.png";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   constructor(props: LoginPageProps) {
@@ -22,7 +28,8 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 
   render() {
-    const { isLoggedin } = this.props;
+    const { isLoggedin, isPasswordVisibile, handleClickShowPassword } =
+      this.props;
 
     return (
       <>
@@ -58,11 +65,29 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                   label="Email"
                   sx={{ width: "70%", margin: 1 }}
                 />
-                <TextField
+                <FormControl
                   variant="standard"
-                  label="Password"
                   sx={{ width: "70%", margin: 1 }}
-                />
+                >
+                  <InputLabel>Password</InputLabel>
+                  <Input
+                    type={isPasswordVisibile ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {!isPasswordVisibile ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
               </Box>
               <Button variant="contained" sx={{ marginTop: 3, width: "70%" }}>
                 Login

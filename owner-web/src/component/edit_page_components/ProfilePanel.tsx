@@ -10,27 +10,35 @@ class ProfilePanel extends React.Component<
   constructor(props: ProfilePanelProps) {
     super(props);
 
+    let defaultOwnerName = "Justin Galang";
+    let defaultRestaurantName = "Chooz: Local Food Menu";
+    let defaultDescription =
+      "We support a centralized menu for any local restaurants around your area! Download the app and look up for any local restaurants and their menu!";
+    let defaultAddress = "123 W Dodson St, Kirksvile, MO 61234";
+    let defaultPhoneNumber = "217 693 1234";
+    let defaultHours =
+      "Monday 01:00 AM - 01:00 PM\nTuesday 02:00 AM - 02:00 PM\nWednesday 03:00 AM - 03:00 PM\nThursday 04:00 AM - 04:00 PM\nFriday 05:00 AM - 05:00 PM\nSaturday 06:00 AM - 06:00 PM\nSunday Closed";
+
     this.state = {
-      ownerName: "string",
-      restaurantName: "string",
-      description: "string",
-      address: "string",
-      hours:
-        "Monday 01:00 AM - 01:00 PM\nTuesday 02:00 AM - 02:00 PM\nWednesday 03:00 AM - 03:00 PM\nThursday 04:00 AM - 04:00 PM\nFriday 05:00 AM - 05:00 PM\nSaturday 06:00 AM - 06:00 PM\nSunday Closed",
-      // "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed\n",
+      ownerName: defaultOwnerName,
+      restaurantName: defaultRestaurantName,
+      description: defaultDescription,
+      address: defaultAddress,
+      phoneNumber: defaultPhoneNumber,
+      hours: defaultHours,
       //
-      newOwnerName: "string",
-      newRestaurantName: "string",
-      newDescription: "string",
-      newAddress: "string",
-      newHours:
-        "Monday 01:00 AM - 01:00 PM\nTuesday 02:00 AM - 02:00 PM\nWednesday 03:00 AM - 03:00 PM\nThursday 04:00 AM - 04:00 PM\nFriday 05:00 AM - 05:00 PM\nSaturday 06:00 AM - 06:00 PM\nSunday Closed",
-      // "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed\n",
+      newOwnerName: defaultOwnerName,
+      newRestaurantName: defaultRestaurantName,
+      newDescription: defaultDescription,
+      newAddress: defaultAddress,
+      newPhoneNumber: defaultPhoneNumber,
+      newHours: defaultHours,
       //
       ownerNameValidationText: "",
       restaurantNameValidationText: "",
       descriptionValidationText: "",
       addressValidationText: "",
+      phoneNumberValidationText: "",
     };
   }
 
@@ -86,6 +94,19 @@ class ProfilePanel extends React.Component<
     }
 
     return this.state.address;
+  };
+  phoneNumberUpdate = (text?: string): string => {
+    if (text !== undefined) {
+      this.setState(() => {
+        return {
+          newPhoneNumber: text,
+        };
+      });
+
+      this.phoneNumberValidation(text);
+    }
+
+    return this.state.phoneNumber;
   };
   hoursUpdate = (text?: string): string => {
     if (text !== undefined) {
@@ -148,6 +169,18 @@ class ProfilePanel extends React.Component<
 
     return this.state.addressValidationText;
   };
+  phoneNumberValidation = (text: string): string => {
+    if (text !== undefined) {
+      this.setState(() => {
+        return {
+          phoneNumberValidationText:
+            text === "" ? "Phone number cannot be empty." : "",
+        };
+      });
+    }
+
+    return this.state.phoneNumberValidationText;
+  };
 
   // Finalizing function that updates the current field with the temporary variables
   onSaveClick = () => {
@@ -157,6 +190,7 @@ class ProfilePanel extends React.Component<
         restaurantName: this.state.newRestaurantName,
         description: this.state.newDescription,
         address: this.state.newAddress,
+        phoneNumber: this.state.newPhoneNumber,
         hours: this.state.newHours,
       };
     });
@@ -187,24 +221,87 @@ class ProfilePanel extends React.Component<
             >
               <Box width="30%">
                 <Typography>Owner Name: </Typography>
+              </Box>
+
+              <Box width="50%">
+                <Typography
+                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                >
+                  {this.state.ownerName}
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <Box width="30%">
                 <Typography>Restaurant Name:</Typography>
-                <Typography>Description: </Typography>
+              </Box>
+
+              <Box width="50%">
+                <Typography
+                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                >
+                  {this.state.restaurantName}
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <Box width="30%">
                 <Typography>Address: </Typography>
               </Box>
 
-              <Box width="30%">
-                <Typography>{this.state.ownerName}</Typography>
-                <Typography>{this.state.restaurantName}</Typography>
-                <Typography>{this.state.description}</Typography>
-                <Typography>{this.state.address}</Typography>
+              <Box width="50%">
+                <Typography
+                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                >
+                  {this.state.address}
+                </Typography>
               </Box>
             </Box>
 
-            <Typography variant="h6" sx={{ marginTop: 5 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <Box width="30%">
+                <Typography>Phone Number: </Typography>
+              </Box>
+
+              <Box width="50%">
+                <Typography
+                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                >
+                  {this.state.phoneNumber}
+                </Typography>
+              </Box>
+            </Box>
+
+            <Typography variant="h6" sx={{ marginTop: 3 }}>
+              Restaurant Description
+            </Typography>
+            <Divider sx={{ marginBottom: 2 }} />
+
+            <Box width="80%">
+              <Typography sx={{ textOverflow: "ellipsis", overflow: "hidden" }}>
+                {this.state.description}
+              </Typography>
+            </Box>
+
+            <Typography variant="h6" sx={{ marginTop: 3 }}>
               Operating Hours
             </Typography>
-
-            <Divider sx={{ marginTop: 1, marginBottom: 1 }} />
+            <Divider sx={{ marginBottom: 2 }} />
 
             <Box
               sx={{
@@ -236,7 +333,7 @@ class ProfilePanel extends React.Component<
                 </Typography>
               </Box>
 
-              <Box width="30%">
+              <Box width="50%">
                 <Typography>
                   {this.state.hours
                     .split("\n", 7)[0]
@@ -299,6 +396,7 @@ class ProfilePanel extends React.Component<
                 restaurantNameUpdate={this.restaurantNameUpdate}
                 descriptionUpdate={this.descriptionUpdate}
                 addressUpdate={this.addressUpdate}
+                phoneNumberUpdate={this.phoneNumberUpdate}
                 hoursUpdate={this.hoursUpdate}
                 //
                 onSaveClick={this.onSaveClick}
@@ -309,6 +407,7 @@ class ProfilePanel extends React.Component<
                 }
                 descriptionValidationText={this.state.descriptionValidationText}
                 addressValidationText={this.state.addressValidationText}
+                phoneNumberValidationText={this.state.phoneNumberValidationText}
               />
             </Box>
           </Box>

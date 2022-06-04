@@ -5,7 +5,26 @@ import LoginPage from "./pages/LoginPage";
 import MainLandingPage from "./pages/MainLandingPage";
 import MenuEditPage from "./pages/MenuEditPage";
 
-class App extends React.Component {
+interface AppProps {}
+
+interface AppState {
+  isLoggedin: boolean;
+  isPasswordVisibile: boolean;
+}
+
+class App extends React.Component<AppProps, AppState> {
+  constructor(props: AppProps) {
+    super(props);
+
+    this.state = { isLoggedin: false, isPasswordVisibile: false };
+  }
+
+  handleClickShowPassword = (event: any) => {
+    this.setState(() => {
+      return { isPasswordVisibile: !this.state.isPasswordVisibile };
+    });
+  };
+
   render() {
     return (
       <BrowserRouter>
@@ -36,10 +55,25 @@ class App extends React.Component {
 
           <Route path="/edit" element={<MenuEditPage isLoggedin={true} />} />
 
-          <Route path="/login" element={<LoginPage isLoggedin={false} />} />
+          <Route
+            path="/login"
+            element={
+              <LoginPage
+                isLoggedin={this.state.isLoggedin}
+                isPasswordVisibile={this.state.isPasswordVisibile}
+                handleClickShowPassword={this.handleClickShowPassword}
+              />
+            }
+          />
           <Route
             path="/registration"
-            element={<CreateAccountPage isLoggedin={false} />}
+            element={
+              <CreateAccountPage
+                isLoggedin={this.state.isLoggedin}
+                isPasswordVisibile={this.state.isPasswordVisibile}
+                handleClickShowPassword={this.handleClickShowPassword}
+              />
+            }
           />
         </Routes>
       </BrowserRouter>
