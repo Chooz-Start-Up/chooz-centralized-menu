@@ -63,3 +63,22 @@ export interface ItemColumnPageProps {
 }
 
 export interface ProfilePanelProps {}
+
+export interface ProfilePanelState {
+  ownerName: string;
+  restaurantName: string;
+  description: string;
+  address: string;
+  hours: string;
+  //
+  newOwnerName: string;
+  newRestaurantName: string;
+  newDescription: string;
+  newAddress: string;
+  newHours: string;
+  //
+  ownerNameValidationText: string;
+  restaurantNameValidationText: string;
+  descriptionValidationText: string;
+  addressValidationText: string;
+}

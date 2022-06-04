@@ -11,6 +11,25 @@ class App extends React.Component {
       <BrowserRouter>
         <Routes>
           <Route
+            path="/"
+            element={
+              <>
+                <p>
+                  <Link to="/preview">/preview</Link>
+                </p>
+                <p>
+                  <Link to="/edit">/edit</Link>
+                </p>
+                <p>
+                  <Link to="/login">/login</Link>
+                </p>
+                <p>
+                  <Link to="/registration">/registration</Link>
+                </p>
+              </>
+            }
+          />
+          <Route
             path="/preview/"
             element={<MainLandingPage isLoggedin={false} />}
           />

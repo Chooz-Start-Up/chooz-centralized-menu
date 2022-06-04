@@ -391,7 +391,7 @@ export class MenuColumnList extends React.Component<
     );
     return (
       <>
-        <Grid container spacing={0} bgcolor={"white"}>
+        <Grid container spacing={0} bgcolor={"white"} height="100vh">
           <Grid
             item
             xs={2}

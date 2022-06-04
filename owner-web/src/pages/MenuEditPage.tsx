@@ -58,7 +58,6 @@ class MenuEditPage extends React.Component<
               flexGrow: 1,
               bgcolor: "background.paper",
               display: "flex",
-              height: "100vh",
             }}
           >
             <Tabs
@@ -66,7 +65,10 @@ class MenuEditPage extends React.Component<
               variant="scrollable"
               value={this.state.tabIndex}
               onChange={this.handleTabPanelChange}
-              sx={{ height: 500, borderRight: 1, borderColor: "grey.300" }}
+              sx={{
+                borderRight: 1,
+                borderColor: "grey.400",
+              }}
             >
               <Tab label="Profile" {...this.tabPanelProps(0)} />
               <Tab label="Edit Menu" {...this.tabPanelProps(1)} />
@@ -75,7 +77,7 @@ class MenuEditPage extends React.Component<
               <ProfilePanel />
             </TabPanel>
             <TabPanel value={this.state.tabIndex} index={1}>
-              <Paper
+              <Box
                 sx={{
                   width: "100%",
                   bgcolor: "white",
@@ -93,10 +95,11 @@ class MenuEditPage extends React.Component<
                         display: "flex",
                         justifyContent: "space-between",
                         paddingLeft: "45%",
-                        // m: 1,
                       }}
                     >
-                      <Typography variant="h4">Resaurant</Typography>
+                      <Typography marginTop={1} variant="h4">
+                        Resaurant
+                      </Typography>
 
                       <Box
                         alignSelf="right"
@@ -116,7 +119,7 @@ class MenuEditPage extends React.Component<
 
                   <MenuColumnList />
                 </Box>
-              </Paper>
+              </Box>
             </TabPanel>
           </Box>
         </ThemeProvider>

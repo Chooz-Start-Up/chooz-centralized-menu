@@ -11,10 +11,10 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import { EditButtonWithDialogProps } from "./interface";
+import { EditMenuButtonWithDialogProps } from "./interface";
 
-const EditButtonWithDialog: React.FC<EditButtonWithDialogProps> = (
-  props: EditButtonWithDialogProps
+const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
+  props: EditMenuButtonWithDialogProps
 ) => {
   const [open, setOpen] = React.useState(false);
 
@@ -82,4 +82,4 @@ const EditButtonWithDialog: React.FC<EditButtonWithDialogProps> = (
   );
 };
 
-export default EditButtonWithDialog;
+export default EditMenuButtonWithDialog;

@@ -28,7 +28,7 @@ export interface ColumnListGeneralButtonProps {
   setSelectedColumnIndex(index?: number): any;
 }
 
-export interface EditButtonWithDialogProps {
+export interface EditMenuButtonWithDialogProps {
   title: string;
   label: string;
   textValue: string;
@@ -45,4 +45,31 @@ export interface PublishButtonProps {
 export interface AccessQRButtonProps {
   isPublished: boolean;
   onQRClick(): any;
+}
+
+export interface EditProfileButtonWithDialogProps {
+  ownerNameUpdate(text?: string): any;
+  restaurantNameUpdate(text?: string): any;
+  descriptionUpdate(text?: string): any;
+  addressUpdate(text?: string): any;
+  hoursUpdate(text?: string): any;
+
+  onSaveClick(): any;
+  // ownerNameValidationText restaurantNameValidationText descriptionValidationText addressValidationText hoursValidationText
+  ownerNameValidationText: string;
+  restaurantNameValidationText: string;
+  descriptionValidationText: string;
+  addressValidationText: string;
+}
+
+export interface DateTimeInputProps {
+  timeString: string;
+  updateTimeString(timeString: string): any;
+}
+
+export interface DateTimeInputState {
+  date: string;
+  isClosed: boolean;
+  startTime: string;
+  closeTime: string;
 }

@@ -8,7 +8,7 @@ import {
 } from "@mui/material/";
 import { ColumnListGeneralButtonProps } from "./interface";
 import DeleteButtonWithWarningDialog from "./DeleteButtonWithWarningDialog";
-import EditButtonWithDialog from "./EditButtonWithDialog";
+import EditMenuButtonWithDialog from "./EditMenuButtonWithDialog";
 
 const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
   props: ColumnListGeneralButtonProps
@@ -53,7 +53,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
 
             {setSelectedColumnIndex() === item.id && (
               <Grid item xs={2}>
-                <EditButtonWithDialog
+                <EditMenuButtonWithDialog
                   title={editDialogTitle}
                   label={editDialogLabel}
                   textValue={item.name}
