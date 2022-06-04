@@ -46,7 +46,7 @@ const TestDB = () => {
         if (snapshot.exists()) {
           snapshot.forEach(function (item) {
             let itemVal = item.val();
-            objList.push(new Restaurant(itemVal.id, itemVal.restaurantName));
+            // objList.push(new Restaurant(itemVal.id, itemVal.restaurantName));
           });
 
           setRestaurantList(objList);

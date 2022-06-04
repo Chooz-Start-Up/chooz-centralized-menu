@@ -13,7 +13,8 @@ import RestaurantListScreen from "../screens/RestaurantList";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../constants/colors";
 import { db } from "../data/database";
-import { Restaurant } from "../util/Restaurant";
+import { IRestaurant, Restaurant } from "../util/Restaurant";
+import { Menu } from "../util/Menu";
 
 const reference = ref(db, "restaurantList/");
 
@@ -27,38 +28,22 @@ Menu and Item will deal with the optional fields.
 export type RestaurantStackParamList = {
   RestaurantListScreen: undefined;
   RestaurantScreen: {
-    restaurantName: String;
-    description?: String;
-    hours?: String;
-    phone?: String;
-    address?: String;
+    restaurant: IRestaurant;
   };
-  MenuScreen: undefined;
+  MenuScreen: {
+    menus: Menu[];
+  };
   ItemScreen: {
-    itemName: String;
+    itemName: string;
     price?: Number;
-    description?: String;
-    ingredients?: String;
+    description?: string;
+    ingredients?: string;
   };
   Test: undefined;
 };
 
 const RestaurantStack = createStackNavigator<RestaurantStackParamList>();
 const RestaurantStackScreen = () => {
-  let restaurantList: Restaurant[] = [];
-  onValue(reference, (snapshot) => {
-    const raw_data = snapshot.val();
-    const data = JSON.stringify(raw_data);
-    console.log("Data as string: ");
-    console.log(data);
-
-    const ref = JSON.parse(data);
-
-    let keys = Object.keys(ref);
-    keys.forEach(function (key: any) {
-      restaurantList.push(ref[key]);
-    });
-  });
   return (
     <RestaurantStack.Navigator initialRouteName="RestaurantListScreen">
       <RestaurantStack.Screen

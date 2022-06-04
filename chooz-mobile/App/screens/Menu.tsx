@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Menu: React.FC<Props> = () => {
+const Menu: React.FC<Props> = ({ route }: Props) => {
+  const menus = route.params.menus;
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
@@ -43,10 +45,10 @@ const Menu: React.FC<Props> = () => {
   */
   let openItem = (
     screen: keyof RestaurantStackParamList,
-    itemName: String,
+    itemName: string,
     price?: Number,
-    description?: String,
-    ingredients?: String
+    description?: string,
+    ingredients?: string
   ) => {
     navigation.navigate(screen, {
       itemName: itemName,

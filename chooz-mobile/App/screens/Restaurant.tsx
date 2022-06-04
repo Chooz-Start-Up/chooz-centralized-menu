@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   ScrollView,
@@ -19,6 +19,16 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { RestaurantStackParamList } from "../config/navigation";
 import { RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors";
+import {
+  child,
+  equalTo,
+  get,
+  onValue,
+  orderByKey,
+  ref,
+} from "firebase/database";
+import { db } from "../data/database";
+import { IRestaurant } from "../util/Restaurant";
 
 type Props = NativeStackScreenProps<
   RestaurantStackParamList,
@@ -26,6 +36,7 @@ type Props = NativeStackScreenProps<
 >;
 
 const screen = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   scrollView: {
     height: screen.height,
@@ -80,11 +91,42 @@ const styles = StyleSheet.create({
   },
 });
 
-const Restaurant: React.FC<Props> = () => {
+const Restaurant: React.FC<Props> = ({ route }: Props) => {
+  const [isLoading, setLoading] = useState(true);
+
+  const dbRef = ref(db);
   const isFocused = useIsFocused();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
+
+  const restaurant = route.params.restaurant;
+  navigation.setOptions({ title: restaurant.restaurantName });
+
+  useEffect(() => {
+    console.log("IN RESTAURANT USE EFFECT: ");
+    get(child(dbRef, "restaurants/restaurant" + restaurant.id))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let data = snapshot.val();
+
+          console.log(JSON.stringify(data.ownerName));
+
+          restaurant.ownerName = data.ownerName;
+          restaurant.address = data.address;
+          restaurant.phoneNumber = data.phoneNumber;
+          restaurant.hours = data.hours;
+          restaurant.menus = data.menus;
+
+          setLoading(false);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 
   return (
     <SafeAreaView>
@@ -95,7 +137,9 @@ const Restaurant: React.FC<Props> = () => {
             style={styles.fab}
             icon="book-open"
             label="Menu"
-            onPress={() => navigation.navigate("MenuScreen")}
+            onPress={() =>
+              navigation.navigate("MenuScreen", { menus: restaurant.menus })
+            }
           />
         </Portal>
       )}
@@ -105,32 +149,22 @@ const Restaurant: React.FC<Props> = () => {
       >
         <View style={styles.pictureView}></View>
         <View style={styles.descriptionView}>
-          <Text style={styles.descriptionText}>
-            This restaurant is very good and has a lot of amazing things to eat.
-            We cook all kinds of meals and it is pretty cheap.
-          </Text>
+          <Text style={styles.descriptionText}>{restaurant.description}</Text>
         </View>
         <RowSeparator />
         <View style={styles.hoursView}>
           <Text style={styles.headerText}>Hours</Text>
-          <Text style={styles.bodyText}>
-            Monday: 7:00am - 7:00pm {"\n"}Tuesday: 7:00am - 7:00pm {"\n"}
-            Wednesday: 7:00am - 7:00pm {"\n"}Thursday: closed {"\n"}Friday:
-            7:00am - 7:00pm {"\n"}Saturday: 7:00am - 7:00pm {"\n"}Sunday: 7:00am
-            - 7:00pm
-          </Text>
+          <Text style={styles.bodyText}>{restaurant.hours}</Text>
         </View>
         <RowSeparator />
         <View style={styles.phoneNumberView}>
           <Text style={styles.headerText}>Phone</Text>
-          <Text style={styles.bodyText}>(816)-739-1403</Text>
+          <Text style={styles.bodyText}>{restaurant.phoneNumber}</Text>
         </View>
         <RowSeparator />
         <View style={styles.addressView}>
           <Text style={styles.headerText}>Address</Text>
-          <Text style={styles.bodyText}>
-            914 S Wabash St, Kirksville MO, 63501
-          </Text>
+          <Text style={styles.bodyText}>{restaurant.address}</Text>
         </View>
         <RowSeparator />
       </ScrollView>

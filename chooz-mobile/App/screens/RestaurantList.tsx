@@ -22,6 +22,7 @@ type Props = NativeStackScreenProps<
 >;
 
 const screen = Dimensions.get("window");
+
 const dbRef = ref(db);
 
 const styles = StyleSheet.create({
@@ -40,7 +41,6 @@ const RestauarantList: React.FC<Props> = ({ route }: Props) => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("USE EFFECT");
     get(child(dbRef, "restaurantList"))
       .then((snapshot) => {
         let objList: Restaurant[] = [];
@@ -77,23 +77,23 @@ const RestauarantList: React.FC<Props> = ({ route }: Props) => {
       {!isLoading && (
         <ScrollView style={styles.scrollView}>
           <List.Section style={styles.listSection}>
-            {restaurantList?.map(({ id, restaurantName, description }) => {
+            {restaurantList?.map((restaurant) => {
               return (
-                <>
+                <View key={"THIS IS A TEMPORARY KEY"}>
                   <List.Item
-                    key={id}
-                    title={restaurantName}
-                    description={description}
+                    key={restaurant.id}
+                    title={restaurant.restaurantName}
+                    description={restaurant.description}
                     left={(props: any) => <List.Icon {...props} icon="book" />}
                     right={(props: any) => <List.Icon {...props} icon="" />}
                     onPress={() =>
                       navigation.navigate("RestaurantScreen", {
-                        restaurantName: "Restaurant Name",
+                        restaurant: restaurant,
                       })
                     }
                   />
-                  <RowSeparator key={10} />
-                </>
+                  <RowSeparator key={"THIS IS ALSO A TEMPORARY KEY"} />
+                </View>
               );
             })}
           </List.Section>
