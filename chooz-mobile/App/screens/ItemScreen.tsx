@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
 
 type Props = NativeStackScreenProps<RestaurantStackParamList, "ItemScreen">;
 
-const Item = ({ route }: Props) => {
-  let itemName = route.params.itemName;
-  let price = route.params.price;
-  let description = route.params.description;
-  let ingredients = route.params.ingredients;
+const ItemScreen = ({ route }: Props) => {
+  let itemName = route.params.item.itemName;
+  let price = route.params.item.price;
+  let description = route.params.item.description;
+  let ingredients = route.params.item.ingredients;
 
   return (
     <View style={styles.container}>
@@ -103,4 +103,4 @@ const Item = ({ route }: Props) => {
   );
 };
 
-export default Item;
+export default ItemScreen;

@@ -19,6 +19,8 @@ import { RowItem, RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors.js";
 import { RestaurantStackParamList } from "../config/navigation";
 import HorizontalList from "../components/HorizontalList";
+import { IMenu, Menu } from "../util/Menu";
+import { Item } from "../util/Item";
 
 type Props = NativeStackScreenProps<RestaurantStackParamList, "MenuScreen">;
 
@@ -30,41 +32,57 @@ const styles = StyleSheet.create({
   },
 });
 
-const Menu: React.FC<Props> = ({ route }: Props) => {
+const MenuScreen: React.FC<Props> = ({ route }: Props) => {
   const menus = route.params.menus;
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
+  const [menu, setMenu] = React.useState<Menu>();
+  const changeMenu = ({ menu }: { menu: Menu }) => {
+    setMenu(menu);
+  };
+
   const [expanded, setExpanded] = React.useState(true);
   const handlePress = () => setExpanded(!expanded);
-
   /*
   DEVELOPER NOTE 05/27:
   openItem() will accept an Item object
   */
-  let openItem = (
-    screen: keyof RestaurantStackParamList,
-    itemName: string,
-    price?: Number,
-    description?: string,
-    ingredients?: string
-  ) => {
-    navigation.navigate(screen, {
-      itemName: itemName,
-      price: price,
-      description: description,
-      ingredients: ingredients,
-    });
+  let openItem = (screen: keyof RestaurantStackParamList, item: Item) => {
+    navigation.navigate(screen, { item });
   };
 
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
-      <HorizontalList />
+      <HorizontalList menus={menus} setMenu={changeMenu} />
       <ScrollView style={styles.scrollView}>
         <List.Section>
-          <List.Accordion
+          {menu?.categories!.map((category) => {
+            console.log(menu?.categories);
+            //Probably will have category error
+            return (
+              <List.Accordion
+                title={category.categoryName}
+                expanded={expanded}
+                onPress={handlePress}
+              >
+                {category.items!.map((item) => {
+                  return (
+                    <List.Item
+                      title={item.itemName}
+                      onPress={() => {
+                        openItem("ItemScreen", item);
+                      }}
+                    />
+                  );
+                })}
+              </List.Accordion>
+            );
+          })}
+
+          {/* <List.Accordion
             title="Appetizers"
             expanded={expanded}
             onPress={handlePress}
@@ -119,11 +137,11 @@ const Menu: React.FC<Props> = ({ route }: Props) => {
               description={"this is a test description."}
             />
             <RowSeparator />
-          </List.Accordion>
+          </List.Accordion> */}
         </List.Section>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default Menu;
+export default MenuScreen;

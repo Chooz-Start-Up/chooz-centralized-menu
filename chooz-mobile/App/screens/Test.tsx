@@ -16,8 +16,8 @@ import { IRestaurant, Restaurant } from "../util/Restaurant";
 import { db } from "../data/database";
 import { getRestaurantList } from "../util/RestaurantApi";
 import { SafeAreaView } from "react-native-safe-area-context";
-import RestauarantList from "./RestaurantList";
-import Item from "./Item";
+import RestauarantListScreen from "./RestaurantListScreen";
+import ItemScreen from "./ItemScreen";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-kfMual2cl0xa7JMtW4WAZkEXr7l2iVo",

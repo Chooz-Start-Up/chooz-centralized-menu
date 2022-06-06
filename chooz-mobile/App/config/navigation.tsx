@@ -5,16 +5,17 @@ import { Entypo } from "@expo/vector-icons";
 import { Platform } from "react-native";
 import { ref, onValue } from "firebase/database";
 
-import MenuScreen from "../screens/Menu";
-import ItemScreen from "../screens/Item";
+import MenuScreen from "../screens/MenuScreen";
+import ItemScreen from "../screens/ItemScreen";
 import TestScreen from "../screens/Test";
-import RestaurantScreen from "../screens/Restaurant";
-import RestaurantListScreen from "../screens/RestaurantList";
+import RestaurantScreen from "../screens/RestaurantScreen";
+import RestaurantListScreen from "../screens/RestaurantListScreen";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../constants/colors";
 import { db } from "../data/database";
 import { IRestaurant, Restaurant } from "../util/Restaurant";
 import { Menu } from "../util/Menu";
+import { Item } from "../util/Item";
 
 const reference = ref(db, "restaurantList/");
 
@@ -28,16 +29,13 @@ Menu and Item will deal with the optional fields.
 export type RestaurantStackParamList = {
   RestaurantListScreen: undefined;
   RestaurantScreen: {
-    restaurant: IRestaurant;
+    restaurant: Restaurant;
   };
   MenuScreen: {
     menus: Menu[];
   };
   ItemScreen: {
-    itemName: string;
-    price?: Number;
-    description?: string;
-    ingredients?: string;
+    item: Item;
   };
   Test: undefined;
 };

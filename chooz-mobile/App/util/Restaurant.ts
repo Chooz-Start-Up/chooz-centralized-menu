@@ -1,3 +1,4 @@
+import { HighlightSpanKind } from "typescript";
 import { Menu } from "./Menu";
 
 export interface IRestaurant {
@@ -19,16 +20,12 @@ export class Restaurant implements IRestaurant {
   private _ownerName?: string;
   private _address?: string;
   private _hours?: string;
-  private _menuBundle?: Menu[] | undefined;
+  private _menus?: Menu[] | undefined;
 
   constructor(id: string, restaurantName: string, description: string) {
     this._id = id;
     this._restaurantName = restaurantName;
     this._description = description;
-    this._phoneNumber = undefined;
-    this._ownerName = undefined;
-    this._address = undefined;
-    this._hours = undefined;
   }
 
   public get id() {
@@ -81,9 +78,36 @@ export class Restaurant implements IRestaurant {
   }
 
   public get menus(): Menu[] {
-    return this._menuBundle!;
+    return this._menus!;
   }
   public set menus(value: Menu[]) {
-    this._menuBundle = value;
+    this._menus = value;
+  }
+
+  public setDetails(jsonStringObject: any) {
+    let obj = JSON.parse(jsonStringObject);
+
+    this._phoneNumber = obj.phoneNumber;
+    this._ownerName = obj.ownerName;
+    this._address = obj.address;
+    this._hours = obj.hours;
+    this._menus = this.parseMenus(obj.menus);
+  }
+
+  private parseMenus(obj: any): Menu[] {
+    let menus: Menu[] = [];
+
+    let keys = Object.keys(obj);
+    keys.forEach(function (key: any) {
+      let title = obj[key].title;
+      console.log("BEFORE PUSH");
+      //console.log(obj[key].categories);
+      menus.push(
+        new Menu(title, undefined, JSON.stringify(obj[key].categories))
+      );
+      console.log("AFTER PUSH");
+    });
+
+    return menus;
   }
 }

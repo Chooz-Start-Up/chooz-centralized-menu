@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
   listSection: {},
 });
 
-const RestauarantList: React.FC<Props> = ({ route }: Props) => {
+const RestauarantListScreen: React.FC<Props> = ({ route }: Props) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
-  const [restaurantList, setRestaurantList] = useState<Array<IRestaurant>>();
+  const [restaurantList, setRestaurantList] = useState<Array<Restaurant>>();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const RestauarantList: React.FC<Props> = ({ route }: Props) => {
   return (
     <>
       {isLoading && (
-        <View style={{ justifyContent: "center" }}>
+        <View style={{ justifyContent: "center", backgroundColor: "#A90011" }}>
           <Text style={{ fontSize: 50 }}>LOADING</Text>
         </View>
       )}
@@ -79,7 +79,7 @@ const RestauarantList: React.FC<Props> = ({ route }: Props) => {
           <List.Section style={styles.listSection}>
             {restaurantList?.map((restaurant) => {
               return (
-                <View key={"THIS IS A TEMPORARY KEY"}>
+                <View key={restaurant.id + "ViewKey"}>
                   <List.Item
                     key={restaurant.id}
                     title={restaurant.restaurantName}
@@ -92,7 +92,7 @@ const RestauarantList: React.FC<Props> = ({ route }: Props) => {
                       })
                     }
                   />
-                  <RowSeparator key={"THIS IS ALSO A TEMPORARY KEY"} />
+                  <RowSeparator key={restaurant.id + "key"} />
                 </View>
               );
             })}
@@ -116,4 +116,4 @@ const RestauarantList: React.FC<Props> = ({ route }: Props) => {
   }
 /> */
 }
-export default RestauarantList;
+export default RestauarantListScreen;

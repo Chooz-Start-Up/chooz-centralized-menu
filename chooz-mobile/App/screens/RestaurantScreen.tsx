@@ -29,6 +29,9 @@ import {
 } from "firebase/database";
 import { db } from "../data/database";
 import { IRestaurant } from "../util/Restaurant";
+import { Menu } from "../util/Menu";
+import { Category } from "../util/Category";
+import { Item } from "../util/Item";
 
 type Props = NativeStackScreenProps<
   RestaurantStackParamList,
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Restaurant: React.FC<Props> = ({ route }: Props) => {
+const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
   const [isLoading, setLoading] = useState(true);
 
   const dbRef = ref(db);
@@ -101,22 +104,54 @@ const Restaurant: React.FC<Props> = ({ route }: Props) => {
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
   const restaurant = route.params.restaurant;
-  navigation.setOptions({ title: restaurant.restaurantName });
 
   useEffect(() => {
-    console.log("IN RESTAURANT USE EFFECT: ");
+    navigation.setOptions({ title: restaurant.restaurantName });
     get(child(dbRef, "restaurants/restaurant" + restaurant.id))
       .then((snapshot) => {
+        let menuList: Menu[] = [];
         if (snapshot.exists()) {
           let data = snapshot.val();
 
-          console.log(JSON.stringify(data.ownerName));
+          restaurant.setDetails(JSON.stringify(data));
 
-          restaurant.ownerName = data.ownerName;
-          restaurant.address = data.address;
-          restaurant.phoneNumber = data.phoneNumber;
-          restaurant.hours = data.hours;
-          restaurant.menus = data.menus;
+          // //Construct Items
+          // let menuKeys = Object.keys(data.menus);
+          // menuKeys.forEach(function (menuKey: any) {
+          //   let menu = data.menus[menuKey];
+          //   let title = menu.title;
+
+          //   //SET CATEGORIES
+          //   let categories: Category[] = [];
+          //   let categoryKeys = Object.keys(menu.categories);
+          //   categoryKeys.forEach(function (categoryKey: any) {
+          //     let category = menu.categories[categoryKey];
+          //     let categoryName = category.title;
+
+          //     //SET ITEMS
+          //     let items: Item[] = [];
+          //     if (category.Items !== undefined) {
+          //       let itemKeys = Object.keys(category.Items);
+          //       itemKeys.forEach(function (itemKey: any) {
+          //         let item = category.Items[itemKey];
+          //         let itemName = item.title;
+          //         let price = item.price;
+          //         let description = item.description;
+          //         let ingredients = item.ingredients;
+
+          //         items.push(
+          //           new Item(itemName, price, description, ingredients)
+          //         );
+          //       });
+          //     }
+
+          //     categories.push(new Category(categoryName, items));
+          //   });
+
+          //   menuList.push(new Menu(title, categories));
+          // });
+
+          // restaurant.menus = menuList;
 
           setLoading(false);
         } else {
@@ -126,7 +161,7 @@ const Restaurant: React.FC<Props> = ({ route }: Props) => {
       .catch((error) => {
         console.error(error);
       });
-  });
+  }, []);
 
   return (
     <SafeAreaView>
@@ -172,4 +207,4 @@ const Restaurant: React.FC<Props> = ({ route }: Props) => {
   );
 };
 
-export default Restaurant;
+export default RestaurantScreen;
