@@ -5,13 +5,11 @@ export class Category {
   private _items: Item[] | undefined;
 
   constructor(categoryName: string, items?: Item[], jsonStringObject?: string) {
-    console.log("CATEGORY CONSTRUCTOR");
     this._categoryName = categoryName;
 
     if (jsonStringObject !== undefined) {
       this.items = this.parseItems(jsonStringObject);
     } else {
-      console.log("IF STATEMENT");
       this._items = items;
     }
   }
@@ -29,14 +27,12 @@ export class Category {
   }
 
   private parseItems(jsonStringObject: string): Item[] {
-    console.log("PARSE ITEMS");
     let obj = JSON.parse(jsonStringObject);
 
     let items: Item[] = [];
 
     let keys = Object.keys(obj);
     keys.forEach(function (key: any) {
-      console.log(obj[key]);
       items.push(
         new Item(
           undefined,
@@ -46,7 +42,6 @@ export class Category {
           JSON.stringify(obj[key])
         )
       );
-      console.log("ITEM PUSHED");
     });
 
     return items;

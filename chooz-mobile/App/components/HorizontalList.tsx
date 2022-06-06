@@ -1,19 +1,8 @@
-import React from "react";
-import {
-  FlatList,
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-  Platform,
-} from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, Platform } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { List } from "react-native-paper";
 import colors from "../constants/colors";
 import { Menu } from "../util/Menu";
-import PropTypes from "prop-types";
-
-const screen = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -40,37 +29,39 @@ const styles = StyleSheet.create({
   },
 });
 
+type Props = {
+  menus: Menu[];
+  changeMenuIndex: Function;
+};
+
 const ColumnSeparator = () => <View style={styles.columnSeparator} />;
 
-const HorizontalList = ({
-  menus,
-  setMenu,
-}: {
-  menus: Menu[];
-  setMenu: Function;
-}) => {
-  console.log("TEST");
-  console.log("FINAL: " + menus[0].categories![0].items![0].itemName);
+const HorizontalList: React.FC<Props> = ({ menus, changeMenuIndex }: Props) => {
+  const [selected, setSelected] = useState();
+
   return (
     <ScrollView
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       style={styles.scrollView}
     >
-      {menus.map((menu) => {
+      {menus.map((menu, i) => {
         return (
-          <>
+          <View key={menu.menuName + "View"}>
             <TouchableOpacity
               key={menu.menuName + "ViewKey"}
               style={styles.listItem}
-              onPress={setMenu(menu)}
+              onPress={() => {
+                console.log("INDEX: " + i);
+                changeMenuIndex(i);
+              }}
             >
               <Text key={menu.menuName + "TextKey"} style={styles.listItemText}>
                 {menu.menuName}
               </Text>
             </TouchableOpacity>
-            <ColumnSeparator />
-          </>
+            <ColumnSeparator key={menu.menuName + "Column"} />
+          </View>
         );
       })}
     </ScrollView>

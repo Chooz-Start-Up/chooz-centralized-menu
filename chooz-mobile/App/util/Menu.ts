@@ -14,15 +14,11 @@ export class Menu implements IMenu {
     categories?: Category[],
     jsonStringObject?: string
   ) {
-    console.log("MENU CONSTRUCTOR");
-    console.log(jsonStringObject);
     this._menuName = menuName;
 
     if (jsonStringObject !== undefined) {
-      console.log("FUNCTION CALL");
       this.categories = this.parseCategories(jsonStringObject!);
     } else {
-      console.log("JSON UNDEFINED");
       this._categories = categories;
     }
   }
@@ -42,7 +38,6 @@ export class Menu implements IMenu {
   }
 
   private parseCategories(jsonStringObject: string): Category[] {
-    console.log("PARSE CATEGORIES");
     let obj = JSON.parse(jsonStringObject);
 
     let categories: Category[] = [];
@@ -53,7 +48,6 @@ export class Menu implements IMenu {
       categories.push(
         new Category(categoryName, undefined, JSON.stringify(obj[key].Items))
       );
-      console.log("PUSHED");
     });
 
     return categories;

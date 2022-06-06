@@ -11,7 +11,6 @@ export class Item {
     ingredients?: string,
     jsonStringObject?: string
   ) {
-    console.log("ITEM CONSTRUCTOR");
     if (jsonStringObject === undefined) {
       this._itemName = itemName;
       this._price = price;
@@ -51,14 +50,7 @@ export class Item {
   }
 
   private parseItem(jsonStringObject: string) {
-    console.log("PARSER");
     let obj = JSON.parse(jsonStringObject);
-
-    let keys = Object.keys(obj);
-    console.log(keys);
-    keys.forEach(function (key: any) {
-      console.log(obj[key]);
-    });
 
     this._itemName = obj["title"];
     this._price = obj.price;

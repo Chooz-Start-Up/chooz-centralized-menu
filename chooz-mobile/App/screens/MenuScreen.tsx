@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   Dimensions,
+  View,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import {
@@ -34,21 +35,24 @@ const styles = StyleSheet.create({
 
 const MenuScreen: React.FC<Props> = ({ route }: Props) => {
   const menus = route.params.menus;
+  const restaurantName = route.params.restaurantName;
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
-  const [menu, setMenu] = React.useState<Menu>();
-  const changeMenu = ({ menu }: { menu: Menu }) => {
-    setMenu(menu);
+  const [menuIndex, setMenuIndex] = React.useState(0);
+  const changeMenuIndex = (menuIndex: number) => {
+    setMenuIndex(menuIndex);
   };
+
+  useEffect(() => {
+    navigation.setOptions({ title: restaurantName });
+    setMenuIndex(menuIndex);
+  }, [menuIndex]);
 
   const [expanded, setExpanded] = React.useState(true);
   const handlePress = () => setExpanded(!expanded);
-  /*
-  DEVELOPER NOTE 05/27:
-  openItem() will accept an Item object
-  */
+
   let openItem = (screen: keyof RestaurantStackParamList, item: Item) => {
     navigation.navigate(screen, { item });
   };
@@ -56,88 +60,34 @@ const MenuScreen: React.FC<Props> = ({ route }: Props) => {
   return (
     <SafeAreaView>
       <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
-      <HorizontalList menus={menus} setMenu={changeMenu} />
+      <HorizontalList menus={menus} changeMenuIndex={changeMenuIndex} />
       <ScrollView style={styles.scrollView}>
         <List.Section>
-          {menu?.categories!.map((category) => {
-            console.log(menu?.categories);
-            //Probably will have category error
+          {menus[menuIndex]?.categories!.map((category) => {
             return (
               <List.Accordion
+                key={category.categoryName + "ACCORDIAN"}
                 title={category.categoryName}
                 expanded={expanded}
                 onPress={handlePress}
               >
-                {category.items!.map((item) => {
+                {category.items?.map((item) => {
                   return (
-                    <List.Item
-                      title={item.itemName}
-                      onPress={() => {
-                        openItem("ItemScreen", item);
-                      }}
-                    />
+                    <View key={item.itemName + "VIEW"}>
+                      <List.Item
+                        key={item.itemName + "ITEM"}
+                        title={item.itemName}
+                        onPress={() => {
+                          openItem("ItemScreen", item);
+                        }}
+                      />
+                      <RowSeparator key={item.itemName + "SEPERATOR"} />
+                    </View>
                   );
                 })}
               </List.Accordion>
             );
           })}
-
-          {/* <List.Accordion
-            title="Appetizers"
-            expanded={expanded}
-            onPress={handlePress}
-          >
-            <List.Item
-              title="Item 1"
-              onPress={() => {
-                openItem(
-                  "ItemScreen",
-                  "Item 1",
-                  14.99,
-                  "Item One is a lovely sorbet made from the tears of sad small children",
-                  "Honey, Vanilla, Tears"
-                );
-              }}
-              right={() => <Text>$0.00</Text>}
-              description={"this is a test description."}
-            />
-            <RowSeparator />
-            <List.Item
-              title="Item 2"
-              onPress={() => {
-                openItem("ItemScreen", "Item 2");
-                console.log("Themes Pushed");
-              }}
-              right={() => <Text>$0.00</Text>}
-              description={"this is a test description."}
-            />
-          </List.Accordion>
-          <List.Accordion
-            title="Entrees"
-            expanded={expanded}
-            onPress={handlePress}
-          >
-            <List.Item
-              title="Item 3"
-              onPress={() => {
-                openItem("ItemScreen", "Item 3");
-                console.log("Themes Pushed");
-              }}
-              right={() => <Text>$0.00</Text>}
-              description={"this is a test description."}
-            />
-            <RowSeparator />
-            <List.Item
-              title="Item 4"
-              onPress={() => {
-                openItem("ItemScreen", "Item 4", undefined, "Test Description");
-                console.log("Themes Pushed");
-              }}
-              right={() => <Text>$0.00</Text>}
-              description={"this is a test description."}
-            />
-            <RowSeparator />
-          </List.Accordion> */}
         </List.Section>
       </ScrollView>
     </SafeAreaView>

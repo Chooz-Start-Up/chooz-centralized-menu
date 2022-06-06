@@ -100,12 +100,9 @@ export class Restaurant implements IRestaurant {
     let keys = Object.keys(obj);
     keys.forEach(function (key: any) {
       let title = obj[key].title;
-      console.log("BEFORE PUSH");
-      //console.log(obj[key].categories);
       menus.push(
         new Menu(title, undefined, JSON.stringify(obj[key].categories))
       );
-      console.log("AFTER PUSH");
     });
 
     return menus;

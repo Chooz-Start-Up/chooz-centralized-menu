@@ -32,6 +32,7 @@ export type RestaurantStackParamList = {
     restaurant: Restaurant;
   };
   MenuScreen: {
+    restaurantName: string;
     menus: Menu[];
   };
   ItemScreen: {

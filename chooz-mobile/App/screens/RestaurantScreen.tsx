@@ -109,50 +109,9 @@ const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
     navigation.setOptions({ title: restaurant.restaurantName });
     get(child(dbRef, "restaurants/restaurant" + restaurant.id))
       .then((snapshot) => {
-        let menuList: Menu[] = [];
         if (snapshot.exists()) {
           let data = snapshot.val();
-
           restaurant.setDetails(JSON.stringify(data));
-
-          // //Construct Items
-          // let menuKeys = Object.keys(data.menus);
-          // menuKeys.forEach(function (menuKey: any) {
-          //   let menu = data.menus[menuKey];
-          //   let title = menu.title;
-
-          //   //SET CATEGORIES
-          //   let categories: Category[] = [];
-          //   let categoryKeys = Object.keys(menu.categories);
-          //   categoryKeys.forEach(function (categoryKey: any) {
-          //     let category = menu.categories[categoryKey];
-          //     let categoryName = category.title;
-
-          //     //SET ITEMS
-          //     let items: Item[] = [];
-          //     if (category.Items !== undefined) {
-          //       let itemKeys = Object.keys(category.Items);
-          //       itemKeys.forEach(function (itemKey: any) {
-          //         let item = category.Items[itemKey];
-          //         let itemName = item.title;
-          //         let price = item.price;
-          //         let description = item.description;
-          //         let ingredients = item.ingredients;
-
-          //         items.push(
-          //           new Item(itemName, price, description, ingredients)
-          //         );
-          //       });
-          //     }
-
-          //     categories.push(new Category(categoryName, items));
-          //   });
-
-          //   menuList.push(new Menu(title, categories));
-          // });
-
-          // restaurant.menus = menuList;
-
           setLoading(false);
         } else {
           console.log("No data available");
@@ -173,7 +132,10 @@ const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
             icon="book-open"
             label="Menu"
             onPress={() =>
-              navigation.navigate("MenuScreen", { menus: restaurant.menus })
+              navigation.navigate("MenuScreen", {
+                restaurantName: restaurant.restaurantName,
+                menus: restaurant.menus,
+              })
             }
           />
         </Portal>
