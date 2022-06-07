@@ -22,6 +22,7 @@ import { RestaurantStackParamList } from "../config/navigation";
 import HorizontalList from "../components/HorizontalList";
 import { IMenu, Menu } from "../util/Menu";
 import { Item } from "../util/Item";
+import CustomAccordion from "../components/CustomAccordion";
 
 type Props = NativeStackScreenProps<RestaurantStackParamList, "MenuScreen">;
 
@@ -29,7 +30,12 @@ const screen = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   scrollView: {
-    height: screen.height,
+    height: screen.height * 0.855,
+    // flex: 2,
+  },
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: colors.white,
   },
 });
 
@@ -50,42 +56,27 @@ const MenuScreen: React.FC<Props> = ({ route }: Props) => {
     setMenuIndex(menuIndex);
   }, [menuIndex]);
 
-  const [expanded, setExpanded] = React.useState(true);
-  const handlePress = () => setExpanded(!expanded);
-
   let openItem = (screen: keyof RestaurantStackParamList, item: Item) => {
     navigation.navigate(screen, { item });
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaView}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
-      <HorizontalList menus={menus} changeMenuIndex={changeMenuIndex} />
+      <HorizontalList
+        menus={menus}
+        currentMenuIndex={menuIndex}
+        changeMenuIndex={changeMenuIndex}
+      />
       <ScrollView style={styles.scrollView}>
         <List.Section>
           {menus[menuIndex]?.categories!.map((category) => {
             return (
-              <List.Accordion
-                key={category.categoryName + "ACCORDIAN"}
-                title={category.categoryName}
-                expanded={expanded}
-                onPress={handlePress}
-              >
-                {category.items?.map((item) => {
-                  return (
-                    <View key={item.itemName + "VIEW"}>
-                      <List.Item
-                        key={item.itemName + "ITEM"}
-                        title={item.itemName}
-                        onPress={() => {
-                          openItem("ItemScreen", item);
-                        }}
-                      />
-                      <RowSeparator key={item.itemName + "SEPERATOR"} />
-                    </View>
-                  );
-                })}
-              </List.Accordion>
+              <CustomAccordion
+                key={category.categoryName}
+                category={category}
+                navigate={openItem}
+              />
             );
           })}
         </List.Section>
