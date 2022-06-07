@@ -47,12 +47,10 @@ class MenuEditPage extends React.Component<
   };
 
   render() {
-    const { isLoggedin } = this.props;
-
     return (
       <>
         <ThemeProvider theme={choozTheme}>
-          <ChoozAppBar isLoggedin={isLoggedin} />
+          <ChoozAppBar />
           <Box
             sx={{
               flexGrow: 1,

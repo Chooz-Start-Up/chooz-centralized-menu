@@ -1,3 +1,1 @@
-export interface ChoozAppBarProps {
-  isLoggedin: boolean;
-}
+export interface ChoozAppBarProps {}

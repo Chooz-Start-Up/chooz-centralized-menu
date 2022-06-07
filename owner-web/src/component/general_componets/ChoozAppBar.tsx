@@ -6,13 +6,12 @@ import Button from "@mui/material/Button";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Grid } from "@mui/material";
 import { ChoozAppBarProps } from "./interface";
+import { getAuth, signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const ChoozAppBar: React.FC<ChoozAppBarProps> = (props: ChoozAppBarProps) => {
-  const { isLoggedin } = props;
-
-  const handleLogin = () => {};
-
-  const handleLogout = () => {};
+  const auth = getAuth();
+  const [user, loading, error] = useAuthState(auth);
 
   return (
     <AppBar position="static">
@@ -39,16 +38,20 @@ const ChoozAppBar: React.FC<ChoozAppBarProps> = (props: ChoozAppBarProps) => {
             </Typography>
           </Grid>
 
-          {!isLoggedin && (
+          {!loading && !user && (
             <Grid container paddingRight={3} justifyContent="flex-end">
-              <Button href="/login/" onClick={handleLogin} sx={{ p: 0 }}>
+              <Button href="/login/">
                 <Typography color="white">Login</Typography>
               </Button>
             </Grid>
           )}
-          {isLoggedin && (
+          {!loading && user && (
             <Grid container paddingRight={3} justifyContent="flex-end">
-              <Button href="/preview/" onClick={handleLogout} sx={{ p: 0 }}>
+              <Button
+                href="/preview/"
+                onClick={() => signOut(auth)}
+                sx={{ p: 0 }}
+              >
                 <Typography color="white">Logout</Typography>
               </Button>
             </Grid>
