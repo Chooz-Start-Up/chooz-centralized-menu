@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { db } from "./firebaseAuthentication";
+import { auth, db } from "./firebaseAuthentication";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export interface IAuthRouteProps {
@@ -12,7 +12,6 @@ export interface IAuthRouteProps {
 const AuthRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
   const [name, setName] = useState("");
   const { children } = props;
-  const auth = getAuth();
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
 
@@ -44,6 +43,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/login");
+    else if (!user.emailVerified) return navigate("/verifyemail");
     // fetchUserName();
   }, [user, loading]);
 

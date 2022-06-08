@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  sendEmailVerification,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -16,6 +17,7 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+import { Navigate, useNavigate } from "react-router-dom";
 import { firebaseConfig } from "../config/config";
 
 const app = initializeApp(firebaseConfig);
@@ -23,7 +25,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-const signInWithGoogle = async () => {
+const signInWithGoogle = async (navigate: any) => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
@@ -36,6 +38,10 @@ const signInWithGoogle = async () => {
         authProvider: "google",
         email: user.email,
       });
+
+      navigate("/fillinfo");
+    } else {
+      navigate("/edit");
     }
   } catch (err: any) {
     throw err;
@@ -62,9 +68,16 @@ const registerWithEmailAndPassword = async (
       authProvider: "local",
       email,
     });
+
+    await sendEmailVerification(user);
   } catch (err: any) {
-    console.error(err);
-    alert(err.message);
+    throw err;
+  }
+};
+
+const resendEmailVerification = async () => {
+  if (auth.currentUser !== null) {
+    await sendEmailVerification(auth.currentUser);
   }
 };
 
@@ -88,6 +101,7 @@ export {
   signInWithGoogle,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
+  resendEmailVerification,
   sendPasswordReset,
   logout,
 };

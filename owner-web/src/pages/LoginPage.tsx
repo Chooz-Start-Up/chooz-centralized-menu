@@ -32,7 +32,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
   const navigate = useNavigate();
-  const auth = getAuth();
   const [user, loading, error] = useAuthState(auth);
 
   const { isPasswordVisibile, handleClickShowPassword } = props;
@@ -84,12 +83,12 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
   };
 
   const onGoogleLogIn = () => {
-    signInWithGoogle().then(
+    signInWithGoogle(navigate).then(
       () => {
-        navigate("/edit");
+        // empty on success. Navigation is done by the function
       },
       () => {
-        setErrorMessage("Unexpected error occurred");
+        setErrorMessage("Unexpected error occurred. Please try again later.");
       }
     );
   };
@@ -108,7 +107,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
           <Box
             boxShadow={5}
             width="450"
-            height="575"
+            height={errorMessage === "" ? "575" : "615"}
             bgcolor="white"
             textAlign="center"
           >
@@ -123,7 +122,10 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
             </Typography>
 
             {errorMessage !== "" && (
-              <Alert severity="error" sx={{ justifyContent: "center" }}>
+              <Alert
+                severity="error"
+                sx={{ maxHeight: 40, justifyContent: "center" }}
+              >
                 Error: {errorMessage}
               </Alert>
             )}

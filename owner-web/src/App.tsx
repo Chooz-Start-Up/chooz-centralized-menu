@@ -9,12 +9,15 @@ import {
   BrowserRouter,
   useNavigate,
 } from "react-router-dom";
+import AfterVerificationRoute from "./firebase/authentication/AfterEmailVerificationRoute";
 import AuthRoute from "./firebase/authentication/AuthRoute";
 import { firebaseConfig } from "./firebase/config/config";
 import CreateAccountPage from "./pages/CreateAccountPage";
+import FillRestaurantInfoPage from "./pages/FillRestaurantInfoPage";
 import LoginPage from "./pages/LoginPage";
 import MainLandingPage from "./pages/MainLandingPage";
 import MenuEditPage from "./pages/MenuEditPage";
+import VerifyEmailPage from "./pages/VerifyEmailPage";
 
 interface AppProps {}
 
@@ -88,6 +91,22 @@ const App: React.FC<AppProps> = (props: AppProps) => {
               isPasswordVisibile={isPasswordVisibile}
               handleClickShowPassword={handleClickShowPassword}
             />
+          }
+        />
+        <Route
+          path="/verifyemail"
+          element={
+            <AfterVerificationRoute>
+              <VerifyEmailPage />
+            </AfterVerificationRoute>
+          }
+        />
+        <Route
+          path="/fillinfo"
+          element={
+            <AuthRoute>
+              <FillRestaurantInfoPage />
+            </AuthRoute>
           }
         />
       </Routes>

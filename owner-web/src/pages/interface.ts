@@ -19,4 +19,6 @@ export interface CreateAccountPageProps {
   handleClickShowPassword(event: any): any;
 }
 
-export interface CreateAccountPageState {}
+export interface VerifyEmailPageProps {}
+
+export interface FillRestaurantInfoPageProps {}
