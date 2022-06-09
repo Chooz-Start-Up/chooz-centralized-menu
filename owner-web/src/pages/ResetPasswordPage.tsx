@@ -43,6 +43,10 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
             setErrorMessage(
               "Email does not exist. Please create an account first."
             );
+          } else {
+            setErrorMessage(
+              "Unexpected error. Please check if it is a valid account email and try again later."
+            );
           }
         }
       );
@@ -66,7 +70,10 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
         >
           <Box
             boxShadow={5}
-            sx={{ width: 425, height: 425 }}
+            sx={{
+              width: 425,
+              height: errorMessage === "" && !success ? 380 : 420,
+            }}
             bgcolor="white"
             textAlign="center"
           >
@@ -98,7 +105,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
                 sx={{
                   color: "grey.600",
                   fontSize: 18,
-                  marginTop: errorMessage === "" && !success ? 6 : 2,
+                  marginTop: errorMessage === "" && !success ? 6 : 3,
                 }}
               >
                 Please enter your account email.

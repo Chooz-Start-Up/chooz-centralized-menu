@@ -22,17 +22,14 @@ import FacebookIcon from "../component/icon_images/icons8-facebook-48.png";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import {
-  auth,
   logInWithEmailAndPassword,
   signInWithGoogle,
+  signInWithFacebook,
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
-import { getAuth } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
 
   const { isPasswordVisibile, handleClickShowPassword } = props;
 
@@ -93,6 +90,17 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
     );
   };
 
+  const onFacebookLogIn = () => {
+    signInWithFacebook(navigate).then(
+      () => {
+        setErrorMessage("");
+      },
+      () => {
+        setErrorMessage("Unexpected error occurred. Please try again later.");
+      }
+    );
+  };
+
   return (
     <>
       <ThemeProvider theme={choozTheme}>
@@ -107,7 +115,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
           <Box
             boxShadow={5}
             width="450"
-            height={errorMessage === "" ? "600" : "645"}
+            height={errorMessage === "" ? "610" : "655"}
             bgcolor="white"
             textAlign="center"
           >
@@ -188,6 +196,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
               <Typography marginLeft={1}>Continue with Google</Typography>
             </Button>
             <Button
+              onClick={onFacebookLogIn}
               variant="outlined"
               sx={{ width: "70%", fontSize: 20, marginTop: 1 }}
             >

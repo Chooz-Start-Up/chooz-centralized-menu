@@ -22,6 +22,7 @@ import FacebookIcon from "../component/icon_images/icons8-facebook-48.png";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   registerWithEmailAndPassword,
+  signInWithFacebook,
   signInWithGoogle,
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
@@ -99,6 +100,17 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
     signInWithGoogle(navigate).then(
       () => {
         // empty on success. Navigation is done by the function
+      },
+      () => {
+        setErrorMessage("Unexpected error occurred. Please try again later.");
+      }
+    );
+  };
+
+  const onFacebookLogIn = () => {
+    signInWithFacebook(navigate).then(
+      () => {
+        setErrorMessage("");
       },
       () => {
         setErrorMessage("Unexpected error occurred. Please try again later.");
@@ -218,6 +230,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
             </Button>
 
             <Button
+              onClick={onFacebookLogIn}
               variant="outlined"
               sx={{ width: "70%", fontSize: 20, marginTop: 1 }}
             >

@@ -95,7 +95,7 @@ const logout = () => {
   signOut(auth);
 };
 
-const facebookSignin = async (navigate: any) => {
+const signInWithFacebook = async (navigate: any) => {
   try {
     const res = await signInWithPopup(auth, facebookProvider);
     const user = res.user;
@@ -127,4 +127,5 @@ export {
   resendEmailVerification,
   sendPasswordReset,
   logout,
+  signInWithFacebook,
 };
