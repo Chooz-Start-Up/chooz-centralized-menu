@@ -8,6 +8,7 @@ import {
   sendPasswordResetEmail,
   signOut,
   sendEmailVerification,
+  FacebookAuthProvider,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -24,6 +25,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
 
 const signInWithGoogle = async (navigate: any) => {
   try {
@@ -84,15 +86,36 @@ const resendEmailVerification = async () => {
 const sendPasswordReset = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent!");
   } catch (err: any) {
-    console.error(err);
-    alert(err.message);
+    throw err;
   }
 };
 
 const logout = () => {
   signOut(auth);
+};
+
+const facebookSignin = async (navigate: any) => {
+  try {
+    const res = await signInWithPopup(auth, facebookProvider);
+    const user = res.user;
+    const q = query(collection(db, "users"), where("uid", "==", user.uid));
+    const docs = await getDocs(q);
+    if (docs.docs.length === 0) {
+      await addDoc(collection(db, "users"), {
+        uid: user.uid,
+        name: user.displayName,
+        authProvider: "google",
+        email: user.email,
+      });
+
+      navigate("/fillinfo");
+    } else {
+      navigate("/edit");
+    }
+  } catch (err: any) {
+    throw err;
+  }
 };
 
 export {

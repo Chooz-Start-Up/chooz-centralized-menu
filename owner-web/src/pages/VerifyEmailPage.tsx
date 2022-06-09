@@ -58,10 +58,9 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
         >
           <Box
             boxShadow={5}
-            sx={{ width: 450, height: errorMessage === "" ? 350 : 390 }}
+            sx={{ width: 450, height: errorMessage === "" ? 380 : 420 }}
             bgcolor="white"
             textAlign="center"
-            padding={2}
           >
             <AdbIcon sx={{ fontSize: 45, marginTop: "3%", color: "red" }} />
             <Typography
@@ -79,7 +78,15 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
               </Alert>
             )}
 
-            <Typography sx={{ color: "grey.600", fontSize: 18, marginTop: 3 }}>
+            <Typography
+              sx={{
+                color: "grey.600",
+                fontSize: 18,
+                marginTop: 3,
+                marginLeft: 2,
+                marginRight: 2,
+              }}
+            >
               A verification email has been sent to {auth.currentUser?.email}.
               Please check your email and come back after verifying your email
               through the link.

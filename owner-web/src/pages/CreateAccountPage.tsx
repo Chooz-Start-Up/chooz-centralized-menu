@@ -120,7 +120,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
           <Box
             boxShadow={5}
             width="450"
-            height={errorMessage === "" ? "625" : "665"}
+            height={errorMessage === "" ? "620" : "670"}
             bgcolor="white"
             textAlign="center"
           >
@@ -225,11 +225,11 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
               <Typography marginLeft={1}>Continue with Facebook</Typography>
             </Button>
 
-            <Typography sx={{ marginTop: 4 }}>
+            <Typography fontSize="medium" sx={{ marginTop: 4 }}>
               Already have an account?
             </Typography>
             <Button href="/login/">
-              <Typography>Login</Typography>
+              <Typography fontSize="medium">Login</Typography>
             </Button>
           </Box>
         </Box>

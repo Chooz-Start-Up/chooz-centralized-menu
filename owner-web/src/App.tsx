@@ -17,6 +17,7 @@ import FillRestaurantInfoPage from "./pages/FillRestaurantInfoPage";
 import LoginPage from "./pages/LoginPage";
 import MainLandingPage from "./pages/MainLandingPage";
 import MenuEditPage from "./pages/MenuEditPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 
 interface AppProps {}
@@ -26,20 +27,8 @@ export const app = initializeApp(firebaseConfig);
 const App: React.FC<AppProps> = (props: AppProps) => {
   const [isPasswordVisibile, setIsPasswordVisibile] = useState(false);
 
-  const auth = getAuth();
-  const [user, loading, error] = useAuthState(auth);
-
   const handleClickShowPassword = (event: any) => {
     setIsPasswordVisibile(!isPasswordVisibile);
-  };
-
-  const requireAuth = (nextState: any, replace: any): any => {
-    if (!user) {
-      replace({
-        pathname: "/edit",
-        state: { nextPathname: nextState.location.pathname },
-      });
-    }
   };
 
   return (
@@ -109,6 +98,7 @@ const App: React.FC<AppProps> = (props: AppProps) => {
             </AuthRoute>
           }
         />
+        <Route path="/resetpassword" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   );

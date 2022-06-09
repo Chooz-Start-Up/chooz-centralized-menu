@@ -85,7 +85,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
   const onGoogleLogIn = () => {
     signInWithGoogle(navigate).then(
       () => {
-        // empty on success. Navigation is done by the function
+        setErrorMessage("");
       },
       () => {
         setErrorMessage("Unexpected error occurred. Please try again later.");
@@ -107,7 +107,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
           <Box
             boxShadow={5}
             width="450"
-            height={errorMessage === "" ? "575" : "615"}
+            height={errorMessage === "" ? "600" : "645"}
             bgcolor="white"
             textAlign="center"
           >
@@ -156,6 +156,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
                 />
               </FormControl>
             </Box>
+
             <Button
               onClick={onEmailPasswordLogIn}
               variant="contained"
@@ -163,6 +164,11 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
             >
               Login
             </Button>
+
+            <Button href="/resetpassword/">
+              <Typography fontSize="small">Forgot your password?</Typography>
+            </Button>
+
             <Divider
               variant="middle"
               sx={{
@@ -188,11 +194,11 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
               <img src={FacebookIcon} width="10%" height="10%" />
               <Typography marginLeft={1}>Continue with Facebook</Typography>
             </Button>
-            <Typography sx={{ marginTop: 4 }}>
+            <Typography fontSize="medium" sx={{ marginTop: 4 }}>
               Don't have an account?
             </Typography>
             <Button href="/registration/">
-              <Typography>Create Account</Typography>
+              <Typography fontSize="medium">Create Account</Typography>
             </Button>
           </Box>
         </Box>

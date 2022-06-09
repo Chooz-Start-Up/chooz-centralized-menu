@@ -22,3 +22,5 @@ export interface CreateAccountPageProps {
 export interface VerifyEmailPageProps {}
 
 export interface FillRestaurantInfoPageProps {}
+
+export interface ResetPasswordPageProps {}
