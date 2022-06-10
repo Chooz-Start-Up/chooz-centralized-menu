@@ -17,8 +17,8 @@ import ChoozAppBar from "../component/general_componets/ChoozAppBar";
 import { CreateAccountPageProps } from "./interface";
 import { choozTheme } from "./theme";
 import AdbIcon from "@mui/icons-material/Adb";
-import GoogleIcon from "../component/icon_images/icons8-google-48.png";
-import FacebookIcon from "../component/icon_images/icons8-facebook-48.png";
+import GoogleIcon from "../component/images/login_icons/icons8-google-48.png";
+import FacebookIcon from "../component/images/login_icons/icons8-facebook-48.png";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   registerWithEmailAndPassword,
