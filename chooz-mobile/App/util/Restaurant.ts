@@ -1,4 +1,3 @@
-import { HighlightSpanKind } from "typescript";
 import { Menu } from "./Menu";
 
 export interface IRestaurant {
@@ -20,12 +19,26 @@ export class Restaurant implements IRestaurant {
   private _ownerName?: string;
   private _address?: string;
   private _hours?: string;
-  private _menus?: Menu[] | undefined;
+  private _menus?: Menu[];
 
-  constructor(id: string, restaurantName: string, description: string) {
+  constructor(
+    id: string = "",
+    restaurantName: string = "",
+    description: string = "",
+    phoneNumber: string = "",
+    ownerName: string = "",
+    address: string = "",
+    hours: string = "",
+    menus?: Menu[]
+  ) {
     this._id = id;
     this._restaurantName = restaurantName;
     this._description = description;
+    this._phoneNumber = phoneNumber;
+    this._ownerName = ownerName;
+    this._address = address;
+    this._hours = hours;
+    this._menus = menus;
   }
 
   public get id() {
@@ -91,20 +104,30 @@ export class Restaurant implements IRestaurant {
     this._ownerName = obj.ownerName;
     this._address = obj.address;
     this._hours = obj.hours;
-    this._menus = this.parseMenus(obj.menus);
+    this._menus = Menu.parseMenus(JSON.stringify(obj.menus));
   }
 
-  private parseMenus(obj: any): Menu[] {
-    let menus: Menu[] = [];
+  public static parseRestaurant(jsonStringObject: string): Restaurant {
+    let obj = JSON.parse(jsonStringObject);
 
-    let keys = Object.keys(obj);
-    keys.forEach(function (key: any) {
-      let title = obj[key].title;
-      menus.push(
-        new Menu(title, undefined, JSON.stringify(obj[key].categories))
-      );
-    });
+    let id = obj.id;
+    let restaurantName = obj.restaurantName;
+    let description = obj.description;
+    let phoneNumber = obj.phoneNumber;
+    let ownerName = obj.ownerName;
+    let address = obj.address;
+    let hours = obj.hours;
+    let menus = Menu.parseMenus(JSON.stringify(obj.menus));
 
-    return menus;
+    return new Restaurant(
+      id,
+      restaurantName,
+      description,
+      phoneNumber,
+      ownerName,
+      address,
+      hours,
+      menus
+    );
   }
 }

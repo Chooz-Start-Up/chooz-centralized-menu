@@ -4,14 +4,9 @@ export class Category {
   private _categoryName: string;
   private _items: Item[] | undefined;
 
-  constructor(categoryName: string, items?: Item[], jsonStringObject?: string) {
+  constructor(categoryName: string = "", items?: Item[]) {
     this._categoryName = categoryName;
-
-    if (jsonStringObject !== undefined) {
-      this.items = this.parseItems(jsonStringObject);
-    } else {
-      this._items = items;
-    }
+    this._items = items;
   }
   public get categoryName(): string {
     return this._categoryName;
@@ -26,24 +21,26 @@ export class Category {
     this._items = value;
   }
 
-  private parseItems(jsonStringObject: string): Item[] {
+  public static parseCategory(jsonStringObject: string): Category {
     let obj = JSON.parse(jsonStringObject);
 
-    let items: Item[] = [];
+    let categoryName = obj.categoryName;
+    let items = Item.parseItems(JSON.stringify(obj.items));
+
+    return new Category(categoryName, items);
+  }
+
+  public static parseCategories(jsonStringObject: string): Category[] {
+    let obj = JSON.parse(jsonStringObject);
+
+    let categories: Category[] = [];
 
     let keys = Object.keys(obj);
     keys.forEach(function (key: any) {
-      items.push(
-        new Item(
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          JSON.stringify(obj[key])
-        )
-      );
+      let category = Category.parseCategory(JSON.stringify(obj[key]));
+      categories.push(new Category(category.categoryName, category.items));
     });
 
-    return items;
+    return categories;
   }
 }

@@ -10,6 +10,8 @@ import ItemScreen from "../screens/ItemScreen";
 import TestScreen from "../screens/Test";
 import RestaurantScreen from "../screens/RestaurantScreen";
 import RestaurantListScreen from "../screens/RestaurantListScreen";
+import TestPushDataScreen from "../screens/TestPushDataScreen";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../constants/colors";
 import { db } from "../data/database";
@@ -39,11 +41,14 @@ export type RestaurantStackParamList = {
     item: Item;
   };
   Test: undefined;
+  TestPushDataScreen: undefined;
 };
 
 const RestaurantStack = createStackNavigator<RestaurantStackParamList>();
 const RestaurantStackScreen = () => {
   return (
+    //RestaurantListScreen
+    //TestPushDataScreen
     <RestaurantStack.Navigator initialRouteName="RestaurantListScreen">
       <RestaurantStack.Screen
         name="RestaurantListScreen"
@@ -100,6 +105,10 @@ const RestaurantStackScreen = () => {
           headerShown: true,
           presentation: "modal",
         }}
+      />
+      <RestaurantStack.Screen
+        name="TestPushDataScreen"
+        component={TestPushDataScreen}
       />
     </RestaurantStack.Navigator>
   );

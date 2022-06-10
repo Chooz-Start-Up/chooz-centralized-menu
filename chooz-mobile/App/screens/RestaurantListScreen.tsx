@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions, View, Text } from "react-native";
+import { StyleSheet, Dimensions, View, Text, StatusBar } from "react-native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -11,10 +11,9 @@ import { useNavigation } from "@react-navigation/native";
 
 import { RestaurantStackParamList } from "../config/navigation";
 import { RowSeparator } from "../components/RowItem";
-import { IRestaurant, Restaurant } from "../util/Restaurant";
-import { child, get, ref } from "firebase/database";
-import { db } from "../data/database";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Restaurant } from "../util/Restaurant";
+import { getRestaurantList } from "../util/RestaurantApi";
+import colors from "../constants/colors";
 
 type Props = NativeStackScreenProps<
   RestaurantStackParamList,
@@ -22,8 +21,6 @@ type Props = NativeStackScreenProps<
 >;
 
 const screen = Dimensions.get("window");
-
-const dbRef = ref(db);
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -33,7 +30,7 @@ const styles = StyleSheet.create({
   listSection: {},
 });
 
-const RestauarantListScreen: React.FC<Props> = ({ route }: Props) => {
+const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
@@ -41,30 +38,7 @@ const RestauarantListScreen: React.FC<Props> = ({ route }: Props) => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    get(child(dbRef, "restaurantList"))
-      .then((snapshot) => {
-        let objList: Restaurant[] = [];
-        if (snapshot.exists()) {
-          snapshot.forEach(function (item) {
-            let itemVal = item.val();
-            objList.push(
-              new Restaurant(
-                itemVal.id,
-                itemVal.restaurantName,
-                itemVal.description
-              )
-            );
-          });
-
-          setRestaurantList(objList);
-          setLoading(false);
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    getRestaurantList(setRestaurantList, setLoading);
   }, []);
 
   return (
@@ -76,6 +50,8 @@ const RestauarantListScreen: React.FC<Props> = ({ route }: Props) => {
       )}
       {!isLoading && (
         <ScrollView style={styles.scrollView}>
+          <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
+
           <List.Section style={styles.listSection}>
             {restaurantList?.map((restaurant) => {
               return (
@@ -103,17 +79,4 @@ const RestauarantListScreen: React.FC<Props> = ({ route }: Props) => {
   );
 };
 
-{
-  /* <List.Item
-  title={"Restaurant"}
-  description={"This is a test description"}
-  left={(props: any) => <List.Icon {...props} icon="book" />}
-  right={(props: any) => <List.Icon {...props} icon="" />}
-  onPress={() =>
-    navigation.navigate("RestaurantScreen", {
-      restaurantName: "Restaurant Name",
-    })
-  }
-/> */
-}
-export default RestauarantListScreen;
+export default RestaurantListScreen;

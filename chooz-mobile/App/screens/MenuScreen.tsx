@@ -70,10 +70,10 @@ const MenuScreen: React.FC<Props> = ({ route }: Props) => {
       />
       <ScrollView style={styles.scrollView}>
         <List.Section>
-          {menus[menuIndex]?.categories!.map((category) => {
+          {menus[menuIndex]?.categories!.map((category, i) => {
             return (
               <CustomAccordion
-                key={category.categoryName}
+                key={category.categoryName + i}
                 category={category}
                 navigate={openItem}
               />

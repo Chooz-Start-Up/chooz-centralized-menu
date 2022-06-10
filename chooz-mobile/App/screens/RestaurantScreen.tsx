@@ -19,19 +19,7 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { RestaurantStackParamList } from "../config/navigation";
 import { RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors";
-import {
-  child,
-  equalTo,
-  get,
-  onValue,
-  orderByKey,
-  ref,
-} from "firebase/database";
-import { db } from "../data/database";
-import { IRestaurant } from "../util/Restaurant";
-import { Menu } from "../util/Menu";
-import { Category } from "../util/Category";
-import { Item } from "../util/Item";
+import { getRestaurantDetails } from "../util/RestaurantApi";
 
 type Props = NativeStackScreenProps<
   RestaurantStackParamList,
@@ -96,10 +84,7 @@ const styles = StyleSheet.create({
 
 const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
   const [isLoading, setLoading] = useState(true);
-
-  const dbRef = ref(db);
   const isFocused = useIsFocused();
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
@@ -107,65 +92,59 @@ const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
 
   useEffect(() => {
     navigation.setOptions({ title: restaurant.restaurantName });
-    get(child(dbRef, "restaurants/restaurant" + restaurant.id))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          let data = snapshot.val();
-          restaurant.setDetails(JSON.stringify(data));
-          setLoading(false);
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    getRestaurantDetails(restaurant, setLoading);
   }, []);
 
   return (
-    <SafeAreaView>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
-      {isFocused && (
-        <Portal>
-          <FAB
-            style={styles.fab}
-            icon="book-open"
-            label="Menu"
-            onPress={() =>
-              navigation.navigate("MenuScreen", {
-                restaurantName: restaurant.restaurantName,
-                menus: restaurant.menus,
-              })
-            }
-          />
-        </Portal>
+    <>
+      {!isLoading && (
+        <SafeAreaView>
+          <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
+          {isFocused && (
+            <Portal>
+              <FAB
+                style={styles.fab}
+                icon="book-open"
+                label="Menu"
+                onPress={() =>
+                  navigation.navigate("MenuScreen", {
+                    restaurantName: restaurant.restaurantName,
+                    menus: restaurant.menus,
+                  })
+                }
+              />
+            </Portal>
+          )}
+          <ScrollView
+            style={styles.scrollView}
+            //contentContainerStyle={{ flexGrow: 1 }}
+          >
+            <View style={styles.pictureView}></View>
+            <View style={styles.descriptionView}>
+              <Text style={styles.descriptionText}>
+                {restaurant.description}
+              </Text>
+            </View>
+            <RowSeparator />
+            <View style={styles.hoursView}>
+              <Text style={styles.headerText}>Hours</Text>
+              <Text style={styles.bodyText}>{restaurant.hours}</Text>
+            </View>
+            <RowSeparator />
+            <View style={styles.phoneNumberView}>
+              <Text style={styles.headerText}>Phone</Text>
+              <Text style={styles.bodyText}>{restaurant.phoneNumber}</Text>
+            </View>
+            <RowSeparator />
+            <View style={styles.addressView}>
+              <Text style={styles.headerText}>Address</Text>
+              <Text style={styles.bodyText}>{restaurant.address}</Text>
+            </View>
+            <RowSeparator />
+          </ScrollView>
+        </SafeAreaView>
       )}
-      <ScrollView
-        style={styles.scrollView}
-        //contentContainerStyle={{ flexGrow: 1 }}
-      >
-        <View style={styles.pictureView}></View>
-        <View style={styles.descriptionView}>
-          <Text style={styles.descriptionText}>{restaurant.description}</Text>
-        </View>
-        <RowSeparator />
-        <View style={styles.hoursView}>
-          <Text style={styles.headerText}>Hours</Text>
-          <Text style={styles.bodyText}>{restaurant.hours}</Text>
-        </View>
-        <RowSeparator />
-        <View style={styles.phoneNumberView}>
-          <Text style={styles.headerText}>Phone</Text>
-          <Text style={styles.bodyText}>{restaurant.phoneNumber}</Text>
-        </View>
-        <RowSeparator />
-        <View style={styles.addressView}>
-          <Text style={styles.headerText}>Address</Text>
-          <Text style={styles.bodyText}>{restaurant.address}</Text>
-        </View>
-        <RowSeparator />
-      </ScrollView>
-    </SafeAreaView>
+    </>
   );
 };
 

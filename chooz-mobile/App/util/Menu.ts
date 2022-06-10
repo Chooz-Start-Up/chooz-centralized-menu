@@ -9,18 +9,9 @@ export class Menu implements IMenu {
   private _menuName: string;
   private _categories: Category[] | undefined;
 
-  constructor(
-    menuName: string,
-    categories?: Category[],
-    jsonStringObject?: string
-  ) {
+  constructor(menuName: string = "", categories?: Category[]) {
     this._menuName = menuName;
-
-    if (jsonStringObject !== undefined) {
-      this.categories = this.parseCategories(jsonStringObject!);
-    } else {
-      this._categories = categories;
-    }
+    this._categories = categories;
   }
 
   public get menuName(): string {
@@ -37,19 +28,26 @@ export class Menu implements IMenu {
     this._categories = value;
   }
 
-  private parseCategories(jsonStringObject: string): Category[] {
+  public static parseMenu(jsonStringObject: any): Menu {
     let obj = JSON.parse(jsonStringObject);
 
-    let categories: Category[] = [];
+    let menuName = obj.menuName;
+    let categories = Category.parseCategories(JSON.stringify(obj.categories));
+
+    return new Menu(menuName, categories);
+  }
+
+  public static parseMenus(jsonStringObject: any): Menu[] {
+    let obj = JSON.parse(jsonStringObject);
+
+    let menus: Menu[] = [];
 
     let keys = Object.keys(obj);
     keys.forEach(function (key: any) {
-      let categoryName = obj[key].title;
-      categories.push(
-        new Category(categoryName, undefined, JSON.stringify(obj[key].Items))
-      );
+      let menu = Menu.parseMenu(JSON.stringify(obj[key]));
+      menus.push(new Menu(menu.menuName, menu._categories));
     });
 
-    return categories;
+    return menus;
   }
 }
