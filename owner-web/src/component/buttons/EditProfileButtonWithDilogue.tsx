@@ -169,7 +169,7 @@ const EditProfileButtonWithDialog: React.FC<
       >
         <DialogTitle variant="h4" sx={{ color: "black" }}>
           Edit Profile
-          <DialogContentText id="alert-dialog-slide-description">
+          <DialogContentText color="black" id="alert-dialog-slide-description">
             All fields are required and cannot be empty
           </DialogContentText>
         </DialogTitle>

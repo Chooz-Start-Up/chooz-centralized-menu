@@ -13,7 +13,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
-import { VerifyEmailPageProps } from "./interface";
+import { FillRestaurantInfoPageProps, VerifyEmailPageProps } from "./interface";
 import { choozTheme } from "./theme";
 import AdbIcon from "@mui/icons-material/Adb";
 
@@ -23,8 +23,8 @@ import {
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
 
-const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
-  props: VerifyEmailPageProps
+const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
+  props: FillRestaurantInfoPageProps
 ) => {
   const navigate = useNavigate();
 
@@ -146,9 +146,9 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
           display="flex"
           justifyContent="center"
           alignItems="center"
-          height="850"
+          height="100vh"
           bgcolor="#ffd7db"
-          paddingTop={0.5}
+          paddingTop={6}
         >
           <Box
             boxShadow={5}
@@ -254,7 +254,10 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
         >
           <DialogTitle>Warning</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
+            <DialogContentText
+              id="alert-dialog-slide-description"
+              color="black"
+            >
               You will not be able to publish your menu if you do not fill in
               the necessary information. You will be able to fill in your
               information on the profile page.
@@ -274,4 +277,4 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
   );
 };
 
-export default VerifyEmailPage;
+export default FillRestaurantInfoPage;

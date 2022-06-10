@@ -72,7 +72,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
       >
         <DialogTitle>Are you sure you want to publish your menu?</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+          <DialogContentText color="black" id="alert-dialog-slide-description">
             A unique QR code will be generated to access your menu!
           </DialogContentText>
         </DialogContent>
@@ -90,7 +90,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
       >
         <DialogTitle>Are you sure you want to unpublish your menu?</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+          <DialogContentText color="black" id="alert-dialog-slide-description">
             Your menu will not be accessible through the QR code anymore. The QR
             code remains the same when the menu is published again.
           </DialogContentText>

@@ -8,9 +8,9 @@ import { Grid } from "@mui/material";
 import { ChoozAppBarProps } from "./interface";
 import { getAuth, signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/authentication/firebaseAuthentication";
 
 const ChoozAppBar: React.FC<ChoozAppBarProps> = (props: ChoozAppBarProps) => {
-  const auth = getAuth();
   const [user, loading, error] = useAuthState(auth);
 
   return (

@@ -105,7 +105,7 @@ const signInWithFacebook = async (navigate: any) => {
       await addDoc(collection(db, "users"), {
         uid: user.uid,
         name: user.displayName,
-        authProvider: "google",
+        authProvider: "facebook",
         email: user.email,
       });
 

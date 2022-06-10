@@ -43,7 +43,11 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/login");
-    else if (!user.emailVerified) return navigate("/verifyemail");
+    else if (
+      !user.emailVerified &&
+      user.providerData[0].providerId.indexOf("facebook.com") === -1
+    )
+      return navigate("/verifyemail");
     // fetchUserName();
   }, [user, loading]);
 

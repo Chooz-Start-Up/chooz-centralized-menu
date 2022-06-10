@@ -46,7 +46,7 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
       >
         <DialogTitle>QR Code Not Available</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+          <DialogContentText color="black" id="alert-dialog-slide-description">
             Please publish the menu first to access the QR code!
           </DialogContentText>
         </DialogContent>
@@ -66,7 +66,7 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
       >
         <DialogTitle>Scan the QR Code</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
+          <DialogContentText color="black" id="alert-dialog-slide-description">
             Use your phone to scan the QR code and access the online menu!
           </DialogContentText>
           <Grid container justifyContent="center">

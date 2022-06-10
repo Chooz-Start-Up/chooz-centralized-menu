@@ -51,8 +51,8 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
               </Typography>
             </Grid>
 
-            {setSelectedColumnIndex() === item.id && (
-              <Grid item xs={2}>
+            <Grid container justifyContent="flex-end">
+              {setSelectedColumnIndex() === item.id && (
                 <EditMenuButtonWithDialog
                   title={editDialogTitle}
                   label={editDialogLabel}
@@ -61,19 +61,17 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
                   updateText={updateText}
                   validateText={validateText}
                 />
-              </Grid>
-            )}
+              )}
 
-            {setSelectedColumnIndex() === item.id && (
-              <Grid item xs={1.5}>
+              {setSelectedColumnIndex() === item.id && (
                 <DeleteButtonWithWarningDialog
                   title={deleteDialogTitle}
                   label={deleteDialogLabel}
                   deleteAction={handleDeleteClick}
                   id={item.id}
                 />
-              </Grid>
-            )}
+              )}
+            </Grid>
           </ListItemButton>
         </ListItem>
       ))}

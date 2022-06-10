@@ -25,6 +25,7 @@ import {
   logInWithEmailAndPassword,
   signInWithGoogle,
   signInWithFacebook,
+  auth,
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
 
@@ -96,7 +97,9 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
         setErrorMessage("");
       },
       () => {
-        setErrorMessage("Unexpected error occurred. Please try again later.");
+        setErrorMessage(
+          "Please make sure your Facebook account has your email information and then try again later."
+        );
       }
     );
   };
@@ -115,7 +118,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
           <Box
             boxShadow={5}
             width="450"
-            height={errorMessage === "" ? "610" : "655"}
+            height={errorMessage === "" ? "620" : "680"}
             bgcolor="white"
             textAlign="center"
           >
@@ -132,7 +135,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
             {errorMessage !== "" && (
               <Alert
                 severity="error"
-                sx={{ maxHeight: 40, justifyContent: "center" }}
+                sx={{ maxHeight: 60, justifyContent: "center" }}
               >
                 Error: {errorMessage}
               </Alert>

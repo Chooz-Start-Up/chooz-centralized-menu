@@ -25,7 +25,6 @@ const InConstructionPage: React.FC = () => {
                   variant="h4"
                   noWrap
                   component="a"
-                  href="/preview/"
                   sx={{
                     mr: 2,
                     display: { xs: "none", md: "flex" },
