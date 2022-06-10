@@ -70,7 +70,8 @@ export async function getRestaurantList(
             new Restaurant(
               item.key!,
               itemVal.restaurantName,
-              itemVal.description
+              itemVal.description,
+              itemVal.isPublished
             )
           );
         });
@@ -130,12 +131,14 @@ async function addRestaurant(uid: string, restaurant: Restaurant) {
     id: key,
     restaurantName: restaurant.restaurantName,
     description: restaurant.description,
+    isPublished: restaurant.isPublished,
   };
 
   const restaurantDetailData = {
     id: key,
     restaurantName: restaurant.restaurantName,
     description: restaurant.description,
+    isPublished: restaurant.isPublished,
     phoneNumber: restaurant.phoneNumber,
     address: restaurant.address,
     menus: restaurant.menus,
@@ -165,12 +168,14 @@ async function updateRestaurant(restaurantKey: string, restaurant: Restaurant) {
     id: restaurantKey,
     restaurantName: restaurant.restaurantName,
     description: restaurant.description,
+    isPublished: restaurant.isPublished,
   });
 
   set(ref(db, "restaurants/" + restaurantKey), {
     id: restaurantKey,
     restaurantName: restaurant.restaurantName,
     description: restaurant.description,
+    isPublished: restaurant.isPublished,
     phoneNumber: restaurant.phoneNumber,
     address: restaurant.address,
     menus: restaurant.menus,

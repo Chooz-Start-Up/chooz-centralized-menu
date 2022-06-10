@@ -4,6 +4,7 @@ export interface IRestaurant {
   id: string;
   restaurantName: string;
   description: string;
+  isPublished: boolean;
   phoneNumber: string;
   ownerName: string;
   address: string;
@@ -15,6 +16,7 @@ export class Restaurant implements IRestaurant {
   private _id: string;
   private _restaurantName: string;
   private _description: string;
+  private _isPublished: boolean;
   private _phoneNumber?: string;
   private _ownerName?: string;
   private _address?: string;
@@ -25,6 +27,7 @@ export class Restaurant implements IRestaurant {
     id: string = "",
     restaurantName: string = "",
     description: string = "",
+    isPublished: boolean = false,
     phoneNumber: string = "",
     ownerName: string = "",
     address: string = "",
@@ -34,6 +37,7 @@ export class Restaurant implements IRestaurant {
     this._id = id;
     this._restaurantName = restaurantName;
     this._description = description;
+    this._isPublished = isPublished;
     this._phoneNumber = phoneNumber;
     this._ownerName = ownerName;
     this._address = address;
@@ -90,6 +94,13 @@ export class Restaurant implements IRestaurant {
     this._hours = value;
   }
 
+  public get isPublished(): boolean {
+    return this._isPublished;
+  }
+  public set isPublished(value: boolean) {
+    this._isPublished = value;
+  }
+
   public get menus(): Menu[] {
     return this._menus!;
   }
@@ -117,6 +128,7 @@ export class Restaurant implements IRestaurant {
     let ownerName = obj.ownerName;
     let address = obj.address;
     let hours = obj.hours;
+    let isPublished = obj.isPublished;
     let menus = Menu.parseMenus(JSON.stringify(obj.menus));
 
     return new Restaurant(
@@ -127,6 +139,7 @@ export class Restaurant implements IRestaurant {
       ownerName,
       address,
       hours,
+      isPublished,
       menus
     );
   }

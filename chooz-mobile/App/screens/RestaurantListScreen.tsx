@@ -56,19 +56,25 @@ const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
             {restaurantList?.map((restaurant) => {
               return (
                 <View key={restaurant.id + "ViewKey"}>
-                  <List.Item
-                    key={restaurant.id}
-                    title={restaurant.restaurantName}
-                    description={restaurant.description}
-                    left={(props: any) => <List.Icon {...props} icon="book" />}
-                    right={(props: any) => <List.Icon {...props} icon="" />}
-                    onPress={() =>
-                      navigation.navigate("RestaurantScreen", {
-                        restaurant: restaurant,
-                      })
-                    }
-                  />
-                  <RowSeparator key={restaurant.id + "key"} />
+                  {restaurant.isPublished && (
+                    <>
+                      <List.Item
+                        key={restaurant.id}
+                        title={restaurant.restaurantName}
+                        description={restaurant.description}
+                        left={(props: any) => (
+                          <List.Icon {...props} icon="book" />
+                        )}
+                        right={(props: any) => <List.Icon {...props} icon="" />}
+                        onPress={() =>
+                          navigation.navigate("RestaurantScreen", {
+                            restaurant: restaurant,
+                          })
+                        }
+                      />
+                      <RowSeparator key={restaurant.id + "key"} />
+                    </>
+                  )}
                 </View>
               );
             })}
