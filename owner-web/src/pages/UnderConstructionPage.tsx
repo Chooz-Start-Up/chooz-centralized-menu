@@ -69,8 +69,8 @@ const InConstructionPage: React.FC = () => {
               Centralized Menu App
             </Typography>
 
-            <Typography fontSize={40} marginTop={5}>
-              We are currently in construction!
+            <Typography fontSize={36} marginTop={5}>
+              We are currently under construction!
             </Typography>
             <Typography marginTop={5} marginBottom={2}>
               Developed by

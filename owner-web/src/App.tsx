@@ -14,7 +14,7 @@ import AuthRoute from "./firebase/authentication/AuthRoute";
 import { firebaseConfig } from "./firebase/config/config";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import FillRestaurantInfoPage from "./pages/FillRestaurantInfoPage";
-import InConstructionPage from "./pages/InConstructionPage";
+import UnderConstructionPage from "./pages/UnderConstructionPage";
 import LoginPage from "./pages/LoginPage";
 import MainLandingPage from "./pages/MainLandingPage";
 import MenuEditPage from "./pages/MenuEditPage";
@@ -54,7 +54,7 @@ const App: React.FC<AppProps> = (props: AppProps) => {
             </>
           }
         /> */}
-        <Route path="/" element={<InConstructionPage />} />
+        <Route path="/" element={<UnderConstructionPage />} />
 
         <Route path="/preview" element={<MainLandingPage />} />
 
