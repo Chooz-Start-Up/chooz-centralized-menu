@@ -2,6 +2,17 @@ import React from "react";
 import { Box, Typography, Divider } from "@mui/material";
 import { ProfilePanelProps, ProfilePanelState } from "./interface";
 import EditProfileButtonWithDialog from "../buttons/EditProfileButtonWithDilogue";
+import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
+import {
+  pullRestaurantByUser,
+  pushRestaurant,
+} from "../../firebase/databaseAPI/RestaurantApi";
+import {
+  auth,
+  currentUser,
+} from "../../firebase/authentication/firebaseAuthentication";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { reload } from "firebase/auth";
 
 class ProfilePanel extends React.Component<
   ProfilePanelProps,
@@ -10,29 +21,26 @@ class ProfilePanel extends React.Component<
   constructor(props: ProfilePanelProps) {
     super(props);
 
-    let defaultOwnerName = "Justin Galang";
-    let defaultRestaurantName = "Chooz: Local Food Menu";
-    let defaultDescription =
-      "We support a centralized menu for any local restaurants around your area! Download the app and look up for any local restaurants and their menu!";
-    let defaultAddress = "123 W Dodson St, Kirksvile, MO 61234";
-    let defaultPhoneNumber = "217 693 1234";
-    let defaultHours =
-      "Monday 01:00 AM - 01:00 PM\nTuesday 02:00 AM - 02:00 PM\nWednesday 03:00 AM - 03:00 PM\nThursday 04:00 AM - 04:00 PM\nFriday 05:00 AM - 05:00 PM\nSaturday 06:00 AM - 06:00 PM\nSunday Closed";
-
     this.state = {
-      ownerName: defaultOwnerName,
-      restaurantName: defaultRestaurantName,
-      description: defaultDescription,
-      address: defaultAddress,
-      phoneNumber: defaultPhoneNumber,
-      hours: defaultHours,
+      loading: false,
+      key: "",
+      isPublished: false,
       //
-      newOwnerName: defaultOwnerName,
-      newRestaurantName: defaultRestaurantName,
-      newDescription: defaultDescription,
-      newAddress: defaultAddress,
-      newPhoneNumber: defaultPhoneNumber,
-      newHours: defaultHours,
+      ownerName: "",
+      restaurantName: "",
+      description: "",
+      address: "",
+      phoneNumber: "",
+      hours:
+        "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed",
+      //
+      newOwnerName: "",
+      newRestaurantName: "",
+      newDescription: "",
+      newAddress: "",
+      newPhoneNumber: "",
+      newHours:
+        "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed",
       //
       ownerNameValidationText: "",
       restaurantNameValidationText: "",
@@ -40,6 +48,56 @@ class ProfilePanel extends React.Component<
       addressValidationText: "",
       phoneNumberValidationText: "",
     };
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged(() => {
+      this.setState(() => {
+        return { loading: true };
+      });
+
+      if (auth !== null && auth.currentUser !== null) {
+        console.log("started pulling");
+        pullRestaurantByUser(auth.currentUser.uid).then(
+          (restaurant) => {
+            console.log(restaurant);
+            this.setState(() => {
+              return {
+                key: restaurant.id,
+                isPublished: restaurant.isPublished,
+                //
+                ownerName: restaurant.ownerName,
+                restaurantName: restaurant.restaurantName,
+                description: restaurant.description,
+                address: restaurant.address,
+                phoneNumber: restaurant.phoneNumber,
+                hours: restaurant.hours,
+                //
+                newOwnerName: restaurant.ownerName,
+                newRestaurantName: restaurant.restaurantName,
+                newDescription: restaurant.description,
+                newAddress: restaurant.address,
+                newPhoneNumber: restaurant.phoneNumber,
+                newHours: restaurant.hours,
+                //
+                ownerNameValidationText: "",
+                restaurantNameValidationText: "",
+                descriptionValidationText: "",
+                addressValidationText: "",
+                phoneNumberValidationText: "",
+              };
+            });
+          },
+          () => {
+            window.location.reload();
+          }
+        );
+
+        this.setState(() => {
+          return { loading: false };
+        });
+      }
+    });
   }
 
   // Text update functions that will temporily save the onChange textfield value. Returns the current field value with no parameter
@@ -110,6 +168,7 @@ class ProfilePanel extends React.Component<
   };
   hoursUpdate = (text?: string): string => {
     if (text !== undefined) {
+      console.log(text);
       this.setState(() => {
         return {
           newHours: text,
@@ -184,233 +243,265 @@ class ProfilePanel extends React.Component<
 
   // Finalizing function that updates the current field with the temporary variables
   onSaveClick = () => {
-    this.setState(() => {
-      return {
-        ownerName: this.state.newOwnerName,
-        restaurantName: this.state.newRestaurantName,
-        description: this.state.newDescription,
-        address: this.state.newAddress,
-        phoneNumber: this.state.newPhoneNumber,
-        hours: this.state.newHours,
-      };
-    });
+    if (auth !== null && auth.currentUser !== null) {
+      console.log("Pushed Data:\n", this.state.newHours);
+      pushRestaurant(
+        auth.currentUser.uid,
+        new Restaurant(
+          this.state.key,
+          this.state.newRestaurantName,
+          this.state.newDescription,
+          this.state.isPublished,
+          this.state.newPhoneNumber,
+          this.state.newOwnerName,
+          this.state.newAddress,
+          this.state.newHours
+        )
+      );
+
+      this.setState(() => {
+        return {
+          ownerName: this.state.newOwnerName,
+          restaurantName: this.state.newRestaurantName,
+          description: this.state.newDescription,
+          address: this.state.newAddress,
+          phoneNumber: this.state.newPhoneNumber,
+          hours: this.state.newHours,
+        };
+      });
+    }
   };
 
   render() {
     return (
       <>
         <Box width="100%" height="100%" bgcolor="grey.200">
-          <Box
-            padding={5}
-            width="40%"
-            height="100vh"
-            bgcolor="white"
-            borderColor="red"
-          >
-            <Typography variant="h4" color="black" textAlign="left">
-              Profile
-            </Typography>
-            <Divider />
-
+          {!this.state.loading && (
             <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                marginTop: 2,
-              }}
+              padding={5}
+              width="40%"
+              height="100vh"
+              bgcolor="white"
+              borderColor="red"
             >
-              <Box width="30%">
-                <Typography>Owner Name: </Typography>
-              </Box>
-
-              <Box width="50%">
-                <Typography
-                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
-                >
-                  {this.state.ownerName}
-                </Typography>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Box width="30%">
-                <Typography>Restaurant Name:</Typography>
-              </Box>
-
-              <Box width="50%">
-                <Typography
-                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
-                >
-                  {this.state.restaurantName}
-                </Typography>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Box width="30%">
-                <Typography>Address: </Typography>
-              </Box>
-
-              <Box width="50%">
-                <Typography
-                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
-                >
-                  {this.state.address}
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Box width="30%">
-                <Typography>Phone Number: </Typography>
-              </Box>
-
-              <Box width="50%">
-                <Typography
-                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
-                >
-                  {this.state.phoneNumber}
-                </Typography>
-              </Box>
-            </Box>
-
-            <Typography variant="h6" sx={{ marginTop: 3 }}>
-              Restaurant Description
-            </Typography>
-            <Divider sx={{ marginBottom: 2 }} />
-
-            <Box width="80%">
-              <Typography sx={{ textOverflow: "ellipsis", overflow: "hidden" }}>
-                {this.state.description}
+              <Typography variant="h4" color="black" textAlign="left">
+                Profile
               </Typography>
-            </Box>
+              <Divider />
 
-            <Typography variant="h6" sx={{ marginTop: 3 }}>
-              Operating Hours
-            </Typography>
-            <Divider sx={{ marginBottom: 2 }} />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: 2,
+                }}
+              >
+                <Box width="30%">
+                  <Typography>Owner Name: </Typography>
+                </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Box width="30%">
-                <Typography>
-                  {this.state.hours.split("\n", 7)[0].split(" ", 1)[0]}:
-                </Typography>
-                <Typography>
-                  {this.state.hours.split("\n", 7)[1].split(" ", 1)[0]}:
-                </Typography>
-                <Typography>
-                  {this.state.hours.split("\n", 7)[2].split(" ", 1)[0]}:
-                </Typography>
-                <Typography>
-                  {this.state.hours.split("\n", 7)[3].split(" ", 1)[0]}:
-                </Typography>
-                <Typography>
-                  {this.state.hours.split("\n", 7)[4].split(" ", 1)[0]}:
-                </Typography>
-                <Typography>
-                  {this.state.hours.split("\n", 7)[5].split(" ", 1)[0]}:
-                </Typography>
-                <Typography>
-                  {this.state.hours.split("\n", 7)[6].split(" ", 1)[0]}:
+                <Box width="50%">
+                  <Typography
+                    sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                  >
+                    {this.state.ownerName}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <Box width="30%">
+                  <Typography>Restaurant Name:</Typography>
+                </Box>
+
+                <Box width="50%">
+                  <Typography
+                    sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                  >
+                    {this.state.restaurantName}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <Box width="30%">
+                  <Typography>Address: </Typography>
+                </Box>
+
+                <Box width="50%">
+                  <Typography
+                    sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                  >
+                    {this.state.address}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <Box width="30%">
+                  <Typography>Phone Number: </Typography>
+                </Box>
+
+                <Box width="50%">
+                  <Typography
+                    sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                  >
+                    {this.state.phoneNumber}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Typography variant="h6" sx={{ marginTop: 3 }}>
+                Restaurant Description
+              </Typography>
+              <Divider sx={{ marginBottom: 2 }} />
+
+              <Box width="80%">
+                <Typography
+                  sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                >
+                  {this.state.description}
                 </Typography>
               </Box>
 
-              <Box width="50%">
-                <Typography>
-                  {this.state.hours
-                    .split("\n", 7)[0]
-                    .substring(
-                      this.state.hours.split("\n", 7)[0].split(" ", 1)[0].length
-                    )}
-                </Typography>
-                <Typography>
-                  {this.state.hours
-                    .split("\n", 7)[1]
-                    .substring(
-                      this.state.hours.split("\n", 7)[1].split(" ", 1)[0].length
-                    )}
-                </Typography>
-                <Typography>
-                  {this.state.hours
-                    .split("\n", 7)[2]
-                    .substring(
-                      this.state.hours.split("\n", 7)[2].split(" ", 1)[0].length
-                    )}
-                </Typography>
-                <Typography>
-                  {this.state.hours
-                    .split("\n", 7)[3]
-                    .substring(
-                      this.state.hours.split("\n", 7)[3].split(" ", 1)[0].length
-                    )}
-                </Typography>
-                <Typography>
-                  {this.state.hours
-                    .split("\n", 7)[4]
-                    .substring(
-                      this.state.hours.split("\n", 7)[4].split(" ", 1)[0].length
-                    )}
-                </Typography>
-                <Typography>
-                  {this.state.hours
-                    .split("\n", 7)[5]
-                    .substring(
-                      this.state.hours.split("\n", 7)[5].split(" ", 1)[0].length
-                    )}
-                </Typography>
-                <Typography>
-                  {this.state.hours
-                    .split("\n", 7)[6]
-                    .substring(
-                      this.state.hours.split("\n", 7)[6].split(" ", 1)[0].length
-                    )}
-                </Typography>
+              <Typography variant="h6" sx={{ marginTop: 3 }}>
+                Operating Hours
+              </Typography>
+              <Divider sx={{ marginBottom: 2 }} />
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <Box width="30%">
+                  <Typography>
+                    {this.state.hours.split("\n", 7)[0].split(" ", 1)[0]}:
+                  </Typography>
+                  <Typography>
+                    {this.state.hours.split("\n", 7)[1].split(" ", 1)[0]}:
+                  </Typography>
+                  <Typography>
+                    {this.state.hours.split("\n", 7)[2].split(" ", 1)[0]}:
+                  </Typography>
+                  <Typography>
+                    {this.state.hours.split("\n", 7)[3].split(" ", 1)[0]}:
+                  </Typography>
+                  <Typography>
+                    {this.state.hours.split("\n", 7)[4].split(" ", 1)[0]}:
+                  </Typography>
+                  <Typography>
+                    {this.state.hours.split("\n", 7)[5].split(" ", 1)[0]}:
+                  </Typography>
+                  <Typography>
+                    {this.state.hours.split("\n", 7)[6].split(" ", 1)[0]}:
+                  </Typography>
+                </Box>
+
+                <Box width="50%">
+                  <Typography>
+                    {this.state.hours
+                      .split("\n", 7)[0]
+                      .substring(
+                        this.state.hours.split("\n", 7)[0].split(" ", 1)[0]
+                          .length
+                      )}
+                  </Typography>
+                  <Typography>
+                    {this.state.hours
+                      .split("\n", 7)[1]
+                      .substring(
+                        this.state.hours.split("\n", 7)[1].split(" ", 1)[0]
+                          .length
+                      )}
+                  </Typography>
+                  <Typography>
+                    {this.state.hours
+                      .split("\n", 7)[2]
+                      .substring(
+                        this.state.hours.split("\n", 7)[2].split(" ", 1)[0]
+                          .length
+                      )}
+                  </Typography>
+                  <Typography>
+                    {this.state.hours
+                      .split("\n", 7)[3]
+                      .substring(
+                        this.state.hours.split("\n", 7)[3].split(" ", 1)[0]
+                          .length
+                      )}
+                  </Typography>
+                  <Typography>
+                    {this.state.hours
+                      .split("\n", 7)[4]
+                      .substring(
+                        this.state.hours.split("\n", 7)[4].split(" ", 1)[0]
+                          .length
+                      )}
+                  </Typography>
+                  <Typography>
+                    {this.state.hours
+                      .split("\n", 7)[5]
+                      .substring(
+                        this.state.hours.split("\n", 7)[5].split(" ", 1)[0]
+                          .length
+                      )}
+                  </Typography>
+                  <Typography>
+                    {this.state.hours
+                      .split("\n", 7)[6]
+                      .substring(
+                        this.state.hours.split("\n", 7)[6].split(" ", 1)[0]
+                          .length
+                      )}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box
+                display="flex"
+                justifyContent="flex-end"
+                sx={{ marginTop: "5%" }}
+              >
+                <EditProfileButtonWithDialog
+                  ownerNameUpdate={this.ownerNameUpdate}
+                  restaurantNameUpdate={this.restaurantNameUpdate}
+                  descriptionUpdate={this.descriptionUpdate}
+                  addressUpdate={this.addressUpdate}
+                  phoneNumberUpdate={this.phoneNumberUpdate}
+                  hoursUpdate={this.hoursUpdate}
+                  //
+                  onSaveClick={this.onSaveClick}
+                  //
+                  ownerNameValidationText={this.state.ownerNameValidationText}
+                  restaurantNameValidationText={
+                    this.state.restaurantNameValidationText
+                  }
+                  descriptionValidationText={
+                    this.state.descriptionValidationText
+                  }
+                  addressValidationText={this.state.addressValidationText}
+                  phoneNumberValidationText={
+                    this.state.phoneNumberValidationText
+                  }
+                />
               </Box>
             </Box>
-
-            <Box
-              display="flex"
-              justifyContent="flex-end"
-              sx={{ marginTop: "5%" }}
-            >
-              <EditProfileButtonWithDialog
-                ownerNameUpdate={this.ownerNameUpdate}
-                restaurantNameUpdate={this.restaurantNameUpdate}
-                descriptionUpdate={this.descriptionUpdate}
-                addressUpdate={this.addressUpdate}
-                phoneNumberUpdate={this.phoneNumberUpdate}
-                hoursUpdate={this.hoursUpdate}
-                //
-                onSaveClick={this.onSaveClick}
-                //
-                ownerNameValidationText={this.state.ownerNameValidationText}
-                restaurantNameValidationText={
-                  this.state.restaurantNameValidationText
-                }
-                descriptionValidationText={this.state.descriptionValidationText}
-                addressValidationText={this.state.addressValidationText}
-                phoneNumberValidationText={this.state.phoneNumberValidationText}
-              />
-            </Box>
-          </Box>
+          )}
         </Box>
       </>
     );

@@ -41,6 +41,7 @@ class DateTimeInput extends React.Component<
   }
 
   parseTimeString = (str: string): string[] => {
+    console.log(str);
     let splitted = str.split(" ", 6);
 
     let splittedStrTime: string[] = [];
@@ -61,14 +62,14 @@ class DateTimeInput extends React.Component<
       }
 
       let closeHourStr: string = "";
-      if (splitted[2] === "PM" && +splitted[1].split(":", 1)[0] !== 12) {
-        let closeHour: number = +splitted[1].split(":", 1);
+      if (splitted[5] === "PM" && +splitted[4].split(":", 1)[0] !== 12) {
+        let closeHour: number = +splitted[4].split(":", 1);
         closeHour += 12;
-        closeHourStr = closeHour + ":" + splitted[1].split(":", 2)[1];
-      } else if (+splitted[1].split(":", 1)[0] === 12 && splitted[2] === "AM") {
-        closeHourStr = "00:" + splitted[1].split(":", 2)[1];
+        closeHourStr = closeHour + ":" + splitted[4].split(":", 2)[1];
+      } else if (+splitted[4].split(":", 1)[0] === 12 && splitted[5] === "AM") {
+        closeHourStr = "00:" + splitted[4].split(":", 2)[1];
       } else {
-        closeHourStr = splitted[1];
+        closeHourStr = splitted[4];
       }
 
       splittedStrTime = [splitted[0], openHourStr, closeHourStr];

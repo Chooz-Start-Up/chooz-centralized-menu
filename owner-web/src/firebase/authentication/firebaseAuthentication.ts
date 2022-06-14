@@ -10,6 +10,7 @@ import {
   sendEmailVerification,
   FacebookAuthProvider,
 } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 import {
   getFirestore,
   query,
@@ -23,7 +24,9 @@ import { firebaseConfig } from "../config/config";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const currentUser = auth.currentUser;
 const db = getFirestore(app);
+const apidb = getDatabase(app);
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
@@ -120,7 +123,9 @@ const signInWithFacebook = async (navigate: any) => {
 
 export {
   auth,
+  currentUser,
   db,
+  apidb,
   signInWithGoogle,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,

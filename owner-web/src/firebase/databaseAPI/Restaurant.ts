@@ -32,7 +32,7 @@ export class Restaurant implements IRestaurant {
     ownerName: string = "",
     address: string = "",
     hours: string = "",
-    menus?: Menu[]
+    menus: Menu[] = []
   ) {
     this._id = id;
     this._restaurantName = restaurantName;

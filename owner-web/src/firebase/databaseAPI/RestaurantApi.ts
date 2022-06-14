@@ -9,9 +9,7 @@ import {
   set,
 } from "firebase/database";
 import { Restaurant } from "./Restaurant";
-import { string } from "prop-types";
-import { db } from "../data/database";
-import { useReducer } from "react";
+import { apidb } from "../authentication/firebaseAuthentication";
 
 const dbRef = ref(getDatabase());
 
@@ -21,8 +19,8 @@ const dbRef = ref(getDatabase());
  * @param restaurant - restaurant object to push
  */
 export async function pushRestaurant(uid: string, restaurant: Restaurant) {
-  console.log("API ID: " + restaurant.id);
-  get(ref(db, "users/" + uid + "/restaurants/" + restaurant.id)).then(
+  console.log("API ID: " + uid);
+  get(ref(apidb, "users/" + uid + "/restaurants/" + restaurant.id)).then(
     (snapshot) => {
       if (snapshot.exists()) {
         updateRestaurant(restaurant.id, restaurant);
@@ -124,14 +122,14 @@ export async function getRestaurantDetails(
  * @returns - the key to the restaurant that was pushed
  */
 async function addRestaurant(uid: string, restaurant: Restaurant) {
-  let key = push(child(ref(db), "users/" + uid)).key;
+  let key = push(child(ref(apidb), "users/" + uid)).key;
 
-  console.log(restaurant);
   const restaurantListData = {
     id: key,
     restaurantName: restaurant.restaurantName,
     description: restaurant.description,
     isPublished: restaurant.isPublished,
+    hours: restaurant.hours,
   };
 
   const restaurantDetailData = {
@@ -142,6 +140,8 @@ async function addRestaurant(uid: string, restaurant: Restaurant) {
     phoneNumber: restaurant.phoneNumber,
     address: restaurant.address,
     menus: restaurant.menus,
+    ownerName: restaurant.ownerName,
+    hours: restaurant.hours,
   };
 
   const userRestaurantReference = {
@@ -154,8 +154,7 @@ async function addRestaurant(uid: string, restaurant: Restaurant) {
   (updates as any)["/restaurantList/" + key] = restaurantListData;
   (updates as any)["/restaurants/" + key] = restaurantDetailData;
 
-  update(ref(db), updates);
-  alert("PUSHED DATA");
+  update(ref(apidb), updates);
 }
 
 /**
@@ -164,14 +163,15 @@ async function addRestaurant(uid: string, restaurant: Restaurant) {
  * @param restaurant
  */
 async function updateRestaurant(restaurantKey: string, restaurant: Restaurant) {
-  set(ref(db, "restaurantList/" + restaurantKey), {
+  set(ref(apidb, "restaurantList/" + restaurantKey), {
     id: restaurantKey,
     restaurantName: restaurant.restaurantName,
     description: restaurant.description,
     isPublished: restaurant.isPublished,
+    hours: restaurant.hours,
   });
 
-  set(ref(db, "restaurants/" + restaurantKey), {
+  set(ref(apidb, "restaurants/" + restaurantKey), {
     id: restaurantKey,
     restaurantName: restaurant.restaurantName,
     description: restaurant.description,
@@ -179,6 +179,8 @@ async function updateRestaurant(restaurantKey: string, restaurant: Restaurant) {
     phoneNumber: restaurant.phoneNumber,
     address: restaurant.address,
     menus: restaurant.menus,
+    ownerName: restaurant.ownerName,
+    hours: restaurant.hours,
   });
 
   console.log("UPDATED");

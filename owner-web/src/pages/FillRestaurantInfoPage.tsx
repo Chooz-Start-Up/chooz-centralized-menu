@@ -22,6 +22,8 @@ import {
   resendEmailVerification,
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
+import { pushRestaurant } from "../firebase/databaseAPI/RestaurantApi";
+import { Restaurant } from "../firebase/databaseAPI/Restaurant";
 
 const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
   props: FillRestaurantInfoPageProps
@@ -54,6 +56,22 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
   };
 
   const handleOkay = () => {
+    if (auth !== null && auth.currentUser !== null) {
+      pushRestaurant(
+        auth.currentUser.uid,
+        new Restaurant(
+          "",
+          "",
+          "",
+          false,
+          "",
+          "",
+          "",
+          "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
+        )
+      );
+    }
+
     setOpen(false);
     navigate("/edit");
   };
@@ -70,8 +88,25 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
       isValidRestaurantName &&
       isValidDescription &&
       isValidAddress &&
-      isValidPhoneNumber
+      isValidPhoneNumber &&
+      auth !== null &&
+      auth.currentUser !== null
     ) {
+      console.log("Filled information pushed");
+      pushRestaurant(
+        auth.currentUser.uid,
+        new Restaurant(
+          "",
+          restaurantName,
+          description,
+          false,
+          phoneNumber,
+          ownerName,
+          address,
+          "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
+        )
+      );
+
       navigate("/edit");
     }
   };

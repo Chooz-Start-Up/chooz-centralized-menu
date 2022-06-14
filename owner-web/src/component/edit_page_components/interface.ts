@@ -65,6 +65,10 @@ export interface ItemColumnPageProps {
 export interface ProfilePanelProps {}
 
 export interface ProfilePanelState {
+  loading: boolean;
+  key: string;
+  isPublished: boolean;
+  //
   ownerName: string;
   restaurantName: string;
   description: string;

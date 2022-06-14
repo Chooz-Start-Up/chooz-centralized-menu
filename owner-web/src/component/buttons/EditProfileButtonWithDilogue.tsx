@@ -12,7 +12,10 @@ import {
   Typography,
 } from "@mui/material";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { auth } from "../../firebase/authentication/firebaseAuthentication";
+import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
+import { pushRestaurant } from "../../firebase/databaseAPI/RestaurantApi";
 import DateTimeInput from "./DateTimeInput";
 import { EditProfileButtonWithDialogProps } from "./interface";
 
@@ -55,13 +58,43 @@ const EditProfileButtonWithDialog: React.FC<
   ];
 
   let splitted = originalHours.split("\n", 7);
-  let mondayTimeString: string = splitted[0];
-  let tuesdayTimeString: string = splitted[1];
-  let wednesdayTimeString: string = splitted[2];
-  let thursdayTimeString: string = splitted[3];
-  let fridayTimeString: string = splitted[4];
-  let saturdayTimeString: string = splitted[5];
-  let sundayTimeString: string = splitted[6];
+  // let mondayTimeString: string = splitted[0];
+  // let tuesdayTimeString: string = splitted[1];
+  // let wednesdayTimeString: string = splitted[2];
+  // let thursdayTimeString: string = splitted[3];
+  // let fridayTimeString: string = splitted[4];
+  // let saturdayTimeString: string = splitted[5];
+  // let sundayTimeString: string = splitted[6];
+
+  const [mondayTimeString, setMondayTimeString] = useState(splitted[0]);
+  const [tuesdayTimeString, setTuesdayTimeString] = useState(splitted[1]);
+  const [wednesdayTimeString, setWednesdayTimeString] = useState(splitted[2]);
+  const [thursdayTimeString, setThursdayTimeString] = useState(splitted[3]);
+  const [fridayTimeString, setFridayTimeString] = useState(splitted[4]);
+  const [saturdayTimeString, setSaturdayTimeString] = useState(splitted[5]);
+  const [sundayTimeString, setSundayTimeString] = useState(splitted[6]);
+
+  useEffect(() => {
+    setMondayTimeString(splitted[0]);
+    setTuesdayTimeString(splitted[1]);
+    setWednesdayTimeString(splitted[2]);
+    setThursdayTimeString(splitted[3]);
+    setFridayTimeString(splitted[4]);
+    setSaturdayTimeString(splitted[5]);
+    setSundayTimeString(splitted[6]);
+  }, splitted);
+
+  useEffect(() => {
+    hoursUpdate(combineTimeString());
+  }, [
+    mondayTimeString,
+    tuesdayTimeString,
+    wednesdayTimeString,
+    thursdayTimeString,
+    fridayTimeString,
+    saturdayTimeString,
+    sundayTimeString,
+  ]);
 
   const combineTimeString = (): string => {
     return (
@@ -82,35 +115,45 @@ const EditProfileButtonWithDialog: React.FC<
   };
 
   const updateMondayTimeString = (timeString: string) => {
-    mondayTimeString = timeString;
-    hoursUpdate(combineTimeString());
+    // mondayTimeString = timeString;
+    setMondayTimeString(timeString);
+    // hoursUpdate(combineTimeString());
   };
   const updateTuesdayTimeString = (timeString: string) => {
-    tuesdayTimeString = timeString;
-    hoursUpdate(combineTimeString());
+    // tuesdayTimeString = timeString;
+    setTuesdayTimeString(timeString);
+    // hoursUpdate(combineTimeString());
   };
   const updateWednesdayTimeString = (timeString: string) => {
-    wednesdayTimeString = timeString;
-    hoursUpdate(combineTimeString());
+    // wednesdayTimeString = timeString;
+    setWednesdayTimeString(timeString);
+    // hoursUpdate(combineTimeString());
   };
   const updateThursdayTimeString = (timeString: string) => {
-    thursdayTimeString = timeString;
-    hoursUpdate(combineTimeString());
+    // thursdayTimeString = timeString;
+    setThursdayTimeString(timeString);
+    // hoursUpdate(combineTimeString());
   };
   const updateFridayTimeString = (timeString: string) => {
-    fridayTimeString = timeString;
-    hoursUpdate(combineTimeString());
+    // fridayTimeString = timeString;
+    setFridayTimeString(timeString);
+    // hoursUpdate(combineTimeString());
   };
   const updateSaturdayTimeString = (timeString: string) => {
-    saturdayTimeString = timeString;
-    hoursUpdate(combineTimeString());
+    // saturdayTimeString = timeString;
+    setSaturdayTimeString(timeString);
+    // hoursUpdate(combineTimeString());
   };
   const updateSundayTimeString = (timeString: string) => {
-    sundayTimeString = timeString;
-    hoursUpdate(combineTimeString());
+    // sundayTimeString = timeString;
+    setSundayTimeString(timeString);
+    // hoursUpdate(combineTimeString());
   };
 
   const handleClickOpen = () => {
+    console.log(originalHours);
+    console.log(splitted);
+    console.log(combineTimeString());
     setOpen(true);
   };
   const handleCancelClose = () => {
