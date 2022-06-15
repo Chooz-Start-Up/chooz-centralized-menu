@@ -100,7 +100,7 @@ const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
       {!isLoading && (
         <SafeAreaView>
           <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
-          {isFocused && (
+          {isFocused ? (
             <Portal>
               <FAB
                 style={styles.fab}
@@ -114,7 +114,7 @@ const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
                 }
               />
             </Portal>
-          )}
+          ) : null}
           <ScrollView
             style={styles.scrollView}
             //contentContainerStyle={{ flexGrow: 1 }}

@@ -68,35 +68,34 @@ const ItemScreen = ({ route }: Props) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
       <ScrollView>
         <View style={styles.content}>
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{itemName}</Text>
-            {price && (
+            {price ? (
               <View style={styles.priceContainer}>
-                <Text style={styles.priceText}>${price}</Text>
+                <Text style={styles.priceText}>{price}</Text>
               </View>
-            )}
+            ) : null}
           </View>
           <RowSeparator />
-          {description && (
+          {description ? (
             <View style={styles.itemContainer}>
               <Text style={styles.headerText}>Descriptions</Text>
               <View style={styles.bodyContainer}>
                 <Text style={styles.bodyText}>{description}</Text>
               </View>
             </View>
-          )}
+          ) : null}
           <RowSeparator />
-          {ingredients && (
+          {ingredients ? (
             <View style={styles.itemContainer}>
               <Text style={styles.headerText}>Ingredients</Text>
               <View style={styles.bodyContainer}>
                 <Text style={styles.bodyText}>{ingredients}</Text>
               </View>
             </View>
-          )}
+          ) : null}
         </View>
       </ScrollView>
     </View>
