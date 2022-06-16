@@ -2,9 +2,9 @@ import { Item } from "./Item";
 
 export class Category {
   private _categoryName: string;
-  private _items: Item[] | undefined;
+  private _items: Item[];
 
-  constructor(categoryName: string = "", items?: Item[]) {
+  constructor(categoryName: string = "", items: Item[] = []) {
     this._categoryName = categoryName;
     this._items = items;
   }
@@ -14,10 +14,10 @@ export class Category {
   public set categoryName(value: string) {
     this._categoryName = value;
   }
-  public get items(): Item[] | undefined {
+  public get items(): Item[] {
     return this._items;
   }
-  public set items(value: Item[] | undefined) {
+  public set items(value: Item[]) {
     this._items = value;
   }
 

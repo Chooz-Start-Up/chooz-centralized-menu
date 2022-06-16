@@ -22,7 +22,7 @@ import {
   resendEmailVerification,
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
-import { pushRestaurant } from "../firebase/databaseAPI/RestaurantApi";
+import { pushProfile } from "../firebase/databaseAPI/RestaurantApi";
 import { Restaurant } from "../firebase/databaseAPI/Restaurant";
 
 const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
@@ -57,7 +57,7 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
 
   const handleOkay = () => {
     if (auth !== null && auth.currentUser !== null) {
-      pushRestaurant(
+      pushProfile(
         auth.currentUser.uid,
         new Restaurant(
           "",
@@ -93,7 +93,7 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
       auth.currentUser !== null
     ) {
       console.log("Filled information pushed");
-      pushRestaurant(
+      pushProfile(
         auth.currentUser.uid,
         new Restaurant(
           "",

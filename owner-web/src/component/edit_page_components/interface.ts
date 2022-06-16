@@ -30,6 +30,10 @@ export interface ItemProps {
 export interface MenuColumnListProps {}
 
 export interface MenuColumnListState {
+  loading: boolean;
+  key: string;
+  isPublished: boolean;
+  //
   addingItemName: string;
   menuItems: MenuProps[];
   selectedMenuIndex: number;

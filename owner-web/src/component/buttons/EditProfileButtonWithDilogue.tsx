@@ -15,7 +15,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
-import { pushRestaurant } from "../../firebase/databaseAPI/RestaurantApi";
+import { pushProfile } from "../../firebase/databaseAPI/RestaurantApi";
 import DateTimeInput from "./DateTimeInput";
 import { EditProfileButtonWithDialogProps } from "./interface";
 
@@ -151,9 +151,6 @@ const EditProfileButtonWithDialog: React.FC<
   };
 
   const handleClickOpen = () => {
-    console.log(originalHours);
-    console.log(splitted);
-    console.log(combineTimeString());
     setOpen(true);
   };
   const handleCancelClose = () => {

@@ -5,7 +5,7 @@ import EditProfileButtonWithDialog from "../buttons/EditProfileButtonWithDilogue
 import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
 import {
   pullRestaurantByUser,
-  pushRestaurant,
+  pushProfile,
 } from "../../firebase/databaseAPI/RestaurantApi";
 import {
   auth,
@@ -245,7 +245,7 @@ class ProfilePanel extends React.Component<
   onSaveClick = () => {
     if (auth !== null && auth.currentUser !== null) {
       console.log("Pushed Data:\n", this.state.newHours);
-      pushRestaurant(
+      pushProfile(
         auth.currentUser.uid,
         new Restaurant(
           this.state.key,

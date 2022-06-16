@@ -1,3 +1,6 @@
+import { MenuProps } from "../../component/edit_page_components/interface";
+import { Category } from "./Category";
+import { Item } from "./Item";
 import { Menu } from "./Menu";
 
 export interface IRestaurant {
@@ -142,5 +145,26 @@ export class Restaurant implements IRestaurant {
       isPublished,
       menus
     );
+  }
+
+  public setMenuWithMenuProps(menus: MenuProps[]) {
+    let parsedMenu: Menu[] = [];
+    menus.forEach((menu) => {
+      let categories: Category[] = [];
+      menu.categoryItems.forEach((cateogry) => {
+        let items: Item[] = [];
+        cateogry.items.forEach((item) => {
+          items.push(
+            new Item(item.name, item.price, item.description, item.ingredients)
+          );
+        });
+
+        categories.push(new Category(cateogry.name, items));
+      });
+
+      parsedMenu.push(new Menu(menu.name, categories));
+    });
+
+    this._menus = parsedMenu;
   }
 }

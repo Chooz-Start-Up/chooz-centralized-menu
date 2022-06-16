@@ -10,22 +10,41 @@ import {
 } from "firebase/database";
 import { Restaurant } from "./Restaurant";
 import { apidb } from "../authentication/firebaseAuthentication";
+import { Menu } from "./Menu";
 
 const dbRef = ref(getDatabase());
 
 /**
- * pushes Restaurant to db - if user and restaurant exists, it updates otherwise, it adds a new record
+ * pushes Restaurant profile to db - if user and restaurant exists, it updates otherwise, it adds a new record
  * @param uid - string of userID
  * @param restaurant - restaurant object to push
  */
-export async function pushRestaurant(uid: string, restaurant: Restaurant) {
-  console.log("API ID: " + uid);
+export async function pushProfile(uid: string, restaurant: Restaurant) {
   get(ref(apidb, "users/" + uid + "/restaurants/" + restaurant.id)).then(
     (snapshot) => {
       if (snapshot.exists()) {
-        updateRestaurant(restaurant.id, restaurant);
+        updateProfile(restaurant.id, restaurant);
       } else {
         addRestaurant(uid, restaurant);
+      }
+    }
+  );
+}
+
+/**
+ * pushes Restaurant menus to db - if user and restaurant exists, it updates otherwise, it adds a new record
+ * @param uid - string of userID
+ * @param restaurant - restaurant object to push
+ */
+export async function pushMenu(uid: string, restaurant: Restaurant) {
+  get(ref(apidb, "users/" + uid + "/restaurants/" + restaurant.id)).then(
+    (snapshot) => {
+      if (snapshot.exists()) {
+        updateMenu(restaurant.id, restaurant);
+      } else {
+        // This should never executing. Assuming menu will be added when everything other exists in the DB
+        console.log("Adding to menu list");
+        addMenu(restaurant);
       }
     }
   );
@@ -42,6 +61,18 @@ export async function pullRestaurantByUser(uid: string): Promise<Restaurant> {
       .then((key) => {
         getRestaurantByKey(key).then((restaurant) => {
           resolve(restaurant);
+        });
+      })
+      .catch((error) => reject(error));
+  });
+}
+
+export async function pullRestaurantMenuByUser(uid: string): Promise<Menu[]> {
+  return new Promise(function (resolve, reject) {
+    getRestaurantKey(uid)
+      .then((key) => {
+        getRestaurantMenuByKey(key).then((menus) => {
+          resolve(menus);
         });
       })
       .catch((error) => reject(error));
@@ -162,7 +193,7 @@ async function addRestaurant(uid: string, restaurant: Restaurant) {
  * @param restaurantKey
  * @param restaurant
  */
-async function updateRestaurant(restaurantKey: string, restaurant: Restaurant) {
+async function updateProfile(restaurantKey: string, restaurant: Restaurant) {
   set(ref(apidb, "restaurantList/" + restaurantKey), {
     id: restaurantKey,
     restaurantName: restaurant.restaurantName,
@@ -178,12 +209,30 @@ async function updateRestaurant(restaurantKey: string, restaurant: Restaurant) {
     isPublished: restaurant.isPublished,
     phoneNumber: restaurant.phoneNumber,
     address: restaurant.address,
-    menus: restaurant.menus,
     ownerName: restaurant.ownerName,
     hours: restaurant.hours,
   });
 
   console.log("UPDATED");
+}
+
+async function addMenu(restaurant: Restaurant) {
+  const menuData = {
+    menus: JSON.parse(JSON.stringify(restaurant.menus)),
+  };
+
+  const updates = {};
+  (updates as any)["/restaurantMenuList/" + restaurant.id] = menuData;
+
+  update(ref(apidb), updates);
+}
+
+async function updateMenu(restaurantKey: string, restaurant: Restaurant) {
+  set(ref(apidb, "restaurantMenuList/" + restaurantKey), {
+    menus: JSON.parse(JSON.stringify(restaurant.menus)),
+  });
+
+  console.log("UPDATED MENU");
 }
 
 /**
@@ -219,6 +268,24 @@ async function getRestaurantKey(uid: string): Promise<string> {
 async function getRestaurantByKey(key: string): Promise<Restaurant> {
   return new Promise(function (resolve, reject) {
     get(child(dbRef, "restaurants/" + key))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let data = snapshot.val();
+          resolve(data);
+        } else {
+          reject("No Data Available");
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+async function getRestaurantMenuByKey(key: string): Promise<Array<Menu>> {
+  return new Promise(function (resolve, reject) {
+    get(child(dbRef, "restaurantMenuList/" + key))
       .then((snapshot) => {
         if (snapshot.exists()) {
           let data = snapshot.val();

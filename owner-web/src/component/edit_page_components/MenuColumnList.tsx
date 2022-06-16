@@ -10,15 +10,25 @@ import {
   Typography,
 } from "@mui/material/";
 import {
+  CategoryProps,
   ItemProps,
   MenuColumnListProps,
   MenuColumnListState,
+  MenuProps,
 } from "./interface";
 import AddButtonWithDialog from "../buttons/AddButtonWithDialog";
 import ColumnListItemButton from "../buttons/ColumnListItemButton";
 import { CategoryColumnList } from "./CategoryColumnList";
 import { ItemColumnList } from "./ItemColumnList";
 import ItemColumnPage from "./ItemColumnDisplay";
+import {
+  pullRestaurantByUser,
+  pullRestaurantMenuByUser,
+  pushMenu,
+} from "../../firebase/databaseAPI/RestaurantApi";
+import { auth } from "../../firebase/authentication/firebaseAuthentication";
+import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
+import { Menu } from "../../firebase/databaseAPI/Menu";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,
@@ -28,6 +38,10 @@ export class MenuColumnList extends React.Component<
     super(props);
 
     this.state = {
+      loading: false,
+      key: "",
+      isPublished: false,
+      //
       addingItemName: "",
       menuItems: [],
       selectedMenuIndex: 0,
@@ -38,14 +52,97 @@ export class MenuColumnList extends React.Component<
     console.log("This is constuctor");
   }
 
-  // static getDerivedStateFromProps(
-  //   props: MenuColumnListProps,
-  //   state: MenuColumnListState
-  // ) {
-  //   console.log("This is getDerivedStateFromProps");
+  pushMenuToDatabase(edittedMenus: MenuProps[]) {
+    if (auth !== null && auth.currentUser !== null) {
+      console.log("Pushing Menu to Database");
+      let menus = new Restaurant(this.state.key);
+      menus.setMenuWithMenuProps(edittedMenus);
+      pushMenu(auth.currentUser.uid, menus);
+    }
+  }
 
-  //   return state;
-  // }
+  componentDidMount() {
+    this.setState(() => {
+      return { loading: true };
+    });
+
+    if (auth !== null && auth.currentUser !== null) {
+      console.log("started pulling");
+      pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
+        console.log(restaurant);
+
+        this.setState(() => {
+          return {
+            key: restaurant.id,
+            isPublished: restaurant.isPublished,
+          };
+        });
+      });
+      pullRestaurantMenuByUser(auth.currentUser.uid).then((menus) => {
+        this.setState(() => {
+          return {
+            menuItems: this.convertMenuToMenuProps(menus),
+          };
+        });
+      });
+
+      this.setState(() => {
+        return { loading: false };
+      });
+    }
+  }
+
+  convertMenuToMenuProps(menusObject: any) {
+    let dbMenus: Menu[] = menusObject["menus"];
+    console.log("Read Menus: ", dbMenus); //////////////////////////////////////////////
+
+    let parsedMenuProps: MenuProps[] = [];
+    if (dbMenus !== undefined) {
+      dbMenus.forEach((menu, menuIndex) => {
+        let dbCategories = menu["_categories"];
+        console.log("Read Categories: ", dbCategories); ////////////////////////////////////////
+
+        let categoryItems: CategoryProps[] = [];
+        if (dbCategories !== undefined) {
+          dbCategories.forEach((cateogry, cateogryIndex) => {
+            let dbItems = cateogry["_items"];
+            console.log("Read Items: ", dbItems); ///////////////////////////////////////////
+
+            let items: ItemProps[] = [];
+            if (dbItems !== undefined) {
+              dbItems.forEach((item, itemIndex) => {
+                items = items.concat({
+                  id: itemIndex,
+                  name: item["_itemName"],
+                  handleDeleteClick: this.handleItemDeleteClick,
+                  description: item["_description"],
+                  price: +item["_price"],
+                  ingredients: item["_ingredients"],
+                });
+              });
+            }
+
+            categoryItems = categoryItems.concat({
+              id: cateogryIndex,
+              name: cateogry["_categoryName"],
+              handleDeleteClick: this.handleCategoryDeleteClick,
+              items: items,
+            });
+          });
+        }
+
+        parsedMenuProps = parsedMenuProps.concat({
+          id: menuIndex,
+          name: menu["_menuName"],
+          handleDeleteClick: this.handleMenuDeleteClick,
+          categoryItems: categoryItems,
+        });
+      });
+    }
+
+    console.log(parsedMenuProps);
+    return parsedMenuProps;
+  }
 
   // Validator to hide or show columns
   validateMenuIndexBeforeRender = (): number => {
@@ -85,7 +182,7 @@ export class MenuColumnList extends React.Component<
   setSelectedMenuIndex = (index?: number): any => {
     if (index !== undefined) {
       this.setState(() => {
-        console.log("Updating index to ", index);
+        // console.log("Updating index to ", index);
         return {
           selectedMenuIndex: index,
           selectedCategoryIndex: 0,
@@ -99,7 +196,7 @@ export class MenuColumnList extends React.Component<
   setSelectedCategoryIndex = (index?: number): any => {
     if (index !== undefined) {
       this.setState(() => {
-        console.log("From local setSelectedCategoryIndex");
+        // console.log("From local setSelectedCategoryIndex");
         return {
           selectedCategoryIndex: index,
           selectedItemIndex: 0,
@@ -112,7 +209,7 @@ export class MenuColumnList extends React.Component<
   setSelectedItemIndex = (index: number): any => {
     if (index !== undefined) {
       this.setState(() => {
-        console.log("From local setSelectedItemIndex");
+        // console.log("From local setSelectedItemIndex");
         return {
           selectedItemIndex: index,
         };
@@ -124,7 +221,7 @@ export class MenuColumnList extends React.Component<
 
   // Generic textfield updater
   updateText = (e: any) => {
-    console.log("Text in textfield: ", e.target.value);
+    // console.log("Text in textfield: ", e.target.value);
     this.setState(() => {
       return {
         addingItemName: e.target.value,
@@ -138,22 +235,24 @@ export class MenuColumnList extends React.Component<
 
   // Menu-specific helper methods and button event handlers
   handleMenuAddClick = () => {
-    this.setState(() => {
-      const items = this.state.menuItems.concat({
-        id: this.state.menuItems.length,
-        name: this.state.addingItemName,
-        handleDeleteClick: this.handleMenuDeleteClick,
-        categoryItems: [],
-      });
+    const items = this.state.menuItems.concat({
+      id: this.state.menuItems.length,
+      name: this.state.addingItemName,
+      handleDeleteClick: this.handleMenuDeleteClick,
+      categoryItems: [],
+    });
 
+    this.setState(() => {
       return {
         menuItems: items,
       };
     });
+
+    this.pushMenuToDatabase(items);
   };
   handleMenuAddRetrieveText = (e: any) => {
     e.preventDefault();
-    console.log(this.state.addingItemName);
+    // console.log(this.state.addingItemName);
     this.handleMenuAddClick();
     this.setState(() => {
       return {
@@ -179,28 +278,24 @@ export class MenuColumnList extends React.Component<
         menuItems: newArray,
       };
     });
-    console.log(
-      this.state.selectedItemIndex,
-      " ",
-      this.state.selectedCategoryIndex,
-      " ",
-      this.state.selectedMenuIndex
-    );
+
+    this.pushMenuToDatabase(newArray);
   };
   handleMenuEditClick = () => {
+    const items = this.state.menuItems;
+    items[this.state.selectedMenuIndex].name = this.state.addingItemName;
+
     this.setState(() => {
-      const items = this.state.menuItems;
-
-      items[this.state.selectedMenuIndex].name = this.state.addingItemName;
-
       return {
         menuItems: items,
       };
     });
+
+    this.pushMenuToDatabase(items);
   };
   handleMenuEditRetrieveText = (e: any) => {
     e.preventDefault();
-    console.log(this.state.addingItemName);
+    // console.log(this.state.addingItemName);
     this.handleMenuEditClick();
     this.setState(() => {
       return {
@@ -211,28 +306,30 @@ export class MenuColumnList extends React.Component<
 
   // Category-specific helper methods and button event handlers
   handleCategoryAddClick = () => {
+    const items = this.state.menuItems[
+      this.state.selectedMenuIndex
+    ].categoryItems.concat({
+      id: this.state.menuItems[this.state.selectedMenuIndex].categoryItems
+        .length,
+      name: this.state.addingItemName,
+      handleDeleteClick: this.handleCategoryDeleteClick,
+      items: [],
+    });
+
+    const updatingMenuItems = this.state.menuItems;
+    updatingMenuItems[this.state.selectedMenuIndex].categoryItems = items;
+
     this.setState(() => {
-      const items = this.state.menuItems[
-        this.state.selectedMenuIndex
-      ].categoryItems.concat({
-        id: this.state.menuItems[this.state.selectedMenuIndex].categoryItems
-          .length,
-        name: this.state.addingItemName,
-        handleDeleteClick: this.handleCategoryDeleteClick,
-        items: [],
-      });
-
-      const updatingMenuItems = this.state.menuItems;
-      updatingMenuItems[this.state.selectedMenuIndex].categoryItems = items;
-
       return {
         menuItems: updatingMenuItems,
       };
     });
+
+    this.pushMenuToDatabase(updatingMenuItems);
   };
   handleCategoryAddRetrieveText = (e: any) => {
     e.preventDefault();
-    console.log(this.state.addingItemName);
+    // console.log(this.state.addingItemName);
     this.handleCategoryAddClick();
     this.setState(() => {
       return {
@@ -245,7 +342,7 @@ export class MenuColumnList extends React.Component<
       this.state.menuItems[this.state.selectedMenuIndex].categoryItems;
 
     let newArray = array.filter(function logic(element) {
-      console.log(element.id, "---", id);
+      // console.log(element.id, "---", id);
       return element.id !== id;
     });
     for (let i = 0; i < newArray.length; i++) {
@@ -260,23 +357,27 @@ export class MenuColumnList extends React.Component<
         menuItems: updatingMenuItems,
       };
     });
+
+    this.pushMenuToDatabase(updatingMenuItems);
   };
   handleCategoryEditClick = () => {
+    const items = this.state.menuItems;
+
+    items[this.state.selectedMenuIndex].categoryItems[
+      this.state.selectedCategoryIndex
+    ].name = this.state.addingItemName;
+
     this.setState(() => {
-      const items = this.state.menuItems;
-
-      items[this.state.selectedMenuIndex].categoryItems[
-        this.state.selectedCategoryIndex
-      ].name = this.state.addingItemName;
-
       return {
         menuItems: items,
       };
     });
+
+    this.pushMenuToDatabase(items);
   };
   handleCategoryEditRetrieveText = (e: any) => {
     e.preventDefault();
-    console.log(this.state.addingItemName);
+    // console.log(this.state.addingItemName);
     this.handleCategoryEditClick();
     this.setState(() => {
       return {
@@ -287,33 +388,35 @@ export class MenuColumnList extends React.Component<
 
   // Item-specific helper methods and button event handlers
   handleItemAddClick = () => {
-    this.setState(() => {
-      const items = this.state.menuItems[
-        this.state.selectedMenuIndex
-      ].categoryItems[this.state.selectedCategoryIndex].items.concat({
-        id: this.state.menuItems[this.state.selectedMenuIndex].categoryItems[
-          this.state.selectedCategoryIndex
-        ].items.length,
-        name: this.state.addingItemName,
-        handleDeleteClick: this.handleItemDeleteClick,
-        description: "",
-        price: 0,
-        ingredients: "",
-      });
-
-      const updatingMenuItems = this.state.menuItems;
-      updatingMenuItems[this.state.selectedMenuIndex].categoryItems[
+    const items = this.state.menuItems[
+      this.state.selectedMenuIndex
+    ].categoryItems[this.state.selectedCategoryIndex].items.concat({
+      id: this.state.menuItems[this.state.selectedMenuIndex].categoryItems[
         this.state.selectedCategoryIndex
-      ].items = items;
+      ].items.length,
+      name: this.state.addingItemName,
+      handleDeleteClick: this.handleItemDeleteClick,
+      description: "",
+      price: 0,
+      ingredients: "",
+    });
 
+    const updatingMenuItems = this.state.menuItems;
+    updatingMenuItems[this.state.selectedMenuIndex].categoryItems[
+      this.state.selectedCategoryIndex
+    ].items = items;
+
+    this.setState(() => {
       return {
         menuItems: updatingMenuItems,
       };
     });
+
+    this.pushMenuToDatabase(updatingMenuItems);
   };
   handleItemAddRetrieveText = (e: any) => {
     e.preventDefault();
-    console.log(this.state.addingItemName);
+    // console.log(this.state.addingItemName);
     this.handleItemAddClick();
     this.setState(() => {
       return {
@@ -328,7 +431,7 @@ export class MenuColumnList extends React.Component<
       ].items;
 
     let newArray = array.filter(function logic(element) {
-      console.log(element.id, "---", id);
+      // console.log(element.id, "---", id);
       return element.id !== id;
     });
     for (let i = 0; i < newArray.length; i++) {
@@ -345,19 +448,23 @@ export class MenuColumnList extends React.Component<
         menuItems: updatingMenuItems,
       };
     });
+
+    this.pushMenuToDatabase(updatingMenuItems);
   };
   handleItemEditClick = () => {
+    const items = this.state.menuItems;
+
+    items[this.state.selectedMenuIndex].categoryItems[
+      this.state.selectedCategoryIndex
+    ].items[this.state.selectedItemIndex].name = this.state.addingItemName;
+
     this.setState(() => {
-      const items = this.state.menuItems;
-
-      items[this.state.selectedMenuIndex].categoryItems[
-        this.state.selectedCategoryIndex
-      ].items[this.state.selectedItemIndex].name = this.state.addingItemName;
-
       return {
         menuItems: items,
       };
     });
+
+    this.pushMenuToDatabase(items);
   };
   handleItemEditRetrieveText = (e: any) => {
     e.preventDefault();
@@ -372,176 +479,181 @@ export class MenuColumnList extends React.Component<
 
   // Item Page helper method to update fields real time
   checkItemUpdate = (item: ItemProps) => {
+    let newArray = this.state.menuItems;
+    newArray[this.state.selectedMenuIndex].categoryItems[
+      this.state.selectedCategoryIndex
+    ].items[this.state.selectedItemIndex] = item;
+
     this.setState(() => {
-      let newArray = this.state.menuItems;
-      newArray[this.state.selectedMenuIndex].categoryItems[
-        this.state.selectedCategoryIndex
-      ].items[this.state.selectedItemIndex] = item;
       return { menuItems: newArray };
     });
+
+    this.pushMenuToDatabase(newArray);
   };
 
   render() {
-    console.log(
-      this.state.selectedMenuIndex,
-      " ",
-      this.state.selectedCategoryIndex,
-      " ",
-      this.state.selectedItemIndex
-    );
+    // console.log(
+    //   this.state.selectedMenuIndex,
+    //   " ",
+    //   this.state.selectedCategoryIndex,
+    //   " ",
+    //   this.state.selectedItemIndex
+    // );
     return (
       <>
-        <Grid container spacing={0} bgcolor={"white"} height="100vh">
-          <Grid
-            item
-            xs={2}
-            borderRight={1}
-            borderColor="grey.300"
-            height="100vh"
-            minHeight={460}
-          >
-            <Box maxHeight={25}>
-              <Typography
-                align="center"
-                bgcolor="#f59795"
-                color="white"
-                variant="h5"
-              >
-                Menu
-              </Typography>
-            </Box>
+        {!this.state.loading && (
+          <Grid container spacing={0} bgcolor={"white"} height="100vh">
+            <Grid
+              item
+              xs={2}
+              borderRight={1}
+              borderColor="grey.300"
+              height="100vh"
+              minHeight={460}
+            >
+              <Box maxHeight={25}>
+                <Typography
+                  align="center"
+                  bgcolor="#f59795"
+                  color="white"
+                  variant="h5"
+                >
+                  Menu
+                </Typography>
+              </Box>
 
-            <List component="nav">
-              <Grid item xs={12}>
-                <ColumnListItemButton
-                  deleteDialogTitle="Are you sure you want to delete the menu?"
-                  deleteDialogLabel="All items in the menu will be deleted as well."
-                  editDialogTitle="Enter New Menu Name"
-                  editDialogLabel="New Menu Name"
-                  items={this.state.menuItems}
-                  handleDeleteClick={this.handleMenuDeleteClick}
-                  handleEditRetrieveText={this.handleMenuEditRetrieveText}
-                  updateText={this.updateText}
-                  validateText={this.validateText}
-                  setSelectedColumnIndex={this.setSelectedMenuIndex}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <ListItem disablePadding alignItems="center">
-                  <AddButtonWithDialog
-                    title="Enter Menu Name"
-                    label="Menu Name"
-                    handleAddRetrieveText={this.handleMenuAddRetrieveText}
+              <List component="nav">
+                <Grid item xs={12}>
+                  <ColumnListItemButton
+                    deleteDialogTitle="Are you sure you want to delete the menu?"
+                    deleteDialogLabel="All items in the menu will be deleted as well."
+                    editDialogTitle="Enter New Menu Name"
+                    editDialogLabel="New Menu Name"
+                    items={this.state.menuItems}
+                    handleDeleteClick={this.handleMenuDeleteClick}
+                    handleEditRetrieveText={this.handleMenuEditRetrieveText}
                     updateText={this.updateText}
                     validateText={this.validateText}
+                    setSelectedColumnIndex={this.setSelectedMenuIndex}
                   />
-                </ListItem>
-              </Grid>
-            </List>
-          </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <ListItem disablePadding alignItems="center">
+                    <AddButtonWithDialog
+                      title="Enter Menu Name"
+                      label="Menu Name"
+                      handleAddRetrieveText={this.handleMenuAddRetrieveText}
+                      updateText={this.updateText}
+                      validateText={this.validateText}
+                    />
+                  </ListItem>
+                </Grid>
+              </List>
+            </Grid>
 
-          <Grid
-            item
-            xs={2}
-            borderRight={1}
-            borderColor="grey.300"
-            height="100vh"
-            minHeight={460}
-          >
-            <Box maxHeight={25}>
-              <Typography
-                align="center"
-                bgcolor="#f59795"
-                color="white"
-                variant="h5"
-              >
-                Category
-              </Typography>
-            </Box>
-            {this.validateMenuIndexBeforeRender() !== -1 && (
-              <>
-                <CategoryColumnList
-                  categoryItems={
-                    this.state.menuItems[this.state.selectedMenuIndex]
-                      .categoryItems
-                  }
-                  handleCategoryAddRetrieveText={
-                    this.handleCategoryAddRetrieveText
-                  }
-                  handleCategoryDeleteClick={this.handleCategoryDeleteClick}
-                  handleCategoryEditRetrieveText={
-                    this.handleCategoryEditRetrieveText
-                  }
-                  updateText={this.updateText}
-                  validateText={this.validateText}
-                  setSelectedCategoryIndex={this.setSelectedCategoryIndex}
-                />
-              </>
-            )}
-          </Grid>
-
-          <Grid
-            item
-            xs={2}
-            borderRight={1}
-            borderColor="grey.300"
-            height="100vh"
-            minHeight={460}
-          >
-            <Box maxHeight={25}>
-              <Typography
-                align="center"
-                bgcolor="#f59795"
-                color="white"
-                variant="h5"
-              >
-                Item
-              </Typography>
-            </Box>
-            {this.validateCategoryIndexBeforeRender() !== -1 && (
-              <>
-                <ItemColumnList
-                  itemItems={
-                    this.state.menuItems[this.state.selectedMenuIndex]
-                      .categoryItems[this.state.selectedCategoryIndex].items
-                  }
-                  handleItemAddRetrieveText={this.handleItemAddRetrieveText}
-                  handleItemDeleteClick={this.handleItemDeleteClick}
-                  handleItemEditRetrieveText={this.handleItemEditRetrieveText}
-                  updateText={this.updateText}
-                  validateText={this.validateText}
-                  setSelectedItemIndex={this.setSelectedItemIndex}
-                />
-              </>
-            )}
-          </Grid>
-
-          <Grid item xs={6}>
-            <Box maxHeight={25}>
-              <Typography
-                align="center"
-                bgcolor="#f59795"
-                color="white"
-                variant="h5"
-              >
-                Item Detail
-              </Typography>
-            </Box>
-            {this.validateItemIndexBeforeRender() !== -1 && (
-              <Box width="95%" marginLeft={2} marginTop={2}>
-                <ItemColumnPage
-                  item={
-                    this.state.menuItems[this.state.selectedMenuIndex]
-                      .categoryItems[this.state.selectedCategoryIndex].items[
-                      this.state.selectedItemIndex
-                    ]
-                  }
-                  checkItemUpdate={this.checkItemUpdate}
-                />
+            <Grid
+              item
+              xs={2}
+              borderRight={1}
+              borderColor="grey.300"
+              height="100vh"
+              minHeight={460}
+            >
+              <Box maxHeight={25}>
+                <Typography
+                  align="center"
+                  bgcolor="#f59795"
+                  color="white"
+                  variant="h5"
+                >
+                  Category
+                </Typography>
               </Box>
-            )}
+              {this.validateMenuIndexBeforeRender() !== -1 && (
+                <>
+                  <CategoryColumnList
+                    categoryItems={
+                      this.state.menuItems[this.state.selectedMenuIndex]
+                        .categoryItems
+                    }
+                    handleCategoryAddRetrieveText={
+                      this.handleCategoryAddRetrieveText
+                    }
+                    handleCategoryDeleteClick={this.handleCategoryDeleteClick}
+                    handleCategoryEditRetrieveText={
+                      this.handleCategoryEditRetrieveText
+                    }
+                    updateText={this.updateText}
+                    validateText={this.validateText}
+                    setSelectedCategoryIndex={this.setSelectedCategoryIndex}
+                  />
+                </>
+              )}
+            </Grid>
+
+            <Grid
+              item
+              xs={2}
+              borderRight={1}
+              borderColor="grey.300"
+              height="100vh"
+              minHeight={460}
+            >
+              <Box maxHeight={25}>
+                <Typography
+                  align="center"
+                  bgcolor="#f59795"
+                  color="white"
+                  variant="h5"
+                >
+                  Item
+                </Typography>
+              </Box>
+              {this.validateCategoryIndexBeforeRender() !== -1 && (
+                <>
+                  <ItemColumnList
+                    itemItems={
+                      this.state.menuItems[this.state.selectedMenuIndex]
+                        .categoryItems[this.state.selectedCategoryIndex].items
+                    }
+                    handleItemAddRetrieveText={this.handleItemAddRetrieveText}
+                    handleItemDeleteClick={this.handleItemDeleteClick}
+                    handleItemEditRetrieveText={this.handleItemEditRetrieveText}
+                    updateText={this.updateText}
+                    validateText={this.validateText}
+                    setSelectedItemIndex={this.setSelectedItemIndex}
+                  />
+                </>
+              )}
+            </Grid>
+
+            <Grid item xs={6}>
+              <Box maxHeight={25}>
+                <Typography
+                  align="center"
+                  bgcolor="#f59795"
+                  color="white"
+                  variant="h5"
+                >
+                  Item Detail
+                </Typography>
+              </Box>
+              {this.validateItemIndexBeforeRender() !== -1 && (
+                <Box width="95%" marginLeft={2} marginTop={2}>
+                  <ItemColumnPage
+                    item={
+                      this.state.menuItems[this.state.selectedMenuIndex]
+                        .categoryItems[this.state.selectedCategoryIndex].items[
+                        this.state.selectedItemIndex
+                      ]
+                    }
+                    checkItemUpdate={this.checkItemUpdate}
+                  />
+                </Box>
+              )}
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </>
     );
   }

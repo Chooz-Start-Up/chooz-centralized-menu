@@ -7,9 +7,9 @@ export interface IMenu {
 
 export class Menu implements IMenu {
   private _menuName: string;
-  private _categories: Category[] | undefined;
+  private _categories: Category[];
 
-  constructor(menuName: string = "", categories?: Category[]) {
+  constructor(menuName: string = "", categories: Category[] = []) {
     this._menuName = menuName;
     this._categories = categories;
   }
@@ -21,10 +21,10 @@ export class Menu implements IMenu {
     this._menuName = value;
   }
 
-  public get categories(): Category[] | undefined {
+  public get categories(): Category[] {
     return this._categories;
   }
-  public set categories(value: Category[] | undefined) {
+  public set categories(value: Category[]) {
     this._categories = value;
   }
 
