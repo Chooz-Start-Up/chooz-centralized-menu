@@ -16,6 +16,8 @@ import AccessQRButton from "../component/buttons/AccessQRButton";
 import { MenuEditPageProp, MenuEditPageState } from "./interface";
 import { choozTheme } from "./theme";
 import ProfilePanel from "../component/edit_page_components/ProfilePanel";
+import { pullRestaurantByUser } from "../firebase/databaseAPI/RestaurantApi";
+import { auth } from "../firebase/authentication/firebaseAuthentication";
 
 class MenuEditPage extends React.Component<
   MenuEditPageProp,
@@ -24,12 +26,44 @@ class MenuEditPage extends React.Component<
   constructor(props: MenuEditPageProp) {
     super(props);
 
-    this.state = { tabIndex: 0, isPublished: false };
+    this.state = {
+      tabIndex: 0,
+      isPublished: false,
+      isProfileValid: false,
+      isLoading: false,
+    };
   }
+
+  checkValidProfile = () => {
+    this.setState(() => {
+      return {
+        isLoading: true,
+      };
+    });
+    if (auth !== null && auth.currentUser !== null) {
+      pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
+        let isValid: boolean =
+          restaurant.ownerName !== "" &&
+          restaurant.restaurantName !== "" &&
+          restaurant.description !== "" &&
+          restaurant.phoneNumber !== "" &&
+          restaurant.address !== "";
+
+        this.setState(() => {
+          return {
+            isProfileValid: isValid,
+            isLoading: false,
+          };
+        });
+      });
+    }
+  };
 
   onPublishClick = () => {
     this.setState(() => {
-      return { isPublished: !this.state.isPublished };
+      return {
+        isPublished: !this.state.isPublished,
+      };
     });
   };
 
@@ -109,6 +143,9 @@ class MenuEditPage extends React.Component<
                         />
                         <PublishButton
                           isPublished={this.state.isPublished}
+                          isProfileValid={this.state.isProfileValid}
+                          isLoading={this.state.isLoading}
+                          checkValidProfile={this.checkValidProfile}
                           onPublishClick={this.onPublishClick}
                         />
                       </Box>

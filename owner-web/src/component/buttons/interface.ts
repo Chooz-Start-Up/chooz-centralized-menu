@@ -39,6 +39,9 @@ export interface EditMenuButtonWithDialogProps {
 
 export interface PublishButtonProps {
   isPublished: boolean;
+  isProfileValid: boolean;
+  isLoading: boolean;
+  checkValidProfile(): any;
   onPublishClick(): any;
 }
 

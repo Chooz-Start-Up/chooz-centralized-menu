@@ -3,6 +3,8 @@ export interface MenuEditPageProp {}
 export interface MenuEditPageState {
   tabIndex: number;
   isPublished: boolean;
+  isProfileValid: boolean;
+  isLoading: boolean;
 }
 
 export interface MainLandingPageProps {}

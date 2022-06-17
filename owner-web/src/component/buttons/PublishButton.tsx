@@ -12,11 +12,18 @@ import { PublishButtonProps } from "./interface";
 const PublishButton: React.FC<PublishButtonProps> = (
   props: PublishButtonProps
 ) => {
-  const { isPublished, onPublishClick } = props;
+  const {
+    isPublished,
+    isProfileValid,
+    isLoading,
+    checkValidProfile,
+    onPublishClick,
+  } = props;
 
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
+    checkValidProfile();
     setOpen(true);
   };
 
@@ -65,7 +72,27 @@ const PublishButton: React.FC<PublishButtonProps> = (
       )}
 
       <Dialog
-        open={open && !isPublished}
+        open={open && !isProfileValid && !isLoading}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>
+          Please make sure you have filled in all of the profile information.
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText color="black" id="alert-dialog-slide-description">
+            You will not be able to publish the menu until you have filled in
+            the profile information.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancel}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={open && !isPublished && isProfileValid && !isLoading}
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
@@ -83,7 +110,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
       </Dialog>
 
       <Dialog
-        open={open && isPublished}
+        open={open && isPublished && isProfileValid && !isLoading}
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
