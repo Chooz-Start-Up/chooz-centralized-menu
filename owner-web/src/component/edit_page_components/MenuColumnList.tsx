@@ -20,7 +20,7 @@ import AddButtonWithDialog from "../buttons/AddButtonWithDialog";
 import ColumnListItemButton from "../buttons/ColumnListItemButton";
 import { CategoryColumnList } from "./CategoryColumnList";
 import { ItemColumnList } from "./ItemColumnList";
-import ItemColumnPage from "./ItemColumnDisplay";
+import ItemColumnDisplay from "./ItemColumnDisplay";
 import {
   pullRestaurantByUser,
   pullRestaurantMenuByUser,
@@ -40,7 +40,6 @@ export class MenuColumnList extends React.Component<
     this.state = {
       loading: false,
       key: "",
-      isPublished: false,
       //
       addingItemName: "",
       menuItems: [],
@@ -74,7 +73,6 @@ export class MenuColumnList extends React.Component<
         this.setState(() => {
           return {
             key: restaurant.id,
-            isPublished: restaurant.isPublished,
           };
         });
       });
@@ -530,6 +528,7 @@ export class MenuColumnList extends React.Component<
                     editDialogTitle="Enter New Menu Name"
                     editDialogLabel="New Menu Name"
                     items={this.state.menuItems}
+                    isPublished={this.props.isPublished}
                     handleDeleteClick={this.handleMenuDeleteClick}
                     handleEditRetrieveText={this.handleMenuEditRetrieveText}
                     updateText={this.updateText}
@@ -537,17 +536,19 @@ export class MenuColumnList extends React.Component<
                     setSelectedColumnIndex={this.setSelectedMenuIndex}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <ListItem disablePadding alignItems="center">
-                    <AddButtonWithDialog
-                      title="Enter Menu Name"
-                      label="Menu Name"
-                      handleAddRetrieveText={this.handleMenuAddRetrieveText}
-                      updateText={this.updateText}
-                      validateText={this.validateText}
-                    />
-                  </ListItem>
-                </Grid>
+                {!this.props.isPublished && (
+                  <Grid item xs={12}>
+                    <ListItem disablePadding alignItems="center">
+                      <AddButtonWithDialog
+                        title="Enter Menu Name"
+                        label="Menu Name"
+                        handleAddRetrieveText={this.handleMenuAddRetrieveText}
+                        updateText={this.updateText}
+                        validateText={this.validateText}
+                      />
+                    </ListItem>
+                  </Grid>
+                )}
               </List>
             </Grid>
 
@@ -576,6 +577,7 @@ export class MenuColumnList extends React.Component<
                       this.state.menuItems[this.state.selectedMenuIndex]
                         .categoryItems
                     }
+                    isPublished={this.props.isPublished}
                     handleCategoryAddRetrieveText={
                       this.handleCategoryAddRetrieveText
                     }
@@ -616,6 +618,7 @@ export class MenuColumnList extends React.Component<
                       this.state.menuItems[this.state.selectedMenuIndex]
                         .categoryItems[this.state.selectedCategoryIndex].items
                     }
+                    isPublished={this.props.isPublished}
                     handleItemAddRetrieveText={this.handleItemAddRetrieveText}
                     handleItemDeleteClick={this.handleItemDeleteClick}
                     handleItemEditRetrieveText={this.handleItemEditRetrieveText}
@@ -640,13 +643,14 @@ export class MenuColumnList extends React.Component<
               </Box>
               {this.validateItemIndexBeforeRender() !== -1 && (
                 <Box width="95%" marginLeft={2} marginTop={2}>
-                  <ItemColumnPage
+                  <ItemColumnDisplay
                     item={
                       this.state.menuItems[this.state.selectedMenuIndex]
                         .categoryItems[this.state.selectedCategoryIndex].items[
                         this.state.selectedItemIndex
                       ]
                     }
+                    isPublished={this.props.isPublished}
                     checkItemUpdate={this.checkItemUpdate}
                   />
                 </Box>

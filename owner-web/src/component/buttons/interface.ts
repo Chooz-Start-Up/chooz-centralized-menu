@@ -21,6 +21,7 @@ export interface ColumnListGeneralButtonProps {
   editDialogTitle: string;
   editDialogLabel: string;
   items: GeneralProps[];
+  isPublished: boolean;
   handleDeleteClick(id: number): any;
   handleEditRetrieveText(e: any): any;
   updateText(e: any): any;
@@ -77,4 +78,10 @@ export interface DateTimeInputState {
   isClosed: boolean;
   startTime: string;
   closeTime: string;
+}
+
+export interface UnpublishAndEditButtonWithDialogProps {
+  isPublished: boolean;
+  isLoading: boolean;
+  onUnpublishEditClick(): any;
 }

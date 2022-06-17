@@ -27,12 +27,13 @@ export interface ItemProps {
   ingredients: string;
 }
 
-export interface MenuColumnListProps {}
+export interface MenuColumnListProps {
+  isPublished: boolean;
+}
 
 export interface MenuColumnListState {
   loading: boolean;
   key: string;
-  isPublished: boolean;
   //
   addingItemName: string;
   menuItems: MenuProps[];
@@ -43,6 +44,7 @@ export interface MenuColumnListState {
 
 export interface CategoryColumnListProps {
   categoryItems: CategoryProps[];
+  isPublished: boolean;
   handleCategoryAddRetrieveText(e: any): any;
   handleCategoryDeleteClick(id: number): any;
   handleCategoryEditRetrieveText(e: any): any;
@@ -53,6 +55,7 @@ export interface CategoryColumnListProps {
 
 export interface ItemColumnListProps {
   itemItems: ItemProps[];
+  isPublished: boolean;
   handleItemAddRetrieveText(e: any): any;
   handleItemDeleteClick(id: number): any;
   handleItemEditRetrieveText(e: any): any;
@@ -61,8 +64,9 @@ export interface ItemColumnListProps {
   setSelectedItemIndex(index: number): any;
 }
 
-export interface ItemColumnPageProps {
+export interface ItemColumnDisplayProps {
   item: ItemProps;
+  isPublished: boolean;
   checkItemUpdate(item: ItemProps): any;
 }
 

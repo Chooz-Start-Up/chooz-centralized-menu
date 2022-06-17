@@ -19,6 +19,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
     deleteDialogLabel,
     editDialogTitle,
     editDialogLabel,
+    isPublished,
     handleDeleteClick,
     handleEditRetrieveText,
     updateText,
@@ -56,7 +57,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
             </Grid>
 
             <Grid container justifyContent="flex-end">
-              {setSelectedColumnIndex() === item.id && (
+              {!isPublished && setSelectedColumnIndex() === item.id && (
                 <EditMenuButtonWithDialog
                   title={editDialogTitle}
                   label={editDialogLabel}
@@ -67,7 +68,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
                 />
               )}
 
-              {setSelectedColumnIndex() === item.id && (
+              {!isPublished && setSelectedColumnIndex() === item.id && (
                 <DeleteButtonWithWarningDialog
                   title={deleteDialogTitle}
                   label={deleteDialogLabel}

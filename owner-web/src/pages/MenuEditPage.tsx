@@ -16,8 +16,12 @@ import AccessQRButton from "../component/buttons/AccessQRButton";
 import { MenuEditPageProp, MenuEditPageState } from "./interface";
 import { choozTheme } from "./theme";
 import ProfilePanel from "../component/edit_page_components/ProfilePanel";
-import { pullRestaurantByUser } from "../firebase/databaseAPI/RestaurantApi";
+import {
+  pullRestaurantByUser,
+  pushProfile,
+} from "../firebase/databaseAPI/RestaurantApi";
 import { auth } from "../firebase/authentication/firebaseAuthentication";
+import UnpublishAndEditButtonWithDialog from "../component/buttons/UnpublishAndEditButtonWithDialog";
 
 class MenuEditPage extends React.Component<
   MenuEditPageProp,
@@ -48,6 +52,7 @@ class MenuEditPage extends React.Component<
           this.setState(() => {
             return {
               restaurantName: restaurant.restaurantName,
+              isPublished: restaurant.isPublished,
               isLoading: false,
             };
           });
@@ -81,12 +86,52 @@ class MenuEditPage extends React.Component<
     }
   };
 
+  onUnpublishEditClick = () => {
+    this.setState(() => {
+      return {
+        isLoading: true,
+      };
+    });
+    if (auth !== null && auth.currentUser !== null) {
+      pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
+        restaurant.isPublished = !this.state.isPublished;
+
+        if (auth !== null && auth.currentUser !== null) {
+          pushProfile(auth.currentUser.uid, restaurant);
+
+          this.setState(() => {
+            return {
+              isPublished: !this.state.isPublished,
+              isLoading: false,
+            };
+          });
+        }
+      });
+    }
+  };
+
   onPublishClick = () => {
     this.setState(() => {
       return {
-        isPublished: !this.state.isPublished,
+        isLoading: true,
       };
     });
+    if (auth !== null && auth.currentUser !== null) {
+      pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
+        restaurant.isPublished = !this.state.isPublished;
+
+        if (auth !== null && auth.currentUser !== null) {
+          pushProfile(auth.currentUser.uid, restaurant);
+
+          this.setState(() => {
+            return {
+              isPublished: !this.state.isPublished,
+              isLoading: false,
+            };
+          });
+        }
+      });
+    }
   };
 
   onQRClick = () => {};
@@ -148,9 +193,24 @@ class MenuEditPage extends React.Component<
                       sx={{
                         display: "flex",
                         justifyContent: "space-between",
-                        paddingLeft: "45%",
                       }}
                     >
+                      <Box minWidth="175px">
+                        {this.state.isPublished && (
+                          <Box
+                            alignSelf="left"
+                            paddingTop={1.25}
+                            marginLeft={2}
+                          >
+                            <UnpublishAndEditButtonWithDialog
+                              isPublished={this.state.isPublished}
+                              isLoading={this.state.isPublished}
+                              onUnpublishEditClick={this.onUnpublishEditClick}
+                            />
+                          </Box>
+                        )}
+                      </Box>
+
                       <Box paddingTop={0.5}>
                         <Typography variant="h4">
                           {this.state.restaurantName}
@@ -176,7 +236,7 @@ class MenuEditPage extends React.Component<
                     </Box>
                   </Box>
 
-                  <MenuColumnList />
+                  <MenuColumnList isPublished={this.state.isPublished} />
                 </Box>
               </Box>
             </TabPanel>

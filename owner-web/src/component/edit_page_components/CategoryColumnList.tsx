@@ -19,21 +19,26 @@ export class CategoryColumnList extends React.Component<CategoryColumnListProps>
               updateText={this.props.updateText}
               validateText={this.props.validateText}
               items={this.props.categoryItems}
+              isPublished={this.props.isPublished}
               handleDeleteClick={this.props.handleCategoryDeleteClick}
               setSelectedColumnIndex={this.props.setSelectedCategoryIndex}
             />
           </Grid>
-          <Grid item xs={12}>
-            <ListItem disablePadding alignItems="center">
-              <AddButtonWithDialog
-                title="Enter Category Name"
-                label="Category Name"
-                handleAddRetrieveText={this.props.handleCategoryAddRetrieveText}
-                updateText={this.props.updateText}
-                validateText={this.props.validateText}
-              />
-            </ListItem>
-          </Grid>
+          {!this.props.isPublished && (
+            <Grid item xs={12}>
+              <ListItem disablePadding alignItems="center">
+                <AddButtonWithDialog
+                  title="Enter Category Name"
+                  label="Category Name"
+                  handleAddRetrieveText={
+                    this.props.handleCategoryAddRetrieveText
+                  }
+                  updateText={this.props.updateText}
+                  validateText={this.props.validateText}
+                />
+              </ListItem>
+            </Grid>
+          )}
         </List>
       </>
     );

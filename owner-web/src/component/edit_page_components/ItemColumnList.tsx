@@ -19,21 +19,24 @@ export class ItemColumnList extends React.Component<ItemColumnListProps> {
               updateText={this.props.updateText}
               validateText={this.props.validateText}
               items={this.props.itemItems}
+              isPublished={this.props.isPublished}
               handleDeleteClick={this.props.handleItemDeleteClick}
               setSelectedColumnIndex={this.props.setSelectedItemIndex}
             />
           </Grid>
-          <Grid item xs={12}>
-            <ListItem disablePadding alignItems="center">
-              <AddButtonWithDialog
-                title="Enter Item Name"
-                label="Item Name"
-                handleAddRetrieveText={this.props.handleItemAddRetrieveText}
-                updateText={this.props.updateText}
-                validateText={this.props.validateText}
-              />
-            </ListItem>
-          </Grid>
+          {!this.props.isPublished && (
+            <Grid item xs={12}>
+              <ListItem disablePadding alignItems="center">
+                <AddButtonWithDialog
+                  title="Enter Item Name"
+                  label="Item Name"
+                  handleAddRetrieveText={this.props.handleItemAddRetrieveText}
+                  updateText={this.props.updateText}
+                  validateText={this.props.validateText}
+                />
+              </ListItem>
+            </Grid>
+          )}
         </List>
       </>
     );

@@ -1,8 +1,5 @@
 import * as React from "react";
-import { Grid, List, ListItem, ListItemButton } from "@mui/material/";
-import { ItemColumnListProps, ItemColumnPageProps } from "./interface";
-import ColumnListItemButton from "../buttons/ColumnListItemButton";
-import AddButtonWithDialog from "../buttons/AddButtonWithDialog";
+import { ItemColumnDisplayProps } from "./interface";
 import {
   Box,
   FilledInput,
@@ -18,8 +15,8 @@ import {
   useFormControl,
 } from "@material-ui/core";
 
-const ItemColumnPage: React.FC<ItemColumnPageProps> = (
-  props: ItemColumnPageProps
+const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
+  props: ItemColumnDisplayProps
 ) => {
   const onDescriptionChange = (e: any): any => {
     props.item.description = e.target.value;
@@ -65,6 +62,7 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
           variant="outlined"
           value={props.item.description}
           onChange={onDescriptionChange}
+          disabled={props.isPublished}
         />
       </Box>
       <Box marginTop={1}>
@@ -76,6 +74,7 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
           value={props.item.price}
           onChange={onPriceChange}
+          disabled={props.isPublished}
         />
       </Box>
       <Box marginTop={1}>
@@ -90,10 +89,11 @@ const ItemColumnPage: React.FC<ItemColumnPageProps> = (
           variant="outlined"
           value={props.item.ingredients}
           onChange={onIngredientsChange}
+          disabled={props.isPublished}
         />
       </Box>
     </>
   );
 };
 
-export default ItemColumnPage;
+export default ItemColumnDisplay;
