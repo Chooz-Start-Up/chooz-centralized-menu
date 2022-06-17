@@ -21,6 +21,7 @@ import MenuEditPage from "./pages/MenuEditPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import AlreadyLoggedInRoute from "./firebase/authentication/AlreadyLoggedInRoute";
+import LoadingPage from "./pages/LoadingPage";
 
 interface AppProps {}
 
@@ -36,25 +37,6 @@ const App: React.FC<AppProps> = (props: AppProps) => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route
-          path="/"
-          element={
-            <>
-              <p>
-                <Link to="/preview">/preview</Link>
-              </p>
-              <p>
-                <Link to="/edit">/edit</Link>
-              </p>
-              <p>
-                <Link to="/login">/login</Link>
-              </p>
-              <p>
-                <Link to="/registration">/registration</Link>
-              </p>
-            </>
-          }
-        /> */}
         <Route path="/" element={<UnderConstructionPage />} />
 
         <Route path="/preview" element={<MainLandingPage />} />

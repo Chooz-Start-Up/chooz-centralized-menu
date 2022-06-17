@@ -45,14 +45,14 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
             selected={setSelectedColumnIndex() === item.id}
             onClick={(event) => handleListItemClick(event, item.id)}
           >
-            <Grid
-              container
-              maxWidth="150px"
-              textOverflow="ellipsis"
-              overflow="hidden"
-              whiteSpace="nowrap"
-            >
-              <Typography>{item.name}</Typography>
+            <Grid container maxWidth="150px">
+              <Typography
+                textOverflow="ellipsis"
+                overflow="hidden"
+                whiteSpace="nowrap"
+              >
+                {item.name}
+              </Typography>
             </Grid>
 
             <Grid container justifyContent="flex-end">
