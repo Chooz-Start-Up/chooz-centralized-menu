@@ -41,7 +41,7 @@ class MenuEditPage extends React.Component<
             <Button
               size="large"
               variant="contained"
-              href="/edit"
+              href="/login"
               sx={{
                 borderRadius: 8,
                 bgcolor: "red",

@@ -20,6 +20,7 @@ import MainLandingPage from "./pages/MainLandingPage";
 import MenuEditPage from "./pages/MenuEditPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
+import AlreadyLoggedInRoute from "./firebase/authentication/AlreadyLoggedInRoute";
 
 interface AppProps {}
 
@@ -70,10 +71,12 @@ const App: React.FC<AppProps> = (props: AppProps) => {
         <Route
           path="/login"
           element={
-            <LoginPage
-              isPasswordVisibile={isPasswordVisibile}
-              handleClickShowPassword={handleClickShowPassword}
-            />
+            <AlreadyLoggedInRoute>
+              <LoginPage
+                isPasswordVisibile={isPasswordVisibile}
+                handleClickShowPassword={handleClickShowPassword}
+              />
+            </AlreadyLoggedInRoute>
           }
         />
         <Route

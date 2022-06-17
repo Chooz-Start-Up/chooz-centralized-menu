@@ -48,7 +48,7 @@ const ChoozAppBar: React.FC<ChoozAppBarProps> = (props: ChoozAppBarProps) => {
           {!loading && user && (
             <Grid container paddingRight={3} justifyContent="flex-end">
               <Button
-                href="/preview/"
+                href="/login/"
                 onClick={() => signOut(auth)}
                 sx={{ p: 0 }}
               >
