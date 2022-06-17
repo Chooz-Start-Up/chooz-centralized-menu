@@ -2,9 +2,9 @@ import { Item } from "./Item";
 
 export class Category {
   private _categoryName: string;
-  private _items: Item[] | undefined;
+  private _items: Item[];
 
-  constructor(categoryName: string = "", items?: Item[]) {
+  constructor(categoryName: string = "", items: Item[] = []) {
     this._categoryName = categoryName;
     this._items = items;
   }
@@ -14,18 +14,18 @@ export class Category {
   public set categoryName(value: string) {
     this._categoryName = value;
   }
-  public get items(): Item[] | undefined {
+  public get items(): Item[] {
     return this._items;
   }
-  public set items(value: Item[] | undefined) {
+  public set items(value: Item[]) {
     this._items = value;
   }
 
   public static parseCategory(jsonStringObject: string): Category {
     let obj = JSON.parse(jsonStringObject);
 
-    let categoryName = obj.categoryName;
-    let items = Item.parseItems(JSON.stringify(obj.items));
+    let categoryName = obj._categoryName;
+    let items = Item.parseItems(JSON.stringify(obj._items));
 
     return new Category(categoryName, items);
   }
@@ -38,7 +38,7 @@ export class Category {
     let keys = Object.keys(obj);
     keys.forEach(function (key: any) {
       let category = Category.parseCategory(JSON.stringify(obj[key]));
-      categories.push(new Category(category.categoryName, category.items));
+      categories.push(new Category(category._categoryName, category._items));
     });
 
     return categories;

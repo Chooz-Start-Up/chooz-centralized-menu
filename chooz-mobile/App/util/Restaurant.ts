@@ -32,7 +32,7 @@ export class Restaurant implements IRestaurant {
     ownerName: string = "",
     address: string = "",
     hours: string = "",
-    menus?: Menu[]
+    menus: Menu[] = []
   ) {
     this._id = id;
     this._restaurantName = restaurantName;
@@ -115,7 +115,10 @@ export class Restaurant implements IRestaurant {
     this._ownerName = obj.ownerName;
     this._address = obj.address;
     this._hours = obj.hours;
-    this._menus = Menu.parseMenus(JSON.stringify(obj.menus));
+  }
+
+  public setMenus(jsonStringObject: any) {
+    this._menus = Menu.parseMenus(jsonStringObject);
   }
 
   public static parseRestaurant(jsonStringObject: string): Restaurant {

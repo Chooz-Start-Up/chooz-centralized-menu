@@ -9,9 +9,8 @@ import {
   set,
 } from "firebase/database";
 import { Restaurant } from "./Restaurant";
-import { string } from "prop-types";
 import { db } from "../data/database";
-import { useReducer } from "react";
+import { Menu } from "./Menu";
 
 const dbRef = ref(getDatabase());
 
@@ -75,7 +74,6 @@ export async function getRestaurantList(
             )
           );
         });
-
         setRestaurantList(objList);
         if (setLoading !== undefined) {
           setLoading(false);
@@ -114,6 +112,18 @@ export async function getRestaurantDetails(
     .catch((error) => {
       console.error(error);
     });
+  get(child(dbRef, "restaurantMenuList/" + restaurant.id + "/menus"))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        restaurant.setMenus(JSON.stringify(data));
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 /**
@@ -126,7 +136,6 @@ export async function getRestaurantDetails(
 async function addRestaurant(uid: string, restaurant: Restaurant) {
   let key = push(child(ref(db), "users/" + uid)).key;
 
-  console.log(restaurant);
   const restaurantListData = {
     id: key,
     restaurantName: restaurant.restaurantName,

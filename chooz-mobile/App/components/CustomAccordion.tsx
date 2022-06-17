@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Platform, View, StyleSheet, Dimensions } from "react-native";
+import { Platform, View, StyleSheet, Dimensions, Text } from "react-native";
 import { Divider, List } from "react-native-paper";
 import colors from "../constants/colors";
 import { Category } from "../util/Category";
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   listItem: {
-    backgroundColor: "grey",
+    backgroundColor: "white",
     alignItems: "center",
   },
   listItemText: {
@@ -54,16 +54,18 @@ const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
     >
       <Divider />
 
-      {items?.map((item) => {
+      {items?.map((item, i) => {
         return (
-          <View key={item.itemName + "View"}>
+          <View key={item.itemName + "View" + i}>
             <List.Item
-              key={item.itemName + "List"}
+              key={item.itemName + "List" + i}
               title={item.itemName}
+              description={item.description}
+              right={() => <Text>{item.price}</Text>}
               style={styles.listItem}
               onPress={() => navigate("ItemScreen", item)}
             />
-            <RowSeparator key={item.itemName + "Separator"} />
+            <RowSeparator key={item.itemName + "Separator" + i} />
           </View>
         );
       })}

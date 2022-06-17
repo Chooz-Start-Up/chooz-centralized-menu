@@ -8,12 +8,11 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { List } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-
 import { RestaurantStackParamList } from "../config/navigation";
 import { RowSeparator } from "../components/RowItem";
 import { Restaurant } from "../util/Restaurant";
-import { getRestaurantList } from "../util/RestaurantApi";
 import colors from "../constants/colors";
+import { getRestaurantList } from "../util/RestaurantApi";
 
 type Props = NativeStackScreenProps<
   RestaurantStackParamList,
