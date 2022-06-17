@@ -15,9 +15,22 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    "submit": {
+      "production": {
+        "ios": {
+          "appleId": "justingalang@gmail.com",
+          "ascAppId": "1630258641",
+          "appleTeamId": "GL2R4GY29R"
+        }
+      }
+    },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.chooz.choozmobile"
+      "bundleIdentifier": "com.chooz.choozmobile",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow Expo experiences to use your camera"
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "com.chooz.choozmobile",
@@ -25,7 +38,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

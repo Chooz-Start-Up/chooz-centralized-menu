@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "620102991378",
+    "firebase_url": "https://chooz-1a9aa-default-rtdb.firebaseio.com",
+    "project_id": "chooz-1a9aa",
+    "storage_bucket": "chooz-1a9aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620102991378:android:f912b431b13afed19922cb",
+        "android_client_info": {
+          "package_name": "com.chooz.choozmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620102991378-j0thv6mm2bt8itcvsojrgk1tq0946c84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3EBgJFePVUzRoHo5T7efpWUR99FexBNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620102991378-j0thv6mm2bt8itcvsojrgk1tq0946c84.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
