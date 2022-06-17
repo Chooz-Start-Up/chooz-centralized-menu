@@ -27,11 +27,33 @@ class MenuEditPage extends React.Component<
     super(props);
 
     this.state = {
+      restaurantName: "",
+
       tabIndex: 0,
       isPublished: false,
       isProfileValid: false,
       isLoading: false,
     };
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged(() => {
+      this.setState(() => {
+        return { isLoading: true };
+      });
+
+      if (auth !== null && auth.currentUser !== null) {
+        pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
+          console.log(restaurant);
+          this.setState(() => {
+            return {
+              restaurantName: restaurant.restaurantName,
+              isLoading: false,
+            };
+          });
+        });
+      }
+    });
   }
 
   checkValidProfile = () => {
@@ -130,7 +152,9 @@ class MenuEditPage extends React.Component<
                       }}
                     >
                       <Box paddingTop={0.5}>
-                        <Typography variant="h4">Restaurant</Typography>
+                        <Typography variant="h4">
+                          {this.state.restaurantName}
+                        </Typography>
                       </Box>
 
                       <Box

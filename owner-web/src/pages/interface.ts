@@ -1,6 +1,8 @@
 export interface MenuEditPageProp {}
 
 export interface MenuEditPageState {
+  restaurantName: string;
+
   tabIndex: number;
   isPublished: boolean;
   isProfileValid: boolean;
