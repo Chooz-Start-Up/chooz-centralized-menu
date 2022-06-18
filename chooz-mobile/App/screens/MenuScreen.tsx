@@ -3,10 +3,8 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  Text,
   StyleSheet,
   Dimensions,
-  View,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import {
@@ -59,6 +57,8 @@ const MenuScreen: React.FC<Props> = ({ route }: Props) => {
   let openItem = (screen: keyof RestaurantStackParamList, item: Item) => {
     navigation.navigate(screen, { item });
   };
+
+  console.log("MENU: " + menus);
 
   return (
     <SafeAreaView style={styles.safeAreaView}>

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   listItem: {
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     alignItems: "center",
   },
   listItemText: {
@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === "ios" ? 17 : 16,
     marginTop: 0,
     height: 75,
-    backgroundColor: colors.white,
   },
   columnSeparator: {
     backgroundColor: colors.border,
@@ -35,6 +34,11 @@ const styles = StyleSheet.create({
   sectionRowSeparator: {
     width: screen.width,
   },
+  rightItem: {
+    justifyContent: "center",
+    backgroundColor: colors.white,
+  },
+  rightItemText: {},
 });
 
 const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
@@ -61,7 +65,11 @@ const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
               key={item.itemName + "List" + i}
               title={item.itemName}
               description={item.description}
-              right={() => <Text>{item.price}</Text>}
+              right={() => (
+                <View style={styles.rightItem}>
+                  <Text>{item.price}</Text>
+                </View>
+              )}
               style={styles.listItem}
               onPress={() => navigate("ItemScreen", item)}
             />

@@ -31,6 +31,7 @@ const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
   scrollView: {
     height: screen.height,
+    backgroundColor: colors.white,
     //flex: 1,
   },
   portal: {},
@@ -39,11 +40,11 @@ const styles = StyleSheet.create({
     margin: 5,
     right: 0,
     top: Platform.OS === "ios" ? screen.height * 0.1 : screen.height * 0.09,
-    //bottom: screen.height - 5,
-    //bottom: 0,
+    backgroundColor: colors.lightRed,
+    color: colors.darkRed,
   },
   pictureView: {
-    backgroundColor: colors.blue,
+    backgroundColor: "lightgrey",
     height: 175,
   },
   descriptionView: {
@@ -71,14 +72,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: Platform.OS === "ios" ? 17 : 14,
     marginBottom: 5,
+    color: colors.darkRed,
   },
   bodyText: {
     marginLeft: 20,
-    fontSize: Platform.OS === "ios" ? 15 : 12,
+    fontSize: Platform.OS === "ios" ? 17 : 14,
   },
   descriptionText: {
     textAlign: "center",
     fontSize: Platform.OS === "ios" ? 17 : 14,
+    fontWeight: "bold",
   },
 });
 
