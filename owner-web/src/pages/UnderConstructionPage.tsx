@@ -13,7 +13,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import JacobChoi from "../component/images/profile/jacob_choi.jpg";
 import JustinGalang from "../component/images/profile/justin_galang.jpg";
 
-const InConstructionPage: React.FC = () => {
+const UnderConstructionPage: React.FC = () => {
   return (
     <>
       <ThemeProvider theme={choozTheme}>
@@ -114,4 +114,4 @@ const InConstructionPage: React.FC = () => {
   );
 };
 
-export default InConstructionPage;
+export default UnderConstructionPage;
