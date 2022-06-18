@@ -46,14 +46,14 @@ const UnderConstructionPage: React.FC = () => {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          height="100vh"
+          height="100%"
           bgcolor="#ffd7db"
         >
           <Box
             boxShadow={5}
             sx={{
-              width: 600,
-              height: 460,
+              width: "80%",
+              height: "auto",
             }}
             bgcolor="white"
             textAlign="center"

@@ -12,6 +12,9 @@ export const choozTheme = createTheme({
     background: {
       paper: "#ffd7db",
     },
+    info: {
+      main: "#fffaef",
+    },
   },
 
   typography: {
