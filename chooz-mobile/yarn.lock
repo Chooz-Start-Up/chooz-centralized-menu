@@ -2199,6 +2199,11 @@
   resolved "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
   integrity sha512-rQfMIGSR/1r/SyN87+VD8xHHzDYeHaJq6elOSCAD+0iLagXkSI2pfA0LmSXP21uw5i3em7GkkRjfJ8wpqWXZNw==
 
+"@react-native-firebase/analytics@^14.11.1":
+  version "14.11.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-14.11.1.tgz#fd75dd699bf811a499aec80b5985d8335f8e0ffd"
+  integrity sha512-ZuBUIIU0qgJANMrGsyOuTi144ZVxMnFESd6pAV5saAPZpmD2R+E/CD+YmHGZR1AFSC1Ujsg/2i1IBgeNyIHJhQ==
+
 "@react-native-firebase/app@^14.11.0":
   version "14.11.0"
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-14.11.0.tgz"
@@ -2212,6 +2217,11 @@
   version "14.11.0"
   resolved "https://registry.npmjs.org/@react-native-firebase/database/-/database-14.11.0.tgz"
   integrity sha512-fD+OYvJjhDhDJmbARzKOZPcsmc3sAExZzKzYijscTDHwhmVM1hgddoTQZMQr40jIQVY5uO2PPx7BiKOz5dZssg==
+
+"@react-native-firebase/dynamic-links@^14.11.1":
+  version "14.11.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-14.11.1.tgz#d7438aba230a27b17cbd2a36d7eb46a62cc24cf3"
+  integrity sha512-PfSsWoHgkwny8Q4UoNIKlptT4T1AYPQ43GRaU5U9AT64LwSfHA03mdhhDzqWGbbIT/hJnczGFgYgLCccmbu0Xg==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"

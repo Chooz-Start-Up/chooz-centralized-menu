@@ -58,7 +58,7 @@ const RestaurantStackScreen = () => {
         name="RestaurantScreen"
         component={RestaurantScreen}
         options={{
-          title: "Restaurant Name",
+          title: "",
           headerTitleStyle: { color: "black" },
           headerShown: true,
           presentation: "card",
@@ -70,7 +70,7 @@ const RestaurantStackScreen = () => {
         name="MenuScreen"
         component={MenuScreen}
         options={{
-          title: "Restaurant Name",
+          title: "",
           gestureEnabled: true,
           gestureDirection: Platform.OS === "ios" ? "horizontal" : "vertical",
           presentation: "card",
