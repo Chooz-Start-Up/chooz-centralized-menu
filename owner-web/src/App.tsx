@@ -78,14 +78,7 @@ const App: React.FC<AppProps> = (props: AppProps) => {
             </AfterVerificationRoute>
           }
         />
-        <Route
-          path="/fillinfo"
-          element={
-            <AuthRoute>
-              <FillRestaurantInfoPage />
-            </AuthRoute>
-          }
-        />
+        <Route path="/fillinfo" element={<FillRestaurantInfoPage />} />
         <Route path="/resetpassword" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>

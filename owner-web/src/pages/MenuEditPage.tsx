@@ -48,7 +48,6 @@ class MenuEditPage extends React.Component<
 
       if (auth !== null && auth.currentUser !== null) {
         pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
-          console.log(restaurant);
           this.setState(() => {
             return {
               restaurantName: restaurant.restaurantName,

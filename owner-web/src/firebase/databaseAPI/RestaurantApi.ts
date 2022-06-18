@@ -58,11 +58,17 @@ export async function pushMenu(uid: string, restaurant: Restaurant) {
 export async function pullRestaurantByUser(uid: string): Promise<Restaurant> {
   return new Promise(function (resolve, reject) {
     getRestaurantKey(uid)
-      .then((key) => {
-        getRestaurantByKey(key).then((restaurant) => {
-          resolve(restaurant);
-        });
-      })
+      .then(
+        (key) => {
+          getRestaurantByKey(key).then((restaurant) => {
+            resolve(restaurant);
+          });
+        },
+        () => {
+          console.log("User data not found. Please refresh");
+          reject();
+        }
+      )
       .catch((error) => reject(error));
   });
 }
@@ -70,11 +76,17 @@ export async function pullRestaurantByUser(uid: string): Promise<Restaurant> {
 export async function pullRestaurantMenuByUser(uid: string): Promise<Menu[]> {
   return new Promise(function (resolve, reject) {
     getRestaurantKey(uid)
-      .then((key) => {
-        getRestaurantMenuByKey(key).then((menus) => {
-          resolve(menus);
-        });
-      })
+      .then(
+        (key) => {
+          getRestaurantMenuByKey(key).then((menus) => {
+            resolve(menus);
+          });
+        },
+        () => {
+          console.log("There are no menu yet");
+          reject();
+        }
+      )
       .catch((error) => reject(error));
   });
 }
@@ -242,7 +254,7 @@ async function updateMenu(restaurantKey: string, restaurant: Restaurant) {
  * @param uid - userID of restaurant you want to retrieve
  * @returns - key of restaurant
  */
-async function getRestaurantKey(uid: string): Promise<string> {
+export async function getRestaurantKey(uid: string): Promise<string> {
   return new Promise(function (resolve, reject) {
     get(child(dbRef, "users/" + uid + "/restaurants"))
       .then((snapshot) => {

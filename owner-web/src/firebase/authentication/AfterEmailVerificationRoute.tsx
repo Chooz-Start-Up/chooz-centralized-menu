@@ -16,6 +16,7 @@ const AfterVerificationRoute: React.FunctionComponent<
   const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
+    if (loading) return;
     if (!user) return navigate("/login");
     else if (user.emailVerified) return navigate("/edit");
   }, [user, loading]);

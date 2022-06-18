@@ -10,6 +10,8 @@ import {
   resendEmailVerification,
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
+import { pushProfile } from "../firebase/databaseAPI/RestaurantApi";
+import { Restaurant } from "../firebase/databaseAPI/Restaurant";
 
 const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
   props: VerifyEmailPageProps
@@ -22,7 +24,21 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
     if (!auth.currentUser?.emailVerified) {
       return auth.currentUser?.reload().then(() => {
         if (auth.currentUser?.emailVerified) {
-          navigate("/fillinfo");
+          pushProfile(
+            auth.currentUser.uid,
+            new Restaurant(
+              "",
+              "",
+              "",
+              false,
+              "",
+              "",
+              "",
+              "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
+            )
+          ).then(() => {
+            navigate("/fillinfo");
+          });
         }
       });
     }

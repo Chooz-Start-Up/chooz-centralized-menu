@@ -53,7 +53,6 @@ export class MenuColumnList extends React.Component<
 
   pushMenuToDatabase(edittedMenus: MenuProps[]) {
     if (auth !== null && auth.currentUser !== null) {
-      console.log("Pushing Menu to Database");
       let menus = new Restaurant(this.state.key);
       menus.setMenuWithMenuProps(edittedMenus);
       pushMenu(auth.currentUser.uid, menus);
@@ -66,10 +65,7 @@ export class MenuColumnList extends React.Component<
     });
 
     if (auth !== null && auth.currentUser !== null) {
-      console.log("started pulling");
       pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
-        console.log(restaurant);
-
         this.setState(() => {
           return {
             key: restaurant.id,
@@ -92,19 +88,16 @@ export class MenuColumnList extends React.Component<
 
   convertMenuToMenuProps(menusObject: any) {
     let dbMenus: Menu[] = menusObject["menus"];
-    console.log("Read Menus: ", dbMenus); //////////////////////////////////////////////
 
     let parsedMenuProps: MenuProps[] = [];
     if (dbMenus !== undefined) {
       dbMenus.forEach((menu, menuIndex) => {
         let dbCategories = menu["_categories"];
-        console.log("Read Categories: ", dbCategories); ////////////////////////////////////////
 
         let categoryItems: CategoryProps[] = [];
         if (dbCategories !== undefined) {
           dbCategories.forEach((cateogry, cateogryIndex) => {
             let dbItems = cateogry["_items"];
-            console.log("Read Items: ", dbItems); ///////////////////////////////////////////
 
             let items: ItemProps[] = [];
             if (dbItems !== undefined) {
@@ -490,13 +483,6 @@ export class MenuColumnList extends React.Component<
   };
 
   render() {
-    // console.log(
-    //   this.state.selectedMenuIndex,
-    //   " ",
-    //   this.state.selectedCategoryIndex,
-    //   " ",
-    //   this.state.selectedItemIndex
-    // );
     return (
       <>
         {!this.state.loading && (

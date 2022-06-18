@@ -22,7 +22,11 @@ import {
   resendEmailVerification,
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
-import { pushProfile } from "../firebase/databaseAPI/RestaurantApi";
+import {
+  getRestaurantKey,
+  pullRestaurantByUser,
+  pushProfile,
+} from "../firebase/databaseAPI/RestaurantApi";
 import { Restaurant } from "../firebase/databaseAPI/Restaurant";
 
 const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
@@ -56,27 +60,11 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
   };
 
   const handleOkay = () => {
-    if (auth !== null && auth.currentUser !== null) {
-      pushProfile(
-        auth.currentUser.uid,
-        new Restaurant(
-          "",
-          "",
-          "",
-          false,
-          "",
-          "",
-          "",
-          "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
-        )
-      );
-    }
-
     setOpen(false);
     navigate("/edit");
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     let isValidOwnerName = validateOwnerName();
     let isValidRestaurantName = validateRestaurantName();
     let isValidDescription = validateDescription();
@@ -93,21 +81,26 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
       auth.currentUser !== null
     ) {
       console.log("Filled information pushed");
-      pushProfile(
-        auth.currentUser.uid,
-        new Restaurant(
-          "",
-          restaurantName,
-          description,
-          false,
-          phoneNumber,
-          ownerName,
-          address,
-          "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
-        )
-      );
+      let uid = auth.currentUser.uid;
 
-      navigate("/edit");
+      getRestaurantKey(uid).then((key) => {
+        pushProfile(
+          uid,
+          new Restaurant(
+            key,
+            restaurantName,
+            description,
+            false,
+            phoneNumber,
+            ownerName,
+            address,
+            "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
+          )
+        ).then(() => {
+          setOpen(false);
+          navigate("/edit");
+        });
+      });
     }
   };
 

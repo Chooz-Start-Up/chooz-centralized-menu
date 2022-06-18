@@ -14,6 +14,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
   const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
+    if (loading) return;
     if (!user) return navigate("/login");
     else if (
       !user.emailVerified &&

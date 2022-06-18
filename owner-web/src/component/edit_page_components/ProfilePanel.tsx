@@ -57,41 +57,35 @@ class ProfilePanel extends React.Component<
       });
 
       if (auth !== null && auth.currentUser !== null) {
-        console.log("started pulling");
-        pullRestaurantByUser(auth.currentUser.uid).then(
-          (restaurant) => {
-            console.log(restaurant);
-            this.setState(() => {
-              return {
-                key: restaurant.id,
-                isPublished: restaurant.isPublished,
-                //
-                ownerName: restaurant.ownerName,
-                restaurantName: restaurant.restaurantName,
-                description: restaurant.description,
-                address: restaurant.address,
-                phoneNumber: restaurant.phoneNumber,
-                hours: restaurant.hours,
-                //
-                newOwnerName: restaurant.ownerName,
-                newRestaurantName: restaurant.restaurantName,
-                newDescription: restaurant.description,
-                newAddress: restaurant.address,
-                newPhoneNumber: restaurant.phoneNumber,
-                newHours: restaurant.hours,
-                //
-                ownerNameValidationText: "",
-                restaurantNameValidationText: "",
-                descriptionValidationText: "",
-                addressValidationText: "",
-                phoneNumberValidationText: "",
-              };
-            });
-          },
-          () => {
-            window.location.reload();
-          }
-        );
+        pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
+          console.log(restaurant);
+          this.setState(() => {
+            return {
+              key: restaurant.id,
+              isPublished: restaurant.isPublished,
+              //
+              ownerName: restaurant.ownerName,
+              restaurantName: restaurant.restaurantName,
+              description: restaurant.description,
+              address: restaurant.address,
+              phoneNumber: restaurant.phoneNumber,
+              hours: restaurant.hours,
+              //
+              newOwnerName: restaurant.ownerName,
+              newRestaurantName: restaurant.restaurantName,
+              newDescription: restaurant.description,
+              newAddress: restaurant.address,
+              newPhoneNumber: restaurant.phoneNumber,
+              newHours: restaurant.hours,
+              //
+              ownerNameValidationText: "",
+              restaurantNameValidationText: "",
+              descriptionValidationText: "",
+              addressValidationText: "",
+              phoneNumberValidationText: "",
+            };
+          });
+        });
 
         this.setState(() => {
           return { loading: false };

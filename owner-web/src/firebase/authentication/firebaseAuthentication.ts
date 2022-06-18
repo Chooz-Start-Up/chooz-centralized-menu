@@ -21,6 +21,8 @@ import {
 } from "firebase/firestore";
 import { Navigate, useNavigate } from "react-router-dom";
 import { firebaseConfig } from "../config/config";
+import { Restaurant } from "../databaseAPI/Restaurant";
+import { pushProfile } from "../databaseAPI/RestaurantApi";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -42,9 +44,23 @@ const signInWithGoogle = async (navigate: any) => {
         name: user.displayName,
         authProvider: "google",
         email: user.email,
+      }).then(() => {
+        pushProfile(
+          user.uid,
+          new Restaurant(
+            "",
+            "",
+            "",
+            false,
+            "",
+            "",
+            "",
+            "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
+          )
+        ).then(() => {
+          navigate("/fillinfo");
+        });
       });
-
-      navigate("/fillinfo");
     } else {
       navigate("/edit");
     }
@@ -110,9 +126,23 @@ const signInWithFacebook = async (navigate: any) => {
         name: user.displayName,
         authProvider: "facebook",
         email: user.email,
+      }).then(() => {
+        pushProfile(
+          user.uid,
+          new Restaurant(
+            "",
+            "",
+            "",
+            false,
+            "",
+            "",
+            "",
+            "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
+          )
+        ).then(() => {
+          navigate("/fillinfo");
+        });
       });
-
-      navigate("/fillinfo");
     } else {
       navigate("/edit");
     }
