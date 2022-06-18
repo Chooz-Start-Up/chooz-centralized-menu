@@ -10,6 +10,10 @@
       {
         "source": "!/menu/**",
         "destination": "/index.html"
+      },
+      {
+        "source": "/.well-known/assetlinks.json",
+        "destination": "/.well-known/assetlinks.json"
       }
     ]
   },
