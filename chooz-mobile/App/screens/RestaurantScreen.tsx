@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     textAlign: "center",
     fontSize: Platform.OS === "ios" ? 17 : 14,
+    fontWeight: "bold",
   },
 });
 
