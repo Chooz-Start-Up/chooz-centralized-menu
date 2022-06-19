@@ -2204,19 +2204,19 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-14.11.1.tgz#fd75dd699bf811a499aec80b5985d8335f8e0ffd"
   integrity sha512-ZuBUIIU0qgJANMrGsyOuTi144ZVxMnFESd6pAV5saAPZpmD2R+E/CD+YmHGZR1AFSC1Ujsg/2i1IBgeNyIHJhQ==
 
-"@react-native-firebase/app@^14.11.0":
-  version "14.11.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-14.11.0.tgz"
-  integrity sha512-LzqgZNx+WcNGYRZG6LB9BkJAx4LE+LsbPF9p65TMSagWYd/iJafoXl4d6KWQeUMIFZQH7Ke/eJ/fIZkc+4eMRw==
+"@react-native-firebase/app@^14.11.1":
+  version "14.11.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-14.11.1.tgz#5d3587bda0a8877863e59384a4d38f7ebc321835"
+  integrity sha512-fkvOK8c7e8MxIbfb2076kO3GtGUc3ZXNEkPyfamRKBnPgANpmnjQaTVIraXpeuIIOfjj5uDK4uw32znWiDusGA==
   dependencies:
     "@expo/config-plugins" "^4.1.5"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/database@^14.11.0":
-  version "14.11.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/database/-/database-14.11.0.tgz"
-  integrity sha512-fD+OYvJjhDhDJmbARzKOZPcsmc3sAExZzKzYijscTDHwhmVM1hgddoTQZMQr40jIQVY5uO2PPx7BiKOz5dZssg==
+"@react-native-firebase/database@14.11.1":
+  version "14.11.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/database/-/database-14.11.1.tgz#5d108ca33270d255b4f2400e1c2d5a63e2194cab"
+  integrity sha512-fX8x58vVDwrhA6j69o5hBhjdc4vKUas8B/cAuueJh5poT3Qx/vQ2V2cqx71288fJvIKX0OGBbBOpmDxSbYmLSQ==
 
 "@react-native-firebase/dynamic-links@^14.11.1":
   version "14.11.1"
@@ -4553,7 +4553,7 @@ expo-asset@~8.5.0:
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
 
-expo-constants@~13.1.1:
+expo-constants@~13.1.0, expo-constants@~13.1.1:
   version "13.1.1"
   resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-13.1.1.tgz"
   integrity sha512-QRVHrrMCLenBzWZ8M+EvCXM+jjdQzFMW27YQHRac3SGGoND1hWr81scOmGwlFo2wLZrYXm8HcYt1E6ry3IIwrA==
@@ -4595,6 +4595,16 @@ expo-keep-awake@~10.1.1:
   version "10.1.1"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-10.1.1.tgz"
   integrity sha512-9zC0sdhQljUeMr2yQ7o4kzEZXVAy82fFOAZE1+TwPL7qR0b0sphe7OJ5T1GX1qLcwuVaJ8YewaPoLSHRk79+Rg==
+
+expo-linking@~3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-3.1.0.tgz#ac16aa976531c6a3e165333670b0e12975b4dfa4"
+  integrity sha512-fZAUjQJThOtBDAdy/wB0bpqCjnGhiEJ+AkWqOQMCrNsd8kVowdA0xNnD1EBk7nESw6/NCg/Iy1lt5smaA21+rA==
+  dependencies:
+    expo-constants "~13.1.0"
+    invariant "^2.2.4"
+    qs "^6.9.1"
+    url-parse "^1.5.9"
 
 expo-manifests@~0.3.0:
   version "0.3.0"
@@ -7780,6 +7790,11 @@ object-hash@^3.0.0:
   resolved "https://registry.npmjs.org/object-hash/-/object-hash-3.0.0.tgz"
   integrity sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==
 
+object-inspect@^1.9.0:
+  version "1.12.2"
+  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.12.2.tgz#c0641f26394532f28ab8d796ab954e43c009a8ea"
+  integrity sha512-z+cPxW0QGUp0mcqcsgQyLVRDoXFQbXOwBaqyF7VIgI4TWNQsDHrBpUQslRmIfAoYWdYzs6UlKJtB2XJpTaNSpQ==
+
 object-keys@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/object-keys/-/object-keys-1.1.1.tgz"
@@ -8389,6 +8404,13 @@ qs@6.7.0, qs@^6.6.0:
   version "6.7.0"
   resolved "https://registry.npmjs.org/qs/-/qs-6.7.0.tgz"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
+
+qs@^6.9.1:
+  version "6.10.5"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.5.tgz#974715920a80ff6a262264acd2c7e6c2a53282b4"
+  integrity sha512-O5RlPh0VFtR78y79rgcgKK4wbAI0C5zGVLztOIdpWX6ep368q5Hv6XRxDvXuZ9q3C6v+e3n8UfZZJw7IIG27eQ==
+  dependencies:
+    side-channel "^1.0.4"
 
 qs@~6.5.2:
   version "6.5.2"
@@ -9244,6 +9266,15 @@ shell-quote@^1.7.3:
   version "1.7.3"
   resolved "https://registry.npmjs.org/shell-quote/-/shell-quote-1.7.3.tgz"
   integrity sha512-Vpfqwm4EnqGdlsBFNmHhxhElJYrdfcxPThu+ryKS5J8L/fhAwLazFZtq+S+TWZ9ANj2piSQLGj6NQg+lKPmxrw==
+
+side-channel@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
+  integrity sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==
+  dependencies:
+    call-bind "^1.0.0"
+    get-intrinsic "^1.0.2"
+    object-inspect "^1.9.0"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.7"
@@ -10195,6 +10226,11 @@ uri-js@^4.2.2:
   integrity sha512-KY9Frmirql91X2Qgjry0Wd4Y+YTdrdZheS8TFwvkbLWf/G5KNJDCh6pKL5OZctEW4+0Baa5idK2ZQuELRwPznQ==
   dependencies:
     punycode "^2.1.0"
+
+uri-scheme@^1.0.120:
+  version "1.0.120"
+  resolved "https://registry.yarnpkg.com/uri-scheme/-/uri-scheme-1.0.120.tgz#3736287334a191ff80a15e507c0d38b47d67de3d"
+  integrity sha512-TpKQG0gZZ9VBoyyQUoCxo/15UFg+1dztHJisIsXyXDKg1jxwF3WGXFlAvrXTm0KHWJWxtKFRBtS9y11bmXsDEg==
 
 urix@^0.1.0:
   version "0.1.0"

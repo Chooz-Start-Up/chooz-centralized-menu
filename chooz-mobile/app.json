@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "testApp",
     "name": "chooz",
     "slug": "chooz",
     "version": "1.0.0",
@@ -37,7 +38,7 @@
     },
     "android": {
       "package": "com.chooz.choozmobile",
-      "versionCode": 2,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Platform } from "react-native";
 import dynamicLinks from "@react-native-firebase/dynamic-links";
+import * as Linking from "expo-linking";
 
 import MenuScreen from "../screens/MenuScreen";
 import ItemScreen from "../screens/ItemScreen";
@@ -67,7 +68,7 @@ const RestaurantStackScreen = () => {
         name="RestaurantScreen"
         component={RestaurantScreen}
         options={{
-          title: "",
+          title: "Restaurant Name",
           headerTitleStyle: { color: "black" },
           headerShown: true,
           presentation: "card",
@@ -79,7 +80,7 @@ const RestaurantStackScreen = () => {
         name="MenuScreen"
         component={MenuScreen}
         options={{
-          title: "",
+          title: "Restaurant Name",
           gestureEnabled: true,
           gestureDirection: Platform.OS === "ios" ? "horizontal" : "vertical",
           presentation: "card",
@@ -113,12 +114,16 @@ const RestaurantStackScreen = () => {
   );
 };
 
+const prefix = Linking.makeUrl("/");
+
+//prefixes: ["https://choozmenu.com/menu"],
 const Navigation = () => {
   const linking = {
-    prefixes: ["https://choozmenu.com/menu"],
+    prefixes: [prefix],
     config: {
       screens: {
-        RestaurantScreen: "Test",
+        RestaurantListScreen: "RestaurantListScreen",
+        RestaurantScreen: "RestaurantScreen",
       },
     },
   };
