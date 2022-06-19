@@ -85,3 +85,8 @@ export interface UnpublishAndEditButtonWithDialogProps {
   isLoading: boolean;
   onUnpublishEditClick(): any;
 }
+
+export interface UploadDeleteImageButtonWithDialogProps {
+  handleUploadAgreeClick(): any;
+  handleDeleteAgreeClick(): any;
+}

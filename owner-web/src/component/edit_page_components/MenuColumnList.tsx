@@ -486,13 +486,19 @@ export class MenuColumnList extends React.Component<
     return (
       <>
         {!this.state.loading && (
-          <Grid container spacing={0} bgcolor={"white"} height="100vh">
+          <Grid
+            container
+            spacing={0}
+            bgcolor={"white"}
+            height="100vh"
+            sx={{ borderLeft: 1, borderColor: "grey.400" }}
+          >
             <Grid
               item
               xs={2}
               borderRight={1}
               borderColor="grey.300"
-              height="100vh"
+              height="auto"
               minHeight={460}
             >
               <Box maxHeight={25}>
@@ -543,7 +549,7 @@ export class MenuColumnList extends React.Component<
               xs={2}
               borderRight={1}
               borderColor="grey.300"
-              height="100vh"
+              height="auto"
               minHeight={460}
             >
               <Box maxHeight={25}>
@@ -584,7 +590,7 @@ export class MenuColumnList extends React.Component<
               xs={2}
               borderRight={1}
               borderColor="grey.300"
-              height="100vh"
+              height="auto"
               minHeight={460}
             >
               <Box maxHeight={25}>

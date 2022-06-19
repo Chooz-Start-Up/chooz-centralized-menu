@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography, Divider, Avatar, Button } from "@mui/material";
 import { ProfilePanelProps, ProfilePanelState } from "./interface";
 import EditProfileButtonWithDialog from "../buttons/EditProfileButtonWithDilogue";
 import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
@@ -13,6 +13,7 @@ import {
 } from "../../firebase/authentication/firebaseAuthentication";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { reload } from "firebase/auth";
+import { choozTheme } from "../../pages/theme";
 
 class ProfilePanel extends React.Component<
   ProfilePanelProps,
@@ -58,7 +59,6 @@ class ProfilePanel extends React.Component<
 
       if (auth !== null && auth.currentUser !== null) {
         pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
-          console.log(restaurant);
           this.setState(() => {
             return {
               key: restaurant.id,
@@ -162,7 +162,6 @@ class ProfilePanel extends React.Component<
   };
   hoursUpdate = (text?: string): string => {
     if (text !== undefined) {
-      console.log(text);
       this.setState(() => {
         return {
           newHours: text,
@@ -269,15 +268,13 @@ class ProfilePanel extends React.Component<
   render() {
     return (
       <>
-        <Box width="100%" height="100%" bgcolor="grey.200">
+        <Box
+          width="100%"
+          bgcolor="grey.200"
+          sx={{ borderLeft: 1, borderColor: "grey.400" }}
+        >
           {!this.state.loading && (
-            <Box
-              padding={5}
-              width="40%"
-              height="100vh"
-              bgcolor="white"
-              borderColor="red"
-            >
+            <Box padding="2%" width="40%" bgcolor="white">
               <Typography variant="h4" color="black" textAlign="left">
                 Profile
               </Typography>
@@ -290,8 +287,8 @@ class ProfilePanel extends React.Component<
                   marginTop: 2,
                 }}
               >
-                <Box width="30%">
-                  <Typography>Owner Name: </Typography>
+                <Box width="40%">
+                  <Typography noWrap>Owner Name: </Typography>
                 </Box>
 
                 <Box width="50%">
@@ -308,8 +305,8 @@ class ProfilePanel extends React.Component<
                   flexDirection: "row",
                 }}
               >
-                <Box width="30%">
-                  <Typography>Restaurant Name:</Typography>
+                <Box width="40%">
+                  <Typography noWrap>Restaurant Name:</Typography>
                 </Box>
 
                 <Box width="50%">
@@ -326,7 +323,7 @@ class ProfilePanel extends React.Component<
                   flexDirection: "row",
                 }}
               >
-                <Box width="30%">
+                <Box width="40%">
                   <Typography>Address: </Typography>
                 </Box>
 
@@ -345,8 +342,8 @@ class ProfilePanel extends React.Component<
                   flexDirection: "row",
                 }}
               >
-                <Box width="30%">
-                  <Typography>Phone Number: </Typography>
+                <Box width="40%">
+                  <Typography noWrap>Phone Number: </Typography>
                 </Box>
 
                 <Box width="50%">
@@ -382,7 +379,7 @@ class ProfilePanel extends React.Component<
                   flexDirection: "row",
                 }}
               >
-                <Box width="30%">
+                <Box width="40%">
                   <Typography>
                     {this.state.hours.split("\n", 7)[0].split(" ", 1)[0]}:
                   </Typography>

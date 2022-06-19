@@ -71,6 +71,7 @@ export async function getRestaurantByKey(key: string): Promise<Restaurant> {
   });
 }
 
+// Updated to return a Promise with an actual Array of Menu
 export async function getRestaurantMenuByKey(
   key: string
 ): Promise<Array<Menu>> {

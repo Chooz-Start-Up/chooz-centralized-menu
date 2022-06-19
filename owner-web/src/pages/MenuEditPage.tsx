@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  Divider,
   Grid,
   Paper,
   Tab,
@@ -16,6 +17,8 @@ import AccessQRButton from "../component/buttons/AccessQRButton";
 import { MenuEditPageProp, MenuEditPageState } from "./interface";
 import { choozTheme } from "./theme";
 import ProfilePanel from "../component/edit_page_components/ProfilePanel";
+import { UploadImagePanel } from "../component/edit_page_components/UploadImagePanel";
+
 import {
   pullRestaurantByUser,
   pushProfile,
@@ -154,7 +157,7 @@ class MenuEditPage extends React.Component<
           <Box
             sx={{
               flexGrow: 1,
-              bgcolor: "background.paper",
+              bgcolor: "white",
               display: "flex",
             }}
           >
@@ -163,18 +166,18 @@ class MenuEditPage extends React.Component<
               variant="scrollable"
               value={this.state.tabIndex}
               onChange={this.handleTabPanelChange}
-              sx={{
-                borderRight: 1,
-                borderColor: "grey.400",
-              }}
             >
               <Tab label="Profile" {...this.tabPanelProps(0)} />
-              <Tab label="Edit Menu" {...this.tabPanelProps(1)} />
+              <Tab label="Upload Image" {...this.tabPanelProps(1)} />
+              <Tab label="Edit Menu" {...this.tabPanelProps(2)} />
             </Tabs>
             <TabPanel value={this.state.tabIndex} index={0}>
               <ProfilePanel />
             </TabPanel>
             <TabPanel value={this.state.tabIndex} index={1}>
+              <UploadImagePanel />
+            </TabPanel>
+            <TabPanel value={this.state.tabIndex} index={2}>
               <Box
                 sx={{
                   width: "100%",

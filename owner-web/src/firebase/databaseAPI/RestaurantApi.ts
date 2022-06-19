@@ -8,9 +8,18 @@ import {
   update,
   set,
 } from "firebase/database";
+import {
+  uploadBytes,
+  ref as storageRef,
+  listAll,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { Restaurant } from "./Restaurant";
-import { apidb } from "../authentication/firebaseAuthentication";
+import { apidb, storage } from "../authentication/firebaseAuthentication";
 import { Menu } from "./Menu";
+import { rejects } from "assert";
+import { resolve } from "path";
 
 const dbRef = ref(getDatabase());
 
@@ -48,6 +57,122 @@ export async function pushMenu(uid: string, restaurant: Restaurant) {
       }
     }
   );
+}
+
+export async function pushBannerImage(
+  uid: string,
+  bannerImage: File | null
+): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    getRestaurantKey(uid).then(
+      (restaurantKey) => {
+        if (bannerImage !== null) {
+          listAll(storageRef(storage, restaurantKey + "/banner/")).then(
+            (data) => {
+              if (data.items.length > 0) {
+                data.items.map((item) => {
+                  deleteObject(storageRef(storage, item.fullPath)).then(() => {
+                    uploadBytes(
+                      storageRef(
+                        storage,
+                        restaurantKey + "/banner/" + bannerImage.name
+                      ),
+                      bannerImage
+                    ).then(
+                      () => {
+                        console.log("The banner was successfully pushed");
+                        resolve("The banner was successfully pushed");
+                      },
+                      () => {
+                        reject(new Error("Error uploading the banner"));
+                      }
+                    );
+                  });
+                });
+              } else {
+                uploadBytes(
+                  storageRef(
+                    storage,
+                    restaurantKey + "/banner/" + bannerImage.name
+                  ),
+                  bannerImage
+                ).then(
+                  () => {
+                    console.log("The banner was successfully pushed");
+                    resolve("The banner was successfully pushed");
+                  },
+                  () => {
+                    reject(new Error("Error uploading the banner"));
+                  }
+                );
+              }
+            }
+          );
+        }
+      },
+      () => {
+        throw new Error("Unexpected error");
+      }
+    );
+  });
+}
+
+export async function pushLogoImage(
+  uid: string,
+  logoImage: File | null
+): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    getRestaurantKey(uid).then(
+      (restaurantKey) => {
+        if (logoImage !== null) {
+          listAll(storageRef(storage, restaurantKey + "/logo/")).then(
+            (data) => {
+              if (data.items.length > 0) {
+                data.items.map((item) => {
+                  deleteObject(storageRef(storage, item.fullPath)).then(() => {
+                    uploadBytes(
+                      storageRef(
+                        storage,
+                        restaurantKey + "/logo/" + logoImage.name
+                      ),
+                      logoImage
+                    ).then(
+                      () => {
+                        console.log("The logo was successfully pushed");
+                        resolve("The logo was successfully pushed");
+                      },
+                      () => {
+                        reject(new Error("Error uploading the logo"));
+                      }
+                    );
+                  });
+                });
+              } else {
+                uploadBytes(
+                  storageRef(
+                    storage,
+                    restaurantKey + "/logo/" + logoImage.name
+                  ),
+                  logoImage
+                ).then(
+                  () => {
+                    console.log("The logo was successfully pushed");
+                    resolve("The logo was successfully pushed");
+                  },
+                  () => {
+                    reject(new Error("Error uploading the logo"));
+                  }
+                );
+              }
+            }
+          );
+        }
+      },
+      () => {
+        throw new Error("Unexpected error");
+      }
+    );
+  });
 }
 
 /**
@@ -88,6 +213,72 @@ export async function pullRestaurantMenuByUser(uid: string): Promise<Menu[]> {
         }
       )
       .catch((error) => reject(error));
+  });
+}
+
+export async function pullBannerImage(uid: string): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    getRestaurantKey(uid).then(
+      (restaurantKey) => {
+        let imageURLs: string = "";
+
+        listAll(storageRef(storage, restaurantKey + "/banner/")).then(
+          (data) => {
+            if (data.items.length > 0) {
+              getDownloadURL(data.items[0]).then((url) => {
+                imageURLs = url;
+                console.log("The banner was successfully pulled");
+                resolve(imageURLs);
+              });
+            }
+          }
+        );
+      },
+      () => {
+        reject(new Error("Unexpected error"));
+      }
+    );
+  });
+}
+
+export async function pullLogoImage(uid: string): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    getRestaurantKey(uid).then(
+      (restaurantKey) => {
+        let imageURLs: string = "";
+
+        listAll(storageRef(storage, restaurantKey + "/logo/")).then((data) => {
+          if (data.items.length > 0) {
+            getDownloadURL(data.items[0]).then((url) => {
+              imageURLs = url;
+              console.log("The logo was successfully pulled");
+              resolve(imageURLs);
+            });
+          }
+        });
+      },
+      () => {
+        reject(new Error("Unexpected error"));
+      }
+    );
+  });
+}
+
+export async function deleteBannerAndLogoImage(uid: string) {
+  getRestaurantKey(uid).then((restaurantKey) => {
+    listAll(storageRef(storage, restaurantKey + "/banner/")).then((data) => {
+      data.items.map((item) => {
+        deleteObject(storageRef(storage, item.fullPath)).then(() => {
+          listAll(storageRef(storage, restaurantKey + "/logo/")).then(
+            (data) => {
+              data.items.map((item) => {
+                deleteObject(storageRef(storage, item.fullPath));
+              });
+            }
+          );
+        });
+      });
+    });
   });
 }
 

@@ -9,6 +9,13 @@ export const choozTheme = createTheme({
     secondary: {
       main: "#ffffff",
     },
+    background: {
+      default: "#ffd7db",
+      paper: "white",
+    },
+    info: {
+      main: "#fffaef",
+    },
   },
 
   typography: {

@@ -19,6 +19,7 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { Navigate, useNavigate } from "react-router-dom";
 import { firebaseConfig } from "../config/config";
 import { Restaurant } from "../databaseAPI/Restaurant";
@@ -29,6 +30,7 @@ const auth = getAuth(app);
 const currentUser = auth.currentUser;
 const db = getFirestore(app);
 const apidb = getDatabase(app);
+const storage = getStorage(app);
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
@@ -156,6 +158,7 @@ export {
   currentUser,
   db,
   apidb,
+  storage,
   signInWithGoogle,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
