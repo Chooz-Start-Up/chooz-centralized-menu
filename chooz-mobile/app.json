@@ -27,7 +27,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "2",
+      "buildNumber": "1.0.2",
       "bundleIdentifier": "com.chooz.choozmobile",
       "infoPlist": {
         "NSCameraUsageDescription": "Allow Expo experiences to use your camera"
@@ -42,7 +42,21 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "choozmenu.com/menu",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

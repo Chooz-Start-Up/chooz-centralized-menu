@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Entypo } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Platform } from "react-native";
+import dynamicLinks from "@react-native-firebase/dynamic-links";
 
 import MenuScreen from "../screens/MenuScreen";
 import ItemScreen from "../screens/ItemScreen";
@@ -35,6 +34,16 @@ export type RestaurantStackParamList = {
 
 const RestaurantStack = createStackNavigator<RestaurantStackParamList>();
 const RestaurantStackScreen = () => {
+  useEffect(() => {
+    dynamicLinks()
+      .getInitialLink()
+      .then((link) => {
+        if (link!.url === "https://choozmenu.com/menu/Test") {
+          // ...set initial route as offers screen
+        }
+      });
+  }, []);
+
   return (
     <RestaurantStack.Navigator initialRouteName="RestaurantListScreen">
       <RestaurantStack.Screen
@@ -105,8 +114,16 @@ const RestaurantStackScreen = () => {
 };
 
 const Navigation = () => {
+  const linking = {
+    prefixes: ["https://choozmenu.com/menu"],
+    config: {
+      screens: {
+        RestaurantScreen: "Test",
+      },
+    },
+  };
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <RestaurantStackScreen />
     </NavigationContainer>
   );
