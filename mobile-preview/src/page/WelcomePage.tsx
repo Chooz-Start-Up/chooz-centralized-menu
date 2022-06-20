@@ -58,22 +58,22 @@ const WelcomePage: React.FC = () => {
           </Button>
         </Box>
 
-        <Button
-          variant="outlined"
-          sx={{
-            margin: 2,
-            width: "30%",
-            height: "5%",
-            bottom: 0,
-            right: 0,
-            position: "absolute",
-            fontSize: "18",
-            padding: 1,
-          }}
-          href={"/preview/" + restaurantKey}
-        >
-          Not now
-        </Button>
+        <Box display="flex" justifyContent="flex-end">
+          <Button
+            variant="outlined"
+            sx={{
+              margin: 2,
+              marginTop: 7,
+              width: "30%",
+              height: "5%",
+              fontSize: "18",
+              padding: 1,
+            }}
+            href={"/preview/" + restaurantKey}
+          >
+            Not now
+          </Button>
+        </Box>
       </ThemeProvider>
     </>
   );

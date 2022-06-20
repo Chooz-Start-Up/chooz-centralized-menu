@@ -14,6 +14,7 @@ const App: React.FC = () => {
           <Route path="/" element={<UnderConstructionPage />} />
 
           <Route path="/welcome/:restaurantKey" element={<WelcomePage />} />
+          {/* <Route path="/welcome" element={<WelcomePage />} /> */}
 
           <Route
             path="/preview/:restaurantKey"
