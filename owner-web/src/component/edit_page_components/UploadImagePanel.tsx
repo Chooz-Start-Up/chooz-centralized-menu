@@ -83,8 +83,8 @@ export const UploadImagePanel: React.FC = () => {
         sx={{ borderLeft: 1, borderColor: "grey.400" }}
       >
         {/* {!this.state.loading && <></>} */}
-        <Box width="44%" bgcolor="white">
-          <Box padding="2%">
+        <Box width="44%" height="100vh" bgcolor="white">
+          <Box padding="4%">
             <Typography variant="h4" color="black" textAlign="left">
               Upload Image
             </Typography>

@@ -72,13 +72,16 @@ export class MenuColumnList extends React.Component<
           };
         });
       });
-      pullRestaurantMenuByUser(auth.currentUser.uid).then((menus) => {
-        this.setState(() => {
-          return {
-            menuItems: this.convertMenuToMenuProps(menus),
-          };
-        });
-      });
+      pullRestaurantMenuByUser(auth.currentUser.uid).then(
+        (menus) => {
+          this.setState(() => {
+            return {
+              menuItems: this.convertMenuToMenuProps(menus),
+            };
+          });
+        },
+        () => {}
+      );
 
       this.setState(() => {
         return { loading: false };
@@ -86,50 +89,38 @@ export class MenuColumnList extends React.Component<
     }
   }
 
-  convertMenuToMenuProps(menusObject: any) {
-    let dbMenus: Menu[] = menusObject["menus"];
-
+  convertMenuToMenuProps(menus: Menu[]) {
     let parsedMenuProps: MenuProps[] = [];
-    if (dbMenus !== undefined) {
-      dbMenus.forEach((menu, menuIndex) => {
-        let dbCategories = menu["_categories"];
-
-        let categoryItems: CategoryProps[] = [];
-        if (dbCategories !== undefined) {
-          dbCategories.forEach((cateogry, cateogryIndex) => {
-            let dbItems = cateogry["_items"];
-
-            let items: ItemProps[] = [];
-            if (dbItems !== undefined) {
-              dbItems.forEach((item, itemIndex) => {
-                items = items.concat({
-                  id: itemIndex,
-                  name: item["_itemName"],
-                  handleDeleteClick: this.handleItemDeleteClick,
-                  description: item["_description"],
-                  price: +item["_price"],
-                  ingredients: item["_ingredients"],
-                });
-              });
-            }
-
-            categoryItems = categoryItems.concat({
-              id: cateogryIndex,
-              name: cateogry["_categoryName"],
-              handleDeleteClick: this.handleCategoryDeleteClick,
-              items: items,
-            });
+    menus.forEach((menu, menuIndex) => {
+      let categoryItems: CategoryProps[] = [];
+      menu.categories.forEach((cateogry, cateogryIndex) => {
+        let items: ItemProps[] = [];
+        cateogry.items.forEach((item, itemIndex) => {
+          items = items.concat({
+            id: itemIndex,
+            name: item.itemName,
+            handleDeleteClick: this.handleItemDeleteClick,
+            description: item.description,
+            price: +item.price,
+            ingredients: item.ingredients,
           });
-        }
+        });
 
-        parsedMenuProps = parsedMenuProps.concat({
-          id: menuIndex,
-          name: menu["_menuName"],
-          handleDeleteClick: this.handleMenuDeleteClick,
-          categoryItems: categoryItems,
+        categoryItems = categoryItems.concat({
+          id: cateogryIndex,
+          name: cateogry.categoryName,
+          handleDeleteClick: this.handleCategoryDeleteClick,
+          items: items,
         });
       });
-    }
+
+      parsedMenuProps = parsedMenuProps.concat({
+        id: menuIndex,
+        name: menu.menuName,
+        handleDeleteClick: this.handleMenuDeleteClick,
+        categoryItems: categoryItems,
+      });
+    });
 
     console.log(parsedMenuProps);
     return parsedMenuProps;

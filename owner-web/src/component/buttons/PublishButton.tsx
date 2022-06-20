@@ -8,6 +8,11 @@ import {
   DialogContentText,
 } from "@mui/material/";
 import { PublishButtonProps } from "./interface";
+import { useState } from "react";
+import { pullRestaurantMenuByUser } from "../../firebase/databaseAPI/RestaurantApi";
+import { auth } from "../../firebase/authentication/firebaseAuthentication";
+import { Restaurant } from "@mui/icons-material";
+import { Typography } from "@material-ui/core";
 
 const PublishButton: React.FC<PublishButtonProps> = (
   props: PublishButtonProps
@@ -19,12 +24,38 @@ const PublishButton: React.FC<PublishButtonProps> = (
     checkValidProfile,
     onPublishClick,
   } = props;
+  const [isMenuValid, setIsMenuValid] = useState(false);
 
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     checkValidProfile();
-    setOpen(true);
+
+    // checking for valid menus if there is no empty item
+    if (auth !== null && auth.currentUser !== null) {
+      pullRestaurantMenuByUser(auth.currentUser.uid).then(
+        (menus) => {
+          let isValid = true;
+          menus.forEach((menu) => {
+            if (menu.categories.length === 0) {
+              isValid = false;
+            }
+            menu.categories.forEach((category) => {
+              if (category.items.length === 0) {
+                isValid = false;
+              }
+            });
+          });
+
+          setIsMenuValid(isValid);
+          setOpen(true);
+        },
+        () => {
+          setIsMenuValid(false);
+          setOpen(true);
+        }
+      );
+    }
   };
 
   const handleCancel = () => {
@@ -72,7 +103,32 @@ const PublishButton: React.FC<PublishButtonProps> = (
       )}
 
       <Dialog
-        open={open && !isProfileValid && !isLoading}
+        open={open && !isPublished && !isMenuValid && !isLoading}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>Make sure your menu is complete.</DialogTitle>
+        <DialogContent sx={{ textAlign: "center" }}>
+          <Typography>
+            Please make sure all menus have at least one category and all
+            categories have at least one item. (Delete empty Menus and
+            Categories )
+          </Typography>
+          <Typography>
+            You will not be able to publish the menu until you have a valid menu
+            list
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancel}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={
+          open && !isPublished && isMenuValid && !isProfileValid && !isLoading
+        }
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
@@ -92,7 +148,9 @@ const PublishButton: React.FC<PublishButtonProps> = (
       </Dialog>
 
       <Dialog
-        open={open && !isPublished && isProfileValid && !isLoading}
+        open={
+          open && !isPublished && isMenuValid && isProfileValid && !isLoading
+        }
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
@@ -110,7 +168,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
       </Dialog>
 
       <Dialog
-        open={open && isPublished && isProfileValid && !isLoading}
+        open={open && isPublished && !isLoading}
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"

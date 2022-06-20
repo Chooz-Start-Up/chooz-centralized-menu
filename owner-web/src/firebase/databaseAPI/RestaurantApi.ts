@@ -20,6 +20,8 @@ import { apidb, storage } from "../authentication/firebaseAuthentication";
 import { Menu } from "./Menu";
 import { rejects } from "assert";
 import { resolve } from "path";
+import { Category } from "./Category";
+import { Item } from "./Item";
 
 const dbRef = ref(getDatabase());
 
@@ -203,9 +205,15 @@ export async function pullRestaurantMenuByUser(uid: string): Promise<Menu[]> {
     getRestaurantKey(uid)
       .then(
         (key) => {
-          getRestaurantMenuByKey(key).then((menus) => {
-            resolve(menus);
-          });
+          getRestaurantMenuByKey(key).then(
+            (menus) => {
+              resolve(menus);
+            },
+            () => {
+              console.log("There are no menu yet");
+              reject();
+            }
+          );
         },
         () => {
           console.log("There are no menu yet");
@@ -492,10 +500,32 @@ async function getRestaurantMenuByKey(key: string): Promise<Array<Menu>> {
       .then((snapshot) => {
         if (snapshot.exists()) {
           let data = snapshot.val();
-          resolve(data);
+          let arrayData: Menu[] = data["menus"];
+
+          let menus: Array<Menu> = [];
+          arrayData.forEach((menu) => {
+            let categories: Array<Category> = [];
+            menu["_categories"].forEach((category) => {
+              let items: Array<Item> = [];
+              category["_items"].forEach((item) => {
+                items.push(
+                  new Item(
+                    item["_itemName"],
+                    item["_price"],
+                    item["_description"],
+                    item["_ingredients"]
+                  )
+                );
+              });
+              categories.push(new Category(category["_categoryName"], items));
+            });
+            menus.push(new Menu(menu["_menuName"], categories));
+          });
+
+          resolve(menus);
         } else {
-          reject("No Data Available");
           console.log("No data available");
+          reject();
         }
       })
       .catch((error) => {

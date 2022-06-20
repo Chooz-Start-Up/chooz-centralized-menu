@@ -151,15 +151,15 @@ export class Restaurant implements IRestaurant {
     let parsedMenu: Menu[] = [];
     menus.forEach((menu) => {
       let categories: Category[] = [];
-      menu.categoryItems.forEach((cateogry) => {
+      menu.categoryItems.forEach((category) => {
         let items: Item[] = [];
-        cateogry.items.forEach((item) => {
+        category.items.forEach((item) => {
           items.push(
             new Item(item.name, item.price, item.description, item.ingredients)
           );
         });
 
-        categories.push(new Category(cateogry.name, items));
+        categories.push(new Category(category.name, items));
       });
 
       parsedMenu.push(new Menu(menu.name, categories));

@@ -5,9 +5,18 @@ import { app } from "../config/config";
 import { Menu } from "../component/Menu";
 import { Category } from "../component/Category";
 import { Item } from "../component/Item";
+import {
+  uploadBytes,
+  ref as storageRef,
+  listAll,
+  getDownloadURL,
+  deleteObject,
+  getStorage,
+} from "firebase/storage";
 
 const dbRef = ref(getDatabase());
 const apidb = getDatabase(app);
+const storage = getStorage(app);
 
 /**
  * Used for RestaurantListScreen.tsx
@@ -111,5 +120,37 @@ export async function getRestaurantMenuByKey(
       .catch((error) => {
         reject(error);
       });
+  });
+}
+
+export async function pullBannerImage(restaurantKey: string): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    let imageURLs: string = "";
+
+    listAll(storageRef(storage, restaurantKey + "/banner/")).then((data) => {
+      if (data.items.length > 0) {
+        getDownloadURL(data.items[0]).then((url) => {
+          imageURLs = url;
+          console.log("The banner was successfully pulled");
+          resolve(imageURLs);
+        });
+      }
+    });
+  });
+}
+
+export async function pullLogoImage(restaurantKey: string): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    let imageURLs: string = "";
+
+    listAll(storageRef(storage, restaurantKey + "/logo/")).then((data) => {
+      if (data.items.length > 0) {
+        getDownloadURL(data.items[0]).then((url) => {
+          imageURLs = url;
+          console.log("The logo was successfully pulled");
+          resolve(imageURLs);
+        });
+      }
+    });
   });
 }

@@ -20,6 +20,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   getRestaurantByKey,
   getRestaurantMenuByKey,
+  pullBannerImage,
+  pullLogoImage,
 } from "../database/api/RestaurantApi";
 import { Restaurant } from "../database/component/Restaurant";
 import { Menu } from "../database/component/Menu";
@@ -37,6 +39,8 @@ const RestaurantMenuPage: React.FC = () => {
   const [restaurantKey, setRestaurantKey] = useState("-N4oB-DoClsQsVBGAOVl");
   const [restaurant, setRestaurant] = useState<Restaurant>(new Restaurant());
   const [restaurantMenus, setRestaurantMenus] = useState<Array<Menu>>([]);
+  const [bannerURL, setBannerURL] = useState("");
+  const [logoURL, setLogoURL] = useState("");
 
   useEffect(() => {
     getRestaurantByKey(restaurantKey).then(
@@ -51,6 +55,12 @@ const RestaurantMenuPage: React.FC = () => {
       },
       () => {}
     );
+    pullBannerImage(restaurantKey).then((bannerURL) => {
+      setBannerURL(bannerURL);
+    });
+    pullLogoImage(restaurantKey).then((logoURL) => {
+      setLogoURL(logoURL);
+    });
   }, [restaurantKey]);
 
   return (
@@ -65,25 +75,51 @@ const RestaurantMenuPage: React.FC = () => {
           </Grid>
         </AppBar>
 
-        <Box display="flex">
-          <Box height="200" width="100%" bgcolor={choozTheme.palette.info.main}>
+        {bannerURL === "" ? (
+          <Box display="flex">
+            <Box
+              height="300"
+              width="100%"
+              bgcolor={choozTheme.palette.info.main}
+            >
+              <Avatar
+                src={logoURL}
+                sx={{
+                  width: 120,
+                  height: 120,
+                  bgcolor: choozTheme.palette.background.paper,
+                  marginLeft: 2,
+                  marginTop: "150",
+                  top: 90,
+                  border: 1,
+                  borderColor: "grey.400",
+                }}
+              />
+            </Box>
+          </Box>
+        ) : (
+          <Box>
+            <Box display="flex" justifyContent="center">
+              <Box height="300" width="100%" component="img" src={bannerURL} />
+            </Box>
             <Avatar
-              alt="Remy Sharp"
-              src=""
+              src={logoURL}
               sx={{
-                width: 100,
-                height: 100,
+                width: 120,
+                height: 120,
                 bgcolor: choozTheme.palette.background.paper,
                 marginLeft: 2,
-                marginTop: "150",
+                bottom: 60,
+                border: 1,
+                borderColor: "grey.400",
               }}
             />
           </Box>
-        </Box>
+        )}
 
         <Box
           display="flex"
-          marginTop="50"
+          marginTop={bannerURL === "" ? 10 : -5}
           sx={{ flexDirection: "column" }}
           bgcolor="white"
           padding={2}

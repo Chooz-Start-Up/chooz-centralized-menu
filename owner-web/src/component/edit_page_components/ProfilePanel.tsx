@@ -270,11 +270,12 @@ class ProfilePanel extends React.Component<
       <>
         <Box
           width="100%"
+          height="auto"
           bgcolor="grey.200"
           sx={{ borderLeft: 1, borderColor: "grey.400" }}
         >
           {!this.state.loading && (
-            <Box padding="2%" width="40%" bgcolor="white">
+            <Box padding="2%" width="40%" height="100vh" bgcolor="white">
               <Typography variant="h4" color="black" textAlign="left">
                 Profile
               </Typography>
