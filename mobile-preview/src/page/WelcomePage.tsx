@@ -58,12 +58,11 @@ const WelcomePage: React.FC = () => {
           </Button>
         </Box>
 
-        <Box display="flex" justifyContent="flex-end">
+        <Box display="flex" justifyContent="center">
           <Button
-            variant="outlined"
+            variant="text"
             sx={{
               margin: 2,
-              marginTop: 7,
               width: "30%",
               height: "5%",
               fontSize: "18",
@@ -71,7 +70,9 @@ const WelcomePage: React.FC = () => {
             }}
             href={"/preview/" + restaurantKey}
           >
-            Not now
+            <Typography sx={{ textDecoration: "underline" }}>
+              Not now
+            </Typography>
           </Button>
         </Box>
       </ThemeProvider>
