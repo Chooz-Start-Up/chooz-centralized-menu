@@ -34,15 +34,6 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
     console.log("Ingredients has updated: ", props.item.ingredients);
   };
 
-  console.log(
-    "Current Data: ",
-    props.item.description,
-    " ",
-    props.item.price,
-    " ",
-    props.item.ingredients
-  );
-
   return (
     <>
       <Box>

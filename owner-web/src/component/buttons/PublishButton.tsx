@@ -39,12 +39,13 @@ const PublishButton: React.FC<PublishButtonProps> = (
           menus.forEach((menu) => {
             if (menu.categories.length === 0) {
               isValid = false;
+            } else {
+              menu.categories.forEach((category) => {
+                if (category.items.length === 0) {
+                  isValid = false;
+                }
+              });
             }
-            menu.categories.forEach((category) => {
-              if (category.items.length === 0) {
-                isValid = false;
-              }
-            });
           });
 
           setIsMenuValid(isValid);

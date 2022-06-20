@@ -209,15 +209,13 @@ export async function pullRestaurantMenuByUser(uid: string): Promise<Menu[]> {
             (menus) => {
               resolve(menus);
             },
-            () => {
-              console.log("There are no menu yet");
-              reject();
+            (msg) => {
+              reject(msg);
             }
           );
         },
-        () => {
-          console.log("There are no menu yet");
-          reject();
+        (msg) => {
+          reject(msg);
         }
       )
       .catch((error) => reject(error));
@@ -505,31 +503,38 @@ async function getRestaurantMenuByKey(key: string): Promise<Array<Menu>> {
           let menus: Array<Menu> = [];
           arrayData.forEach((menu) => {
             let categories: Array<Category> = [];
-            menu["_categories"].forEach((category) => {
-              let items: Array<Item> = [];
-              category["_items"].forEach((item) => {
-                items.push(
-                  new Item(
-                    item["_itemName"],
-                    item["_price"],
-                    item["_description"],
-                    item["_ingredients"]
-                  )
-                );
+
+            if (menu["_categories"] !== undefined) {
+              menu["_categories"].forEach((category) => {
+                let items: Array<Item> = [];
+
+                if (category["_items"] !== undefined) {
+                  category["_items"].forEach((item) => {
+                    items.push(
+                      new Item(
+                        item["_itemName"],
+                        item["_price"],
+                        item["_description"],
+                        item["_ingredients"]
+                      )
+                    );
+                  });
+                }
+
+                categories.push(new Category(category["_categoryName"], items));
               });
-              categories.push(new Category(category["_categoryName"], items));
-            });
+            }
+
             menus.push(new Menu(menu["_menuName"], categories));
           });
-
           resolve(menus);
         } else {
-          console.log("No data available");
-          reject();
+          reject("No data available");
         }
       })
       .catch((error) => {
-        reject(error);
+        console.error(error);
+        reject("Unexpected rrror occurred");
       });
   });
 }

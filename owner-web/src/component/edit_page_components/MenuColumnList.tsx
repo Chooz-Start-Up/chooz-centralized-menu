@@ -47,8 +47,6 @@ export class MenuColumnList extends React.Component<
       selectedCategoryIndex: 0,
       selectedItemIndex: 0,
     };
-
-    console.log("This is constuctor");
   }
 
   pushMenuToDatabase(edittedMenus: MenuProps[]) {
@@ -80,7 +78,9 @@ export class MenuColumnList extends React.Component<
             };
           });
         },
-        () => {}
+        (msg) => {
+          console.error(msg);
+        }
       );
 
       this.setState(() => {
@@ -122,7 +122,6 @@ export class MenuColumnList extends React.Component<
       });
     });
 
-    console.log(parsedMenuProps);
     return parsedMenuProps;
   }
 
