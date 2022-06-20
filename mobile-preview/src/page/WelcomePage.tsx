@@ -11,8 +11,16 @@ import {
 } from "@mui/material";
 import { choozTheme } from "../theme/theme";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate, useParams } from "react-router-dom";
 
 const WelcomePage: React.FC = () => {
+  let { restaurantKey } = useParams();
+  const navigate = useNavigate();
+
+  if (restaurantKey === undefined) {
+    navigate("/notfound");
+  }
+
   return (
     <>
       <ThemeProvider theme={choozTheme}>
@@ -62,7 +70,7 @@ const WelcomePage: React.FC = () => {
             fontSize: "18",
             padding: 1,
           }}
-          href="/preview"
+          href={"/preview/" + restaurantKey}
         >
           Not now
         </Button>

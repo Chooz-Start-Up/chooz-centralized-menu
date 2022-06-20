@@ -25,8 +25,12 @@ import {
 } from "../database/api/RestaurantApi";
 import { Restaurant } from "../database/component/Restaurant";
 import { Menu } from "../database/component/Menu";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RestaurantMenuPage: React.FC = () => {
+  let { restaurantKey } = useParams();
+  const navigate = useNavigate();
+
   const [descriptionExpanded, setDescriptionExpanded] = React.useState<
     string | false
   >(false);
@@ -36,31 +40,41 @@ const RestaurantMenuPage: React.FC = () => {
       setDescriptionExpanded(isExpanded ? panel : false);
     };
 
-  const [restaurantKey, setRestaurantKey] = useState("-N4oB-DoClsQsVBGAOVl");
+  // ?key=-N4oB-DoClsQsVBGAOVl
+  // const [restaurantKey, setRestaurantKey] = useState("-N4oB-DoClsQsVBGAOVl");
   const [restaurant, setRestaurant] = useState<Restaurant>(new Restaurant());
   const [restaurantMenus, setRestaurantMenus] = useState<Array<Menu>>([]);
   const [bannerURL, setBannerURL] = useState("");
   const [logoURL, setLogoURL] = useState("");
 
   useEffect(() => {
-    getRestaurantByKey(restaurantKey).then(
-      (restaurant) => {
-        setRestaurant(restaurant);
-      },
-      () => {}
-    );
-    getRestaurantMenuByKey(restaurantKey).then(
-      (menus) => {
-        setRestaurantMenus(menus);
-      },
-      () => {}
-    );
-    pullBannerImage(restaurantKey).then((bannerURL) => {
-      setBannerURL(bannerURL);
-    });
-    pullLogoImage(restaurantKey).then((logoURL) => {
-      setLogoURL(logoURL);
-    });
+    console.log("Key: ", restaurantKey);
+    if (restaurantKey !== undefined || restaurantKey === "") {
+      getRestaurantByKey(restaurantKey).then(
+        (restaurant) => {
+          setRestaurant(restaurant);
+        },
+        () => {
+          navigate("/notfound");
+        }
+      );
+      getRestaurantMenuByKey(restaurantKey).then(
+        (menus) => {
+          setRestaurantMenus(menus);
+        },
+        () => {
+          navigate("/notfound");
+        }
+      );
+      pullBannerImage(restaurantKey).then((bannerURL) => {
+        setBannerURL(bannerURL);
+      });
+      pullLogoImage(restaurantKey).then((logoURL) => {
+        setLogoURL(logoURL);
+      });
+    } else {
+      navigate("/notfound");
+    }
   }, [restaurantKey]);
 
   return (
