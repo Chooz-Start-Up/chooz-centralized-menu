@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Platform } from "react-native";
-import dynamicLinks from "@react-native-firebase/dynamic-links";
 import * as Linking from "expo-linking";
+import dynamicLinks from "@react-native-firebase/dynamic-links";
 
 import MenuScreen from "../screens/MenuScreen";
 import ItemScreen from "../screens/ItemScreen";
@@ -11,16 +11,17 @@ import TestScreen from "../screens/Test";
 import RestaurantScreen from "../screens/RestaurantScreen";
 import RestaurantListScreen from "../screens/RestaurantListScreen";
 import TestPushDataScreen from "../screens/TestPushDataScreen";
-
 import { Restaurant } from "../util/Restaurant";
 import { Menu } from "../util/Menu";
 import { Item } from "../util/Item";
+import { navigationRef, navigate } from "../config/rootNavigation";
 import colors from "../constants/colors";
+import { transparent } from "react-native-paper/lib/typescript/styles/colors";
 
 export type RestaurantStackParamList = {
   RestaurantListScreen: undefined;
   RestaurantScreen: {
-    restaurant: Restaurant;
+    restaurantID: string;
   };
   MenuScreen: {
     restaurantName: string;
@@ -35,16 +36,6 @@ export type RestaurantStackParamList = {
 
 const RestaurantStack = createStackNavigator<RestaurantStackParamList>();
 const RestaurantStackScreen = () => {
-  useEffect(() => {
-    dynamicLinks()
-      .getInitialLink()
-      .then((link) => {
-        if (link!.url === "https://choozmenu.com/menu/Test") {
-          // ...set initial route as offers screen
-        }
-      });
-  }, []);
-
   return (
     <RestaurantStack.Navigator initialRouteName="RestaurantListScreen">
       <RestaurantStack.Screen
@@ -71,6 +62,7 @@ const RestaurantStackScreen = () => {
           title: "Restaurant Name",
           headerTitleStyle: { color: "black" },
           headerShown: true,
+          headerTransparent: true,
           presentation: "card",
           headerLeftLabelVisible: false,
           //headerTintColor: colors.darkRed,
@@ -114,21 +106,44 @@ const RestaurantStackScreen = () => {
   );
 };
 
-const prefix = Linking.makeUrl("/");
-
-//prefixes: ["https://choozmenu.com/menu"],
 const Navigation = () => {
-  const linking = {
-    prefixes: [prefix],
-    config: {
-      screens: {
-        RestaurantListScreen: "RestaurantListScreen",
-        RestaurantScreen: "RestaurantScreen",
-      },
-    },
+  const _handleUrl = (obj: any) => {
+    let url = obj.url;
+    let data = Linking.parse(url);
+    let id = data.queryParams.id;
+    navigate("RestaurantListScreen");
+    navigate("RestaurantScreen", { restaurantID: id });
   };
+
+  //CREATE TEST
+  // console.log(
+  //   "URL:   " +
+  //     createURL("/--/RestaurantScreen", {
+  //       queryParams: { id: "-N4oB-DoClsQsVBGAOVl" },
+  //     })
+  // );
+  useEffect(() => {
+    Linking.getInitialURL()
+      .then((url) => {
+        if (url) {
+          console.log("Before");
+          let urlData = Linking.parse(url);
+          let id = urlData.queryParams.id;
+          if (id) {
+            navigate("RestaurantScreen", { restaurantID: id });
+          } else {
+            navigate("RestaurantListScreen");
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    Linking.addEventListener("url", _handleUrl);
+  }, []);
   return (
-    <NavigationContainer linking={linking}>
+    <NavigationContainer ref={navigationRef}>
       <RestaurantStackScreen />
     </NavigationContainer>
   );

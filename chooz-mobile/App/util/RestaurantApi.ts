@@ -11,6 +11,7 @@ import {
 import { Restaurant } from "./Restaurant";
 import { db } from "../data/database";
 import { Menu } from "./Menu";
+import MenuScreen from "../screens/MenuScreen";
 
 const dbRef = ref(getDatabase());
 
@@ -93,25 +94,7 @@ export async function getRestaurantList(
  * @param restaurant - the restaurant that requires details
  * @param setLoading - an optional function that sets the state of isLoading
  */
-export async function getRestaurantDetails(
-  restaurant: Restaurant,
-  setLoading?: Function
-) {
-  get(child(dbRef, "restaurants/" + restaurant.id))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        let data = snapshot.val();
-        restaurant.setDetails(JSON.stringify(data));
-        if (setLoading !== undefined) {
-          setLoading(false);
-        }
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+export async function getRestaurantMenu(restaurant: Restaurant) {
   get(child(dbRef, "restaurantMenuList/" + restaurant.id + "/menus"))
     .then((snapshot) => {
       if (snapshot.exists()) {
@@ -189,8 +172,6 @@ async function updateRestaurant(restaurantKey: string, restaurant: Restaurant) {
     address: restaurant.address,
     menus: restaurant.menus,
   });
-
-  console.log("UPDATED");
 }
 
 /**
@@ -223,20 +204,33 @@ async function getRestaurantKey(uid: string): Promise<string> {
  * @param key - string of restaurant key
  * @returns restaurant promise
  */
-async function getRestaurantByKey(key: string): Promise<Restaurant> {
+export async function getRestaurantByKey(key: string): Promise<Restaurant> {
   return new Promise(function (resolve, reject) {
-    get(child(dbRef, "restaurants/" + key))
+    let restaurant = new Restaurant();
+    get(child(dbRef, "restaurantMenuList/" + key + "/menus"))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          let data = snapshot.val();
-          resolve(data);
+          let menus = snapshot.val();
+          restaurant.setMenus(JSON.stringify(menus));
+          get(child(dbRef, "restaurants/" + key))
+            .then((snapshot) => {
+              if (snapshot.exists()) {
+                let details = snapshot.val();
+                restaurant.setDetails(JSON.stringify(details));
+                resolve(restaurant);
+              } else {
+                reject("No Data Available");
+              }
+            })
+            .catch((error) => {
+              reject(error);
+            });
         } else {
-          reject("No Data Available");
           console.log("No data available");
         }
       })
       .catch((error) => {
-        reject(error);
+        console.error(error);
       });
   });
 }

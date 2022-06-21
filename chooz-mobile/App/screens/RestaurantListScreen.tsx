@@ -67,7 +67,7 @@ const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
                         right={(props: any) => <List.Icon {...props} icon="" />}
                         onPress={() =>
                           navigation.navigate("RestaurantScreen", {
-                            restaurant: restaurant,
+                            restaurantID: restaurant.id,
                           })
                         }
                       />

@@ -58,8 +58,6 @@ const MenuScreen: React.FC<Props> = ({ route }: Props) => {
     navigation.navigate(screen, { item });
   };
 
-  console.log("MENU: " + menus);
-
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.white} />

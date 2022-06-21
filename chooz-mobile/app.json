@@ -1,6 +1,6 @@
 {
   "expo": {
-    "scheme": "testApp",
+    "scheme": "myapp",
     "name": "chooz",
     "slug": "chooz",
     "version": "1.0.0",

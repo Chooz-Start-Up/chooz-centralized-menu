@@ -111,10 +111,14 @@ export class Restaurant implements IRestaurant {
   public setDetails(jsonStringObject: any) {
     let obj = JSON.parse(jsonStringObject);
 
+    this._id = obj.id;
+    this._restaurantName = obj.restaurantName;
+    this._description = obj.description;
     this._phoneNumber = obj.phoneNumber;
     this._ownerName = obj.ownerName;
     this._address = obj.address;
     this._hours = obj.hours;
+    this._isPublished = obj.isPublished;
   }
 
   public setMenus(jsonStringObject: any) {

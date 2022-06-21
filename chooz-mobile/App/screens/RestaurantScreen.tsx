@@ -15,18 +15,27 @@ import {
 } from "@react-navigation/native-stack";
 import { FAB, Portal } from "react-native-paper";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 import { RestaurantStackParamList } from "../config/navigation";
 import { RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors";
-import { getRestaurantDetails } from "../util/RestaurantApi";
+import {
+  getRestaurantByKey,
+  getRestaurantMenu,
+  pullRestaurantByUser,
+} from "../util/RestaurantApi";
+import { Restaurant } from "../util/Restaurant";
+import { navigate } from "../config/rootNavigation";
 
 type Props = NativeStackScreenProps<
   RestaurantStackParamList,
   "RestaurantScreen"
 >;
 
-const screen = Dimensions.get("window");
+const screen = Dimensions.get("screen");
+const window = Dimensions.get("window");
+const navbarHeight = screen.height - window.height;
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -45,7 +54,7 @@ const styles = StyleSheet.create({
   },
   pictureView: {
     backgroundColor: "lightgrey",
-    height: 175,
+    height: (screen.width / 4) * 3,
   },
   descriptionView: {
     marginTop: 10,
@@ -87,15 +96,23 @@ const styles = StyleSheet.create({
 
 const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
   const [isLoading, setLoading] = useState(true);
+  const [restaurant, setRestaurant] = useState<Restaurant>(new Restaurant());
   const isFocused = useIsFocused();
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
 
-  const restaurant = route.params.restaurant;
+  const restaurantID = route.params.restaurantID;
 
   useEffect(() => {
     navigation.setOptions({ title: restaurant.restaurantName });
-    getRestaurantDetails(restaurant, setLoading);
+    getRestaurantByKey(restaurantID)
+      .then((restaurant) => {
+        setRestaurant(restaurant);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
