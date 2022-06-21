@@ -122,25 +122,35 @@ const Navigation = () => {
   //       queryParams: { id: "-N4oB-DoClsQsVBGAOVl" },
   //     })
   // );
-  useEffect(() => {
-    Linking.getInitialURL()
-      .then((url) => {
-        if (url) {
-          console.log("Before");
-          let urlData = Linking.parse(url);
-          let id = urlData.queryParams.id;
-          if (id) {
-            navigate("RestaurantScreen", { restaurantID: id });
-          } else {
-            navigate("RestaurantListScreen");
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
-    Linking.addEventListener("url", _handleUrl);
+  async function buildLink() {
+    const link = await dynamicLinks().buildLink({
+      link: "https://choozmenu.com",
+      // domainUriPrefix is created in your Firebase console
+      domainUriPrefix: "https://choozmenu.com/menu",
+    });
+
+    return link;
+  }
+  useEffect(() => {
+    console.log("BUILD LINK: " + JSON.stringify(buildLink()));
+    // Linking.getInitialURL()
+    //   .then((url) => {
+    //     if (url) {
+    //       console.log("Before");
+    //       let urlData = Linking.parse(url);
+    //       let id = urlData.queryParams.id;
+    //       if (id) {
+    //         navigate("RestaurantScreen", { restaurantID: id });
+    //       } else {
+    //         navigate("RestaurantListScreen");
+    //       }
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    // Linking.addEventListener("url", _handleUrl);
   }, []);
   return (
     <NavigationContainer ref={navigationRef}>
