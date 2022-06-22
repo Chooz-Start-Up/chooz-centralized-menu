@@ -2,9 +2,9 @@
   "name": "chooz-mobile",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
@@ -20,6 +20,7 @@
     "@react-native-firebase/dynamic-links": "^14.11.1",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/stack": "^6.2.1",
+    "eas": "^0.1.0",
     "expo": "~45.0.0",
     "expo-application": "~4.1.0",
     "expo-linking": "~3.1.0",
@@ -39,7 +40,8 @@
     "react-native-vector-icons": "*",
     "react-native-web": "0.17.7",
     "react-redux": "^8.0.2",
-    "uri-scheme": "^1.0.120"
+    "uri-scheme": "^1.0.120",
+    "expo-splash-screen": "~0.15.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
