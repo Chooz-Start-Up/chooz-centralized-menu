@@ -38,7 +38,7 @@
     },
     "android": {
       "package": "com.chooz.choozmobile",
-      "versionCode": 1,
+      "versionCode": 1.1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
