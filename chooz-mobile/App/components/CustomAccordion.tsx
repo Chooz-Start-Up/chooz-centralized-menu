@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   listItem: {
     backgroundColor: colors.white,
-    alignItems: "center",
+    //alignItems: "center",
   },
   listItemText: {
     textAlign: "center", // <-- the magic

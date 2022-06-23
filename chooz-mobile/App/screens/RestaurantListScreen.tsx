@@ -5,11 +5,11 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { ScrollView } from "react-native-gesture-handler";
-import { List } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { ListItem } from "react-native-elements";
 
 import { RestaurantStackParamList } from "../config/navigation";
-import { RowSeparator } from "../components/RowItem";
+import { RowSeparator, RowItem } from "../components/RowItem";
 import { Restaurant } from "../util/Restaurant";
 import { getRestaurantList } from "../util/RestaurantApi";
 import colors from "../constants/colors";
@@ -51,37 +51,59 @@ const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
         <ScrollView style={styles.scrollView}>
           <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
 
-          <List.Section style={styles.listSection}>
-            {restaurantList?.map((restaurant) => {
-              return (
-                <View key={restaurant.id + "ViewKey"}>
-                  {restaurant.isPublished && (
-                    <>
-                      <List.Item
-                        key={restaurant.id}
-                        title={restaurant.restaurantName}
-                        description={restaurant.description}
-                        left={(props: any) => (
-                          <List.Icon {...props} icon="book" />
-                        )}
-                        right={(props: any) => <List.Icon {...props} icon="" />}
-                        onPress={() =>
-                          navigation.navigate("RestaurantScreen", {
-                            restaurantID: restaurant.id,
-                          })
-                        }
-                      />
-                      <RowSeparator key={restaurant.id + "key"} />
-                    </>
-                  )}
-                </View>
-              );
-            })}
-          </List.Section>
+          {restaurantList?.map((restaurant) => {
+            return (
+              <View key={restaurant.id + "ViewKey"}>
+                {restaurant.isPublished && (
+                  <RowItem
+                    title={restaurant.restaurantName}
+                    description={restaurant.description}
+                    onPress={() =>
+                      navigation.navigate("RestaurantScreen", {
+                        restaurantID: restaurant.id,
+                      })
+                    }
+                  />
+                )}
+                <RowSeparator />
+              </View>
+            );
+          })}
         </ScrollView>
       )}
     </>
   );
 };
+
+//           <List.Section style={styles.listSection}>
+//             {restaurantList?.map((restaurant) => {
+//               return (
+//                 <View key={restaurant.id + "ViewKey"}>
+//                   {restaurant.isPublished && (
+//                     <>
+//                       <ListItem
+//                         key={restaurant.id}
+//                         title={restaurant.restaurantName}
+//                         description={restaurant.description}
+//                         left={}
+//                         right={(props: any) => <List.Icon {...props} icon="" />}
+//                         onPress={() =>
+//                           navigation.navigate("RestaurantScreen", {
+//                             restaurantID: restaurant.id,
+//                           })
+//                         }
+//                       />
+//                       <RowSeparator key={restaurant.id + "key"} />
+//                     </>
+//                   )}
+//                 </View>
+//               );
+//             })}
+//           </List.Section>
+//         </ScrollView>
+//       )}
+//     </>
+//   );
+// };
 
 export default RestaurantListScreen;
