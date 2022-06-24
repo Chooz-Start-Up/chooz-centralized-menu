@@ -15,17 +15,19 @@ import { AccessQRButtonProps } from "./interface";
 import { Grid } from "@material-ui/core";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { pullDynamicLink } from "../../firebase/databaseAPI/DynamicLinkAPI";
+import { QRCode } from "react-qrcode-logo";
+import JacobChoi from "../images/profile/jacob_choi.jpg";
 
 const AccessQRButton: React.FC<AccessQRButtonProps> = (
   props: AccessQRButtonProps
 ) => {
-  const { isPublished, onQRClick } = props;
+  const { isPublished } = props;
 
   const [open, setOpen] = React.useState(false);
 
+  const [link, setLink] = React.useState("");
+
   const handleClickOpen = () => {
-    onQRClick();
-    generateLink();
     setOpen(true);
   };
 
@@ -34,13 +36,13 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
   };
 
   const generateLink = () => {
-    let link;
     if (auth !== null && auth.currentUser !== null) {
       pullDynamicLink(auth.currentUser.uid).then((dynamicLink) => {
-        link = dynamicLink;
+        setLink(dynamicLink);
         console.log(link);
       });
     }
+    return link;
   };
 
   return (
@@ -83,7 +85,7 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
             Use your phone to scan the QR code and access the online menu!
           </DialogContentText>
           <Grid container justifyContent="center">
-            <Box
+            {/* <Box
               marginTop={2}
               alignSelf="center"
               sx={{
@@ -91,7 +93,12 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
                 height: 180,
                 bgcolor: "red",
               }}
-            ></Box>
+            ></Box> */}
+            <QRCode
+              value={generateLink()}
+              logoImage={JacobChoi}
+              eyeRadius={3}
+            />
           </Grid>
         </DialogContent>
         <DialogActions>

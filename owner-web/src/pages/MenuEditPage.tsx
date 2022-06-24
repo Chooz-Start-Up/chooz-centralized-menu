@@ -137,8 +137,6 @@ class MenuEditPage extends React.Component<
     }
   };
 
-  onQRClick = () => {};
-
   tabPanelProps(index: number) {
     return {
       id: `vertical-tab-${index}`,
@@ -224,10 +222,7 @@ class MenuEditPage extends React.Component<
                         alignSelf="right"
                         marginRight={this.state.isPublished ? 1.75 : 3}
                       >
-                        <AccessQRButton
-                          isPublished={this.state.isPublished}
-                          onQRClick={this.onQRClick}
-                        />
+                        <AccessQRButton isPublished={this.state.isPublished} />
                         <PublishButton
                           isPublished={this.state.isPublished}
                           isProfileValid={this.state.isProfileValid}

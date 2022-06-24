@@ -48,7 +48,6 @@ export interface PublishButtonProps {
 
 export interface AccessQRButtonProps {
   isPublished: boolean;
-  onQRClick(): any;
 }
 
 export interface EditProfileButtonWithDialogProps {
