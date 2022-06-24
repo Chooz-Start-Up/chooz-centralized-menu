@@ -2271,6 +2271,11 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
+"@react-native-firebase/dynamic-links@^15.0.0":
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/dynamic-links/-/dynamic-links-15.0.0.tgz#56ff64cd85e5dd082d6e471c61aaf55ba9742af8"
+  integrity sha512-Zv4PXZlOzmM7kBY9MXDJEe2dZ+QjwmKwgFEliGfYDzbJq2kG5/PmQcNTEXcnJxFPM7EdeHFPqVmt0EOXsOC49Q==
+
 "@rollup/plugin-babel@^5.2.0":
   version "5.3.1"
   resolved "https://registry.npmjs.org/@rollup/plugin-babel/-/plugin-babel-5.3.1.tgz"

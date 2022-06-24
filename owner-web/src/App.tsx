@@ -21,7 +21,8 @@ import MenuEditPage from "./pages/MenuEditPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import AlreadyLoggedInRoute from "./firebase/authentication/AlreadyLoggedInRoute";
-import LoadingPage from "./pages/LoadingPage";
+
+import generateLink from "./firebase/dynamicLink/DynamicLink";
 
 interface AppProps {}
 
@@ -33,6 +34,10 @@ const App: React.FC<AppProps> = (props: AppProps) => {
   const handleClickShowPassword = (event: any) => {
     setIsPasswordVisibile(!isPasswordVisibile);
   };
+
+  generateLink("-N4oE-g8WbJUPYqadmWf").then((shortLink) => {
+    console.log("Practical Call: ", shortLink);
+  });
 
   return (
     <BrowserRouter>
