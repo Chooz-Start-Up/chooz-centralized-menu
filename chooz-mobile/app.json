@@ -28,7 +28,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.0.2",
+      "buildNumber": "1.0.3",
       "bundleIdentifier": "com.chooz.choozmobile",
       "infoPlist": {
         "NSCameraUsageDescription": "Allow Expo experiences to use your camera"
