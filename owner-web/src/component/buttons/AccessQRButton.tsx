@@ -16,11 +16,17 @@ import { Grid } from "@material-ui/core";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { pullDynamicLink } from "../../firebase/databaseAPI/DynamicLinkAPI";
 import { QRCode } from "react-qrcode-logo";
-import JacobChoi from "../images/profile/jacob_choi.jpg";
+
+import ChoozIcon from "../images/chooz_icon/chooz_red.png";
+
+import * as htmlToImage from "html-to-image";
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
 
 const AccessQRButton: React.FC<AccessQRButtonProps> = (
   props: AccessQRButtonProps
 ) => {
+  const printRef = React.useRef<HTMLDivElement>(null);
+
   const { isPublished } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -39,10 +45,27 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
     if (auth !== null && auth.currentUser !== null) {
       pullDynamicLink(auth.currentUser.uid).then((dynamicLink) => {
         setLink(dynamicLink);
-        console.log(link);
       });
     }
     return link;
+  };
+
+  const downloadQR = () => {
+    if (printRef.current === null) {
+      console.log("It was null");
+      return;
+    }
+
+    toPng(printRef.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "ChoozQR.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -85,20 +108,36 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
             Use your phone to scan the QR code and access the online menu!
           </DialogContentText>
           <Grid container justifyContent="center">
-            {/* <Box
+            <Box
               marginTop={2}
-              alignSelf="center"
-              sx={{
-                width: 180,
-                height: 180,
-                bgcolor: "red",
-              }}
-            ></Box> */}
-            <QRCode
-              value={generateLink()}
-              logoImage={JacobChoi}
-              eyeRadius={3}
-            />
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+            >
+              <Box fontSize={100}>
+                <div ref={printRef}>
+                  <QRCode
+                    value={generateLink()}
+                    logoImage={ChoozIcon}
+                    logoHeight={80}
+                    logoWidth={80}
+                    eyeRadius={10}
+                    qrStyle="dots"
+                    size={300}
+                    // bgColor="#FFFAEF"
+                    // fgColor="#A90011"
+                  />
+                </div>
+              </Box>
+
+              <Button
+                variant="outlined"
+                sx={{ width: "90%", marginLeft: "5%", marginTop: "5%" }}
+                onClick={downloadQR}
+              >
+                Download Image
+              </Button>
+            </Box>
           </Grid>
         </DialogContent>
         <DialogActions>
