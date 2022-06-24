@@ -18,8 +18,6 @@ import {
 import { Restaurant } from "./Restaurant";
 import { apidb, storage } from "../authentication/firebaseAuthentication";
 import { Menu } from "./Menu";
-import { rejects } from "assert";
-import { resolve } from "path";
 import { Category } from "./Category";
 import { Item } from "./Item";
 
@@ -54,7 +52,6 @@ export async function pushMenu(uid: string, restaurant: Restaurant) {
         updateMenu(restaurant.id, restaurant);
       } else {
         // This should never executing. Assuming menu will be added when everything other exists in the DB
-        console.log("Adding to menu list");
         addMenu(restaurant);
       }
     }
@@ -82,7 +79,6 @@ export async function pushBannerImage(
                       bannerImage
                     ).then(
                       () => {
-                        console.log("The banner was successfully pushed");
                         resolve("The banner was successfully pushed");
                       },
                       () => {
@@ -100,7 +96,6 @@ export async function pushBannerImage(
                   bannerImage
                 ).then(
                   () => {
-                    console.log("The banner was successfully pushed");
                     resolve("The banner was successfully pushed");
                   },
                   () => {
@@ -140,7 +135,6 @@ export async function pushLogoImage(
                       logoImage
                     ).then(
                       () => {
-                        console.log("The logo was successfully pushed");
                         resolve("The logo was successfully pushed");
                       },
                       () => {
@@ -158,7 +152,6 @@ export async function pushLogoImage(
                   logoImage
                 ).then(
                   () => {
-                    console.log("The logo was successfully pushed");
                     resolve("The logo was successfully pushed");
                   },
                   () => {
@@ -192,7 +185,6 @@ export async function pullRestaurantByUser(uid: string): Promise<Restaurant> {
           });
         },
         () => {
-          console.log("User data not found. Please refresh");
           reject();
         }
       )
@@ -233,7 +225,6 @@ export async function pullBannerImage(uid: string): Promise<string> {
             if (data.items.length > 0) {
               getDownloadURL(data.items[0]).then((url) => {
                 imageURLs = url;
-                console.log("The banner was successfully pulled");
                 resolve(imageURLs);
               });
             }
@@ -257,7 +248,6 @@ export async function pullLogoImage(uid: string): Promise<string> {
           if (data.items.length > 0) {
             getDownloadURL(data.items[0]).then((url) => {
               imageURLs = url;
-              console.log("The logo was successfully pulled");
               resolve(imageURLs);
             });
           }
@@ -319,7 +309,7 @@ export async function getRestaurantList(
           setLoading(false);
         }
       } else {
-        console.log("No data available");
+        console.error("No data available");
       }
     })
     .catch((error) => {
@@ -421,8 +411,6 @@ async function updateProfile(restaurantKey: string, restaurant: Restaurant) {
     ownerName: restaurant.ownerName,
     hours: restaurant.hours,
   });
-
-  console.log("UPDATED");
 }
 
 async function addMenu(restaurant: Restaurant) {
@@ -440,8 +428,6 @@ async function updateMenu(restaurantKey: string, restaurant: Restaurant) {
   set(ref(apidb, "restaurantMenuList/" + restaurantKey), {
     menus: JSON.parse(JSON.stringify(restaurant.menus)),
   });
-
-  console.log("UPDATED MENU");
 }
 
 /**
@@ -460,7 +446,6 @@ export async function getRestaurantKey(uid: string): Promise<string> {
           resolve(Object.keys(data)[0]);
         } else {
           reject("No Data Available");
-          console.log("No data available");
         }
       })
       .catch((error) => {
@@ -483,7 +468,6 @@ async function getRestaurantByKey(key: string): Promise<Restaurant> {
           resolve(data);
         } else {
           reject("No Data Available");
-          console.log("No data available");
         }
       })
       .catch((error) => {

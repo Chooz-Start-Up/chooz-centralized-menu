@@ -1,6 +1,6 @@
 import "firebase/firestore";
 import { ref, get, update } from "firebase/database";
-import { apidb, storage } from "../authentication/firebaseAuthentication";
+import { apidb } from "../authentication/firebaseAuthentication";
 import { getRestaurantKey } from "./RestaurantApi";
 import generateLink from "../dynamicLink/DynamicLink";
 

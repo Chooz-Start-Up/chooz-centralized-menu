@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Divider,
-  Grid,
-  Paper,
-  Tab,
-  Tabs,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { Box, Tab, Tabs, ThemeProvider, Typography } from "@mui/material";
 import TabPanel from "../component/buttons/TabPanel";
 import { MenuColumnList } from "../component/edit_page_components/MenuColumnList";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
@@ -58,7 +49,6 @@ class MenuEditPage extends React.Component<
               isLoading: false,
             };
           });
-          console.log("Pulled Data: ", restaurant.isPublished);
         });
       }
     });

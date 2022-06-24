@@ -48,7 +48,6 @@ const RestaurantMenuPage: React.FC = () => {
   const [logoURL, setLogoURL] = useState("");
 
   useEffect(() => {
-    console.log("Key: ", restaurantKey);
     if (restaurantKey !== undefined || restaurantKey === "") {
       getRestaurantByKey(restaurantKey).then(
         (restaurant) => {

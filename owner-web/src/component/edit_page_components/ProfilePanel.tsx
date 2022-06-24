@@ -7,13 +7,7 @@ import {
   pullRestaurantByUser,
   pushProfile,
 } from "../../firebase/databaseAPI/RestaurantApi";
-import {
-  auth,
-  currentUser,
-} from "../../firebase/authentication/firebaseAuthentication";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { reload } from "firebase/auth";
-import { choozTheme } from "../../pages/theme";
+import { auth } from "../../firebase/authentication/firebaseAuthentication";
 
 class ProfilePanel extends React.Component<
   ProfilePanelProps,

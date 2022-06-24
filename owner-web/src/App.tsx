@@ -1,14 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import {
-  Routes,
-  Route,
-  Link,
-  BrowserRouter,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import AfterVerificationRoute from "./firebase/authentication/AfterEmailVerificationRoute";
 import AuthRoute from "./firebase/authentication/AuthRoute";
 import { firebaseConfig } from "./firebase/config/config";
@@ -36,9 +28,9 @@ const App: React.FC<AppProps> = (props: AppProps) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<UnderConstructionPage />} />
+        {/* <Route path="/" element={<UnderConstructionPage />} /> */}
 
-        <Route path="/preview" element={<MainLandingPage />} />
+        <Route path="/" element={<MainLandingPage />} />
 
         <Route
           path="/edit"

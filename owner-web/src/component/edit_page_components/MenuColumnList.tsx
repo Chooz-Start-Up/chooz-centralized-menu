@@ -1,15 +1,5 @@
 import * as React from "react";
-import {
-  Box,
-  Divider,
-  Fade,
-  Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  Paper,
-  Typography,
-} from "@mui/material/";
+import { Box, Fade, Grid, List, ListItem, Typography } from "@mui/material/";
 import {
   CategoryProps,
   ItemProps,

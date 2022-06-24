@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Grid } from "@mui/material";
 import { ChoozAppBarProps } from "./interface";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 
@@ -22,7 +22,7 @@ const ChoozAppBar: React.FC<ChoozAppBarProps> = (props: ChoozAppBarProps) => {
               variant="h4"
               noWrap
               component="a"
-              href="/preview/"
+              href="/"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },

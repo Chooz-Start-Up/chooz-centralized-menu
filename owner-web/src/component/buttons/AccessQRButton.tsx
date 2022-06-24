@@ -19,8 +19,7 @@ import { QRCode } from "react-qrcode-logo";
 
 import ChoozIcon from "../images/chooz_icon/chooz_red.png";
 
-import * as htmlToImage from "html-to-image";
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
+import { toPng } from "html-to-image";
 
 const AccessQRButton: React.FC<AccessQRButtonProps> = (
   props: AccessQRButtonProps
@@ -114,21 +113,19 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
               flexDirection="column"
               justifyContent="center"
             >
-              <Box fontSize={100}>
-                <div ref={printRef}>
-                  <QRCode
-                    value={generateLink()}
-                    logoImage={ChoozIcon}
-                    logoHeight={80}
-                    logoWidth={80}
-                    eyeRadius={10}
-                    qrStyle="dots"
-                    size={300}
-                    // bgColor="#FFFAEF"
-                    // fgColor="#A90011"
-                  />
-                </div>
-              </Box>
+              <div ref={printRef}>
+                <QRCode
+                  value={generateLink()}
+                  logoImage={ChoozIcon}
+                  logoHeight={80}
+                  logoWidth={80}
+                  eyeRadius={10}
+                  qrStyle="dots"
+                  size={300}
+                  // bgColor="#FFFAEF"
+                  // fgColor="#A90011"
+                />
+              </div>
 
               <Button
                 variant="outlined"

@@ -2,17 +2,10 @@ import * as React from "react";
 import { ItemColumnDisplayProps } from "./interface";
 import {
   Box,
-  FilledInput,
-  FormControl,
-  FormHelperText,
   Input,
   InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Paper,
   TextField,
   Typography,
-  useFormControl,
 } from "@material-ui/core";
 import { Fade } from "@mui/material";
 
@@ -22,17 +15,14 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
   const onDescriptionChange = (e: any): any => {
     props.item.description = e.target.value;
     props.checkItemUpdate(props.item);
-    console.log("Description has updated: ", props.item.description);
   };
   const onPriceChange = (e: any): any => {
     props.item.price = e.target.value;
     props.checkItemUpdate(props.item);
-    console.log("Price has updated: ", props.item.price);
   };
   const onIngredientsChange = (e: any): any => {
     props.item.ingredients = e.target.value;
     props.checkItemUpdate(props.item);
-    console.log("Ingredients has updated: ", props.item.ingredients);
   };
 
   return (

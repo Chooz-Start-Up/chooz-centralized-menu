@@ -13,9 +13,6 @@ import {
 } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
-import { auth } from "../../firebase/authentication/firebaseAuthentication";
-import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
-import { pushProfile } from "../../firebase/databaseAPI/RestaurantApi";
 import DateTimeInput from "./DateTimeInput";
 import { EditProfileButtonWithDialogProps } from "./interface";
 

@@ -1,24 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Box, Typography, Divider, Avatar, Alert } from "@mui/material";
-import EditProfileButtonWithDialog from "../buttons/EditProfileButtonWithDilogue";
-import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
+import React, { useState } from "react";
+import { Box, Typography, Divider, Alert } from "@mui/material";
 import {
   deleteBannerAndLogoImage,
-  pullBannerImage,
-  pullLogoImage,
-  pullRestaurantByUser,
   pushBannerImage,
   pushLogoImage,
-  pushProfile,
 } from "../../firebase/databaseAPI/RestaurantApi";
-import {
-  auth,
-  currentUser,
-} from "../../firebase/authentication/firebaseAuthentication";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { reload } from "firebase/auth";
-import { choozTheme } from "../../pages/theme";
-import UploadImageButtonWithDialog from "../buttons/UploadDeleteImageButtonWithDialog";
+import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import UploadDeleteImageButtonWithDialog from "../buttons/UploadDeleteImageButtonWithDialog";
 
 export const UploadImagePanel: React.FC = () => {

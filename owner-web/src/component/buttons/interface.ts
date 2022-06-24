@@ -1,4 +1,4 @@
-import { GeneralProps, MenuProps } from "../edit_page_components/interface";
+import { GeneralProps } from "../edit_page_components/interface";
 
 export interface AddButtonWithDialogProps {
   title: string;
