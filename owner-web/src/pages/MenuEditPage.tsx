@@ -58,6 +58,7 @@ class MenuEditPage extends React.Component<
               isLoading: false,
             };
           });
+          console.log("Pulled Data: ", restaurant.isPublished);
         });
       }
     });

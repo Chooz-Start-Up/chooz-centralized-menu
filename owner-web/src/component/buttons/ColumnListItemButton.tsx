@@ -9,6 +9,8 @@ import {
 import { ColumnListGeneralButtonProps } from "./interface";
 import DeleteButtonWithWarningDialog from "./DeleteButtonWithWarningDialog";
 import EditMenuButtonWithDialog from "./EditMenuButtonWithDialog";
+import { Draggable } from "react-beautiful-dnd";
+import { makeStyles } from "@material-ui/core";
 
 const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
   props: ColumnListGeneralButtonProps
@@ -37,48 +39,70 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
     }
   };
 
+  const useStyles = makeStyles({
+    draggingListItem: {
+      background: "rgb(235,235,235)",
+    },
+  });
+  const classes = useStyles();
+
   return (
     <>
-      {items.map((item) => (
-        <ListItem key={item.id} disablePadding>
-          <ListItemButton
-            sx={{ height: 50 }}
-            selected={setSelectedColumnIndex() === item.id}
-            onClick={(event) => handleListItemClick(event, item.id)}
-          >
-            <Grid container maxWidth="150px">
-              <Typography
-                textOverflow="ellipsis"
-                overflow="hidden"
-                whiteSpace="nowrap"
+      {items.map((item, index) => (
+        <Draggable
+          key={item.id}
+          draggableId={item.id.toString()}
+          index={index}
+          isDragDisabled={isPublished}
+        >
+          {(provided, snapshot) => (
+            <ListItem
+              disablePadding
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              className={snapshot.isDragging ? classes.draggingListItem : ""}
+            >
+              <ListItemButton
+                sx={{ height: 50 }}
+                selected={setSelectedColumnIndex() === item.id}
+                onClick={(event) => handleListItemClick(event, item.id)}
               >
-                {item.name}
-              </Typography>
-            </Grid>
+                <Grid container maxWidth="150px">
+                  <Typography
+                    textOverflow="ellipsis"
+                    overflow="hidden"
+                    whiteSpace="nowrap"
+                  >
+                    {item.name}
+                  </Typography>
+                </Grid>
 
-            <Grid container justifyContent="flex-end">
-              {!isPublished && setSelectedColumnIndex() === item.id && (
-                <EditMenuButtonWithDialog
-                  title={editDialogTitle}
-                  label={editDialogLabel}
-                  textValue={item.name}
-                  handleEditRetrieveText={handleEditRetrieveText}
-                  updateText={updateText}
-                  validateText={validateText}
-                />
-              )}
+                <Grid container justifyContent="flex-end">
+                  {!isPublished && setSelectedColumnIndex() === item.id && (
+                    <EditMenuButtonWithDialog
+                      title={editDialogTitle}
+                      label={editDialogLabel}
+                      textValue={item.name}
+                      handleEditRetrieveText={handleEditRetrieveText}
+                      updateText={updateText}
+                      validateText={validateText}
+                    />
+                  )}
 
-              {!isPublished && setSelectedColumnIndex() === item.id && (
-                <DeleteButtonWithWarningDialog
-                  title={deleteDialogTitle}
-                  label={deleteDialogLabel}
-                  deleteAction={handleDeleteClick}
-                  id={item.id}
-                />
-              )}
-            </Grid>
-          </ListItemButton>
-        </ListItem>
+                  {!isPublished && setSelectedColumnIndex() === item.id && (
+                    <DeleteButtonWithWarningDialog
+                      title={deleteDialogTitle}
+                      label={deleteDialogLabel}
+                      deleteAction={handleDeleteClick}
+                      id={item.id}
+                    />
+                  )}
+                </Grid>
+              </ListItemButton>
+            </ListItem>
+          )}
+        </Draggable>
       ))}
     </>
   );

@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   Box,
   Divider,
+  Fade,
   Grid,
   List,
   ListItem,
@@ -29,6 +30,13 @@ import {
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
 import { Menu } from "../../firebase/databaseAPI/Menu";
+import {
+  DragDropContext,
+  Droppable,
+  DraggableLocation,
+  DropResult,
+  ResponderProvided,
+} from "react-beautiful-dnd";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,
@@ -39,6 +47,7 @@ export class MenuColumnList extends React.Component<
 
     this.state = {
       loading: false,
+      reorderLoading: false,
       key: "",
       //
       addingItemName: "",
@@ -86,6 +95,40 @@ export class MenuColumnList extends React.Component<
       this.setState(() => {
         return { loading: false };
       });
+    }
+  }
+
+  componentDidUpdate(
+    prevProps: MenuColumnListProps,
+    prevState: MenuColumnListState
+  ) {
+    if (this.state.reorderLoading !== prevState.reorderLoading) {
+      console.log("executed");
+      if (auth !== null && auth.currentUser !== null) {
+        pullRestaurantMenuByUser(auth.currentUser.uid).then(
+          (menus) => {
+            this.setState(
+              () => {
+                return {
+                  menuItems: this.convertMenuToMenuProps(menus),
+                };
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState(() => {
+                    return {
+                      reorderLoading: false,
+                    };
+                  });
+                }, 50);
+              }
+            );
+          },
+          (msg) => {
+            console.error(msg);
+          }
+        );
+      }
     }
   }
 
@@ -472,6 +515,98 @@ export class MenuColumnList extends React.Component<
     this.pushMenuToDatabase(newArray);
   };
 
+  onMenuDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const destinationIndex = result.destination.index;
+
+    const array = Array.from(this.state.menuItems);
+    const [removed] = array.splice(result.source.index, 1);
+    array.splice(destinationIndex, 0, removed);
+
+    this.pushMenuToDatabase(array);
+
+    this.setState(
+      () => {
+        return {
+          reorderLoading: true,
+        };
+      },
+      () => {
+        this.setSelectedMenuIndex(destinationIndex);
+        this.setSelectedCategoryIndex(-1);
+        this.setSelectedItemIndex(-1);
+      }
+    );
+  };
+
+  onCategoryDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const destinationIndex = result.destination.index;
+
+    const array = Array.from(this.state.menuItems);
+    const [removed] = array[this.state.selectedMenuIndex].categoryItems.splice(
+      result.source.index,
+      1
+    );
+    array[this.state.selectedMenuIndex].categoryItems.splice(
+      result.destination.index,
+      0,
+      removed
+    );
+
+    this.pushMenuToDatabase(array);
+
+    this.setState(() => {
+      return {
+        menuItems: array,
+      };
+    });
+
+    this.setState(
+      () => {
+        return {
+          reorderLoading: true,
+        };
+      },
+      () => {
+        this.setSelectedCategoryIndex(destinationIndex);
+        this.setSelectedItemIndex(-1);
+      }
+    );
+  };
+
+  onItemDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const destinationIndex = result.destination.index;
+
+    const array = Array.from(this.state.menuItems);
+    const [removed] = array[this.state.selectedMenuIndex].categoryItems[
+      this.state.selectedCategoryIndex
+    ].items.splice(result.source.index, 1);
+    array[this.state.selectedMenuIndex].categoryItems[
+      this.state.selectedCategoryIndex
+    ].items.splice(result.destination.index, 0, removed);
+
+    this.pushMenuToDatabase(array);
+
+    this.setState(() => {
+      return {
+        menuItems: array,
+      };
+    });
+
+    this.setState(
+      () => {
+        return {
+          reorderLoading: true,
+        };
+      },
+      () => {
+        this.setSelectedItemIndex(destinationIndex);
+      }
+    );
+  };
+
   render() {
     return (
       <>
@@ -502,36 +637,63 @@ export class MenuColumnList extends React.Component<
                 </Typography>
               </Box>
 
-              <List component="nav">
-                <Grid item xs={12}>
-                  <ColumnListItemButton
-                    deleteDialogTitle="Are you sure you want to delete the menu?"
-                    deleteDialogLabel="All items in the menu will be deleted as well."
-                    editDialogTitle="Enter New Menu Name"
-                    editDialogLabel="New Menu Name"
-                    items={this.state.menuItems}
-                    isPublished={this.props.isPublished}
-                    handleDeleteClick={this.handleMenuDeleteClick}
-                    handleEditRetrieveText={this.handleMenuEditRetrieveText}
-                    updateText={this.updateText}
-                    validateText={this.validateText}
-                    setSelectedColumnIndex={this.setSelectedMenuIndex}
-                  />
-                </Grid>
-                {!this.props.isPublished && (
-                  <Grid item xs={12}>
-                    <ListItem disablePadding alignItems="center">
-                      <AddButtonWithDialog
-                        title="Enter Menu Name"
-                        label="Menu Name"
-                        handleAddRetrieveText={this.handleMenuAddRetrieveText}
-                        updateText={this.updateText}
-                        validateText={this.validateText}
-                      />
-                    </ListItem>
-                  </Grid>
-                )}
-              </List>
+              {!this.state.reorderLoading && (
+                <DragDropContext onDragEnd={this.onMenuDragEnd}>
+                  <Droppable
+                    droppableId="droppableMenuList"
+                    isDropDisabled={this.props.isPublished}
+                  >
+                    {(provided) => (
+                      <Fade
+                        in={!this.state.reorderLoading}
+                        exit={false}
+                        mountOnEnter
+                        unmountOnExit
+                        timeout={275}
+                      >
+                        <List
+                          component="nav"
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                        >
+                          <Grid item xs={12}>
+                            <ColumnListItemButton
+                              deleteDialogTitle="Are you sure you want to delete the menu?"
+                              deleteDialogLabel="All items in the menu will be deleted as well."
+                              editDialogTitle="Enter New Menu Name"
+                              editDialogLabel="New Menu Name"
+                              items={this.state.menuItems}
+                              isPublished={this.props.isPublished}
+                              handleDeleteClick={this.handleMenuDeleteClick}
+                              handleEditRetrieveText={
+                                this.handleMenuEditRetrieveText
+                              }
+                              updateText={this.updateText}
+                              validateText={this.validateText}
+                              setSelectedColumnIndex={this.setSelectedMenuIndex}
+                            />
+                          </Grid>
+                          {!this.props.isPublished && (
+                            <Grid item xs={12}>
+                              <ListItem disablePadding alignItems="center">
+                                <AddButtonWithDialog
+                                  title="Enter Menu Name"
+                                  label="Menu Name"
+                                  handleAddRetrieveText={
+                                    this.handleMenuAddRetrieveText
+                                  }
+                                  updateText={this.updateText}
+                                  validateText={this.validateText}
+                                />
+                              </ListItem>
+                            </Grid>
+                          )}
+                        </List>
+                      </Fade>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+              )}
             </Grid>
 
             <Grid
@@ -554,23 +716,26 @@ export class MenuColumnList extends React.Component<
               </Box>
               {this.validateMenuIndexBeforeRender() !== -1 && (
                 <>
-                  <CategoryColumnList
-                    categoryItems={
-                      this.state.menuItems[this.state.selectedMenuIndex]
-                        .categoryItems
-                    }
-                    isPublished={this.props.isPublished}
-                    handleCategoryAddRetrieveText={
-                      this.handleCategoryAddRetrieveText
-                    }
-                    handleCategoryDeleteClick={this.handleCategoryDeleteClick}
-                    handleCategoryEditRetrieveText={
-                      this.handleCategoryEditRetrieveText
-                    }
-                    updateText={this.updateText}
-                    validateText={this.validateText}
-                    setSelectedCategoryIndex={this.setSelectedCategoryIndex}
-                  />
+                  {!this.state.reorderLoading && (
+                    <CategoryColumnList
+                      categoryItems={
+                        this.state.menuItems[this.state.selectedMenuIndex]
+                          .categoryItems
+                      }
+                      isPublished={this.props.isPublished}
+                      handleCategoryAddRetrieveText={
+                        this.handleCategoryAddRetrieveText
+                      }
+                      handleCategoryDeleteClick={this.handleCategoryDeleteClick}
+                      handleCategoryEditRetrieveText={
+                        this.handleCategoryEditRetrieveText
+                      }
+                      updateText={this.updateText}
+                      validateText={this.validateText}
+                      setSelectedCategoryIndex={this.setSelectedCategoryIndex}
+                      onCategoryDragEnd={this.onCategoryDragEnd}
+                    />
+                  )}
                 </>
               )}
             </Grid>
@@ -595,19 +760,24 @@ export class MenuColumnList extends React.Component<
               </Box>
               {this.validateCategoryIndexBeforeRender() !== -1 && (
                 <>
-                  <ItemColumnList
-                    itemItems={
-                      this.state.menuItems[this.state.selectedMenuIndex]
-                        .categoryItems[this.state.selectedCategoryIndex].items
-                    }
-                    isPublished={this.props.isPublished}
-                    handleItemAddRetrieveText={this.handleItemAddRetrieveText}
-                    handleItemDeleteClick={this.handleItemDeleteClick}
-                    handleItemEditRetrieveText={this.handleItemEditRetrieveText}
-                    updateText={this.updateText}
-                    validateText={this.validateText}
-                    setSelectedItemIndex={this.setSelectedItemIndex}
-                  />
+                  {!this.state.reorderLoading && (
+                    <ItemColumnList
+                      itemItems={
+                        this.state.menuItems[this.state.selectedMenuIndex]
+                          .categoryItems[this.state.selectedCategoryIndex].items
+                      }
+                      isPublished={this.props.isPublished}
+                      handleItemAddRetrieveText={this.handleItemAddRetrieveText}
+                      handleItemDeleteClick={this.handleItemDeleteClick}
+                      handleItemEditRetrieveText={
+                        this.handleItemEditRetrieveText
+                      }
+                      updateText={this.updateText}
+                      validateText={this.validateText}
+                      setSelectedItemIndex={this.setSelectedItemIndex}
+                      onItemDragEnd={this.onItemDragEnd}
+                    />
+                  )}
                 </>
               )}
             </Grid>

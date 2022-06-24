@@ -1,3 +1,5 @@
+import { DropResult } from "react-beautiful-dnd";
+
 export interface GeneralProps {
   id: number;
   name: string;
@@ -33,6 +35,7 @@ export interface MenuColumnListProps {
 
 export interface MenuColumnListState {
   loading: boolean;
+  reorderLoading: boolean;
   key: string;
   //
   addingItemName: string;
@@ -51,6 +54,7 @@ export interface CategoryColumnListProps {
   updateText(e: any): any;
   validateText(): any;
   setSelectedCategoryIndex(index: number): any;
+  onCategoryDragEnd(result: DropResult): any;
 }
 
 export interface ItemColumnListProps {
@@ -62,6 +66,7 @@ export interface ItemColumnListProps {
   updateText(e: any): any;
   validateText(): any;
   setSelectedItemIndex(index: number): any;
+  onItemDragEnd(result: DropResult): any;
 }
 
 export interface ItemColumnDisplayProps {
