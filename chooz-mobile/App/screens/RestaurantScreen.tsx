@@ -104,7 +104,6 @@ const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
   const restaurantID = route.params.restaurantID;
 
   useEffect(() => {
-    navigation.setOptions({ title: restaurant.restaurantName });
     getRestaurantByKey(restaurantID)
       .then((restaurant) => {
         setRestaurant(restaurant);

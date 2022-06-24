@@ -34,11 +34,11 @@
         "NSCameraUsageDescription": "Allow Expo experiences to use your camera"
       },
       "googleServicesFile": "./GoogleService-Info.plist",
-      "associatedDomains": ["applinks:choozmenu.com/menu"]
+      "associatedDomains": ["applinks:choozmenu.com"]
     },
     "android": {
       "package": "com.chooz.choozmobile",
-      "versionCode": 1,
+      "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -51,7 +51,7 @@
           "data": [
             {
               "scheme": "https",
-              "host": "choozmenu.com/menu",
+              "host": "choozmenu.com",
               "pathPrefix": "/"
             }
           ],

@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Platform } from "react-native";
 import * as Linking from "expo-linking";
-import dynamicLinks from "@react-native-firebase/dynamic-links";
+import dynamicLinks, { firebase } from "@react-native-firebase/dynamic-links";
 
 import MenuScreen from "../screens/MenuScreen";
 import ItemScreen from "../screens/ItemScreen";
@@ -59,7 +59,7 @@ const RestaurantStackScreen = () => {
         name="RestaurantScreen"
         component={RestaurantScreen}
         options={{
-          title: "Restaurant Name",
+          title: "",
           headerTitleStyle: { color: "black" },
           headerShown: true,
           headerTransparent: true,
@@ -109,19 +109,21 @@ const RestaurantStackScreen = () => {
 const Navigation = () => {
   const _handleUrl = (obj: any) => {
     let url = obj.url;
-    let data = Linking.parse(url);
-    let id = data.queryParams.id;
+    let { hostname, path, queryParams } = Linking.parse(url);
+    let id = queryParams.id;
     navigate("RestaurantListScreen");
-    navigate("RestaurantScreen", { restaurantID: id });
+    if (id) {
+      navigate("RestaurantScreen", { restaurantID: id });
+    }
   };
 
-  //CREATE TEST
-  // console.log(
-  //   "URL:   " +
-  //     createURL("/--/RestaurantScreen", {
-  //       queryParams: { id: "-N4oB-DoClsQsVBGAOVl" },
-  //     })
-  // );
+  console.log(
+    "URL:   " +
+      Linking.createURL("/--/RestaurantScreen", {
+        queryParams: { id: "-N4oB-DoClsQsVBGAOVl" },
+      })
+  );
+
   useEffect(() => {
     Linking.getInitialURL()
       .then((url) => {
