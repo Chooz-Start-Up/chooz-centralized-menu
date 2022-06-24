@@ -13,6 +13,8 @@ import {
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import { AccessQRButtonProps } from "./interface";
 import { Grid } from "@material-ui/core";
+import { auth } from "../../firebase/authentication/firebaseAuthentication";
+import { pullDynamicLink } from "../../firebase/databaseAPI/DynamicLinkAPI";
 
 const AccessQRButton: React.FC<AccessQRButtonProps> = (
   props: AccessQRButtonProps
@@ -23,11 +25,22 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
 
   const handleClickOpen = () => {
     onQRClick();
+    generateLink();
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const generateLink = () => {
+    let link;
+    if (auth !== null && auth.currentUser !== null) {
+      pullDynamicLink(auth.currentUser.uid).then((dynamicLink) => {
+        link = dynamicLink;
+        console.log(link);
+      });
+    }
   };
 
   return (
