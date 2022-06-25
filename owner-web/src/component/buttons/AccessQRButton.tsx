@@ -17,7 +17,7 @@ import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { pullDynamicLink } from "../../firebase/databaseAPI/DynamicLinkAPI";
 import { QRCode } from "react-qrcode-logo";
 
-import ChoozIcon from "../images/chooz_icon/chooz_red.png";
+import ChoozIcon from "../images/chooz_icons/logoRed_bgWhiteCircular.png";
 
 import { toPng } from "html-to-image";
 
