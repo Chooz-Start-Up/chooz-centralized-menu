@@ -96,10 +96,20 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
       () => {
         setErrorMessage("");
       },
-      () => {
-        setErrorMessage(
-          "Please make sure your Facebook account has your email information and then try again later."
-        );
+      (err) => {
+        if (
+          err.message.indexOf(
+            "auth/account-exists-with-different-credential"
+          ) !== -1
+        ) {
+          setErrorMessage(
+            "You already have an existing account with the same email. Please try to login another way."
+          );
+        } else {
+          setErrorMessage(
+            "Please make sure your Facebook account has your email information and then try again later."
+          );
+        }
       }
     );
   };

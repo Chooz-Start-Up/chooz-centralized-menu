@@ -110,8 +110,20 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
       () => {
         setErrorMessage("");
       },
-      () => {
-        setErrorMessage("Unexpected error occurred. Please try again later.");
+      (err) => {
+        if (
+          err.message.indexOf(
+            "auth/account-exists-with-different-credential"
+          ) !== -1
+        ) {
+          setErrorMessage(
+            "You already have an existing account with the same email. Please try to login another way."
+          );
+        } else {
+          setErrorMessage(
+            "Please make sure your Facebook account has your email information and then try again later."
+          );
+        }
       }
     );
   };
@@ -130,7 +142,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
           <Box
             boxShadow={5}
             width="450"
-            height={errorMessage === "" ? "620" : "670"}
+            height={errorMessage === "" ? "630" : "690"}
             bgcolor="white"
             textAlign="center"
           >
