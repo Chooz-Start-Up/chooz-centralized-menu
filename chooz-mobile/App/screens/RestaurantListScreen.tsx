@@ -5,14 +5,14 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { ScrollView } from "react-native-gesture-handler";
-import { List } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 import { RestaurantStackParamList } from "../config/navigation";
-import { RowSeparator } from "../components/RowItem";
+import { RowSeparator, RestaurantListItem } from "../components/RowItem";
 import { Restaurant } from "../util/Restaurant";
 import { getRestaurantList } from "../util/RestaurantApi";
 import colors from "../constants/colors";
+import { List } from "react-native-paper";
 
 type Props = NativeStackScreenProps<
   RestaurantStackParamList,
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
 const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
-
   const [restaurantList, setRestaurantList] = useState<Array<Restaurant>>();
   const [isLoading, setLoading] = useState(true);
 
@@ -42,38 +41,28 @@ const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
 
   return (
     <>
-      {isLoading && (
-        <View style={{ justifyContent: "center", backgroundColor: "#A90011" }}>
-          <Text style={{ fontSize: 50 }}>LOADING</Text>
-        </View>
-      )}
+      {isLoading && <View></View>}
       {!isLoading && (
         <ScrollView style={styles.scrollView}>
           <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
 
-          <List.Section style={styles.listSection}>
+          <List.Section title="All Restaurants">
             {restaurantList?.map((restaurant) => {
               return (
                 <View key={restaurant.id + "ViewKey"}>
                   {restaurant.isPublished && (
-                    <>
-                      <List.Item
-                        key={restaurant.id}
-                        title={restaurant.restaurantName}
-                        description={restaurant.description}
-                        left={(props: any) => (
-                          <List.Icon {...props} icon="book" />
-                        )}
-                        right={(props: any) => <List.Icon {...props} icon="" />}
-                        onPress={() =>
-                          navigation.navigate("RestaurantScreen", {
-                            restaurantID: restaurant.id,
-                          })
-                        }
-                      />
-                      <RowSeparator key={restaurant.id + "key"} />
-                    </>
+                    <RestaurantListItem
+                      title={restaurant.restaurantName}
+                      restaurantID={restaurant.id}
+                      description={restaurant.description}
+                      onPress={() =>
+                        navigation.navigate("RestaurantScreen", {
+                          restaurantID: restaurant.id,
+                        })
+                      }
+                    />
                   )}
+                  <RowSeparator />
                 </View>
               );
             })}

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, Platform, Dimensions } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  BorderlessButton,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 import colors from "../constants/colors";
 import { Menu } from "../util/Menu";
 
@@ -9,26 +13,20 @@ const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: colors.white,
-    height: 30,
+    height: 33,
   },
   listItem: {
     backgroundColor: colors.white,
     alignItems: "center",
-    height: 30,
-    //borderWidth: 1,
-    borderBottomColor: "#E53C38",
+    height: 33,
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgrey",
   },
   listItemText: {
     textAlign: "center", // <-- the magic
-    paddingTop: Platform.OS === "ios" ? 5 : 5,
+    paddingTop: 6,
     fontSize: Platform.OS === "ios" ? 17 : 16,
-    marginTop: 0,
-    height: 25,
     backgroundColor: "transparent",
-  },
-  columnSeparator: {
-    backgroundColor: colors.border,
-    width: 2,
   },
 });
 
@@ -37,8 +35,6 @@ type Props = {
   currentMenuIndex: number;
   changeMenuIndex: Function;
 };
-
-const ColumnSeparator = () => <View style={styles.columnSeparator} />;
 
 const HorizontalList: React.FC<Props> = ({
   menus,
@@ -57,11 +53,24 @@ const HorizontalList: React.FC<Props> = ({
     }
   };
 
-  const setSelectedStyle = (index: number) => {
+  const setSelectedBorder = (index: number) => {
     if (selected === index) {
       return {
         borderBottomWidth: 2,
+        borderBottomColor: colors.secondaryRed,
       };
+    } else {
+      return {};
+    }
+  };
+
+  const setSelectedText = (index: number) => {
+    if (selected === index) {
+      return {
+        fontWeight: "bold",
+        color: colors.secondaryRed,
+        paddingTop: 4,
+      } as const;
     } else {
       return {};
     }
@@ -75,23 +84,27 @@ const HorizontalList: React.FC<Props> = ({
     >
       {menus.map((menu, i) => {
         return (
-          <View
-            key={menu.menuName + "View"}
-            style={[styles.listItem, getWidth(), setSelectedStyle(i)]}
-          >
-            <TouchableOpacity
-              key={menu.menuName + "ViewKey"}
-              style={getWidth()}
-              onPress={() => {
-                setSelected(i);
-                changeMenuIndex(i);
-              }}
+          <View key={menu.menuName + "container"}>
+            <View
+              key={menu.menuName + "View"}
+              style={[styles.listItem, getWidth(), setSelectedBorder(i)]}
             >
-              <Text key={menu.menuName + "TextKey"} style={styles.listItemText}>
-                {menu.menuName}
-              </Text>
-            </TouchableOpacity>
-            <ColumnSeparator key={menu.menuName + "Column"} />
+              <TouchableOpacity
+                key={menu.menuName + "ViewKey"}
+                style={getWidth()}
+                onPress={() => {
+                  setSelected(i);
+                  changeMenuIndex(i);
+                }}
+              >
+                <Text
+                  key={menu.menuName + "TextKey"}
+                  style={[styles.listItemText, setSelectedText(i)]}
+                >
+                  {menu.menuName}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         );
       })}

@@ -6,6 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { RowSeparator } from "../components/RowItem";
 import { RestaurantStackParamList } from "../config/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import colors from "../constants/colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,33 +29,42 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    justifyContent: "space-between",
-    flexDirection: "row",
     marginTop: 20,
-    marginBottom: 20,
     marginRight: 20,
     marginLeft: 20,
+    marginBottom: 5,
   },
   titleText: {
     fontSize: Platform.OS === "ios" ? 22 : 20,
     //fontWeight: "bold",
   },
-  priceContainer: {},
+  priceContainer: {
+    marginBottom: 5,
+    marginRight: 20,
+    marginLeft: 20,
+  },
   priceText: {
-    fontSize: Platform.OS === "ios" ? 20 : 16,
+    fontSize: Platform.OS === "ios" ? 22 : 20,
+    fontWeight: "bold",
   },
   headerText: {
     fontSize: Platform.OS === "ios" ? 17 : 14,
     fontWeight: "bold",
+    color: colors.darkRed,
   },
   bodyContainer: {
     flex: 1,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 10,
     marginTop: 10,
   },
   bodyText: {
     fontSize: Platform.OS === "ios" ? 17 : 14,
+  },
+  separator: {
+    backgroundColor: colors.border,
+    height: 1,
+    marginHorizontal: Platform.OS === "ios" ? 20 : 0,
+    marginVertical: 5,
   },
 });
 
@@ -72,30 +82,28 @@ const ItemScreen = ({ route }: Props) => {
         <View style={styles.content}>
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{itemName}</Text>
-            {price ? (
-              <View style={styles.priceContainer}>
-                <Text style={styles.priceText}>{price}</Text>
-              </View>
-            ) : null}
           </View>
-          <RowSeparator />
-          {description ? (
-            <View style={styles.itemContainer}>
-              <Text style={styles.headerText}>Descriptions</Text>
-              <View style={styles.bodyContainer}>
-                <Text style={styles.bodyText}>{description}</Text>
-              </View>
+
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>{`$${price.toFixed(2)}`}</Text>
+          </View>
+          <View style={styles.separator} />
+
+          <View style={styles.itemContainer}>
+            <Text style={styles.headerText}>Description</Text>
+            <View style={styles.bodyContainer}>
+              <Text style={styles.bodyText}>{description}</Text>
             </View>
-          ) : null}
-          <RowSeparator />
-          {ingredients ? (
-            <View style={styles.itemContainer}>
-              <Text style={styles.headerText}>Ingredients</Text>
-              <View style={styles.bodyContainer}>
-                <Text style={styles.bodyText}>{ingredients}</Text>
-              </View>
+          </View>
+          <View style={styles.separator} />
+
+          <View style={styles.itemContainer}>
+            <Text style={styles.headerText}>Ingredients</Text>
+            <View style={styles.bodyContainer}>
+              <Text style={styles.bodyText}>{ingredients}</Text>
             </View>
-          ) : null}
+          </View>
+          <View style={styles.separator} />
         </View>
       </ScrollView>
     </View>

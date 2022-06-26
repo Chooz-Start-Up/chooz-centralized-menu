@@ -14,7 +14,7 @@ import {
 import { List } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-import { RowItem, RowSeparator } from "../components/RowItem";
+import { RestaurantListItem, RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors.js";
 import { RestaurantStackParamList } from "../config/navigation";
 import HorizontalList from "../components/HorizontalList";
@@ -67,17 +67,15 @@ const MenuScreen: React.FC<Props> = ({ route }: Props) => {
         changeMenuIndex={changeMenuIndex}
       />
       <ScrollView style={styles.scrollView}>
-        <List.Section>
-          {menus[menuIndex].categories.map((category, i) => {
-            return (
-              <CustomAccordion
-                key={category.categoryName + i}
-                category={category}
-                navigate={openItem}
-              />
-            );
-          })}
-        </List.Section>
+        {menus[menuIndex].categories.map((category, i) => {
+          return (
+            <CustomAccordion
+              key={category.categoryName + i}
+              category={category}
+              navigate={openItem}
+            />
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );

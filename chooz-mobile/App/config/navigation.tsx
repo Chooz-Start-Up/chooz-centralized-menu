@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Platform } from "react-native";
@@ -42,17 +43,23 @@ const RestaurantStackScreen = () => {
         name="RestaurantListScreen"
         component={RestaurantListScreen}
         options={{
-          title: "chooz",
+          headerTitle: () => (
+            <Image
+              style={{ width: 200, height: 70 }}
+              source={require("../assets/images/brand/chooz_red.png")}
+              resizeMode="contain"
+            />
+          ),
+          headerStyle: {
+            backgroundColor: "white",
+          },
+          headerTitleStyle: {
+            color: "black",
+            fontWeight: "bold",
+          },
           headerShown: true,
-          headerTintColor: colors.darkRed,
-          // headerRight: () => (
-          //   <TouchableOpacity
-          //     onPress={() => alert("Search not yet implemented.")}
-          //     style={{ paddingHorizontal: 15 }}
-          //   >
-          //     <Entypo name="magnifying-glass" size={30} color={colors.blue} />
-          //   </TouchableOpacity>
-          // ),
+          headerTintColor: "#d11d27",
+          headerTitleAlign: "center",
         }}
       />
       <RestaurantStack.Screen
@@ -65,7 +72,7 @@ const RestaurantStackScreen = () => {
           headerTransparent: true,
           presentation: "card",
           headerLeftLabelVisible: false,
-          //headerTintColor: colors.darkRed,
+          headerTintColor: colors.secondaryRed,
         }}
       />
       <RestaurantStack.Screen
@@ -77,6 +84,12 @@ const RestaurantStackScreen = () => {
           gestureDirection: Platform.OS === "ios" ? "horizontal" : "vertical",
           presentation: "card",
           headerLeftLabelVisible: false,
+          headerTitleStyle: {
+            color: "black",
+            fontWeight: "bold",
+            fontSize: Platform.OS === "ios" ? 20 : 20,
+          },
+          headerTintColor: colors.secondaryRed,
         }}
       />
       <RestaurantStack.Screen
@@ -87,6 +100,7 @@ const RestaurantStackScreen = () => {
           headerShown: true,
           headerLeftLabelVisible: false,
           presentation: "modal",
+          headerTintColor: "#d11d27",
         }}
       />
       <RestaurantStack.Screen
@@ -141,7 +155,6 @@ const Navigation = () => {
       .catch((error) => {
         console.log(error);
       });
-
     Linking.addEventListener("url", _handleUrl);
   }, []);
   return (

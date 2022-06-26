@@ -9,11 +9,20 @@ import {
   set,
 } from "firebase/database";
 import { Restaurant } from "./Restaurant";
-import { db } from "../data/database";
+import { app, db } from "../data/database";
 import { Menu } from "./Menu";
 import MenuScreen from "../screens/MenuScreen";
+import {
+  uploadBytes,
+  ref as storageRef,
+  listAll,
+  getDownloadURL,
+  deleteObject,
+  getStorage,
+} from "firebase/storage";
 
 const dbRef = ref(getDatabase());
+const storage = getStorage(app);
 
 /**
  * pushes Restaurant to db - if user and restaurant exists, it updates otherwise, it adds a new record
@@ -232,5 +241,34 @@ export async function getRestaurantByKey(key: string): Promise<Restaurant> {
       .catch((error) => {
         console.error(error);
       });
+  });
+}
+export async function pullBannerImage(restaurantKey: string): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    let imageURLs: string = "";
+
+    listAll(storageRef(storage, restaurantKey + "/banner/")).then((data) => {
+      if (data.items.length > 0) {
+        getDownloadURL(data.items[0]).then((url) => {
+          imageURLs = url;
+          resolve(imageURLs);
+        });
+      }
+    });
+  });
+}
+
+export async function pullLogoImage(restaurantKey: string): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    let imageURLs: string = "";
+
+    listAll(storageRef(storage, restaurantKey + "/logo/")).then((data) => {
+      if (data.items.length > 0) {
+        getDownloadURL(data.items[0]).then((url) => {
+          imageURLs = url;
+          resolve(imageURLs);
+        });
+      }
+    });
   });
 }

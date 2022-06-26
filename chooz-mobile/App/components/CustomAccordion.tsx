@@ -1,9 +1,16 @@
 import React, { useCallback, useState } from "react";
-import { Platform, View, StyleSheet, Dimensions, Text } from "react-native";
+import {
+  Platform,
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  ColorPropType,
+} from "react-native";
 import { Divider, List } from "react-native-paper";
 import colors from "../constants/colors";
 import { Category } from "../util/Category";
-import { RowSeparator } from "./RowItem";
+import { MenuItem, RowSeparator } from "./RowItem";
 
 type Props = {
   category: Category;
@@ -16,16 +23,10 @@ const styles = StyleSheet.create({
   section: {
     backgroundColor: colors.white,
   },
-  listItem: {
-    backgroundColor: colors.white,
-    alignItems: "center",
-  },
-  listItemText: {
-    textAlign: "center", // <-- the magic
-    paddingTop: Platform.OS === "ios" ? 5 : 5,
-    fontSize: Platform.OS === "ios" ? 17 : 16,
-    marginTop: 0,
-    height: 75,
+  sectionTitle: {
+    color: colors.secondaryRed,
+    fontWeight: "bold",
+    fontSize: Platform.OS === "ios" ? 17 : 14,
   },
   columnSeparator: {
     backgroundColor: colors.border,
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.white,
   },
-  rightItemText: {},
 });
 
 const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
@@ -53,6 +53,7 @@ const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
     <List.Accordion
       title={category.categoryName}
       style={styles.section}
+      titleStyle={styles.sectionTitle}
       expanded={expanded}
       onPress={handlePress}
     >
@@ -61,19 +62,14 @@ const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
       {items?.map((item, i) => {
         return (
           <View key={item.itemName + "View" + i}>
-            <List.Item
+            <MenuItem
               key={item.itemName + "List" + i}
               title={item.itemName}
               description={item.description}
-              right={() => (
-                <View style={styles.rightItem}>
-                  <Text>{item.price}</Text>
-                </View>
-              )}
-              style={styles.listItem}
+              price={item.price}
               onPress={() => navigate("ItemScreen", item)}
             />
-            <RowSeparator key={item.itemName + "Separator" + i} />
+            <Divider key={item.itemName + "Separator" + i} />
           </View>
         );
       })}
