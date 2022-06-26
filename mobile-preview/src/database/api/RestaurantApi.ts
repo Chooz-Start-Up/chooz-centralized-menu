@@ -127,28 +127,51 @@ export async function pullBannerImage(restaurantKey: string): Promise<string> {
   return new Promise(function (resolve, reject) {
     let imageURLs: string = "";
 
-    listAll(storageRef(storage, restaurantKey + "/banner/")).then((data) => {
-      if (data.items.length > 0) {
-        getDownloadURL(data.items[0]).then((url) => {
-          imageURLs = url;
-          resolve(imageURLs);
-        });
+    listAll(storageRef(storage, restaurantKey + "/banner/")).then(
+      (data) => {
+        if (data.items.length > 0) {
+          getDownloadURL(data.items[0]).then(
+            (url) => {
+              imageURLs = url;
+              resolve(imageURLs);
+            },
+            () => {
+              reject("Banner not found");
+            }
+          );
+        } else {
+          reject("Banner not found");
+        }
+      },
+      () => {
+        reject("Banner not found");
       }
-    });
+    );
   });
 }
 
 export async function pullLogoImage(restaurantKey: string): Promise<string> {
   return new Promise(function (resolve, reject) {
     let imageURLs: string = "";
-
-    listAll(storageRef(storage, restaurantKey + "/logo/")).then((data) => {
-      if (data.items.length > 0) {
-        getDownloadURL(data.items[0]).then((url) => {
-          imageURLs = url;
-          resolve(imageURLs);
-        });
+    listAll(storageRef(storage, restaurantKey + "/logo/")).then(
+      (data) => {
+        if (data.items.length > 0) {
+          getDownloadURL(data.items[0]).then(
+            (url) => {
+              imageURLs = url;
+              resolve(imageURLs);
+            },
+            () => {
+              reject("Logo not found");
+            }
+          );
+        } else {
+          reject("Logo not found");
+        }
+      },
+      () => {
+        reject("Logo not found");
       }
-    });
+    );
   });
 }
