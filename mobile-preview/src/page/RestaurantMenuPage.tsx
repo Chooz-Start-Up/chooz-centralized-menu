@@ -68,7 +68,6 @@ const RestaurantMenuPage: React.FC = () => {
         setBannerURL(bannerURL);
       });
       pullLogoImage(restaurantKey).then((logoURL) => {
-        console.log(logoURL);
         setLogoURL(logoURL);
       });
     } else {
@@ -176,7 +175,7 @@ const RestaurantMenuPage: React.FC = () => {
                         key={i}
                         display="flex"
                         justifyContent="space-between"
-                        width="60%"
+                        width="100%"
                       >
                         <Typography>
                           {day.split("\n", 7)[0].split(" ", 1)[0]}:
@@ -238,7 +237,6 @@ const RestaurantMenuPage: React.FC = () => {
                       <div key={itemIndex}>
                         <Box
                           key={itemIndex}
-                          // bgcolor={choozTheme.palette.info.main}
                           bgcolor="white"
                           height="auto"
                           padding="10"
@@ -248,12 +246,10 @@ const RestaurantMenuPage: React.FC = () => {
                           boxShadow={1}
                         >
                           <Accordion
-                            key={menuIndex}
                             disableGutters
                             defaultExpanded={false}
                             elevation={0}
                             sx={{
-                              // bgcolor: choozTheme.palette.info.main,
                               bgcolor: "white",
                             }}
                             expanded={
@@ -287,16 +283,13 @@ const RestaurantMenuPage: React.FC = () => {
                               </Typography>
                             </Box>
 
-                            <AccordionDetails>
-                              <Divider sx={{ marginBottom: 2 }} />
-                              <Typography>
-                                {item.description === ""
-                                  ? "Empty"
-                                  : item.description}
-                              </Typography>
-                            </AccordionDetails>
+                            {item.description !== "" && (
+                              <AccordionDetails>
+                                <Divider sx={{ marginBottom: 2 }} />
+                                <Typography>{item.description}</Typography>
+                              </AccordionDetails>
+                            )}
                           </Accordion>
-                          {/* <Box textAlign="left" marginTop="3%"></Box> */}
                         </Box>
                       </div>
                     ))}

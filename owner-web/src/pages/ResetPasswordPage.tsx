@@ -156,7 +156,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
                         Go back to Login
                       </Button>
                     )}
-                    {userEmail !== undefined && !success && (
+                    {userEmail !== undefined && !success ? (
                       <Button
                         href="/edit"
                         sx={{
@@ -166,6 +166,17 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
                         }}
                       >
                         Go back to Profile
+                      </Button>
+                    ) : (
+                      <Button
+                        href="/login"
+                        sx={{
+                          textDecoration: "underline",
+                          textTransform: "none",
+                          width: "150px",
+                        }}
+                      >
+                        Go back to Login
                       </Button>
                     )}
                   </Box>

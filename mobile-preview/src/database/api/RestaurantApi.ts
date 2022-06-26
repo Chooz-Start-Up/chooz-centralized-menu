@@ -131,7 +131,6 @@ export async function pullBannerImage(restaurantKey: string): Promise<string> {
       if (data.items.length > 0) {
         getDownloadURL(data.items[0]).then((url) => {
           imageURLs = url;
-          console.log("The banner was successfully pulled");
           resolve(imageURLs);
         });
       }
@@ -147,7 +146,6 @@ export async function pullLogoImage(restaurantKey: string): Promise<string> {
       if (data.items.length > 0) {
         getDownloadURL(data.items[0]).then((url) => {
           imageURLs = url;
-          console.log("The logo was successfully pulled");
           resolve(imageURLs);
         });
       }
