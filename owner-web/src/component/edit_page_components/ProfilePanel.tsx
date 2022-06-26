@@ -389,14 +389,14 @@ class ProfilePanel extends React.Component<
                   }}
                 >
                   <Box width="40%">
-                    {this.state.hours.split("\n", 7).map((day) => (
-                      <Typography>{day.split(" ", 1)[0]}</Typography>
+                    {this.state.hours.split("\n", 7).map((day, i) => (
+                      <Typography key={i}>{day.split(" ", 1)[0]}</Typography>
                     ))}
                   </Box>
 
                   <Box width="50%">
-                    {this.state.hours.split("\n", 7).map((day) => (
-                      <Typography>
+                    {this.state.hours.split("\n", 7).map((day, i) => (
+                      <Typography key={i}>
                         {day.substring(day.split(" ", 1)[0].length)}
                       </Typography>
                     ))}

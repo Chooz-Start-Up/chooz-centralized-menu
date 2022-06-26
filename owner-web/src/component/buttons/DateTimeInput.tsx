@@ -41,7 +41,6 @@ class DateTimeInput extends React.Component<
   }
 
   parseTimeString = (str: string): string[] => {
-    console.log(str);
     let splitted = str.split(" ", 6);
 
     let splittedStrTime: string[] = [];
@@ -164,7 +163,6 @@ class DateTimeInput extends React.Component<
         this.props.updateTimeString(this.generateTimeString());
       }
     );
-    console.log("Open Time Changed");
   };
 
   onCloseTimeChange = (event: any) => {
@@ -176,26 +174,50 @@ class DateTimeInput extends React.Component<
         this.props.updateTimeString(this.generateTimeString());
       }
     );
-    console.log("Close Time Changed");
+  };
+
+  onCopyAboveClick = () => {
+    let aboveTimeString: string[] = this.parseTimeString(
+      this.props.aboveTimeString
+    );
+    this.setState(
+      () => {
+        return { startTime: aboveTimeString[1], closeTime: aboveTimeString[2] };
+      },
+      () => {
+        this.props.updateTimeString(this.generateTimeString());
+      }
+    );
   };
 
   render() {
     const {} = this.props;
     return (
       <>
-        <Typography variant="h6">
-          {this.state.date}
-          <FormControlLabel
-            control={
-              <Checkbox
-                onChange={this.onIsClosedChange}
-                checked={this.state.isClosed}
-              />
-            }
-            label="Closed"
-            sx={{ marginLeft: 2 }}
-          />
-        </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between" width={210}>
+            <Box display="flex" maxWidth={60}>
+              <Typography variant="h6">{this.state.date}</Typography>
+            </Box>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={this.onIsClosedChange}
+                  checked={this.state.isClosed}
+                />
+              }
+              label="Closed"
+              sx={{ marginLeft: 2 }}
+            />
+          </Box>
+          <Button
+            disabled={this.state.isClosed || this.props.aboveTimeString === ""}
+            sx={{ textTransform: "none" }}
+            onClick={this.onCopyAboveClick}
+          >
+            Copy Above
+          </Button>
+        </Box>
 
         <TextField
           disabled={this.state.isClosed}

@@ -38,7 +38,7 @@ const EditProfileButtonWithDialog: React.FC<
     phoneNumberValidationText,
   } = props;
 
-  let [
+  const [
     originalOwnerName,
     originalRestaurantName,
     originalDescription,
@@ -54,7 +54,7 @@ const EditProfileButtonWithDialog: React.FC<
     hoursUpdate(),
   ];
 
-  let splitted = originalHours.split("\n", 7);
+  const splitted = originalHours.split("\n", 7);
   // let mondayTimeString: string = splitted[0];
   // let tuesdayTimeString: string = splitted[1];
   // let wednesdayTimeString: string = splitted[2];
@@ -156,6 +156,14 @@ const EditProfileButtonWithDialog: React.FC<
     descriptionUpdate(originalDescription);
     addressUpdate(originalAddress);
     hoursUpdate(originalHours);
+
+    setMondayTimeString(splitted[0]);
+    setTuesdayTimeString(splitted[1]);
+    setWednesdayTimeString(splitted[2]);
+    setThursdayTimeString(splitted[3]);
+    setFridayTimeString(splitted[4]);
+    setSaturdayTimeString(splitted[5]);
+    setSundayTimeString(splitted[6]);
 
     setOpen(false);
   };
@@ -302,29 +310,36 @@ const EditProfileButtonWithDialog: React.FC<
             <DateTimeInput
               timeString={mondayTimeString}
               updateTimeString={updateMondayTimeString}
+              aboveTimeString={""}
             />
             <DateTimeInput
               timeString={tuesdayTimeString}
               updateTimeString={updateTuesdayTimeString}
+              aboveTimeString={mondayTimeString}
             />
             <DateTimeInput
               timeString={wednesdayTimeString}
               updateTimeString={updateWednesdayTimeString}
+              aboveTimeString={tuesdayTimeString}
             />
             <DateTimeInput
               timeString={thursdayTimeString}
               updateTimeString={updateThursdayTimeString}
+              aboveTimeString={wednesdayTimeString}
             />
             <DateTimeInput
               timeString={fridayTimeString}
               updateTimeString={updateFridayTimeString}
+              aboveTimeString={thursdayTimeString}
             />
             <DateTimeInput
               timeString={saturdayTimeString}
               updateTimeString={updateSaturdayTimeString}
+              aboveTimeString={fridayTimeString}
             />
             <DateTimeInput
               timeString={sundayTimeString}
+              aboveTimeString={saturdayTimeString}
               updateTimeString={updateSundayTimeString}
             />
           </Box>
