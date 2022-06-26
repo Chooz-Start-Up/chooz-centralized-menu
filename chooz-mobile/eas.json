@@ -5,16 +5,24 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "ios": {
+        "buildConfiguration": "Debug",
+        "image": "latest"
+      }
     },
     "preview": {
       "distribution": "internal"
     },
-    "production": {
-      "image": "latest"
-    }
+    "production": {}
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "justingalang@gmail.com",
+        "ascAppId": "1630258641",
+        "appleTeamId": "GL2R4GY29R"
+      }
+    }
   }
 }
