@@ -605,7 +605,7 @@ export class MenuColumnList extends React.Component<
           <Grid
             container
             spacing={0}
-            height="100vh"
+            height="90vh"
             sx={{ borderLeft: 1, borderColor: "grey.400" }}
           >
             <Grid

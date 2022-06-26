@@ -280,7 +280,7 @@ class ProfilePanel extends React.Component<
               <Box
                 padding="2%"
                 width="40%"
-                height="100vh"
+                height="95vh"
                 bgcolor="white"
                 boxShadow={2}
               >

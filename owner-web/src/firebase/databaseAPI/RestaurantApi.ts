@@ -163,7 +163,7 @@ export async function pushLogoImage(
           );
         }
       },
-      () => {
+      (err) => {
         throw new Error("Unexpected error");
       }
     );
@@ -214,12 +214,11 @@ export async function pullRestaurantMenuByUser(uid: string): Promise<Menu[]> {
   });
 }
 
-export async function pullBannerImage(uid: string): Promise<string> {
+export async function pullBannerImageByUser(uid: string): Promise<string> {
   return new Promise(function (resolve, reject) {
-    getRestaurantKey(uid).then(
-      (restaurantKey) => {
+    getRestaurantKey(uid)
+      .then((restaurantKey) => {
         let imageURLs: string = "";
-
         listAll(storageRef(storage, restaurantKey + "/banner/")).then(
           (data) => {
             if (data.items.length > 0) {
@@ -230,18 +229,17 @@ export async function pullBannerImage(uid: string): Promise<string> {
             }
           }
         );
-      },
-      () => {
-        reject(new Error("Unexpected error"));
-      }
-    );
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 }
 
-export async function pullLogoImage(uid: string): Promise<string> {
+export async function pullLogoImageByUser(uid: string): Promise<string> {
   return new Promise(function (resolve, reject) {
-    getRestaurantKey(uid).then(
-      (restaurantKey) => {
+    getRestaurantKey(uid)
+      .then((restaurantKey) => {
         let imageURLs: string = "";
 
         listAll(storageRef(storage, restaurantKey + "/logo/")).then((data) => {
@@ -252,11 +250,10 @@ export async function pullLogoImage(uid: string): Promise<string> {
             });
           }
         });
-      },
-      () => {
-        reject(new Error("Unexpected error"));
-      }
-    );
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 }
 
