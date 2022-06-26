@@ -10,15 +10,22 @@ import {
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
 import { ResetPasswordPageProps } from "./interface";
 import { choozTheme } from "../theme/theme";
-import { sendPasswordReset } from "../firebase/authentication/firebaseAuthentication";
+import {
+  auth,
+  sendPasswordReset,
+} from "../firebase/authentication/firebaseAuthentication";
 import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
+import { useParams } from "react-router-dom";
+import { signOut } from "firebase/auth";
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
   props: ResetPasswordPageProps
 ) => {
+  let { userEmail } = useParams();
+
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(userEmail !== undefined ? userEmail : "");
 
   const validateEmail = (): boolean => {
     if (email === "") {
@@ -31,6 +38,9 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
   };
 
   const onResetPasswordClick = () => {
+    if (auth) {
+      signOut(auth);
+    }
     if (validateEmail()) {
       sendPasswordReset(email).then(
         () => {
@@ -65,10 +75,12 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
             <Box
               boxShadow={5}
               sx={{
-                width: 425,
+                width: 450,
                 height: errorMessage === "" && !success ? 380 : 420,
+                paddingTop: 2,
+                paddingBottom: userEmail !== undefined ? 4 : 2,
               }}
-              bgcolor="white"
+              bgcolor={choozTheme.palette.secondary.light}
               textAlign="center"
             >
               <Box component="img" src={LogoText} margin="2%" width="25%" />
@@ -84,8 +96,8 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
 
               {success && (
                 <Alert severity="success" sx={{ justifyContent: "center" }}>
-                  The email has been sent! Please reset your password through
-                  the email link and try logging in again.
+                  A reset email has been sent! Please reset your password
+                  through the email link and try logging in again.
                 </Alert>
               )}
 
@@ -95,36 +107,69 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
                     color: "grey.600",
                     fontSize: 18,
                     marginTop: errorMessage === "" && !success ? 5 : 3,
+                    marginRight: 2,
+                    marginLeft: 2,
                   }}
                 >
-                  Please enter your account email.
+                  {userEmail !== undefined
+                    ? 'Please click the "Reset Password" button to reset your password.'
+                    : "Please enter your account email."}
                 </Typography>
 
                 <TextField
-                  disabled={success}
+                  disabled={success || userEmail !== undefined}
+                  value={userEmail !== undefined ? userEmail : ""}
                   onChange={onEmailChange}
                   label="Email"
                   sx={{ marginTop: 3, width: 350 }}
                 />
 
-                {!success && (
-                  <Button
-                    variant="contained"
-                    onClick={onResetPasswordClick}
-                    sx={{ marginTop: 3, textTransform: "none" }}
+                <Box display="flex" justifyContent="center">
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
                   >
-                    Reset Password
-                  </Button>
-                )}
-                {success && (
-                  <Button
-                    variant="contained"
-                    href="/login/"
-                    sx={{ marginTop: 3 }}
-                  >
-                    Go back to Login
-                  </Button>
-                )}
+                    {!success && (
+                      <Button
+                        variant="contained"
+                        onClick={onResetPasswordClick}
+                        sx={{
+                          marginTop: 3,
+                          textTransform: "none",
+                          width: "150px",
+                        }}
+                      >
+                        Reset Password
+                      </Button>
+                    )}
+                    {success && (
+                      <Button
+                        variant="contained"
+                        href="/login/"
+                        sx={{
+                          marginTop: 3,
+                          width: "150px",
+                          textTransform: "none",
+                        }}
+                      >
+                        Go back to Login
+                      </Button>
+                    )}
+                    {userEmail !== undefined && !success && (
+                      <Button
+                        href="/edit"
+                        sx={{
+                          textDecoration: "underline",
+                          textTransform: "none",
+                          width: "150px",
+                        }}
+                      >
+                        Go back to Profile
+                      </Button>
+                    )}
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Box>

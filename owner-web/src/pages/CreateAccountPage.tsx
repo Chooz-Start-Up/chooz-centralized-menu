@@ -129,7 +129,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
 
   return (
     <ThemeProvider theme={choozTheme}>
-      <Box height="100%" bgcolor={choozTheme.palette.secondary.main}>
+      <Box height="110%" bgcolor={choozTheme.palette.secondary.main}>
         <ChoozAppBar />
         <Box display="flex" justifyContent="center" height="85%" margin={3}>
           <Box display="flex" flexDirection="column" justifyContent="center">

@@ -72,6 +72,10 @@ const App: React.FC<AppProps> = (props: AppProps) => {
         />
         <Route path="/fillinfo" element={<FillRestaurantInfoPage />} />
         <Route path="/resetpassword" element={<ResetPasswordPage />} />
+        <Route
+          path="/resetpassword/:userEmail"
+          element={<ResetPasswordPage />}
+        />
       </Routes>
     </BrowserRouter>
   );

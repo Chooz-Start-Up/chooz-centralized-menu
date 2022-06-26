@@ -477,6 +477,17 @@ class ProfilePanel extends React.Component<
                   justifyContent="flex-end"
                   sx={{ marginTop: "5%" }}
                 >
+                  {auth.currentUser?.providerData[0].providerId.indexOf(
+                    "password"
+                  ) !== -1 && (
+                    <Button
+                      variant="outlined"
+                      href={"/resetpassword/" + auth.currentUser?.email}
+                      sx={{ marginRight: 2, textTransform: "none" }}
+                    >
+                      Reset Password
+                    </Button>
+                  )}
                   <EditProfileButtonWithDialog
                     ownerNameUpdate={this.ownerNameUpdate}
                     restaurantNameUpdate={this.restaurantNameUpdate}

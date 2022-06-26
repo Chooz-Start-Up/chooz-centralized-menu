@@ -115,7 +115,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
   return (
     <>
       <ThemeProvider theme={choozTheme}>
-        <Box height="100%" bgcolor={choozTheme.palette.secondary.main}>
+        <Box height="110%" bgcolor={choozTheme.palette.secondary.main}>
           <ChoozAppBar />
           <Box display="flex" justifyContent="center" height="85%" margin={3}>
             <Box display="flex" flexDirection="column" justifyContent="center">
@@ -182,7 +182,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
                   Login
                 </Button>
 
-                <Button href="/resetpassword/" sx={{ textTransform: "none" }}>
+                <Button href="/resetpassword" sx={{ textTransform: "none" }}>
                   <Typography fontSize="small">
                     Forgot your password?
                   </Typography>
