@@ -9,10 +9,12 @@ import {
   DialogTitle,
   Divider,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
+import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import DateTimeInput from "./DateTimeInput";
 import { EditProfileButtonWithDialogProps } from "./interface";
 
@@ -218,11 +220,28 @@ const EditProfileButtonWithDialog: React.FC<
       >
         <DialogTitle variant="h4" sx={{ color: "black" }}>
           Edit Profile
-          <DialogContentText color="black" id="alert-dialog-slide-description">
-            All fields are required and cannot be empty
+          <DialogContentText color="black" sx={{ marginTop: 1 }}>
+            All fields are required and cannot be empty.
+          </DialogContentText>
+          <DialogContentText color="black">
+            Operation hours will be set to be "Closed" by default.
           </DialogContentText>
         </DialogTitle>
         <DialogContent>
+          <Box>
+            <Tooltip title="You cannot change the email as this is the ID">
+              <TextField
+                fullWidth
+                margin="normal"
+                id="emailAddress"
+                label="Email Address"
+                variant="standard"
+                defaultValue={auth.currentUser?.email}
+                disabled={true}
+              />
+            </Tooltip>
+          </Box>
+
           <Box>
             <TextField
               fullWidth

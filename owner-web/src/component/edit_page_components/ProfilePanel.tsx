@@ -289,6 +289,19 @@ class ProfilePanel extends React.Component<
                 </Typography>
                 <Divider />
 
+                <Box display="flex" marginTop={1}>
+                  <Box width="40%">
+                    <Typography noWrap>Email Address: </Typography>
+                  </Box>
+                  <Box width="50%">
+                    <Typography
+                      sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                    >
+                      {auth.currentUser?.email}
+                    </Typography>
+                  </Box>
+                </Box>
+
                 <Box
                   sx={{
                     display: "flex",

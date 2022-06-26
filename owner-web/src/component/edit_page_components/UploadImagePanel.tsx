@@ -126,7 +126,7 @@ export const UploadImagePanel: React.FC = () => {
       sx={{ borderLeft: 1, borderColor: "grey.400" }}
     >
       <Fade in={true} exit={false} mountOnEnter unmountOnExit timeout={400}>
-        <Box width="44%" height="140vh" bgcolor="white" paddingTop="1%">
+        <Box width="44%" height="150vh" bgcolor="white" paddingTop="1%">
           <Typography
             variant="h4"
             color="black"
@@ -145,21 +145,28 @@ export const UploadImagePanel: React.FC = () => {
           />
           <Box sx={{ marginLeft: "4%", marginRight: "4%" }}>
             <Typography variant="h5">Preview</Typography>
+            <Typography variant="h6" color="grey.500">
+              The ratio of the images may differ depending on the screen. Please
+              check the app or the mobile web preview to see the actual result.
+            </Typography>
             <Typography variant="h6" color="grey.500" sx={{ marginBottom: 2 }}>
-              Ratio may differ depending on the screen. Please check the app or
-              the mobile web preview to see the actual result.
+              The QR code to the app/web preview can be accessed after
+              publishing the menu.
             </Typography>
           </Box>
+
           <Box display="flex" justifyContent="center" height="430">
             <Box display="flex" flexDirection="column" height="460">
               {bannerURL !== "" ? (
-                <Box
-                  height="360"
-                  width="500"
-                  bgcolor={choozTheme.palette.secondary.main}
-                  component="img"
-                  src={bannerURL}
-                />
+                <Fade in={true} mountOnEnter unmountOnExit timeout={300}>
+                  <Box
+                    height="360"
+                    width="500"
+                    bgcolor={choozTheme.palette.secondary.main}
+                    component="img"
+                    src={bannerURL}
+                  />
+                </Fade>
               ) : (
                 <Box
                   height="360"
@@ -167,18 +174,20 @@ export const UploadImagePanel: React.FC = () => {
                   bgcolor={choozTheme.palette.secondary.main}
                 />
               )}
-              <Avatar
-                src={logoURL !== "" ? logoURL : Logo}
-                sx={{
-                  width: 100,
-                  height: 100,
-                  bgcolor: choozTheme.palette.secondary.light,
-                  marginLeft: 3,
-                  bottom: 50,
-                  border: 1,
-                  borderColor: "grey.400",
-                }}
-              />
+              <Fade in={true} mountOnEnter unmountOnExit timeout={300}>
+                <Avatar
+                  src={logoURL !== "" ? logoURL : Logo}
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    bgcolor: choozTheme.palette.secondary.light,
+                    marginLeft: 3,
+                    bottom: 50,
+                    border: 1,
+                    borderColor: "grey.400",
+                  }}
+                />
+              </Fade>
             </Box>
           </Box>
 
