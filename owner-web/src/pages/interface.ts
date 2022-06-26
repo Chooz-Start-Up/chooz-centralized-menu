@@ -28,3 +28,8 @@ export interface VerifyEmailPageProps {}
 export interface FillRestaurantInfoPageProps {}
 
 export interface ResetPasswordPageProps {}
+
+export interface LoadingPageProps {
+  exitLoading: boolean;
+  setExitLoading: any;
+}

@@ -13,6 +13,7 @@ import MenuEditPage from "./pages/MenuEditPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import AlreadyLoggedInRoute from "./firebase/authentication/AlreadyLoggedInRoute";
+import "./App.css";
 
 interface AppProps {}
 

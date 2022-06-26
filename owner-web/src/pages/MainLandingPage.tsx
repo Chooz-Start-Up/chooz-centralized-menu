@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  Paper,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, ThemeProvider, Typography } from "@mui/material";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
 import { MainLandingPageProps, MainLandingPageState } from "./interface";
-import { choozTheme } from "./theme";
-import { Link, Outlet } from "react-router-dom";
+import { choozTheme } from "../theme/theme";
+import { ExpandMore } from "@mui/icons-material";
 
 class MenuEditPage extends React.Component<
   MainLandingPageProps,
@@ -30,9 +23,9 @@ class MenuEditPage extends React.Component<
 
           <Grid container justifyContent="center">
             <Box maxWidth="60%" padding={10}>
-              <Typography align="center" variant="h2">
+              <Typography align="center" variant="h2" fontWeight="bold">
                 This is just a menu made by stupid college students. Nothing
-                else.
+                else. chooz
               </Typography>
             </Box>
           </Grid>
@@ -44,11 +37,9 @@ class MenuEditPage extends React.Component<
               href="/login"
               sx={{
                 borderRadius: 8,
-                bgcolor: "red",
-                "&:hover": {
-                  background: "red.800",
-                },
+                textTransform: "none",
               }}
+              color="primary"
             >
               <Typography variant="h5">Create Menu</Typography>
             </Button>

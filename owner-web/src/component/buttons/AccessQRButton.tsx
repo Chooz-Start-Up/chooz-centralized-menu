@@ -16,9 +16,7 @@ import { Grid } from "@material-ui/core";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { pullDynamicLink } from "../../firebase/databaseAPI/DynamicLinkAPI";
 import { QRCode } from "react-qrcode-logo";
-
 import ChoozIcon from "../images/chooz_icons/logoRed_bgWhiteCircular.png";
-
 import { toPng } from "html-to-image";
 
 const AccessQRButton: React.FC<AccessQRButtonProps> = (
@@ -88,7 +86,9 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -122,14 +122,17 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
                   eyeRadius={10}
                   qrStyle="dots"
                   size={300}
-                  // bgColor="#FFFAEF"
-                  // fgColor="#A90011"
                 />
               </div>
 
               <Button
                 variant="outlined"
-                sx={{ width: "90%", marginLeft: "5%", marginTop: "5%" }}
+                sx={{
+                  width: "90%",
+                  marginLeft: "5%",
+                  marginTop: "5%",
+                  textTransform: "none",
+                }}
                 onClick={downloadQR}
               >
                 Download Image
@@ -138,7 +141,9 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
     </>

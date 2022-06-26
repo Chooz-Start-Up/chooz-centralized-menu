@@ -11,6 +11,7 @@ import {
 } from "@mui/material/";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { AddButtonWithDialogProps } from "./interface";
+import { choozTheme } from "../../theme/theme";
 
 const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
   props: AddButtonWithDialogProps
@@ -32,7 +33,10 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
     <>
       <ListItemButton selected={false} onClick={handleClickOpen}>
         <Grid container justifyContent="center">
-          <AddCircleOutlineIcon fontSize="large" sx={{ color: "#ef5350" }} />
+          <AddCircleOutlineIcon
+            fontSize="large"
+            sx={{ color: choozTheme.palette.primary.main }}
+          />
         </Grid>
       </ListItemButton>
 
@@ -53,13 +57,16 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+            Cancel
+          </Button>
           <Button
             variant="contained"
             type="submit"
             form="myform"
             disabled={validateText() !== ""}
             onClick={handleClose}
+            sx={{ textTransform: "none" }}
           >
             Create
           </Button>

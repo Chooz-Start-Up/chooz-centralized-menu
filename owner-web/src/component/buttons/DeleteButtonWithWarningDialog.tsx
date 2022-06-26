@@ -54,8 +54,12 @@ const DeleteButtonWithWarningDialog: React.FC<
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleClose}>Delete</Button>
+          <Button onClick={handleCancel} sx={{ textTransform: "none" }}>
+            Cancel
+          </Button>
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </>

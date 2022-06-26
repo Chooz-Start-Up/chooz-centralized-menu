@@ -66,13 +66,16 @@ const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+            Cancel
+          </Button>
           <Button
             variant="contained"
             type="submit"
             form="myeditform"
             disabled={validateText() !== ""}
             onClick={handleClose}
+            sx={{ textTransform: "none" }}
           >
             Update
           </Button>

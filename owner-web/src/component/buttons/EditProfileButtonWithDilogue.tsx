@@ -192,7 +192,11 @@ const EditProfileButtonWithDialog: React.FC<
 
   return (
     <>
-      <Button onClick={handleClickOpen} variant="contained">
+      <Button
+        onClick={handleClickOpen}
+        variant="contained"
+        sx={{ textTransform: "none" }}
+      >
         Edit Profile
       </Button>
       <Dialog
@@ -329,23 +333,14 @@ const EditProfileButtonWithDialog: React.FC<
           <Button
             onClick={handleCancelClose}
             variant="outlined"
-            sx={{
-              bgcolor: "grey.300",
-              color: "black",
-              borderColor: "grey.400",
-              boxShadow: 1,
-              "&:hover": {
-                backgroundColor: "grey.400",
-                borderColor: "grey.500",
-              },
-            }}
+            sx={{ textTransform: "none" }}
           >
             Cancel
           </Button>
           <Button
             onClick={handleSaveClose}
             variant="contained"
-            sx={{ marginLeft: 1 }}
+            sx={{ marginLeft: 1, textTransform: "none" }}
             disabled={!canClickSave()}
           >
             Save

@@ -11,6 +11,7 @@ import DeleteButtonWithWarningDialog from "./DeleteButtonWithWarningDialog";
 import EditMenuButtonWithDialog from "./EditMenuButtonWithDialog";
 import { Draggable } from "react-beautiful-dnd";
 import { makeStyles } from "@material-ui/core";
+import { choozTheme } from "../../theme/theme";
 
 const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
   props: ColumnListGeneralButtonProps
@@ -28,7 +29,6 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
     validateText,
     setSelectedColumnIndex,
   } = props;
-  // const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -41,9 +41,10 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
 
   const useStyles = makeStyles({
     draggingListItem: {
-      background: "rgb(235,235,235)",
+      background: choozTheme.palette.secondary.main,
     },
   });
+
   const classes = useStyles();
 
   return (
@@ -64,7 +65,9 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
               className={snapshot.isDragging ? classes.draggingListItem : ""}
             >
               <ListItemButton
-                sx={{ height: 50 }}
+                sx={{
+                  height: 50,
+                }}
                 selected={setSelectedColumnIndex() === item.id}
                 onClick={(event) => handleListItemClick(event, item.id)}
               >

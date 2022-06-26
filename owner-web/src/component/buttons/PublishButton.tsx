@@ -81,6 +81,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
               backgroundColor: "red.100",
               boxShadow: "none",
             },
+            textTransform: "none",
           }}
         >
           Publish
@@ -97,6 +98,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
               backgroundColor: "red.100",
               boxShadow: "none",
             },
+            textTransform: "none",
           }}
         >
           Unpublish
@@ -122,7 +124,9 @@ const PublishButton: React.FC<PublishButtonProps> = (
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>Close</Button>
+          <Button onClick={handleCancel} sx={{ textTransform: "none" }}>
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -163,8 +167,12 @@ const PublishButton: React.FC<PublishButtonProps> = (
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleClose}>Publish</Button>
+          <Button onClick={handleCancel} sx={{ textTransform: "none" }}>
+            Cancel
+          </Button>
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+            Publish
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -182,8 +190,12 @@ const PublishButton: React.FC<PublishButtonProps> = (
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleClose}>Unpublish</Button>
+          <Button onClick={handleCancel} sx={{ textTransform: "none" }}>
+            Cancel
+          </Button>
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+            Unpublish
+          </Button>
         </DialogActions>
       </Dialog>
     </>

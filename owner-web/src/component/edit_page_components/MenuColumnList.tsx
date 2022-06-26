@@ -27,6 +27,7 @@ import {
   DropResult,
   ResponderProvided,
 } from "react-beautiful-dnd";
+import { choozTheme } from "../../theme/theme";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,
@@ -523,8 +524,8 @@ export class MenuColumnList extends React.Component<
       },
       () => {
         this.setSelectedMenuIndex(destinationIndex);
-        this.setSelectedCategoryIndex(-1);
-        this.setSelectedItemIndex(-1);
+        this.setSelectedCategoryIndex(0);
+        this.setSelectedItemIndex(0);
       }
     );
   };
@@ -560,7 +561,7 @@ export class MenuColumnList extends React.Component<
       },
       () => {
         this.setSelectedCategoryIndex(destinationIndex);
-        this.setSelectedItemIndex(-1);
+        this.setSelectedItemIndex(0);
       }
     );
   };
@@ -604,7 +605,6 @@ export class MenuColumnList extends React.Component<
           <Grid
             container
             spacing={0}
-            bgcolor={"white"}
             height="100vh"
             sx={{ borderLeft: 1, borderColor: "grey.400" }}
           >
@@ -619,8 +619,8 @@ export class MenuColumnList extends React.Component<
               <Box maxHeight={25}>
                 <Typography
                   align="center"
-                  bgcolor="#f59795"
-                  color="white"
+                  bgcolor={choozTheme.palette.primary.light}
+                  color={choozTheme.palette.primary.contrastText}
                   variant="h5"
                 >
                   Menu
@@ -697,8 +697,8 @@ export class MenuColumnList extends React.Component<
               <Box maxHeight={25}>
                 <Typography
                   align="center"
-                  bgcolor="#f59795"
-                  color="white"
+                  bgcolor={choozTheme.palette.primary.light}
+                  color={choozTheme.palette.primary.contrastText}
                   variant="h5"
                 >
                   Category
@@ -741,8 +741,8 @@ export class MenuColumnList extends React.Component<
               <Box maxHeight={25}>
                 <Typography
                   align="center"
-                  bgcolor="#f59795"
-                  color="white"
+                  bgcolor={choozTheme.palette.primary.light}
+                  color={choozTheme.palette.primary.contrastText}
                   variant="h5"
                 >
                   Item
@@ -776,8 +776,8 @@ export class MenuColumnList extends React.Component<
               <Box maxHeight={25}>
                 <Typography
                   align="center"
-                  bgcolor="#f59795"
-                  color="white"
+                  bgcolor={choozTheme.palette.primary.light}
+                  color={choozTheme.palette.primary.contrastText}
                   variant="h5"
                 >
                   Item Detail

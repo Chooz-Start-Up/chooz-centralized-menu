@@ -41,6 +41,7 @@ const UnpublishAndEditButtonWithDialog: React.FC<
             backgroundColor: "red.100",
             boxShadow: "none",
           },
+          textTransform: "none",
         }}
       >
         Edit

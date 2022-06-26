@@ -7,7 +7,7 @@ import {
   Grid,
   Toolbar,
 } from "@mui/material";
-import { choozTheme } from "./theme";
+import { choozTheme } from "../theme/theme";
 import AdbIcon from "@mui/icons-material/Adb";
 
 import JacobChoi from "../component/images/profile/jacob_choi.jpg";

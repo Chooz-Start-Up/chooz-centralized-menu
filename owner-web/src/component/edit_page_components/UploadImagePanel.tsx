@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Divider, Alert } from "@mui/material";
+import { Box, Typography, Divider, Alert, Fade } from "@mui/material";
 import {
   deleteBannerAndLogoImage,
   pushBannerImage,
@@ -62,14 +62,13 @@ export const UploadImagePanel: React.FC = () => {
   };
 
   return (
-    <>
-      <Box
-        width="100%"
-        height="auto"
-        bgcolor="grey.200"
-        sx={{ borderLeft: 1, borderColor: "grey.400" }}
-      >
-        {/* {!this.state.loading && <></>} */}
+    <Box
+      width="100%"
+      height="auto"
+      bgcolor="grey.200"
+      sx={{ borderLeft: 1, borderColor: "grey.400" }}
+    >
+      <Fade in={true} exit={false} mountOnEnter unmountOnExit timeout={400}>
         <Box width="44%" height="100vh" bgcolor="white">
           <Box padding="4%">
             <Typography variant="h4" color="black" textAlign="left">
@@ -141,7 +140,7 @@ export const UploadImagePanel: React.FC = () => {
             </Box>
           </Box>
         </Box>
-      </Box>
-    </>
+      </Fade>
+    </Box>
   );
 };

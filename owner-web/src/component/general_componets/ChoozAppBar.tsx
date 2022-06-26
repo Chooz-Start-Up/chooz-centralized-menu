@@ -4,60 +4,38 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { ChoozAppBarProps } from "./interface";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
+import LogoText from "../images/chooz_icons/logoWhite_textWhite_horizontal.png";
 
 const ChoozAppBar: React.FC<ChoozAppBarProps> = (props: ChoozAppBarProps) => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
   return (
-    <AppBar position="static">
-      <Grid>
-        <Toolbar disableGutters>
-          <Grid container paddingLeft={3}>
-            <Typography
-              variant="h4"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              <AdbIcon
-                fontSize="large"
-                sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-              />
-              Chooz
-            </Typography>
-          </Grid>
+    <AppBar position="sticky" elevation={1}>
+      <Box display="flex" justifyContent="space-between" padding={1}>
+        <Button href="/" disableTouchRipple>
+          <Box component="img" src={LogoText} width="125px" />
+        </Button>
 
-          {!loading && !user && (
-            <Grid container paddingRight={3} justifyContent="flex-end">
-              <Button href="/login/">
-                <Typography color="white">Login</Typography>
-              </Button>
-            </Grid>
-          )}
-          {!loading && user && (
-            <Grid container paddingRight={3} justifyContent="flex-end">
-              <Button
-                href="/login/"
-                onClick={() => signOut(auth)}
-                sx={{ p: 0 }}
-              >
-                <Typography color="white">Logout</Typography>
-              </Button>
-            </Grid>
-          )}
-        </Toolbar>
-      </Grid>
+        {!loading && !user && (
+          <Button href="/login/" sx={{ textTransform: "none" }}>
+            <Typography color="white">Login</Typography>
+          </Button>
+        )}
+        {!loading && user && (
+          <Button
+            href="/login/"
+            onClick={() => signOut(auth)}
+            sx={{ textTransform: "none" }}
+          >
+            <Typography color="white">Logout</Typography>
+          </Button>
+        )}
+      </Box>
     </AppBar>
   );
 };

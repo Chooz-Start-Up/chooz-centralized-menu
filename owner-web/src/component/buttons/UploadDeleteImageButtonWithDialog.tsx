@@ -46,13 +46,17 @@ const UploadDeleteImageButtonWithDialog: React.FC<
 
   return (
     <>
-      <Button variant="outlined" onClick={handleDeleteClick}>
+      <Button
+        variant="outlined"
+        onClick={handleDeleteClick}
+        sx={{ textTransform: "none" }}
+      >
         Delete Current Images
       </Button>
 
       <Button
         variant="contained"
-        sx={{ marginLeft: 1 }}
+        sx={{ marginLeft: 1, textTransform: "none" }}
         onClick={handleUploadClick}
       >
         Upload
@@ -69,8 +73,15 @@ const UploadDeleteImageButtonWithDialog: React.FC<
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelClick}>Cancel</Button>
-          <Button onClick={handleDeleteOkayClick}>Okay</Button>
+          <Button onClick={handleCancelClick} sx={{ textTransform: "none" }}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDeleteOkayClick}
+            sx={{ textTransform: "none" }}
+          >
+            Okay
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -86,8 +97,15 @@ const UploadDeleteImageButtonWithDialog: React.FC<
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelClick}>Cancel</Button>
-          <Button onClick={handleUploadOkayClick}>Okay</Button>
+          <Button onClick={handleCancelClick} sx={{ textTransform: "none" }}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleUploadOkayClick}
+            sx={{ textTransform: "none" }}
+          >
+            Okay
+          </Button>
         </DialogActions>
       </Dialog>
     </>

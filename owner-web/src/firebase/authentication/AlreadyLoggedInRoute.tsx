@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "./firebaseAuthentication";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LoadingPage from "../../pages/LoadingPage";
 import { getRestaurantKey } from "../databaseAPI/RestaurantApi";
 
 export interface IAlreadyLoggedInRouteProps {
@@ -16,7 +15,10 @@ const AlreadyLoggedInRoute: React.FunctionComponent<
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
 
+  const [exitLoading, setExitLoading] = useState(true);
+
   useEffect(() => {
+    setExitLoading(true);
     if (loading) return;
     else if (user) {
       getRestaurantKey(user.uid).then(
@@ -27,15 +29,12 @@ const AlreadyLoggedInRoute: React.FunctionComponent<
           console.log("Had problem reading key");
         }
       );
+    } else {
+      setExitLoading(false);
     }
   }, [user, loading]);
 
-  return (
-    <>
-      {loading && <LoadingPage />}
-      {!loading && children}
-    </>
-  );
+  return <>{!exitLoading && !loading && children}</>;
 };
 
 export default AlreadyLoggedInRoute;
