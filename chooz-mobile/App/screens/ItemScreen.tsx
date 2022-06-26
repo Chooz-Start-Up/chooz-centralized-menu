@@ -1,9 +1,7 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { Platform, Dimensions, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { RowSeparator } from "../components/RowItem";
 import { RestaurantStackParamList } from "../config/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import colors from "../constants/colors";
@@ -89,21 +87,29 @@ const ItemScreen = ({ route }: Props) => {
           </View>
           <View style={styles.separator} />
 
-          <View style={styles.itemContainer}>
-            <Text style={styles.headerText}>Description</Text>
-            <View style={styles.bodyContainer}>
-              <Text style={styles.bodyText}>{description}</Text>
-            </View>
-          </View>
-          <View style={styles.separator} />
+          {description ? (
+            <>
+              <View style={styles.itemContainer}>
+                <Text style={styles.headerText}>Description</Text>
+                <View style={styles.bodyContainer}>
+                  <Text style={styles.bodyText}>{description}</Text>
+                </View>
+              </View>
+              <View style={styles.separator} />
+            </>
+          ) : null}
 
-          <View style={styles.itemContainer}>
-            <Text style={styles.headerText}>Ingredients</Text>
-            <View style={styles.bodyContainer}>
-              <Text style={styles.bodyText}>{ingredients}</Text>
-            </View>
-          </View>
-          <View style={styles.separator} />
+          {ingredients ? (
+            <>
+              <View style={styles.itemContainer}>
+                <Text style={styles.headerText}>Ingredients</Text>
+                <View style={styles.bodyContainer}>
+                  <Text style={styles.bodyText}>{ingredients}</Text>
+                </View>
+              </View>
+              <View style={styles.separator} />
+            </>
+          ) : null}
         </View>
       </ScrollView>
     </View>

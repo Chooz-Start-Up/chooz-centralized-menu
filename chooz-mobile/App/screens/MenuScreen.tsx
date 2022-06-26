@@ -55,7 +55,9 @@ const MenuScreen: React.FC<Props> = ({ route }: Props) => {
   }, [menuIndex]);
 
   let openItem = (screen: keyof RestaurantStackParamList, item: Item) => {
-    navigation.navigate(screen, { item });
+    if (item.description || item.ingredients) {
+      navigation.navigate(screen, { item });
+    }
   };
 
   return (
