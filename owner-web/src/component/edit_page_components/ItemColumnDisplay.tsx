@@ -1,13 +1,14 @@
 import * as React from "react";
 import { ItemColumnDisplayProps } from "./interface";
 import {
+  Fade,
   Box,
   Input,
   InputAdornment,
   TextField,
   Typography,
-} from "@material-ui/core";
-import { Fade } from "@mui/material";
+  Tooltip,
+} from "@mui/material";
 
 const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
   props: ItemColumnDisplayProps
@@ -35,21 +36,6 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
         </Box>
         <Box marginTop={1}>
           <Typography variant="h6" align="left">
-            Description
-          </Typography>
-          <TextField
-            id="description"
-            multiline
-            fullWidth
-            minRows={4}
-            variant="outlined"
-            value={props.item.description}
-            onChange={onDescriptionChange}
-            disabled={props.isPublished}
-          />
-        </Box>
-        <Box marginTop={1}>
-          <Typography variant="h6" align="left">
             Price
           </Typography>
           <Input
@@ -61,9 +47,43 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
           />
         </Box>
         <Box marginTop={1}>
-          <Typography variant="h6" align="left">
-            Ingredients
-          </Typography>
+          <Box display="flex" justifyContent="space-between" width="190">
+            <Typography variant="h6" align="left">
+              Description
+            </Typography>
+            <Box marginTop={0.5}>
+              <Tooltip title="If this field is empty, the description section will not be visible to customers.">
+                <Typography sx={{ fontSize: 10, color: "grey.500" }}>
+                  (Optional)
+                </Typography>
+              </Tooltip>
+            </Box>
+          </Box>
+          <TextField
+            id="description"
+            multiline
+            fullWidth
+            minRows={4}
+            variant="outlined"
+            value={props.item.description}
+            onChange={onDescriptionChange}
+            disabled={props.isPublished}
+          />
+        </Box>
+
+        <Box marginTop={1}>
+          <Box display="flex" justifyContent="space-between" width="190">
+            <Typography variant="h6" align="left">
+              Ingredients
+            </Typography>
+            <Box marginTop={0.5}>
+              <Tooltip title="If this field is empty, the ingredients section will not be visible to customers.">
+                <Typography sx={{ fontSize: 10, color: "grey.500" }}>
+                  (Optional)
+                </Typography>
+              </Tooltip>
+            </Box>
+          </Box>
           <TextField
             id="ingredient"
             multiline

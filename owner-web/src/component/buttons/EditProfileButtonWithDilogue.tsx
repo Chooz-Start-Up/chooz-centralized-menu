@@ -229,7 +229,7 @@ const EditProfileButtonWithDialog: React.FC<
         </DialogTitle>
         <DialogContent>
           <Box>
-            <Tooltip title="You cannot change the email as this is the ID">
+            <Tooltip title="You cannot change the email address.">
               <TextField
                 fullWidth
                 margin="normal"

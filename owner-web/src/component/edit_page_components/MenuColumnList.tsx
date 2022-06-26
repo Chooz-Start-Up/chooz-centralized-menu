@@ -94,7 +94,6 @@ export class MenuColumnList extends React.Component<
     prevState: MenuColumnListState
   ) {
     if (this.state.reorderLoading !== prevState.reorderLoading) {
-      console.log("executed");
       if (auth !== null && auth.currentUser !== null) {
         pullRestaurantMenuByUser(auth.currentUser.uid).then(
           (menus) => {

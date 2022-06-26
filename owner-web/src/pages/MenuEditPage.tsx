@@ -53,6 +53,27 @@ class MenuEditPage extends React.Component<
     });
   }
 
+  componentDidUpdate(
+    prevProps: MenuEditPageProp,
+    prevState: MenuEditPageState
+  ) {
+    if (
+      this.state.tabIndex !== prevState.tabIndex &&
+      this.state.tabIndex === 2
+    ) {
+      if (auth !== null && auth.currentUser !== null) {
+        console.log("Executed");
+        pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
+          this.setState(() => {
+            return {
+              restaurantName: restaurant.restaurantName,
+            };
+          });
+        });
+      }
+    }
+  }
+
   checkValidProfile = () => {
     this.setState(() => {
       return {
