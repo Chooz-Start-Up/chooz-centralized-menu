@@ -12,6 +12,7 @@ import {
 import { choozTheme } from "../theme/theme";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate, useParams } from "react-router-dom";
+import ChoozAppBar from "../component/general/ChoozAppBar";
 
 const WelcomePage: React.FC = () => {
   let { restaurantKey } = useParams();
@@ -24,14 +25,7 @@ const WelcomePage: React.FC = () => {
   return (
     <>
       <ThemeProvider theme={choozTheme}>
-        <AppBar position="sticky" sx={{ height: "5%" }}>
-          <Grid container justifyContent="center">
-            <AdbIcon sx={{ fontSize: 30, marginTop: "1.5%" }} />
-            <Typography fontSize={24} marginTop="1%">
-              Chooz
-            </Typography>
-          </Grid>
-        </AppBar>
+        <ChoozAppBar />
         <Box
           display="flex"
           textAlign="center"
@@ -52,6 +46,7 @@ const WelcomePage: React.FC = () => {
               marginTop: "5%",
               fontSize: "large",
               alignSelf: "center",
+              textTransform: "none",
             }}
           >
             Download App
@@ -70,7 +65,9 @@ const WelcomePage: React.FC = () => {
             }}
             href={"/preview/" + restaurantKey}
           >
-            <Typography sx={{ textDecoration: "underline" }}>
+            <Typography
+              sx={{ textDecoration: "underline", textTransform: "none" }}
+            >
               Not now
             </Typography>
           </Button>

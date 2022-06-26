@@ -5,6 +5,7 @@ import PageNotFound from "./page/PageNotFound";
 
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import RestaurantMenuPage from "./page/RestaurantMenuPage";
+import "./App.css";
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,6 @@ const App: React.FC = () => {
           {/* <Route path="/" element={<UnderConstructionPage />} /> */}
 
           <Route path="/welcome/:restaurantKey" element={<WelcomePage />} />
-          {/* <Route path="/welcome" element={<WelcomePage />} /> */}
 
           <Route
             path="/preview/:restaurantKey"

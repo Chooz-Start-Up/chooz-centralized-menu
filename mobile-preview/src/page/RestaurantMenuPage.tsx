@@ -6,12 +6,9 @@ import {
   AppBar,
   Avatar,
   Box,
-  Button,
   Divider,
   Grid,
-  Paper,
   ThemeProvider,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { choozTheme } from "../theme/theme";
@@ -26,6 +23,8 @@ import {
 import { Restaurant } from "../database/component/Restaurant";
 import { Menu } from "../database/component/Menu";
 import { useNavigate, useParams } from "react-router-dom";
+import ChoozAppBar from "../component/general/ChoozAppBar";
+import Logo from "../component/images/chooz_icons/logoGrey.png";
 
 const RestaurantMenuPage: React.FC = () => {
   let { restaurantKey } = useParams();
@@ -69,6 +68,7 @@ const RestaurantMenuPage: React.FC = () => {
         setBannerURL(bannerURL);
       });
       pullLogoImage(restaurantKey).then((logoURL) => {
+        console.log(logoURL);
         setLogoURL(logoURL);
       });
     } else {
@@ -79,28 +79,21 @@ const RestaurantMenuPage: React.FC = () => {
   return (
     <>
       <ThemeProvider theme={choozTheme}>
-        <AppBar position="sticky" sx={{ height: "auto" }}>
-          <Grid container justifyContent="center">
-            <AdbIcon sx={{ fontSize: 30, marginTop: "1%" }} />
-            <Typography fontSize={24} marginTop="0.5%">
-              Chooz
-            </Typography>
-          </Grid>
-        </AppBar>
+        <ChoozAppBar />
 
         {bannerURL === "" ? (
           <Box display="flex">
             <Box
               height="300"
               width="100%"
-              bgcolor={choozTheme.palette.info.main}
+              bgcolor={choozTheme.palette.secondary.main}
             >
               <Avatar
-                src={logoURL}
+                src={!logoURL ? Logo : logoURL}
                 sx={{
                   width: 120,
                   height: 120,
-                  bgcolor: choozTheme.palette.background.paper,
+                  bgcolor: choozTheme.palette.secondary.light,
                   marginLeft: 2,
                   marginTop: "150",
                   top: 90,
@@ -113,14 +106,20 @@ const RestaurantMenuPage: React.FC = () => {
         ) : (
           <Box>
             <Box display="flex" justifyContent="center">
-              <Box height="300" width="100%" component="img" src={bannerURL} />
+              <Box
+                height="300"
+                width="100%"
+                component="img"
+                bgcolor={choozTheme.palette.secondary.main}
+                src={bannerURL}
+              />
             </Box>
             <Avatar
-              src={logoURL}
+              src={!logoURL ? Logo : logoURL}
               sx={{
                 width: 120,
                 height: 120,
-                bgcolor: choozTheme.palette.background.paper,
+                bgcolor: choozTheme.palette.secondary.light,
                 marginLeft: 2,
                 bottom: 60,
                 border: 1,

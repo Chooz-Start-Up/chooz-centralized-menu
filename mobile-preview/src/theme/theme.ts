@@ -3,30 +3,20 @@ import { createTheme } from "@mui/material";
 export const choozTheme = createTheme({
   palette: {
     primary: {
-      main: "#f44336",
-      contrastText: "#ffffff",
+      main: "#D11D27",
+      light: "#E53C38",
+      dark: "#A90011",
+      contrastText: "#FFFFFF",
     },
     secondary: {
-      main: "#ffffff",
-    },
-    background: {
-      paper: "#ffd7db",
-    },
-    info: {
-      main: "#fffaef",
+      main: "#FFFAEF",
+      light: "#FFFFFF",
+      dark: "#FBEBD8",
+      contrastText: "#000000",
     },
   },
 
   typography: {
-    button: {
-      textTransform: "none",
-    },
-    h4: {
-      fontSize: 34,
-      color: "#ffffff",
-      verticalAlign: "middle",
-      alignItems: "center",
-      textAlign: "center",
-    },
+    fontFamily: "Hurme Geometric Sans 3",
   },
 });

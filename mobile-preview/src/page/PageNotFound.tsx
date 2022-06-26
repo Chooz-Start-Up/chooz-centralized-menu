@@ -1,45 +1,14 @@
 import React from "react";
-import {
-  Box,
-  ThemeProvider,
-  Typography,
-  AppBar,
-  Grid,
-  Toolbar,
-  Button,
-} from "@mui/material";
-import AdbIcon from "@mui/icons-material/Adb";
+import { Box, ThemeProvider, Typography, Button } from "@mui/material";
 import { choozTheme } from "../theme/theme";
+import ChoozAppBar from "../component/general/ChoozAppBar";
+import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
 
 const PageNotFound: React.FC = () => {
   return (
     <>
       <ThemeProvider theme={choozTheme}>
-        <AppBar position="static">
-          <Grid>
-            <Toolbar disableGutters>
-              <Grid container paddingLeft={3}>
-                <Typography
-                  variant="h4"
-                  noWrap
-                  component="a"
-                  sx={{
-                    mr: 2,
-                    display: { xs: "none", md: "flex" },
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  <AdbIcon
-                    fontSize="large"
-                    sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                  />
-                  Chooz
-                </Typography>
-              </Grid>
-            </Toolbar>
-          </Grid>
-        </AppBar>
+        <ChoozAppBar />
         <Box
           display="flex"
           justifyContent="center"
@@ -57,12 +26,7 @@ const PageNotFound: React.FC = () => {
             textAlign="center"
             padding={3}
           >
-            <AdbIcon sx={{ fontSize: 45, marginTop: "3%", color: "red" }} />
-            <Typography
-              sx={{ color: "black", fontWeight: "bold", fontSize: 34 }}
-            >
-              Chooz
-            </Typography>
+            <Box component="img" src={LogoText} margin="2%" width="125px" />
             <Typography sx={{ color: "grey.600", fontSize: 18 }}>
               Centralized Menu App
             </Typography>
@@ -83,6 +47,7 @@ const PageNotFound: React.FC = () => {
                 marginTop: 4,
                 fontSize: "large",
                 alignSelf: "center",
+                textTransform: "none",
               }}
             >
               Download App

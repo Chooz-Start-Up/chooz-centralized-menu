@@ -15,9 +15,6 @@ export const choozTheme = createTheme({
       dark: "#FBEBD8",
       contrastText: "#000000",
     },
-    action: {
-      selected: "#FBEBD8",
-    },
   },
   typography: {
     fontFamily: "Hurme Geometric Sans 3",
