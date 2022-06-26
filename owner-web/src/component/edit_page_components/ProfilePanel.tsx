@@ -389,86 +389,17 @@ class ProfilePanel extends React.Component<
                   }}
                 >
                   <Box width="40%">
-                    <Typography>
-                      {this.state.hours.split("\n", 7)[0].split(" ", 1)[0]}:
-                    </Typography>
-                    <Typography>
-                      {this.state.hours.split("\n", 7)[1].split(" ", 1)[0]}:
-                    </Typography>
-                    <Typography>
-                      {this.state.hours.split("\n", 7)[2].split(" ", 1)[0]}:
-                    </Typography>
-                    <Typography>
-                      {this.state.hours.split("\n", 7)[3].split(" ", 1)[0]}:
-                    </Typography>
-                    <Typography>
-                      {this.state.hours.split("\n", 7)[4].split(" ", 1)[0]}:
-                    </Typography>
-                    <Typography>
-                      {this.state.hours.split("\n", 7)[5].split(" ", 1)[0]}:
-                    </Typography>
-                    <Typography>
-                      {this.state.hours.split("\n", 7)[6].split(" ", 1)[0]}:
-                    </Typography>
+                    {this.state.hours.split("\n", 7).map((day) => (
+                      <Typography>{day.split(" ", 1)[0]}</Typography>
+                    ))}
                   </Box>
 
                   <Box width="50%">
-                    <Typography>
-                      {this.state.hours
-                        .split("\n", 7)[0]
-                        .substring(
-                          this.state.hours.split("\n", 7)[0].split(" ", 1)[0]
-                            .length
-                        )}
-                    </Typography>
-                    <Typography>
-                      {this.state.hours
-                        .split("\n", 7)[1]
-                        .substring(
-                          this.state.hours.split("\n", 7)[1].split(" ", 1)[0]
-                            .length
-                        )}
-                    </Typography>
-                    <Typography>
-                      {this.state.hours
-                        .split("\n", 7)[2]
-                        .substring(
-                          this.state.hours.split("\n", 7)[2].split(" ", 1)[0]
-                            .length
-                        )}
-                    </Typography>
-                    <Typography>
-                      {this.state.hours
-                        .split("\n", 7)[3]
-                        .substring(
-                          this.state.hours.split("\n", 7)[3].split(" ", 1)[0]
-                            .length
-                        )}
-                    </Typography>
-                    <Typography>
-                      {this.state.hours
-                        .split("\n", 7)[4]
-                        .substring(
-                          this.state.hours.split("\n", 7)[4].split(" ", 1)[0]
-                            .length
-                        )}
-                    </Typography>
-                    <Typography>
-                      {this.state.hours
-                        .split("\n", 7)[5]
-                        .substring(
-                          this.state.hours.split("\n", 7)[5].split(" ", 1)[0]
-                            .length
-                        )}
-                    </Typography>
-                    <Typography>
-                      {this.state.hours
-                        .split("\n", 7)[6]
-                        .substring(
-                          this.state.hours.split("\n", 7)[6].split(" ", 1)[0]
-                            .length
-                        )}
-                    </Typography>
+                    {this.state.hours.split("\n", 7).map((day) => (
+                      <Typography>
+                        {day.substring(day.split(" ", 1)[0].length)}
+                      </Typography>
+                    ))}
                   </Box>
                 </Box>
 
