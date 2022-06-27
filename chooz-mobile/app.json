@@ -19,13 +19,13 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "7",
+      "buildNumber": "10",
       "bundleIdentifier": "com.chooz.choozmobile",
       "infoPlist": {
         "NSCameraUsageDescription": "Allow Expo experiences to use your camera"
       },
       "googleServicesFile": "./GoogleService-Info.plist",
-      "associatedDomains": ["applinks:choozmenu.com"]
+      "associatedDomains": ["applinks:m.choozmenu.com"]
     },
     "android": {
       "package": "com.chooz.choozmobile",
@@ -53,11 +53,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "@react-native-firebase/app",
-      "@react-native-firebase/perf",
-      "@react-native-firebase/crashlytics"
-    ],
+    "plugins": [],
     "runtimeVersion": {
       "policy": "sdkVersion"
     }
