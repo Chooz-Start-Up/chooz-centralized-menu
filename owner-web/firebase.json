@@ -4,11 +4,11 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "/menu/**",
+        "source": "/mobile/**",
         "dynamicLinks": true
       },
       {
-        "source": "!/menu/**",
+        "source": "!/mobile/**",
         "destination": "/index.html"
       },
       {

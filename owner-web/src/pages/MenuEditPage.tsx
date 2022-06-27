@@ -62,7 +62,6 @@ class MenuEditPage extends React.Component<
       this.state.tabIndex === 2
     ) {
       if (auth !== null && auth.currentUser !== null) {
-        console.log("Executed");
         pullRestaurantByUser(auth.currentUser.uid).then((restaurant) => {
           this.setState(() => {
             return {

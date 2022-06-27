@@ -1,12 +1,12 @@
 export class Item {
   private _itemName: string;
-  private _price: Number;
+  private _price: number;
   private _description: string;
   private _ingredients: string;
 
   constructor(
     itemName: string = "",
-    price: Number = 0,
+    price: number = 0,
     description: string = "",
     ingredients: string = ""
   ) {
@@ -23,10 +23,10 @@ export class Item {
     this._itemName = value;
   }
 
-  public get price(): Number {
+  public get price(): number {
     return this._price;
   }
-  public set price(value: Number) {
+  public set price(value: number) {
     this._price = value;
   }
 

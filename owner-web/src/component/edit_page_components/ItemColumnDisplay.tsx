@@ -18,7 +18,13 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
     props.checkItemUpdate(props.item);
   };
   const onPriceChange = (e: any): any => {
-    props.item.price = e.target.value;
+    if (!isNaN(+e.target.value)) {
+      console.log(Number(e.target.value));
+      props.item.price = +e.target.value;
+    } else {
+      props.item.price = 0;
+    }
+
     props.checkItemUpdate(props.item);
   };
   const onIngredientsChange = (e: any): any => {

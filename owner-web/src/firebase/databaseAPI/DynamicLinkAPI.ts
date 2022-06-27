@@ -2,7 +2,7 @@ import "firebase/firestore";
 import { ref, get, update } from "firebase/database";
 import { apidb } from "../authentication/firebaseAuthentication";
 import { getRestaurantKey } from "./RestaurantApi";
-import generateLink from "../dynamicLink/DynamicLink";
+import generateLink, { generateLongLink } from "../dynamicLink/DynamicLink";
 
 export async function pullDynamicLink(uid: string): Promise<string> {
   return new Promise(function (resolve, reject) {
