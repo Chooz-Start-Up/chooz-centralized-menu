@@ -174,7 +174,7 @@ const RestaurantMenuPage: React.FC = () => {
           unmountOnExit
           timeout={1000}
         >
-          <Box position="absolute" top={450}>
+          <Box position="absolute" top={465} width="100%">
             <Box
               display="flex"
               marginTop={-5}

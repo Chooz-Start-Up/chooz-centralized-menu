@@ -29,50 +29,40 @@ const WelcomePage: React.FC = () => {
         {/* <ChoozAppBar /> */}
 
         <Box
-          height="100%"
           display="flex"
           flexDirection="column"
-          justifyContent="center"
-          alignContent="center"
           textAlign="center"
+          margin="10%"
         >
-          <Box
-            display="flex"
-            flexDirection="column"
-            textAlign="center"
-            margin="2%"
-          >
-            {/* Replacing the header */}
-            <Box display="flex" justifyContent="center">
-              <Box component="img" src={LogoText} margin="2%" width="40%" />
-            </Box>
-            {/* <Typography variant="h3" margin="2%" fontWeight="bold">
+          {/* Replacing the header */}
+          <Box display="flex" justifyContent="center">
+            <Box component="img" src={LogoText} margin="2%" width="40%" />
+          </Box>
+          {/* <Typography variant="h3" margin="2%" fontWeight="bold">
             Welcome to chooz!
             </Typography> */}
 
-            <Typography variant="h4" margin="2%" marginTop="6%">
-              Download the app for a better experience!
-            </Typography>
-            <Typography variant="h6" margin="2%" marginTop="3%">
-              Chooz is a centralized menu app that allows you to view
-              restaurant's menus natively on your phone. At participating
-              restaurants, scan the Chooz QR code to view the entire menu in a
-              natural and intuitive way.
-            </Typography>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: 8,
-                marginTop: "5%",
-                fontSize: "large",
-                alignSelf: "center",
-                textTransform: "none",
-              }}
-            >
-              Download App
-            </Button>
-          </Box>
-
+          <Typography variant="h4" margin="2%" marginTop="6%">
+            Download the app for a better experience!
+          </Typography>
+          <Typography variant="h6" margin="2%" marginTop="3%">
+            Chooz is a centralized menu app that allows you to view restaurant's
+            menus natively on your phone. At participating restaurants, scan the
+            Chooz QR code to view the entire menu in a natural and intuitive
+            way.
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: 8,
+              marginTop: "5%",
+              fontSize: "large",
+              alignSelf: "center",
+              textTransform: "none",
+            }}
+          >
+            Download App
+          </Button>
           <Box display="flex" justifyContent="center">
             <Button
               variant="text"
