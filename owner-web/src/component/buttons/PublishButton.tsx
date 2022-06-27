@@ -6,13 +6,13 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
+  Typography,
 } from "@mui/material/";
 import { PublishButtonProps } from "./interface";
 import { useState } from "react";
 import { pullRestaurantMenuByUser } from "../../firebase/databaseAPI/RestaurantApi";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
-import { Restaurant } from "@mui/icons-material";
-import { Typography } from "@material-ui/core";
+import { choozTheme } from "../../theme/theme";
 
 const PublishButton: React.FC<PublishButtonProps> = (
   props: PublishButtonProps
@@ -84,7 +84,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
             textTransform: "none",
           }}
         >
-          Publish
+          <Typography>Publish</Typography>
         </Button>
       )}
       {isPublished && (

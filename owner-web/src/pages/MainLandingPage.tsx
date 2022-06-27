@@ -22,9 +22,8 @@ class MenuEditPage extends React.Component<
       <>
         <ThemeProvider theme={choozTheme}>
           <ChoozAppBar />
-          <Box height="200vh" />
           <Box
-            height="460"
+            height="380"
             width="100%"
             // component="img"
             // src={Background}
@@ -32,22 +31,26 @@ class MenuEditPage extends React.Component<
             sx={{ position: "absolute" }}
             zIndex="-1"
             top={0}
+            display="flex"
+            justifyContent="center"
           />
           <Typography
             align="center"
-            variant="h2"
+            variant="h3"
             fontWeight="bold"
             color={choozTheme.palette.secondary.light}
             sx={{
-              position: "absolute",
-              top: 0,
-              maxWidth: "60%",
-              marginLeft: "20%",
-              marginTop: 12,
+              maxWidth: "80%",
+              marginLeft: "10%",
+              marginTop: 6,
             }}
           >
-            This is just a menu made by stupid college students. Nothing else.
-            chooz
+            Create a free online menu for your restaurant
+            <Typography variant="h4" marginTop={4}>
+              Easily Viewable
+            </Typography>
+            <Typography variant="h4">Instant Updates</Typography>
+            <Typography variant="h4">QR Code access</Typography>
             <Box display="flex" justifyContent="center" marginTop={6}>
               <Button
                 size="large"
@@ -57,20 +60,13 @@ class MenuEditPage extends React.Component<
                   borderRadius: 8,
                   textTransform: "none",
                   alignSelf: "center",
+                  marginTop: 8,
                 }}
-                color="primary"
               >
                 <Typography variant="h5">Create Menu</Typography>
               </Button>
             </Box>
           </Typography>
-
-          {/* <Box
-            component="img"
-            src={ChoozBackground}
-            // height="460"
-            width="100%"
-          /> */}
         </ThemeProvider>
       </>
     );

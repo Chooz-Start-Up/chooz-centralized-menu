@@ -62,7 +62,7 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              className={snapshot.isDragging ? classes.draggingListItem : ""}
+              // className={snapshot.isDragging ? classes.draggingListItem : ""}
             >
               <ListItemButton
                 sx={{

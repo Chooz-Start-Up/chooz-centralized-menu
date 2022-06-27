@@ -9,15 +9,18 @@ import {
   IconButton,
   Tooltip,
   Box,
+  Grid,
+  Typography,
+  ThemeProvider,
 } from "@mui/material/";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import { AccessQRButtonProps } from "./interface";
-import { Grid } from "@material-ui/core";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { pullDynamicLink } from "../../firebase/databaseAPI/DynamicLinkAPI";
 import { QRCode } from "react-qrcode-logo";
 import ChoozIcon from "../images/chooz_icons/logoRed_bgWhiteCircular.png";
 import { toPng } from "html-to-image";
+import { choozTheme } from "../../theme/theme";
 
 const AccessQRButton: React.FC<AccessQRButtonProps> = (
   props: AccessQRButtonProps
@@ -67,85 +70,94 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
 
   return (
     <>
-      <Tooltip title="Access QR Code">
-        <IconButton onClick={handleClickOpen}>
-          <QrCode2Icon fontSize="large" />
-        </IconButton>
-      </Tooltip>
+      <ThemeProvider theme={choozTheme}>
+        <Tooltip title="Access QR Code">
+          <IconButton onClick={handleClickOpen}>
+            <QrCode2Icon fontSize="large" />
+          </IconButton>
+        </Tooltip>
 
-      <Dialog
-        open={open && !isPublished}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>QR Code Not Available</DialogTitle>
-        <DialogContent>
-          <DialogContentText color="black" id="alert-dialog-slide-description">
-            Please publish the menu first to access the QR code!
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Dialog open={open && !isPublished} keepMounted onClose={handleClose}>
+          <DialogTitle>QR Code Not Available</DialogTitle>
+          <DialogContent>
+            <DialogContentText color="black">
+              Please publish the menu first to access the QR code
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
 
-      <Dialog
-        open={open && isPublished}
-        // keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-        sx={{
-          minHeight: "500px",
-        }}
-      >
-        <DialogTitle>Scan the QR Code</DialogTitle>
-        <DialogContent>
-          <DialogContentText color="black" id="alert-dialog-slide-description">
-            Use your phone to scan the QR code and access the online menu!
-          </DialogContentText>
-          <Grid container justifyContent="center">
-            <Box
-              marginTop={2}
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-            >
-              <div ref={printRef}>
-                <QRCode
-                  value={generateLink()}
-                  logoImage={ChoozIcon}
-                  logoHeight={80}
-                  logoWidth={80}
-                  eyeRadius={10}
-                  qrStyle="dots"
-                  size={300}
-                />
-              </div>
-
-              <Button
-                variant="outlined"
-                sx={{
-                  width: "90%",
-                  marginLeft: "5%",
-                  marginTop: "5%",
-                  textTransform: "none",
-                }}
-                onClick={downloadQR}
+        <Dialog
+          open={open && isPublished}
+          // keepMounted
+          onClose={handleClose}
+          sx={{
+            minHeight: "500px",
+          }}
+        >
+          <DialogTitle>Scan the QR Code</DialogTitle>
+          <DialogContent>
+            <DialogContentText color="black">
+              <Typography fontSize={20}>
+                Use your phone to scan the QR code and access the mobile menu
+              </Typography>
+            </DialogContentText>
+            <Grid container justifyContent="center">
+              <Box
+                marginTop={1}
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
               >
-                Download Image
-              </Button>
-            </Box>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+                <div ref={printRef}>
+                  <QRCode
+                    value={generateLink()}
+                    logoImage={ChoozIcon}
+                    logoHeight={80}
+                    logoWidth={80}
+                    eyeRadius={10}
+                    qrStyle="dots"
+                    size={300}
+                  />
+                </div>
+
+                <Button
+                  variant="outlined"
+                  sx={{
+                    width: "90%",
+                    marginLeft: "5%",
+                    marginTop: "5%",
+                    textTransform: "none",
+                  }}
+                  onClick={downloadQR}
+                >
+                  Download Image
+                </Button>
+              </Box>
+            </Grid>
+            <Typography
+              align="center"
+              fontSize={14}
+              color="grey.500"
+              sx={{ marginTop: 3 }}
+            >
+              <Typography display="inline" fontWeight="bold">
+                This QR code will remain the same
+              </Typography>{" "}
+              after any edits that you make to the menu or profile
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
     </>
   );
 };

@@ -20,13 +20,7 @@ import {
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
 import { Menu } from "../../firebase/databaseAPI/Menu";
-import {
-  DragDropContext,
-  Droppable,
-  DraggableLocation,
-  DropResult,
-  ResponderProvided,
-} from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { choozTheme } from "../../theme/theme";
 
 export class MenuColumnList extends React.Component<

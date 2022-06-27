@@ -126,7 +126,7 @@ export const UploadImagePanel: React.FC = () => {
       sx={{ borderLeft: 1, borderColor: "grey.400" }}
     >
       <Fade in={true} exit={false} mountOnEnter unmountOnExit timeout={400}>
-        <Box width="44%" height="150vh" bgcolor="white" paddingTop="1%">
+        <Box width="44%" height="160vh" bgcolor="white" paddingTop="1%">
           <Typography
             variant="h4"
             color="black"
@@ -138,19 +138,22 @@ export const UploadImagePanel: React.FC = () => {
           <Divider
             sx={{
               marginTop: 1,
-              marginBottom: 2,
+              marginBottom: 1,
               marginLeft: "4%",
               marginRight: "4%",
             }}
           />
           <Box sx={{ marginLeft: "4%", marginRight: "4%" }}>
-            <Typography variant="h5">Preview</Typography>
-            <Typography variant="h6" color="grey.500">
-              The ratio of the images may differ depending on the screen. Please
-              check the app or the mobile web preview to see the actual result.
+            <Typography variant="h5" sx={{ marginBottom: 1 }}>
+              Preview
+            </Typography>
+            <Typography variant="h6" color="grey.500" sx={{ marginBottom: 1 }}>
+              The banner image ratio may differ depending on the screen. Check
+              the app or mobile browser preview to accurately view how your
+              pictures will be displayed.
             </Typography>
             <Typography variant="h6" color="grey.500" sx={{ marginBottom: 2 }}>
-              The QR code to the app/web preview can be accessed after
+              The QR code to the mobile menu can be accessed only after
               publishing the menu.
             </Typography>
           </Box>
