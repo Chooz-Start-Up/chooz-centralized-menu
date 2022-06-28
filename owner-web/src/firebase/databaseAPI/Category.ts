@@ -2,10 +2,16 @@ import { Item } from "./Item";
 
 export class Category {
   private _categoryName: string;
+  private _description: string;
   private _items: Item[];
 
-  constructor(categoryName: string = "", items: Item[] = []) {
+  constructor(
+    categoryName: string = "",
+    description: string = "",
+    items: Item[] = []
+  ) {
     this._categoryName = categoryName;
+    this._description = description;
     this._items = items;
   }
   public get categoryName(): string {
@@ -20,14 +26,21 @@ export class Category {
   public set items(value: Item[]) {
     this._items = value;
   }
+  public get description(): string {
+    return this._description;
+  }
+  public set description(value: string) {
+    this._description = value;
+  }
 
   public static parseCategory(jsonStringObject: string): Category {
     let obj = JSON.parse(jsonStringObject);
 
     let categoryName = obj.categoryName;
+    let description = obj.description;
     let items = Item.parseItems(JSON.stringify(obj.items));
 
-    return new Category(categoryName, items);
+    return new Category(categoryName, description, items);
   }
 
   public static parseCategories(jsonStringObject: string): Category[] {
@@ -38,7 +51,13 @@ export class Category {
     let keys = Object.keys(obj);
     keys.forEach(function (key: any) {
       let category = Category.parseCategory(JSON.stringify(obj[key]));
-      categories.push(new Category(category.categoryName, category.items));
+      categories.push(
+        new Category(
+          category.categoryName,
+          category.description,
+          category.items
+        )
+      );
     });
 
     return categories;

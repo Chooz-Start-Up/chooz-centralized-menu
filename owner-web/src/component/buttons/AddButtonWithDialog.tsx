@@ -26,12 +26,26 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
     setOpen(false);
   };
 
-  const { title, label, handleAddRetrieveText, updateText, validateText } =
-    props;
+  const handleCancel = () => {
+    updateText(null, "");
+    if (type === "category" && props.updateDescriptionText !== undefined) {
+      props.updateDescriptionText(null, "");
+    }
+    setOpen(false);
+  };
+
+  const {
+    type,
+    title,
+    label,
+    handleAddRetrieveText,
+    updateText,
+    validateText,
+  } = props;
 
   return (
     <>
-      <ListItemButton selected={false} onClick={handleClickOpen}>
+      <ListItemButton selected={false} onClick={handleClickOpen} disableRipple>
         <Grid container justifyContent="center">
           <AddCircleOutlineIcon
             fontSize="large"
@@ -43,7 +57,7 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle color="primary">{title}</DialogTitle>
         <DialogContent>
-          <form onSubmit={handleAddRetrieveText} id="myform">
+          <form onSubmit={handleAddRetrieveText} id="myform" autoComplete="off">
             <TextField
               autoFocus
               margin="dense"
@@ -54,10 +68,22 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
               helperText={validateText()}
               onChange={updateText}
             />
+            {type === "category" && (
+              <TextField
+                margin="dense"
+                id="description"
+                label={"Category Description"}
+                variant="standard"
+                fullWidth
+                multiline
+                minRows={3}
+                onChange={props.updateDescriptionText}
+              />
+            )}
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+          <Button onClick={handleCancel} sx={{ textTransform: "none" }}>
             Cancel
           </Button>
           <Button

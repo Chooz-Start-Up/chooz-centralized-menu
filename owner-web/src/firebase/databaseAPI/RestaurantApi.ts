@@ -502,7 +502,13 @@ async function getRestaurantMenuByKey(key: string): Promise<Array<Menu>> {
                   });
                 }
 
-                categories.push(new Category(category["_categoryName"], items));
+                categories.push(
+                  new Category(
+                    category["_categoryName"],
+                    category["_description"],
+                    items
+                  )
+                );
               });
             }
 

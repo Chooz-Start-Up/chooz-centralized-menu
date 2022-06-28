@@ -29,6 +29,7 @@ export class ItemColumnList extends React.Component<ItemColumnListProps> {
                 >
                   <Grid item xs={12}>
                     <ColumnListItemButton
+                      type="item"
                       deleteDialogTitle="Are you sure you want to delete the item?"
                       deleteDialogLabel="All item information will be deleted."
                       editDialogTitle="Enter New Item Name"
@@ -48,6 +49,7 @@ export class ItemColumnList extends React.Component<ItemColumnListProps> {
                     <Grid item xs={12}>
                       <ListItem disablePadding alignItems="center">
                         <AddButtonWithDialog
+                          type="item"
                           title="Enter Item Name"
                           label="Item Name"
                           handleAddRetrieveText={
