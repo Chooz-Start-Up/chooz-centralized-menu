@@ -59,7 +59,7 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
     toPng(printRef.current, { cacheBust: true })
       .then((dataUrl) => {
         const link = document.createElement("a");
-        link.download = "ChoozQR.png";
+        link.download = "Chooz " + props.restaurantName + ".png";
         link.href = dataUrl;
         link.click();
       })
@@ -114,7 +114,11 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
             minHeight: "500px",
           }}
         >
-          <DialogTitle>Scan the QR Code</DialogTitle>
+          <DialogTitle>
+            <Typography fontSize={22} fontWeight="bold" align="center">
+              View Menu
+            </Typography>
+          </DialogTitle>
           <DialogContent>
             <DialogContentText color="black">
               <Typography fontSize={20}>

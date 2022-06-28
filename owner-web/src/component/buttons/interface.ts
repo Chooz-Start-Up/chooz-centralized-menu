@@ -42,12 +42,14 @@ export interface PublishButtonProps {
   isPublished: boolean;
   isProfileValid: boolean;
   isLoading: boolean;
+  restaurantName: string;
   checkValidProfile(): any;
   onPublishClick(): any;
 }
 
 export interface AccessQRButtonProps {
   isPublished: boolean;
+  restaurantName: string;
 }
 
 export interface EditProfileButtonWithDialogProps {

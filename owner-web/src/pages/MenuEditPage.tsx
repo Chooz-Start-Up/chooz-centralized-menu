@@ -256,6 +256,7 @@ class MenuEditPage extends React.Component<
                         >
                           <AccessQRButton
                             isPublished={this.state.isPublished}
+                            restaurantName={this.state.restaurantName}
                           />
                           <PublishButton
                             isPublished={this.state.isPublished}
@@ -263,6 +264,7 @@ class MenuEditPage extends React.Component<
                             isLoading={this.state.isLoading}
                             checkValidProfile={this.checkValidProfile}
                             onPublishClick={this.onPublishClick}
+                            restaurantName={this.state.restaurantName}
                           />
                         </Box>
                       </Box>
