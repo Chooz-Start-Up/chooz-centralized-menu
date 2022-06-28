@@ -43,15 +43,17 @@ const WelcomePage: React.FC = () => {
             </Typography> */}
 
           <Typography variant="h4" margin="2%" marginTop="6%">
-            Download the app for a better experience!
+            {/* Download the app for a better experience! */}
+            The App will be availble soon... For now, view on the browser!
           </Typography>
           <Typography variant="h6" margin="2%" marginTop="3%">
-            Chooz is a centralized menu app that allows you to view restaurant's
+            {/* Chooz is a centralized menu app that allows you to view restaurant's
             menus natively on your phone. At participating restaurants, scan the
             Chooz QR code to view the entire menu in a natural and intuitive
-            way.
+            way. */}
+            The Chooz app will soon be available for iOS and Android...
           </Typography>
-          <Button
+          {/* <Button
             variant="contained"
             sx={{
               borderRadius: 8,
@@ -62,10 +64,10 @@ const WelcomePage: React.FC = () => {
             }}
           >
             Download App
-          </Button>
+          </Button> */}
           <Box display="flex" justifyContent="center">
             <Button
-              variant="text"
+              variant="contained"
               sx={{
                 margin: 2,
                 width: "30%",
@@ -75,11 +77,7 @@ const WelcomePage: React.FC = () => {
               }}
               href={"/preview/" + restaurantKey}
             >
-              <Typography
-                sx={{ textDecoration: "underline", textTransform: "none" }}
-              >
-                View Menu
-              </Typography>
+              <Typography sx={{ textTransform: "none" }}>View Menu</Typography>
             </Button>
           </Box>
         </Box>

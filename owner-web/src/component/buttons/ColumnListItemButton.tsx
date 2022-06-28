@@ -72,8 +72,20 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
                 onClick={(event) => handleListItemClick(event, item.id)}
                 sx={{
                   height: "60",
+                  "&:hover": {
+                    backgroundColor: "grey",
+                  },
                   "&.Mui-focusVisible": {
                     backgroundColor: "transparent",
+                  },
+                  "&.Mui-selected": {
+                    backgroundColor: "grey.200",
+                    "&.Mui-focusVisible": {
+                      backgroundColor: "grey.200",
+                    },
+                    "&:hover": {
+                      backgroundColor: "grey.300",
+                    },
                   },
                 }}
               >

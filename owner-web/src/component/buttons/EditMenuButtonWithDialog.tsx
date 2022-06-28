@@ -89,7 +89,7 @@ const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
               <TextField
                 margin="dense"
                 id="description"
-                label={"Category Description"}
+                label={"Category Description (Optional)"}
                 variant="standard"
                 fullWidth
                 multiline

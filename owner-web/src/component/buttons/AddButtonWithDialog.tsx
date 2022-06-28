@@ -52,6 +52,7 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
           "&.Mui-focusVisible": {
             backgroundColor: "transparent",
           },
+          height: "60",
         }}
       >
         <Grid container justifyContent="center">
