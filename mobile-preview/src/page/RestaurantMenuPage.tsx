@@ -148,7 +148,12 @@ const RestaurantMenuPage: React.FC = () => {
                   bgcolor="grey.300"
                   // bgcolor={choozTheme.palette.secondary.light}
                 >
-                  <Box height="300" component="img" src={bannerURL} />
+                  <Box
+                    height="300"
+                    width={window.innerWidth <= 1200 ? "100%" : "auto"}
+                    component="img"
+                    src={bannerURL}
+                  />
                 </Box>
                 <Avatar
                   src={!logoURL ? Logo : logoURL}

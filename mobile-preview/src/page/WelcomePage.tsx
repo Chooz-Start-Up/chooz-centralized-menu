@@ -78,7 +78,7 @@ const WelcomePage: React.FC = () => {
               <Typography
                 sx={{ textDecoration: "underline", textTransform: "none" }}
               >
-                Not now
+                View Menu
               </Typography>
             </Button>
           </Box>
