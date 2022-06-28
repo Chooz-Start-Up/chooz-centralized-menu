@@ -118,7 +118,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
 
                 <TextField
                   disabled={success || userEmail !== undefined}
-                  value={userEmail !== undefined ? userEmail : ""}
+                  defaultValue={userEmail !== undefined ? userEmail : ""}
                   onChange={onEmailChange}
                   label="Email"
                   sx={{ marginTop: 3, width: 350 }}

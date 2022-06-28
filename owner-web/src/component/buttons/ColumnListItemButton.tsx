@@ -1,9 +1,11 @@
 import * as React from "react";
 import {
   Box,
+  createTheme,
   Grid,
   ListItem,
   ListItemButton,
+  ThemeProvider,
   Typography,
 } from "@mui/material/";
 import { ColumnListGeneralButtonProps } from "./interface";
@@ -65,43 +67,43 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
               // className={snapshot.isDragging ? classes.draggingListItem : ""}
             >
               <ListItemButton
-                sx={{
-                  height: 50,
-                }}
+                sx={{ height: "60" }}
                 selected={setSelectedColumnIndex() === item.id}
                 onClick={(event) => handleListItemClick(event, item.id)}
               >
-                <Grid container maxWidth="150px">
-                  <Typography
-                    textOverflow="ellipsis"
-                    overflow="hidden"
-                    whiteSpace="nowrap"
-                  >
-                    {item.name}
-                  </Typography>
-                </Grid>
+                <Box width="100%" display="flex" justifyContent="space-between">
+                  <Box width={isPublished ? "100%" : "60%"}>
+                    <Typography
+                      textOverflow="ellipsis"
+                      overflow="hidden"
+                      whiteSpace="nowrap"
+                    >
+                      {item.name}
+                    </Typography>
+                  </Box>
 
-                <Grid container justifyContent="flex-end">
-                  {!isPublished && setSelectedColumnIndex() === item.id && (
-                    <EditMenuButtonWithDialog
-                      title={editDialogTitle}
-                      label={editDialogLabel}
-                      textValue={item.name}
-                      handleEditRetrieveText={handleEditRetrieveText}
-                      updateText={updateText}
-                      validateText={validateText}
-                    />
-                  )}
+                  <Box width="60" height="25" maxHeight="65">
+                    {!isPublished && setSelectedColumnIndex() === item.id && (
+                      <EditMenuButtonWithDialog
+                        title={editDialogTitle}
+                        label={editDialogLabel}
+                        textValue={item.name}
+                        handleEditRetrieveText={handleEditRetrieveText}
+                        updateText={updateText}
+                        validateText={validateText}
+                      />
+                    )}
 
-                  {!isPublished && setSelectedColumnIndex() === item.id && (
-                    <DeleteButtonWithWarningDialog
-                      title={deleteDialogTitle}
-                      label={deleteDialogLabel}
-                      deleteAction={handleDeleteClick}
-                      id={item.id}
-                    />
-                  )}
-                </Grid>
+                    {!isPublished && setSelectedColumnIndex() === item.id && (
+                      <DeleteButtonWithWarningDialog
+                        title={deleteDialogTitle}
+                        label={deleteDialogLabel}
+                        deleteAction={handleDeleteClick}
+                        id={item.id}
+                      />
+                    )}
+                  </Box>
+                </Box>
               </ListItemButton>
             </ListItem>
           )}

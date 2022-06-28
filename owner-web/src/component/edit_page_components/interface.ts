@@ -70,6 +70,8 @@ export interface ItemColumnListProps {
 }
 
 export interface ItemColumnDisplayProps {
+  menuIndex: number;
+  categoryIndex: number;
   item: ItemProps;
   isPublished: boolean;
   checkItemUpdate(item: ItemProps): any;

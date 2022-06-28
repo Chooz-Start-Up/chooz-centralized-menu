@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.chooz.choozmobile",
+      "sha256_cert_fingerprints": [
+        "AE:36:C4:6D:4D:4F:27:7B:18:FB:89:12:FF:86:33:3A:53:BD:CC:C5:30:90:72:55:53:F8:A1:3E:79:3C:34:E9"
+      ]
+    }
+  }
+]

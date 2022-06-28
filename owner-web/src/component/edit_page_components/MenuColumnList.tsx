@@ -603,7 +603,7 @@ export class MenuColumnList extends React.Component<
           >
             <Grid
               item
-              xs={2}
+              xs={2.5} // Column width
               borderRight={1}
               borderColor="grey.300"
               height="auto"
@@ -681,7 +681,7 @@ export class MenuColumnList extends React.Component<
 
             <Grid
               item
-              xs={2}
+              xs={2.5} // Column width
               borderRight={1}
               borderColor="grey.300"
               height="auto"
@@ -725,7 +725,7 @@ export class MenuColumnList extends React.Component<
 
             <Grid
               item
-              xs={2}
+              xs={2.5} // Column width
               borderRight={1}
               borderColor="grey.300"
               height="auto"
@@ -765,7 +765,10 @@ export class MenuColumnList extends React.Component<
               )}
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid
+              item
+              xs={4.5} // Column width
+            >
               <Box maxHeight={25}>
                 <Typography
                   align="center"
@@ -773,12 +776,14 @@ export class MenuColumnList extends React.Component<
                   color={choozTheme.palette.primary.contrastText}
                   variant="h5"
                 >
-                  Item Detail
+                  Item Details
                 </Typography>
               </Box>
               {this.validateItemIndexBeforeRender() !== -1 && (
                 <Box width="95%" marginLeft={2} marginTop={2}>
                   <ItemColumnDisplay
+                    menuIndex={this.state.selectedMenuIndex}
+                    categoryIndex={this.state.selectedCategoryIndex}
                     item={
                       this.state.menuItems[this.state.selectedMenuIndex]
                         .categoryItems[this.state.selectedCategoryIndex].items[

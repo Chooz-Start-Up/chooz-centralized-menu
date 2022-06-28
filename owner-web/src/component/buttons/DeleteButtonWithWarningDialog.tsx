@@ -39,7 +39,7 @@ const DeleteButtonWithWarningDialog: React.FC<
         }}
         onClick={handleClickOpen}
       >
-        <ClearIcon />
+        <ClearIcon sx={{ fontSize: 18 }} />
       </IconButton>
       <Dialog
         open={open}

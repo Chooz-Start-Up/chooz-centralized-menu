@@ -45,7 +45,7 @@ const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
         }}
         onClick={handleClickOpen}
       >
-        <EditIcon />
+        <EditIcon sx={{ fontSize: 18 }} />
       </IconButton>
 
       <Dialog open={open} onClose={handleClose}>
