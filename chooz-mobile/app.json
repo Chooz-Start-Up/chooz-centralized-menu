@@ -19,17 +19,19 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "10",
+      "buildNumber": "17",
       "bundleIdentifier": "com.chooz.choozmobile",
       "infoPlist": {
-        "NSCameraUsageDescription": "Allow Expo experiences to use your camera"
+        "NSCameraUsageDescription": "Allow Expo experiences to use your camera",
+        "FirebaseDynamicLinksCustomDomains": ["https://choozmenu.com/mobile"]
       },
+
       "googleServicesFile": "./GoogleService-Info.plist",
-      "associatedDomains": ["applinks:m.choozmenu.com"]
+      "associatedDomains": ["applinks:choozmenu.com"]
     },
     "android": {
       "package": "com.chooz.choozmobile",
-      "versionCode": 7,
+      "versionCode": 14,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -53,7 +55,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [],
+    "plugins": ["@react-native-firebase/app"],
     "runtimeVersion": {
       "policy": "sdkVersion"
     }

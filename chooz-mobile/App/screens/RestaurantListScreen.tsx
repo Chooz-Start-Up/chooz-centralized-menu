@@ -8,7 +8,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
 import { RestaurantStackParamList } from "../config/navigation";
-import { RowSeparator, RestaurantListItem } from "../components/RowItem";
+import {
+  RowSeparator,
+  RestaurantListItem,
+  SectionHeader,
+} from "../components/RowItem";
 import { Restaurant } from "../util/Restaurant";
 import { getRestaurantList } from "../util/RestaurantApi";
 import colors from "../constants/colors";
@@ -45,28 +49,25 @@ const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
       {!isLoading && (
         <ScrollView style={styles.scrollView}>
           <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
-
-          <List.Section title="All Restaurants">
-            {restaurantList?.map((restaurant) => {
-              return (
-                <View key={restaurant.id + "ViewKey"}>
-                  {restaurant.isPublished && (
-                    <RestaurantListItem
-                      title={restaurant.restaurantName}
-                      restaurantID={restaurant.id}
-                      description={restaurant.description}
-                      onPress={() =>
-                        navigation.navigate("RestaurantScreen", {
-                          restaurantID: restaurant.id,
-                        })
-                      }
-                    />
-                  )}
-                  <RowSeparator />
-                </View>
-              );
-            })}
-          </List.Section>
+          <SectionHeader title="All Restaurants" />
+          {restaurantList?.map((restaurant) => {
+            return (
+              <View key={restaurant.id + "ViewKey"}>
+                {restaurant.isPublished && (
+                  <RestaurantListItem
+                    title={restaurant.restaurantName}
+                    restaurantID={restaurant.id}
+                    description={restaurant.description}
+                    onPress={() =>
+                      navigation.navigate("RestaurantScreen", {
+                        restaurantID: restaurant.id,
+                      })
+                    }
+                  />
+                )}
+              </View>
+            );
+          })}
         </ScrollView>
       )}
     </>

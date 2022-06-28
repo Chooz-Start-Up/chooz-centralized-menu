@@ -17,7 +17,6 @@ import {
 } from "@react-navigation/native-stack";
 import { FAB, Portal } from "react-native-paper";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import { useHeaderHeight } from "@react-navigation/elements";
 
 import { RestaurantStackParamList } from "../config/navigation";
 import colors from "../constants/colors";

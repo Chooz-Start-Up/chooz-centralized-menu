@@ -64,9 +64,7 @@ const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
           <View key={item.itemName + "View" + i}>
             <MenuItem
               key={item.itemName + "List" + i}
-              title={item.itemName}
-              description={item.description}
-              price={item.price}
+              item={item}
               onPress={() => navigate("ItemScreen", item)}
             />
             <Divider key={item.itemName + "Separator" + i} />

@@ -17,7 +17,6 @@ import { Menu } from "../util/Menu";
 import { Item } from "../util/Item";
 import { navigationRef, navigate } from "../config/rootNavigation";
 import colors from "../constants/colors";
-import { transparent } from "react-native-paper/lib/typescript/styles/colors";
 
 export type RestaurantStackParamList = {
   RestaurantListScreen: undefined;
@@ -123,29 +122,15 @@ const RestaurantStackScreen = () => {
 const Navigation = () => {
   const _handleUrl = (obj: any) => {
     let url = obj.url;
-    let { hostname, path, queryParams } = Linking.parse(url);
-    let id = queryParams.id;
-    navigate("RestaurantListScreen");
-    if (id) {
-      navigate("RestaurantScreen", { restaurantID: id });
-    }
-  };
-
-  console.log(
-    "URL:   " +
-      Linking.createURL("/--/RestaurantScreen", {
-        queryParams: { id: "-N4oB-DoClsQsVBGAOVl" },
-      })
-  );
-
-  useEffect(() => {
-    Linking.getInitialURL()
-      .then((url) => {
-        if (url) {
-          console.log("Before");
-          let urlData = Linking.parse(url);
-          let id = urlData.queryParams.id;
+    dynamicLinks()
+      .resolveLink(url)
+      .then((resolvedData) => {
+        //If the app is passed a dynamic link - (ios)
+        if (resolvedData) {
+          let { hostname, path, queryParams } = Linking.parse(resolvedData.url);
+          let id = queryParams.id;
           if (id) {
+            navigate("RestaurantListScreen");
             navigate("RestaurantScreen", { restaurantID: id });
           } else {
             navigate("RestaurantListScreen");
@@ -153,9 +138,43 @@ const Navigation = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        //If app is just passed a deep link - (android)
+        if (url) {
+          let { hostname, path, queryParams } = Linking.parse(url);
+          let id = queryParams.id;
+          if (id) {
+            navigate("RestaurantListScreen");
+            navigate("RestaurantScreen", { restaurantID: id });
+          } else {
+            navigate("RestaurantListScreen");
+          }
+        }
       });
+  };
+
+  useEffect(() => {
+    //When app is in Background
     Linking.addEventListener("url", _handleUrl);
+
+    //When app is closed
+    Linking.getInitialURL().then((url) => {
+      dynamicLinks()
+        .resolveLink(url)
+        .then((resolvedData) => {
+          if (resolvedData) {
+            console.log("Before");
+            let { hostname, path, queryParams } = Linking.parse(
+              resolvedData.url
+            );
+            let id = queryParams.id;
+            if (id) {
+              navigate("RestaurantScreen", { restaurantID: id });
+            } else {
+              navigate("RestaurantListScreen");
+            }
+          }
+        });
+    });
   }, []);
   return (
     <NavigationContainer ref={navigationRef}>

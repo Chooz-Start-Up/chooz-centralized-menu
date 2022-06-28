@@ -12,6 +12,7 @@ import { Entypo } from "@expo/vector-icons";
 import { pullLogoImage } from "../util/RestaurantApi";
 
 import colors from "../constants/colors";
+import { Item } from "../util/Item";
 
 const styles = StyleSheet.create({
   row: {
@@ -67,8 +68,31 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     height: 75,
   },
-  loadingLogo: {
+  itemRowContainer: {
+    backgroundColor: "white",
+    flex: 1,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  itemTextTitle: {
+    marginTop: 5,
+    backgroundColor: "white",
+    fontSize: Platform.OS === "ios" ? 15 : 14,
+    fontWeight: "bold",
+  },
+  sectionHeader: {
+    backgroundColor: "white",
+    height: 50,
+    justifyContent: "center",
+  },
+  sectionTitleText: {
+    marginLeft: 10,
+    fontSize: 15,
+    color: "grey",
+  },
+  divider: {
     backgroundColor: "lightgrey",
+    height: StyleSheet.hairlineWidth,
   },
 });
 
@@ -118,31 +142,37 @@ export const RestaurantListItem = ({
   );
 };
 
-export const MenuItem = ({
-  title,
-  description,
-  price,
-  onPress,
-}: {
-  title: string;
-  description?: string;
-  price: Number;
-  onPress: any;
-}) => {
+export const MenuItem = ({ item, onPress }: { item: Item; onPress: any }) => {
+  let hasDetails = item.description !== "" || item.ingredients !== "";
   return (
-    <TouchableOpacity style={styles.menuItem} onPress={onPress}>
-      <View style={styles.rowContainer}>
+    <TouchableOpacity
+      disabled={!hasDetails}
+      style={styles.menuItem}
+      onPress={onPress}
+    >
+      <View style={styles.itemRowContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{title}</Text>
-          {description ? (
+          <Text style={styles.itemTextTitle}>{item.itemName}</Text>
+          {item.description ? (
             <Text style={styles.description} numberOfLines={2}>
-              {description}
+              {item.description}
             </Text>
           ) : null}
         </View>
-        <Text>{`$${price.toFixed(2)}`}</Text>
+        <Text>{`$${item.price.toFixed(2)}`}</Text>
       </View>
     </TouchableOpacity>
+  );
+};
+
+export const SectionHeader = ({ title }: { title: string }) => {
+  return (
+    <>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitleText}>{title}</Text>
+      </View>
+      <View style={styles.divider}></View>
+    </>
   );
 };
 
