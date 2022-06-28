@@ -21,14 +21,9 @@ const AlreadyLoggedInRoute: React.FunctionComponent<
     setExitLoading(true);
     if (loading) return;
     else if (user) {
-      getRestaurantKey(user.uid).then(
-        () => {
-          navigate("/edit");
-        },
-        () => {
-          console.log("Had problem reading key");
-        }
-      );
+      getRestaurantKey(user.uid).then(() => {
+        navigate("/edit");
+      });
     } else {
       setExitLoading(false);
     }

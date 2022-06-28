@@ -36,9 +36,9 @@ export class Category {
   public static parseCategory(jsonStringObject: string): Category {
     let obj = JSON.parse(jsonStringObject);
 
-    let categoryName = obj.categoryName;
-    let description = obj.description;
-    let items = Item.parseItems(JSON.stringify(obj.items));
+    let categoryName = obj._categoryName;
+    let description = obj._description;
+    let items = Item.parseItems(JSON.stringify(obj._items));
 
     return new Category(categoryName, description, items);
   }
