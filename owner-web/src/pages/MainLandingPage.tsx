@@ -3,9 +3,7 @@ import { Box, Button, Grid, ThemeProvider, Typography } from "@mui/material";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
 import { MainLandingPageProps, MainLandingPageState } from "./interface";
 import { choozTheme } from "../theme/theme";
-import { ExpandMore } from "@mui/icons-material";
-import Background from "../component/images/background/red_landingPage.jpg";
-import ChoozBackground from "../component/images/background/chooz_featureGraphic.png";
+import ChoozEmailLogo from "../component/images/chooz_icons/logoRed.png";
 
 class MenuEditPage extends React.Component<
   MainLandingPageProps,
@@ -23,7 +21,7 @@ class MenuEditPage extends React.Component<
         <ThemeProvider theme={choozTheme}>
           <ChoozAppBar />
           <Box
-            height="380"
+            height="400"
             width="100%"
             // component="img"
             // src={Background}
@@ -67,6 +65,33 @@ class MenuEditPage extends React.Component<
               </Button>
             </Box>
           </Typography>
+
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignContent="center"
+            marginTop="8%"
+            width="20%"
+            position="absolute"
+            bottom={10}
+            right="40%"
+          >
+            <Typography variant="h6" fontWeight="bold" align="center">
+              Report Bug
+            </Typography>
+            <Box display="flex" alignSelf="center">
+              <Box
+                component="img"
+                src={ChoozEmailLogo}
+                width={35}
+                height={35}
+              />
+              <Typography sx={{ marginLeft: 1.5, marginTop: 0.5 }}>
+                support@choozmenu.com
+              </Typography>
+            </Box>
+          </Box>
         </ThemeProvider>
       </>
     );
