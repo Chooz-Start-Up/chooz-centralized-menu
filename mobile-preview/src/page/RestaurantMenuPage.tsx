@@ -276,77 +276,93 @@ const RestaurantMenuPage: React.FC = () => {
                   <AccordionDetails sx={{ height: "40%" }}>
                     {menu.categories.map((category, categoryIndex) => (
                       <div key={categoryIndex}>
-                        <Typography
-                          variant="h6"
-                          marginBottom="2%"
-                          fontWeight="bold"
-                          textAlign="left"
+                        <Accordion
+                          key={menuIndex}
+                          disableGutters
+                          defaultExpanded={true}
+                          elevation={0}
+                          sx={{
+                            bgcolor: "white",
+                          }}
                         >
-                          {category.categoryName}
-                        </Typography>
-                        {category.items.map((item, itemIndex) => (
-                          <div key={itemIndex}>
-                            <Box
-                              key={itemIndex}
-                              bgcolor="white"
-                              height="auto"
-                              padding="10"
-                              display="flex"
-                              flexDirection="column"
-                              marginBottom="3%"
-                              boxShadow={1}
+                          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography
+                              variant="h6"
+                              marginBottom="2%"
+                              fontWeight="bold"
+                              textAlign="left"
                             >
-                              <Accordion
-                                disableGutters
-                                defaultExpanded={false}
-                                elevation={0}
-                                sx={{
-                                  bgcolor: "white",
-                                }}
-                                expanded={
-                                  descriptionExpanded ===
-                                  "m" +
-                                    menuIndex +
-                                    "c" +
-                                    categoryIndex +
-                                    "i" +
-                                    itemIndex
-                                }
-                                onChange={handleDescriptionAccordionChange(
-                                  "m" +
-                                    menuIndex +
-                                    "c" +
-                                    categoryIndex +
-                                    "i" +
-                                    itemIndex
-                                )}
-                              >
+                              {category.categoryName}
+                            </Typography>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            {category.items.map((item, itemIndex) => (
+                              <div key={itemIndex}>
                                 <Box
+                                  key={itemIndex}
+                                  bgcolor="white"
+                                  height="auto"
+                                  padding="10"
                                   display="flex"
-                                  justifyContent="space-between"
+                                  flexDirection="column"
+                                  marginBottom="3%"
+                                  boxShadow={1}
                                 >
-                                  <AccordionSummary sx={{ width: "100%" }}>
-                                    <Typography>{item.itemName}</Typography>
-                                  </AccordionSummary>
-                                  <Typography
-                                    flexDirection="column"
-                                    alignSelf="center"
-                                    paddingRight="2%"
+                                  <Accordion
+                                    disableGutters
+                                    defaultExpanded={false}
+                                    elevation={0}
+                                    sx={{
+                                      bgcolor: "white",
+                                    }}
+                                    expanded={
+                                      descriptionExpanded ===
+                                      "m" +
+                                        menuIndex +
+                                        "c" +
+                                        categoryIndex +
+                                        "i" +
+                                        itemIndex
+                                    }
+                                    onChange={handleDescriptionAccordionChange(
+                                      "m" +
+                                        menuIndex +
+                                        "c" +
+                                        categoryIndex +
+                                        "i" +
+                                        itemIndex
+                                    )}
                                   >
-                                    {"$" + item.price.toFixed(2)}
-                                  </Typography>
-                                </Box>
+                                    <Box
+                                      display="flex"
+                                      justifyContent="space-between"
+                                    >
+                                      <AccordionSummary sx={{ width: "100%" }}>
+                                        <Typography>{item.itemName}</Typography>
+                                      </AccordionSummary>
+                                      <Typography
+                                        flexDirection="column"
+                                        alignSelf="center"
+                                        paddingRight="2%"
+                                      >
+                                        {"$" + item.price.toFixed(2)}
+                                      </Typography>
+                                    </Box>
 
-                                {item.description !== "" && (
-                                  <AccordionDetails>
-                                    <Divider sx={{ marginBottom: 2 }} />
-                                    <Typography>{item.description}</Typography>
-                                  </AccordionDetails>
-                                )}
-                              </Accordion>
-                            </Box>
-                          </div>
-                        ))}
+                                    {item.description !== "" && (
+                                      <AccordionDetails>
+                                        <Divider sx={{ marginBottom: 2 }} />
+                                        <Typography>
+                                          {item.description}
+                                        </Typography>
+                                      </AccordionDetails>
+                                    )}
+                                  </Accordion>
+                                </Box>
+                              </div>
+                            ))}
+                          </AccordionDetails>
+                        </Accordion>
                       </div>
                     ))}
                   </AccordionDetails>
