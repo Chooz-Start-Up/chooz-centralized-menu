@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "target": "mobile",
+    "public": "build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/menu/**",
+        "dynamicLinks": true
+      },
+      {
+        "source": "!/menu/**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/.well-known/assetlinks.json",
+        "destination": "/.well-known/assetlinks.json"
+      }
+    ]
+  }
+}
