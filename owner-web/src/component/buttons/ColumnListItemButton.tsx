@@ -72,6 +72,9 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
                 onClick={(event) => handleListItemClick(event, item.id)}
                 sx={{
                   height: "60",
+                  "&.Mui-focusVisible": {
+                    backgroundColor: "transparent",
+                  },
                 }}
               >
                 <Box width="100%" display="flex" justifyContent="space-between">

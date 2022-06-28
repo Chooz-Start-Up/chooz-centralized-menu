@@ -45,7 +45,15 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
 
   return (
     <>
-      <ListItemButton selected={false} onClick={handleClickOpen} disableRipple>
+      <ListItemButton
+        selected={false}
+        onClick={handleClickOpen}
+        sx={{
+          "&.Mui-focusVisible": {
+            backgroundColor: "transparent",
+          },
+        }}
+      >
         <Grid container justifyContent="center">
           <AddCircleOutlineIcon
             fontSize="large"
