@@ -252,6 +252,7 @@ export class MenuColumnList extends React.Component<
 
     this.setState(() => {
       return {
+        selectedMenuIndex: this.state.menuItems.length,
         menuItems: items,
       };
     });
@@ -329,6 +330,9 @@ export class MenuColumnList extends React.Component<
 
     this.setState(() => {
       return {
+        selectedCategoryIndex:
+          this.state.menuItems[this.state.selectedMenuIndex].categoryItems
+            .length,
         menuItems: updatingMenuItems,
       };
     });
@@ -414,11 +418,20 @@ export class MenuColumnList extends React.Component<
       this.state.selectedCategoryIndex
     ].items = items;
 
-    this.setState(() => {
-      return {
-        menuItems: updatingMenuItems,
-      };
-    });
+    this.setState(
+      () => {
+        return {
+          selectedItemIndex:
+            this.state.menuItems[this.state.selectedMenuIndex].categoryItems[
+              this.state.selectedCategoryIndex
+            ].items.length - 1,
+          menuItems: updatingMenuItems,
+        };
+      },
+      () => {
+        console.log(this.state.selectedItemIndex);
+      }
+    );
 
     this.pushMenuToDatabase(updatingMenuItems);
   };

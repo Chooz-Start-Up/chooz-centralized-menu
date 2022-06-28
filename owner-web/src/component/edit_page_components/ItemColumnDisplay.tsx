@@ -19,7 +19,6 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
   const [localPriceField, setLocalPriceField] = useState("");
 
   useEffect(() => {
-    console.log(props.item.price.toString());
     setLocalPriceField(props.item.price.toString());
   }, [props.menuIndex, props.categoryIndex, props.item.id]);
 
@@ -65,6 +64,7 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
           </Typography>
           <Input
             id="price"
+            autoFocus
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             type="number"
             value={
