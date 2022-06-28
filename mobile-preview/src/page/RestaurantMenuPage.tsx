@@ -122,7 +122,7 @@ const RestaurantMenuPage: React.FC = () => {
                   sx={{
                     width: 120,
                     height: 120,
-                    bgcolor: choozTheme.palette.secondary.light,
+                    bgcolor: choozTheme.palette.secondary.dark,
                     marginLeft: 2,
                     marginTop: "150",
                     top: 90,
@@ -142,14 +142,13 @@ const RestaurantMenuPage: React.FC = () => {
               timeout={1000}
             >
               <Box>
-                <Box display="flex" justifyContent="center">
-                  <Box
-                    height="300"
-                    width="100%"
-                    component="img"
-                    bgcolor={choozTheme.palette.secondary.main}
-                    src={bannerURL}
-                  />
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  bgcolor="grey.300"
+                  // bgcolor={choozTheme.palette.secondary.light}
+                >
+                  <Box height="300" component="img" src={bannerURL} />
                 </Box>
                 <Avatar
                   src={!logoURL ? Logo : logoURL}
@@ -329,7 +328,7 @@ const RestaurantMenuPage: React.FC = () => {
                                     alignSelf="center"
                                     paddingRight="2%"
                                   >
-                                    {"$" + item.price}
+                                    {"$" + item.price.toFixed(2)}
                                   </Typography>
                                 </Box>
 
