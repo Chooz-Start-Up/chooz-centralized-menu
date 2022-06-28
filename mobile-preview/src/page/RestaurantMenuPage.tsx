@@ -6,6 +6,7 @@ import {
   AppBar,
   Avatar,
   Box,
+  Button,
   Divider,
   Fade,
   Grid,
@@ -27,6 +28,7 @@ import { Menu } from "../database/component/Menu";
 import { useNavigate, useParams } from "react-router-dom";
 import ChoozAppBar from "../component/general/ChoozAppBar";
 import Logo from "../component/images/chooz_icons/logoGrey.png";
+import { border } from "@mui/system";
 
 const RestaurantMenuPage: React.FC = () => {
   let { restaurantKey } = useParams();
@@ -194,13 +196,27 @@ const RestaurantMenuPage: React.FC = () => {
               >
                 {restaurant.restaurantName}
               </Typography>
-              <Typography variant="h6">{restaurant.description}</Typography>
+
+              <Accordion
+                disableGutters
+                elevation={1}
+                sx={{ bgcolor: "transparent" }}
+                defaultExpanded={true}
+              >
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography fontWeight="bold">Description</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography variant="h6">{restaurant.description}</Typography>
+                </AccordionDetails>
+              </Accordion>
 
               <Box marginTop={1} display="flex" flexDirection="column">
                 <Accordion
                   disableGutters
                   elevation={1}
                   sx={{ bgcolor: "transparent" }}
+                  defaultExpanded={true}
                 >
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography fontWeight="bold">
@@ -333,21 +349,41 @@ const RestaurantMenuPage: React.FC = () => {
                                         itemIndex
                                     )}
                                   >
-                                    <Box
-                                      display="flex"
-                                      justifyContent="space-between"
+                                    <AccordionSummary
+                                      sx={{ width: "100%" }}
+                                      expandIcon={
+                                        item.description !== "" ? (
+                                          <ExpandMoreIcon />
+                                        ) : (
+                                          <ExpandMoreIcon
+                                            sx={{ color: "white" }}
+                                          />
+                                        )
+                                      }
                                     >
-                                      <AccordionSummary sx={{ width: "100%" }}>
-                                        <Typography>{item.itemName}</Typography>
-                                      </AccordionSummary>
-                                      <Typography
-                                        flexDirection="column"
-                                        alignSelf="center"
-                                        paddingRight="2%"
+                                      <Box
+                                        display="flex"
+                                        justifyContent="space-between"
+                                        width="100%"
                                       >
-                                        {"$" + item.price.toFixed(2)}
-                                      </Typography>
-                                    </Box>
+                                        <Typography align="left">
+                                          {item.itemName}
+                                        </Typography>
+                                        <Typography
+                                          flexDirection="column"
+                                          align="right"
+                                          marginLeft={2}
+                                          marginRight={1}
+                                        >
+                                          {"$" + item.price.toFixed(2)}
+                                        </Typography>
+                                      </Box>
+                                      {/* {item.description !== "" && (
+                                        <Typography>
+                                          {item.description}
+                                        </Typography>
+                                      )} */}
+                                    </AccordionSummary>
 
                                     {item.description !== "" && (
                                       <AccordionDetails>
