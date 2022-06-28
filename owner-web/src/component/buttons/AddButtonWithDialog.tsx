@@ -81,12 +81,13 @@ const AddButtonWithDialog: React.FC<AddButtonWithDialogProps> = (
               <TextField
                 margin="dense"
                 id="description"
-                label={"Category Description"}
+                label={"Category Description (Optional)"}
                 variant="standard"
                 fullWidth
                 multiline
                 minRows={3}
                 onChange={props.updateDescriptionText}
+                placeholder="General description for all items in the category"
               />
             )}
           </form>

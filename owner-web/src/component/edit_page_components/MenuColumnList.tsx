@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Box, Fade, Grid, List, ListItem, Typography } from "@mui/material/";
+import {
+  Box,
+  Fade,
+  Grid,
+  List,
+  ListItem,
+  Tooltip,
+  Typography,
+} from "@mui/material/";
 import {
   CategoryProps,
   ItemProps,
@@ -22,6 +30,7 @@ import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
 import { Menu } from "../../firebase/databaseAPI/Menu";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { choozTheme } from "../../theme/theme";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,

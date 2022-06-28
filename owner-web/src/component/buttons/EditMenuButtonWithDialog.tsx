@@ -96,6 +96,7 @@ const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
                 minRows={3}
                 onChange={props.updateDescriptionText}
                 defaultValue={props.descriptionTextValue}
+                placeholder="General description for all items in the category"
               />
             )}
           </form>
