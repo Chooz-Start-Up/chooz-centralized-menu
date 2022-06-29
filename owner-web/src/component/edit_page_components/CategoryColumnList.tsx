@@ -29,7 +29,6 @@ export class CategoryColumnList extends React.Component<CategoryColumnListProps>
                 >
                   <Grid item xs={12}>
                     <ColumnListItemButton
-                      type="category"
                       deleteDialogTitle="Are you sure you want to delete the category?"
                       deleteDialogLabel="All items in the category will be deleted as well."
                       editDialogTitle="Enter New Category Name"
@@ -45,14 +44,12 @@ export class CategoryColumnList extends React.Component<CategoryColumnListProps>
                       setSelectedColumnIndex={
                         this.props.setSelectedCategoryIndex
                       }
-                      updateDescriptionText={this.props.updateDescriptionText}
                     />
                   </Grid>
                   {!this.props.isPublished && (
                     <Grid item xs={12}>
                       <ListItem disablePadding alignItems="center">
                         <AddButtonWithDialog
-                          type="category"
                           title="Enter Category Name"
                           label="Category Name"
                           handleAddRetrieveText={
@@ -60,9 +57,6 @@ export class CategoryColumnList extends React.Component<CategoryColumnListProps>
                           }
                           updateText={this.props.updateText}
                           validateText={this.props.validateText}
-                          updateDescriptionText={
-                            this.props.updateDescriptionText
-                          }
                         />
                       </ListItem>
                     </Grid>

@@ -31,8 +31,8 @@ export class Menu implements IMenu {
   public static parseMenu(jsonStringObject: any): Menu {
     let obj = JSON.parse(jsonStringObject);
 
-    let menuName = obj._menuName;
-    let categories = Category.parseCategories(JSON.stringify(obj._categories));
+    let menuName = obj.menuName;
+    let categories = Category.parseCategories(JSON.stringify(obj.categories));
 
     return new Menu(menuName, categories);
   }
