@@ -1,0 +1,28 @@
+{
+  "hosting": {
+    "public": "build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/mobile/**",
+        "dynamicLinks": true
+      },
+      {
+        "source": "!/mobile/**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/.well-known/assetlinks.json",
+        "destination": "/.well-known/assetlinks.json"
+      }
+    ]
+  },
+  "emulators": {
+    "hosting": {
+      "port": 5033
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
+}

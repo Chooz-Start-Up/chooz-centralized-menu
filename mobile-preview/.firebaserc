@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "chooz-1a9aa"
+  },
+  "targets": {
+    "chooz-1a9aa": {
+      "hosting": {
+        "mobile": [
+          "choozmobile"
+        ]
+      }
+    }
+  }
+}
