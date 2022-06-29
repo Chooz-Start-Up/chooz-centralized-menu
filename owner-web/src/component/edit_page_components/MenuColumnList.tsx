@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Box, Fade, Grid, List, ListItem, Typography } from "@mui/material/";
+import {
+  Box,
+  Fade,
+  Grid,
+  List,
+  ListItem,
+  Tooltip,
+  Typography,
+} from "@mui/material/";
 import {
   CategoryProps,
   ItemProps,
@@ -22,6 +30,7 @@ import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
 import { Menu } from "../../firebase/databaseAPI/Menu";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { choozTheme } from "../../theme/theme";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 export class MenuColumnList extends React.Component<
   MenuColumnListProps,
@@ -36,6 +45,7 @@ export class MenuColumnList extends React.Component<
       key: "",
       //
       addingItemName: "",
+      addingDescription: "",
       menuItems: [],
       selectedMenuIndex: 0,
       selectedCategoryIndex: 0,
@@ -136,6 +146,7 @@ export class MenuColumnList extends React.Component<
         categoryItems = categoryItems.concat({
           id: cateogryIndex,
           name: cateogry.categoryName,
+          description: cateogry.description,
           handleDeleteClick: this.handleCategoryDeleteClick,
           items: items,
         });
@@ -227,14 +238,36 @@ export class MenuColumnList extends React.Component<
     }
   };
 
-  // Generic textfield updater
-  updateText = (e: any) => {
-    // console.log("Text in textfield: ", e.target.value);
-    this.setState(() => {
-      return {
-        addingItemName: e.target.value,
-      };
-    });
+  // Generic textfield updater. Parameter prevVal will be set if exists, else set to event.taget.value
+  updateText = (e: any, prevVal?: string) => {
+    if (prevVal !== undefined) {
+      this.setState(() => {
+        return {
+          addingItemName: prevVal,
+        };
+      });
+    } else {
+      this.setState(() => {
+        return {
+          addingItemName: e.target.value,
+        };
+      });
+    }
+  };
+  updateDescriptionText = (e: any, prevVal?: string) => {
+    if (prevVal !== undefined) {
+      this.setState(() => {
+        return {
+          addingDescription: prevVal,
+        };
+      });
+    } else {
+      this.setState(() => {
+        return {
+          addingDescription: e.target.value,
+        };
+      });
+    }
   };
   validateText = (): string => {
     const emptyTextfieldErrorMsg: string = "Name field cannot be empty.";
@@ -321,6 +354,7 @@ export class MenuColumnList extends React.Component<
       id: this.state.menuItems[this.state.selectedMenuIndex].categoryItems
         .length,
       name: this.state.addingItemName,
+      description: this.state.addingDescription,
       handleDeleteClick: this.handleCategoryDeleteClick,
       items: [],
     });
@@ -332,7 +366,7 @@ export class MenuColumnList extends React.Component<
       return {
         selectedCategoryIndex:
           this.state.menuItems[this.state.selectedMenuIndex].categoryItems
-            .length,
+            .length - 1,
         menuItems: updatingMenuItems,
       };
     });
@@ -345,6 +379,7 @@ export class MenuColumnList extends React.Component<
     this.handleCategoryAddClick();
     this.setState(() => {
       return {
+        addingDescription: "",
         addingItemName: "",
       };
     });
@@ -378,6 +413,9 @@ export class MenuColumnList extends React.Component<
     items[this.state.selectedMenuIndex].categoryItems[
       this.state.selectedCategoryIndex
     ].name = this.state.addingItemName;
+    items[this.state.selectedMenuIndex].categoryItems[
+      this.state.selectedCategoryIndex
+    ].description = this.state.addingDescription;
 
     this.setState(() => {
       return {
@@ -387,12 +425,12 @@ export class MenuColumnList extends React.Component<
 
     this.pushMenuToDatabase(items);
   };
-  handleCategoryEditRetrieveText = (e: any) => {
+  handleEditNameDescriptionRetrieveText = (e: any) => {
     e.preventDefault();
-    // console.log(this.state.addingItemName);
     this.handleCategoryEditClick();
     this.setState(() => {
       return {
+        addingDescription: "",
         addingItemName: "",
       };
     });
@@ -654,6 +692,7 @@ export class MenuColumnList extends React.Component<
                         >
                           <Grid item xs={12}>
                             <ColumnListItemButton
+                              type="menu"
                               deleteDialogTitle="Are you sure you want to delete the menu?"
                               deleteDialogLabel="All items in the menu will be deleted as well."
                               editDialogTitle="Enter New Menu Name"
@@ -673,6 +712,7 @@ export class MenuColumnList extends React.Component<
                             <Grid item xs={12}>
                               <ListItem disablePadding alignItems="center">
                                 <AddButtonWithDialog
+                                  type="menu"
                                   title="Enter Menu Name"
                                   label="Menu Name"
                                   handleAddRetrieveText={
@@ -702,12 +742,19 @@ export class MenuColumnList extends React.Component<
             >
               <Box maxHeight={25}>
                 <Typography
-                  align="center"
                   bgcolor={choozTheme.palette.primary.light}
                   color={choozTheme.palette.primary.contrastText}
-                  variant="h5"
                 >
-                  Category
+                  <Box display="flex" justifyContent="center">
+                    <Typography variant="h5">Category</Typography>
+
+                    {/* <Tooltip title="Categories can have a general description for its items. Please add or edit a category to add category description.">
+                      <HelpOutlineIcon
+                        fontSize="small"
+                        sx={{ marginTop: 0.75, marginLeft: 1 }}
+                      />
+                    </Tooltip> */}
+                  </Box>
                 </Typography>
               </Box>
               {this.validateMenuIndexBeforeRender() !== -1 && (
@@ -724,12 +771,13 @@ export class MenuColumnList extends React.Component<
                       }
                       handleCategoryDeleteClick={this.handleCategoryDeleteClick}
                       handleCategoryEditRetrieveText={
-                        this.handleCategoryEditRetrieveText
+                        this.handleEditNameDescriptionRetrieveText
                       }
                       updateText={this.updateText}
                       validateText={this.validateText}
                       setSelectedCategoryIndex={this.setSelectedCategoryIndex}
                       onCategoryDragEnd={this.onCategoryDragEnd}
+                      updateDescriptionText={this.updateDescriptionText}
                     />
                   )}
                 </>
@@ -804,6 +852,11 @@ export class MenuColumnList extends React.Component<
                       ]
                     }
                     isPublished={this.props.isPublished}
+                    categoryDescription={
+                      this.state.menuItems[this.state.selectedMenuIndex]
+                        .categoryItems[this.state.selectedCategoryIndex]
+                        .description
+                    }
                     checkItemUpdate={this.checkItemUpdate}
                   />
                 </Box>

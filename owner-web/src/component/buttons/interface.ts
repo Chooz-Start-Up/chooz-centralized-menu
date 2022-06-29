@@ -3,9 +3,11 @@ import { GeneralProps } from "../edit_page_components/interface";
 export interface AddButtonWithDialogProps {
   title: string;
   label: string;
+  type: string;
   handleAddRetrieveText(e: any): any;
-  updateText(e: any): any;
+  updateText(e: any, prevVale?: string): any;
   validateText(): any;
+  updateDescriptionText?(e: any, prevVale?: string): any;
 }
 
 export interface DeleteButtonWithWarningDialogProps {
@@ -22,20 +24,25 @@ export interface ColumnListGeneralButtonProps {
   editDialogLabel: string;
   items: GeneralProps[];
   isPublished: boolean;
+  type: string;
   handleDeleteClick(id: number): any;
   handleEditRetrieveText(e: any): any;
-  updateText(e: any): any;
+  updateText(e: any, prevVale?: string): any;
   validateText(): any;
   setSelectedColumnIndex(index?: number): any;
+  updateDescriptionText?(e: any, prevVale?: string): any;
 }
 
 export interface EditMenuButtonWithDialogProps {
   title: string;
   label: string;
   textValue: string;
+  type: string;
+  descriptionTextValue?: string;
   handleEditRetrieveText(e: any): any;
-  updateText(e: any): any;
+  updateText(e: any, prevVale?: string): any;
   validateText(): any;
+  updateDescriptionText?(e: any, prevVale?: string): any;
 }
 
 export interface PublishButtonProps {

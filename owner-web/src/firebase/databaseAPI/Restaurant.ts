@@ -159,7 +159,9 @@ export class Restaurant implements IRestaurant {
           );
         });
 
-        categories.push(new Category(category.name, items));
+        categories.push(
+          new Category(category.name, category.description, items)
+        );
       });
 
       parsedMenu.push(new Menu(menu.name, categories));

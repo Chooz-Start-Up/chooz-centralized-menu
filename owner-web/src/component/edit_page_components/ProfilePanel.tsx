@@ -263,12 +263,7 @@ class ProfilePanel extends React.Component<
   render() {
     return (
       <>
-        <Box
-          width="100%"
-          height="auto"
-          bgcolor="grey.200"
-          sx={{ borderLeft: 1, borderColor: "grey.400" }}
-        >
+        <Box width="100%" height="auto" bgcolor="grey.200">
           {!this.state.loading && (
             <Fade
               in={true}

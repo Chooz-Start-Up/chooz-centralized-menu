@@ -21,8 +21,10 @@ import {
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { firebaseConfig } from "../config/config";
+import { Menu } from "../databaseAPI/Menu";
 import { Restaurant } from "../databaseAPI/Restaurant";
-import { pushProfile } from "../databaseAPI/RestaurantApi";
+import { pushMenu, pushProfile } from "../databaseAPI/RestaurantApi";
+import defaultMenu from "./defaultMenu.json";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -58,8 +60,22 @@ const signInWithGoogle = async (navigate: any) => {
             "",
             "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
           )
-        ).then(() => {
-          navigate("/fillinfo");
+        ).then((key) => {
+          const pushingMenu = new Restaurant(
+            key,
+            "",
+            "",
+            false,
+            "",
+            "",
+            "",
+            "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed",
+            Menu.parseMenus(JSON.stringify(defaultMenu))
+          );
+          console.log(pushingMenu);
+          pushMenu(user.uid, pushingMenu).then(() => {
+            navigate("/fillinfo");
+          });
         });
       });
     } else {
