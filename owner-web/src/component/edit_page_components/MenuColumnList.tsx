@@ -742,12 +742,19 @@ export class MenuColumnList extends React.Component<
             >
               <Box maxHeight={25}>
                 <Typography
-                  align="center"
                   bgcolor={choozTheme.palette.primary.light}
                   color={choozTheme.palette.primary.contrastText}
-                  variant="h5"
                 >
-                  Category
+                  <Box display="flex" justifyContent="center">
+                    <Typography variant="h5">Category</Typography>
+
+                    {/* <Tooltip title="Categories can have a general description for its items. Please add or edit a category to add category description.">
+                      <HelpOutlineIcon
+                        fontSize="small"
+                        sx={{ marginTop: 0.75, marginLeft: 1 }}
+                      />
+                    </Tooltip> */}
+                  </Box>
                 </Typography>
               </Box>
               {this.validateMenuIndexBeforeRender() !== -1 && (
@@ -845,6 +852,11 @@ export class MenuColumnList extends React.Component<
                       ]
                     }
                     isPublished={this.props.isPublished}
+                    categoryDescription={
+                      this.state.menuItems[this.state.selectedMenuIndex]
+                        .categoryItems[this.state.selectedCategoryIndex]
+                        .description
+                    }
                     checkItemUpdate={this.checkItemUpdate}
                   />
                 </Box>

@@ -78,6 +78,7 @@ export interface ItemColumnDisplayProps {
   categoryIndex: number;
   item: ItemProps;
   isPublished: boolean;
+  categoryDescription: string;
   checkItemUpdate(item: ItemProps): any;
 }
 
