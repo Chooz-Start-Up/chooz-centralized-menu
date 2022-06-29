@@ -47,10 +47,10 @@ export class Item {
   public static parseItem(jsonStringObject: string): Item {
     let obj = JSON.parse(jsonStringObject);
 
-    let itemName = obj["itemName"];
-    let price = obj.price;
-    let description = obj.description;
-    let ingredients = obj.ingredients;
+    let itemName = obj._itemName;
+    let price = obj._price;
+    let description = obj._description;
+    let ingredients = obj._ingredients;
 
     return new Item(itemName, price, description, ingredients);
   }
