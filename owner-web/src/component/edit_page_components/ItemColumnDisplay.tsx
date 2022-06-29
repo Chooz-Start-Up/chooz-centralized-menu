@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { set } from "firebase/database";
 
 const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
   props: ItemColumnDisplayProps
@@ -52,11 +52,12 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
 
   return (
     <Fade in={true} exit={false} mountOnEnter unmountOnExit timeout={275}>
-      {/* For future additional implementations, making the display scrollable */}
-      <Box maxHeight={500} overflow="auto">
-        <Typography variant="h5" align="center">
-          {props.item.name}
-        </Typography>
+      <Box>
+        <Box>
+          <Typography variant="h5" align="center">
+            {props.item.name}
+          </Typography>
+        </Box>
         <Box marginTop={1}>
           <Typography variant="h6" align="left">
             Price
@@ -133,7 +134,7 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
             id="ingredient"
             multiline
             fullWidth
-            minRows={2}
+            minRows={4}
             variant="outlined"
             value={props.item.ingredients}
             onChange={onIngredientsChange}
@@ -142,18 +143,6 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
               console.log("Blurred");
             }}
           />
-
-          {props.categoryDescription !== "" && (
-            <Box display="flex" flexDirection="column" marginTop={5}>
-              <Typography variant="h6" align="left" color="grey.500">
-                Category Description:
-              </Typography>
-
-              <Typography fontSize={16} align="left" color="grey.500">
-                {props.categoryDescription}
-              </Typography>
-            </Box>
-          )}
         </Box>
       </Box>
     </Fade>

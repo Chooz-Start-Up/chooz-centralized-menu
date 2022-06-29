@@ -3,14 +3,12 @@ import { DropResult } from "react-beautiful-dnd";
 export interface GeneralProps {
   id: number;
   name: string;
-  description?: string;
   handleDeleteClick(id: number): any;
 }
 
 export interface CategoryProps {
   id: number;
   name: string;
-  description: string;
   handleDeleteClick(id: number): any;
   items: ItemProps[];
 }
@@ -41,7 +39,6 @@ export interface MenuColumnListState {
   key: string;
   //
   addingItemName: string;
-  addingDescription: string;
   menuItems: MenuProps[];
   selectedMenuIndex: number;
   selectedCategoryIndex: number;
@@ -58,7 +55,6 @@ export interface CategoryColumnListProps {
   validateText(): any;
   setSelectedCategoryIndex(index: number): any;
   onCategoryDragEnd(result: DropResult): any;
-  updateDescriptionText(e: any): any;
 }
 
 export interface ItemColumnListProps {
@@ -78,7 +74,6 @@ export interface ItemColumnDisplayProps {
   categoryIndex: number;
   item: ItemProps;
   isPublished: boolean;
-  categoryDescription: string;
   checkItemUpdate(item: ItemProps): any;
 }
 

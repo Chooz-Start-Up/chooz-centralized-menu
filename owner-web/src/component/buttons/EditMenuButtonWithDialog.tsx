@@ -10,7 +10,7 @@ import {
   ListItemButton,
   TextField,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { EditMenuButtonWithDialogProps } from "./interface";
 
 const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
@@ -26,32 +26,14 @@ const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
     setOpen(false);
   };
 
-  const handleCancel = () => {
-    updateText(null, "");
-    if (type === "category" && props.updateDescriptionText !== undefined) {
-      props.updateDescriptionText(null, "");
-    }
-    setOpen(false);
-  };
-
   const {
     title,
     label,
     textValue,
-    type,
     handleEditRetrieveText,
     updateText,
     validateText,
   } = props;
-
-  useEffect(() => {
-    if (open) {
-      updateText(null, textValue);
-      if (type === "category" && props.updateDescriptionText !== undefined) {
-        props.updateDescriptionText(null, props.descriptionTextValue);
-      }
-    }
-  }, [open]);
 
   return (
     <>
@@ -69,11 +51,7 @@ const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle color="primary">{title}</DialogTitle>
         <DialogContent>
-          <form
-            onSubmit={handleEditRetrieveText}
-            id="myeditform"
-            autoComplete="off"
-          >
+          <form onSubmit={handleEditRetrieveText} id="myeditform">
             <TextField
               autoFocus
               margin="dense"
@@ -85,24 +63,10 @@ const EditMenuButtonWithDialog: React.FC<EditMenuButtonWithDialogProps> = (
               onChange={updateText}
               defaultValue={textValue}
             />
-            {type === "category" && (
-              <TextField
-                margin="dense"
-                id="description"
-                label={"Category Description (Optional)"}
-                variant="standard"
-                fullWidth
-                multiline
-                minRows={3}
-                onChange={props.updateDescriptionText}
-                defaultValue={props.descriptionTextValue}
-                placeholder="General description for all items in the category"
-              />
-            )}
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel} sx={{ textTransform: "none" }}>
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
             Cancel
           </Button>
           <Button
