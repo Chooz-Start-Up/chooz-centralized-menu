@@ -250,10 +250,7 @@ class MenuEditPage extends React.Component<
                           </Typography>
                         </Box>
 
-                        <Box
-                          alignSelf="right"
-                          marginRight={this.state.isPublished ? 1.75 : 3}
-                        >
+                        <Box alignSelf="right" marginRight={3}>
                           <AccessQRButton
                             isPublished={this.state.isPublished}
                             restaurantName={this.state.restaurantName}

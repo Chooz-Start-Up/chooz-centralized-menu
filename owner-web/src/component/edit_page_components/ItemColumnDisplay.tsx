@@ -37,7 +37,6 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
     }
 
     setLocalPriceField(str);
-    // if (str.indexOf(".") !== -1 && str.at(str.indexOf(".") + 1) !== "0") {
     if (str !== "") {
       props.item.price = Number(parseFloat(str));
     } else {

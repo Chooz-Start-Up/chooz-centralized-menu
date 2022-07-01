@@ -71,26 +71,22 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
   return (
     <>
       <ThemeProvider theme={choozTheme}>
-        <Tooltip title="Access QR Code">
-          <Button
-            variant="contained"
-            sx={{
-              height: 35,
-              bgcolor: "red",
-              "&:hover": {
-                backgroundColor: "red.100",
-                boxShadow: "none",
-              },
-              margin: 1,
-            }}
-            onClick={handleClickOpen}
-          >
-            <QrCode2Icon fontSize="medium" />
-            {/* <IconButton onClick={handleClickOpen}>
-              <QrCode2Icon fontSize="large" />
-            </IconButton> */}
-          </Button>
-        </Tooltip>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            bgcolor: "red",
+            "&:hover": {
+              backgroundColor: "red.100",
+              boxShadow: "none",
+            },
+            textTransform: "none",
+            margin: 1,
+          }}
+          onClick={handleClickOpen}
+        >
+          Access QR
+        </Button>
 
         <Dialog open={open && !isPublished} keepMounted onClose={handleClose}>
           <DialogTitle>QR Code Not Available</DialogTitle>

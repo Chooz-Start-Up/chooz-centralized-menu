@@ -122,7 +122,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
             textTransform: "none",
           }}
         >
-          <Typography>Publish</Typography>
+          Publish
         </Button>
       )}
       {isPublished && (
