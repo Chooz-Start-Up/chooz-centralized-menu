@@ -43,6 +43,7 @@ const UnpublishAndEditButtonWithDialog: React.FC<
           },
           textTransform: "none",
         }}
+        disabled={!isPublished}
       >
         Edit
       </Button>

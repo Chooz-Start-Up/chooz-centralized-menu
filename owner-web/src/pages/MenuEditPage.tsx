@@ -224,19 +224,17 @@ class MenuEditPage extends React.Component<
                         }}
                       >
                         <Box minWidth="175px">
-                          {this.state.isPublished && (
-                            <Box
-                              alignSelf="left"
-                              paddingTop={1.25}
-                              marginLeft={2}
-                            >
-                              <UnpublishAndEditButtonWithDialog
-                                isPublished={this.state.isPublished}
-                                isLoading={this.state.isPublished}
-                                onUnpublishEditClick={this.onUnpublishEditClick}
-                              />
-                            </Box>
-                          )}
+                          <Box
+                            alignSelf="left"
+                            paddingTop={1.25}
+                            marginLeft={2}
+                          >
+                            <UnpublishAndEditButtonWithDialog
+                              isPublished={this.state.isPublished}
+                              isLoading={this.state.isPublished}
+                              onUnpublishEditClick={this.onUnpublishEditClick}
+                            />
+                          </Box>
                         </Box>
 
                         <Box paddingTop={0.5}>
