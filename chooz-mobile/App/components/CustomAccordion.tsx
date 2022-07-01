@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.white,
   },
+  categoryDescription: {
+    marginTop: 3,
+    marginLeft: 10,
+    maxHeight: 100,
+    color: "grey",
+  },
 });
 
 const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
@@ -52,6 +58,9 @@ const CustomAccordion: React.FC<Props> = ({ category, navigate }) => {
   return (
     <List.Accordion
       title={category.categoryName}
+      description={category.description}
+      descriptionStyle={styles.categoryDescription}
+      descriptionNumberOfLines={10}
       style={styles.section}
       titleStyle={styles.sectionTitle}
       expanded={expanded}

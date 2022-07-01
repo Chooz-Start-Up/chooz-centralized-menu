@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Platform,
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Image,
-} from "react-native";
+import { Platform, View, Text, StyleSheet, Image } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Entypo } from "@expo/vector-icons";
 import { pullLogoImage } from "../util/RestaurantApi";
@@ -32,6 +26,7 @@ const styles = StyleSheet.create({
   description: {
     marginTop: 3,
     marginBottom: 5,
+    marginLeft: 10,
     backgroundColor: "white",
     fontSize: Platform.OS === "ios" ? 15 : 12,
     color: "grey",
@@ -61,11 +56,11 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   menuItem: {
-    backgroundColor: "white",
     flex: 1,
     alignItems: "center",
     flexDirection: "row",
-    marginHorizontal: 10,
+    marginLeft: 20,
+    marginRight: 10,
     height: 75,
   },
   itemRowContainer: {

@@ -80,7 +80,7 @@ const RestaurantStackScreen = () => {
         options={{
           title: "Restaurant Name",
           gestureEnabled: true,
-          gestureDirection: Platform.OS === "ios" ? "horizontal" : "vertical",
+          gestureDirection: "horizontal",
           presentation: "card",
           headerLeftLabelVisible: false,
           headerTitleStyle: {

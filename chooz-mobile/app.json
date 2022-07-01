@@ -18,8 +18,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
-      "buildNumber": "17",
+      "supportsTablet": false,
+      "buildNumber": "20",
       "bundleIdentifier": "com.chooz.choozmobile",
       "infoPlist": {
         "NSCameraUsageDescription": "Allow Expo experiences to use your camera",
@@ -31,7 +31,7 @@
     },
     "android": {
       "package": "com.chooz.choozmobile",
-      "versionCode": 14,
+      "versionCode": 17,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
