@@ -235,21 +235,16 @@ class MenuEditPage extends React.Component<
             marginTop={10}
             marginBottom={5}
           >
-            <Box display="flex" flexDirection="column" justifyContent="center">
-              <Typography variant="h6" fontWeight="bold" align="center">
-                Report Bug
+            <Box display="flex" alignSelf="center">
+              <Box
+                component="img"
+                src={ChoozEmailLogo}
+                width={35}
+                height={35}
+              />
+              <Typography fontSize={16} sx={{ marginLeft: 1, marginTop: 0.5 }}>
+                support@choozmenu.com
               </Typography>
-              <Box display="flex" alignSelf="center">
-                <Box
-                  component="img"
-                  src={ChoozEmailLogo}
-                  width={35}
-                  height={35}
-                />
-                <Typography sx={{ marginLeft: 1, marginTop: 0.5 }}>
-                  support@choozmenu.com
-                </Typography>
-              </Box>
             </Box>
           </Box>
         </ThemeProvider>
