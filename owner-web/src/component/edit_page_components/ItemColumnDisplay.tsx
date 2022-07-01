@@ -83,11 +83,13 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
                 localPriceField === "0.00"
               ) {
                 setLocalPriceField("");
-              } else if (localPriceField.indexOf(".00") !== -1) {
-                setLocalPriceField(
-                  localPriceField.substring(0, localPriceField.indexOf(".00"))
-                );
               }
+              /* For auto deleting the .00 when focused. Picky ass Justin didnt want it tho */
+              // else if (localPriceField.indexOf(".00") !== -1) {
+              //   setLocalPriceField(
+              //     localPriceField.substring(0, localPriceField.indexOf(".00"))
+              //   );
+              // }
             }}
             onBlur={(event) => {
               setIsPriceFocused(false);
