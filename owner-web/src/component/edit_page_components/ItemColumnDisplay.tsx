@@ -19,7 +19,7 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
   const [localPriceField, setLocalPriceField] = useState("");
 
   useEffect(() => {
-    setLocalPriceField(props.item.price.toString());
+    setLocalPriceField(parseFloat(props.item.price.toString()).toFixed(2));
   }, [props.menuIndex, props.categoryIndex, props.item.id]);
 
   const onDescriptionChange = (e: any): any => {
@@ -37,6 +37,7 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
     }
 
     setLocalPriceField(str);
+    // if (str.indexOf(".") !== -1 && str.at(str.indexOf(".") + 1) !== "0") {
     if (str !== "") {
       props.item.price = Number(parseFloat(str));
     } else {
@@ -68,17 +69,25 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
             type="number"
             value={
               localPriceField !== "0"
-                ? props.item.price.toString()
+                ? localPriceField
                 : isPriceFocused
                 ? ""
-                : "0"
+                : "0.00"
             }
             onChange={onPriceChange}
             disabled={props.isPublished}
             onFocus={(event) => {
               setIsPriceFocused(true);
-              if (localPriceField === "0") {
+              if (
+                localPriceField === "0" ||
+                localPriceField === "0.0" ||
+                localPriceField === "0.00"
+              ) {
                 setLocalPriceField("");
+              } else if (localPriceField.indexOf(".00") !== -1) {
+                setLocalPriceField(
+                  localPriceField.substring(0, localPriceField.indexOf(".00"))
+                );
               }
             }}
             onBlur={(event) => {
