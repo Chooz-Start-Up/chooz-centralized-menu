@@ -8,9 +8,11 @@ import {
   resendEmailVerification,
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
-import { pushProfile } from "../firebase/databaseAPI/RestaurantApi";
+import { pushMenu, pushProfile } from "../firebase/databaseAPI/RestaurantApi";
 import { Restaurant } from "../firebase/databaseAPI/Restaurant";
 import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
+import { Menu } from "../firebase/databaseAPI/Menu";
+import defaultMenu from "../firebase/authentication/defaultMenu.json";
 
 const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
   props: VerifyEmailPageProps
@@ -20,11 +22,14 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
   const [errorMessage, setErrorMessage] = useState("");
 
   setInterval(() => {
-    if (!auth.currentUser?.emailVerified) {
+    if (auth.currentUser !== null && !auth.currentUser?.emailVerified) {
+      const user = auth.currentUser;
+
       return auth.currentUser?.reload().then(() => {
         if (auth.currentUser?.emailVerified) {
+          // if (!auth.currentUser?.emailVerified) { // this is for manually creating the account for the restaurants
           pushProfile(
-            auth.currentUser.uid,
+            user.uid,
             new Restaurant(
               "",
               "",
@@ -35,8 +40,21 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
               "",
               "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
             )
-          ).then(() => {
-            navigate("/fillinfo");
+          ).then((key) => {
+            const pushingMenu = new Restaurant(
+              key,
+              "",
+              "",
+              false,
+              "",
+              "",
+              "",
+              "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed",
+              Menu.parseMenus(JSON.stringify(defaultMenu))
+            );
+            pushMenu(user.uid, pushingMenu).then(() => {
+              navigate("/fillinfo");
+            });
           });
         }
       });

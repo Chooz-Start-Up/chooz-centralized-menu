@@ -33,16 +33,25 @@ export async function pushProfile(
   restaurant: Restaurant
 ): Promise<string> {
   return new Promise(function (resolve, reject) {
-    get(ref(apidb, "users/" + uid + "/restaurants/" + restaurant.id)).then(
-      (snapshot) => {
-        if (snapshot.exists()) {
-          updateProfile(restaurant.id, restaurant);
-          resolve(restaurant.id);
-        } else {
-          addRestaurant(uid, restaurant).then((key) => {
-            resolve(key);
-          });
-        }
+    getRestaurantKey(uid).then(
+      (restaurantKey) => {
+        get(ref(apidb, "users/" + uid + "/restaurants/" + restaurantKey)).then(
+          (snapshot) => {
+            if (snapshot.exists()) {
+              updateProfile(restaurantKey, restaurant);
+              resolve(restaurantKey);
+            } else {
+              addRestaurant(uid, restaurant).then((key) => {
+                resolve(key);
+              });
+            }
+          }
+        );
+      },
+      () => {
+        addRestaurant(uid, restaurant).then((key) => {
+          resolve(key);
+        });
       }
     );
   });
@@ -372,39 +381,39 @@ async function addRestaurant(
   return new Promise(function (resolve, reject) {
     let key = push(child(ref(apidb), "users/" + uid)).key;
 
-    const restaurantListData = {
-      id: key,
-      restaurantName: restaurant.restaurantName,
-      description: restaurant.description,
-      isPublished: restaurant.isPublished,
-      hours: restaurant.hours,
-    };
-
-    const restaurantDetailData = {
-      id: key,
-      restaurantName: restaurant.restaurantName,
-      description: restaurant.description,
-      isPublished: restaurant.isPublished,
-      phoneNumber: restaurant.phoneNumber,
-      address: restaurant.address,
-      menus: restaurant.menus,
-      ownerName: restaurant.ownerName,
-      hours: restaurant.hours,
-    };
-
-    const userRestaurantReference = {
-      id: key,
-    };
-
-    const updates = {};
-    (updates as any)["/users/" + uid + "/restaurants/" + key] =
-      userRestaurantReference;
-    (updates as any)["/restaurantList/" + key] = restaurantListData;
-    (updates as any)["/restaurants/" + key] = restaurantDetailData;
-
-    update(ref(apidb), updates);
-
     if (key !== null) {
+      const restaurantListData = {
+        id: key,
+        restaurantName: restaurant.restaurantName,
+        description: restaurant.description,
+        isPublished: restaurant.isPublished,
+        hours: restaurant.hours,
+      };
+
+      const restaurantDetailData = {
+        id: key,
+        restaurantName: restaurant.restaurantName,
+        description: restaurant.description,
+        isPublished: restaurant.isPublished,
+        phoneNumber: restaurant.phoneNumber,
+        address: restaurant.address,
+        menus: restaurant.menus,
+        ownerName: restaurant.ownerName,
+        hours: restaurant.hours,
+      };
+
+      const userRestaurantReference = {
+        id: key,
+      };
+
+      const updates = {};
+      (updates as any)["/users/" + uid + "/restaurants/" + key] =
+        userRestaurantReference;
+      (updates as any)["/restaurantList/" + key] = restaurantListData;
+      (updates as any)["/restaurants/" + key] = restaurantDetailData;
+
+      update(ref(apidb), updates);
+
       resolve(key);
     } else {
       reject("Unexpected error occurred");

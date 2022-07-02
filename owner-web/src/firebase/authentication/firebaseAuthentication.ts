@@ -72,7 +72,6 @@ const signInWithGoogle = async (navigate: any) => {
             "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed",
             Menu.parseMenus(JSON.stringify(defaultMenu))
           );
-          console.log(pushingMenu);
           pushMenu(user.uid, pushingMenu).then(() => {
             navigate("/fillinfo");
           });
@@ -107,7 +106,7 @@ const registerWithEmailAndPassword = async (
       email,
     });
 
-    await sendEmailVerification(user);
+    await sendEmailVerification(user); // disabling this when manually creating account
   } catch (err: any) {
     throw err;
   }
@@ -156,8 +155,21 @@ const signInWithFacebook = async (navigate: any) => {
             "",
             "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed"
           )
-        ).then(() => {
-          navigate("/fillinfo");
+        ).then((key) => {
+          const pushingMenu = new Restaurant(
+            key,
+            "",
+            "",
+            false,
+            "",
+            "",
+            "",
+            "Monday Closed\nTuesday Closed\nWednesday Closed\nThursday Closed\nFriday Closed\nSaturday Closed\nSunday Closed",
+            Menu.parseMenus(JSON.stringify(defaultMenu))
+          );
+          pushMenu(user.uid, pushingMenu).then(() => {
+            navigate("/fillinfo");
+          });
         });
       });
     } else {
