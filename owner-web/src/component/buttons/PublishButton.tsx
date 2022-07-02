@@ -259,7 +259,8 @@ const PublishButton: React.FC<PublishButtonProps> = (
         <DialogContent>
           <DialogContentText color="black">
             <Typography fontSize={20}>
-              Use your phone to scan the QR code and access the mobile menu
+              Your restaurant and menu is now discoverable on the app. You can
+              scan the QR code now to see!
             </Typography>
           </DialogContentText>
           <Grid container justifyContent="center">

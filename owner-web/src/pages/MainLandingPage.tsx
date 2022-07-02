@@ -99,8 +99,11 @@ class MenuEditPage extends React.Component<
                 <Divider />
                 <AccordionDetails>
                   <Typography variant="h6">
-                    chooz is centralized menu system! I don't even know what
-                    that means!
+                    Chooz is a platform with the mission to connect local
+                    restaurants to their customers. This means providing the
+                    ability for restaurants to create and update their profile
+                    instantaneously and giving customers a way to easily
+                    discover local restaurants via the app.
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -115,8 +118,10 @@ class MenuEditPage extends React.Component<
                 <Divider />
                 <AccordionDetails>
                   <Typography variant="h6">
-                    We allow restaurant owners to make their online menus that
-                    customers can see through their phone!
+                    For now, we provide restaurant owners with the ability to
+                    create a menu that is easily viewable on a mobile device,
+                    and a QR Code for restaurant owners to place around their
+                    restaurant.
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -131,8 +136,11 @@ class MenuEditPage extends React.Component<
                 <Divider />
                 <AccordionDetails>
                   <Typography variant="h6">
-                    After publishing your menu, you will have access to the QR
-                    code which you can scan to pull up the menu!
+                    After publishing your menu, you will have access to your QR
+                    code. Scanning this QR code will pull up your menu! This QR
+                    Code will pull up the menu on the app if it is downloaded,
+                    or the browser preview if the user decides to download it at
+                    a later time.
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -147,10 +155,10 @@ class MenuEditPage extends React.Component<
                 <Divider />
                 <AccordionDetails>
                   <Typography variant="h6">
-                    Not necessarily! If you do not have the app downloaded, you
-                    will be able to check the menu through the browser! We do
-                    recommend you to download the app for more future features
-                    though!
+                    Nope! If you do not have the app downloaded, you will be
+                    able to check the menu through the browser! We do recommend
+                    you to download the app for a better experience and future
+                    features!
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -166,9 +174,7 @@ class MenuEditPage extends React.Component<
                 <AccordionDetails>
                   <Typography variant="h6">
                     Yes! It is totally free to make the menu and retrieve the QR
-                    code after publishing it! However, there will be a
-                    restaurant verification system in the future to ensure you
-                    are an actual restaurant owner.
+                    code after publishing it!
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -177,7 +183,7 @@ class MenuEditPage extends React.Component<
               <Accordion disableGutters elevation={3} sx={{ marginTop: 2 }}>
                 <AccordionSummary>
                   <Typography variant="h5">
-                    Q6: Is chooz a just an online menu provider?
+                    Q6: Is chooz just an online menu provider?
                   </Typography>
                 </AccordionSummary>
                 <Divider />
@@ -185,9 +191,9 @@ class MenuEditPage extends React.Component<
                   <Typography variant="h6">
                     Of course not! Our vision is to create a social media for
                     the restaurant owners and customers where the customers can
-                    rate restaurants and share their favourite menu, while the
-                    owners can observe those feedbacks and advertise their
-                    menus!
+                    rate restaurants and share their favourite menus and items,
+                    while the owners can observe those feedbacks and advertise
+                    their menus!
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -202,9 +208,9 @@ class MenuEditPage extends React.Component<
                 <Divider />
                 <AccordionDetails>
                   <Typography variant="h6">
-                    Instant! As soon as you make your changes and republish it,
-                    the menu will be updated on both the app and browser after a
-                    quick refresh!
+                    Updating the menu or restaurant information is INSTANT! As
+                    soon as you make your changes, the menu will be updated on
+                    both the app and browser after a quick refresh!
                   </Typography>
                 </AccordionDetails>
               </Accordion>
@@ -221,8 +227,7 @@ class MenuEditPage extends React.Component<
                 <AccordionDetails>
                   <Typography variant="h6">
                     No! The QR code will remain the same even after you have
-                    editted your menu as this QR code is permanent! However,
-                    your menu will not be available if your menu is unpublished.
+                    editted your menu.
                   </Typography>
                 </AccordionDetails>
               </Accordion>
