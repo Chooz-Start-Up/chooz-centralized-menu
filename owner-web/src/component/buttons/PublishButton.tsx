@@ -146,7 +146,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
       <Dialog
         open={open && !isPublished && !isMenuValid && !isLoading}
         keepMounted
-        onClose={handleClose}
+        onClose={handleCancel}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>Make sure your menu is complete.</DialogTitle>
@@ -173,7 +173,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
           open && !isPublished && isMenuValid && !isProfileValid && !isLoading
         }
         keepMounted
-        onClose={handleClose}
+        onClose={handleCancel}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>
@@ -195,7 +195,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
           open && !isPublished && isMenuValid && isProfileValid && !isLoading
         }
         keepMounted
-        onClose={handleClose}
+        onClose={handleCancel}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>Are you sure you want to publish your menu?</DialogTitle>
@@ -223,7 +223,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
       <Dialog
         open={open && isPublished && !isLoading}
         keepMounted
-        onClose={handleClose}
+        onClose={handleCancel}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>Are you sure you want to unpublish your menu?</DialogTitle>
@@ -246,7 +246,7 @@ const PublishButton: React.FC<PublishButtonProps> = (
       <Dialog
         open={qrOpen}
         // keepMounted
-        onClose={handleClose}
+        onClose={handleCancel}
         sx={{
           minHeight: "500px",
         }}
