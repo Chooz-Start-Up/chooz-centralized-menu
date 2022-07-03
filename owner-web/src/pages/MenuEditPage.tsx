@@ -9,6 +9,7 @@ import { MenuEditPageProp, MenuEditPageState } from "./interface";
 import { choozTheme } from "../theme/theme";
 import ProfilePanel from "../component/edit_page_components/ProfilePanel";
 import { UploadImagePanel } from "../component/edit_page_components/UploadImagePanel";
+import { TutorialPanel } from "../component/edit_page_components/TutorialPanel";
 import {
   pullRestaurantByUser,
   pushProfile,
@@ -190,6 +191,11 @@ class MenuEditPage extends React.Component<
                 {...this.tabPanelProps(2)}
                 sx={{ textTransform: "none" }}
               />
+              <Tab
+                label="Tutorial"
+                {...this.tabPanelProps(3)}
+                sx={{ textTransform: "none" }}
+              />
             </Tabs>
             <TabPanel value={this.state.tabIndex} index={0}>
               <ProfilePanel />
@@ -269,6 +275,9 @@ class MenuEditPage extends React.Component<
                   </Box>
                 </Box>
               </Fade>
+            </TabPanel>
+            <TabPanel value={this.state.tabIndex} index={3}>
+              <TutorialPanel />
             </TabPanel>
           </Box>
         </ThemeProvider>

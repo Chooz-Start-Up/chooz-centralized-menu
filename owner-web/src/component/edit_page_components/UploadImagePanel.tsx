@@ -126,7 +126,13 @@ export const UploadImagePanel: React.FC = () => {
       sx={{ borderLeft: 1, borderColor: "grey.400" }}
     >
       <Fade in={true} exit={false} mountOnEnter unmountOnExit timeout={400}>
-        <Box width="44%" height="160vh" bgcolor="white" paddingTop="1%">
+        <Box
+          width="44%"
+          height="160vh"
+          bgcolor="white"
+          paddingTop="2%"
+          boxShadow={2}
+        >
           <Typography
             variant="h4"
             color="black"
@@ -137,7 +143,6 @@ export const UploadImagePanel: React.FC = () => {
           </Typography>
           <Divider
             sx={{
-              marginTop: 1,
               marginBottom: 1,
               marginLeft: "4%",
               marginRight: "4%",
