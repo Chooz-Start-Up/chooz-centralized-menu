@@ -17,7 +17,7 @@ const App: React.FC = () => {
           <Route path="/welcome/:restaurantKey" element={<WelcomePage />} />
 
           <Route
-            path="/preview/:restaurantKey"
+            path="/restaurant-menu/:restaurantName/:restaurantKey"
             element={<RestaurantMenuPage />}
           />
 

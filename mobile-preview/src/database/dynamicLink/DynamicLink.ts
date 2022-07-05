@@ -13,11 +13,9 @@ const generateLink = (restaurantKey: string) => {
             link: `https://choozmenu.com/RestaurantScreen/?id=${restaurantKey}`,
             androidInfo: {
               androidPackageName: "com.chooz.choozmobile",
-              androidFallbackLink: `https://m.choozmenu.com/welcome/${restaurantKey}`,
             },
             iosInfo: {
               iosBundleId: "com.chooz.choozmobile",
-              iosFallbackLink: `https://m.choozmenu.com/welcome/${restaurantKey}`,
               iosAppStoreId: "1630258641",
             },
             navigationInfo: {

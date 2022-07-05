@@ -29,10 +29,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import ChoozAppBar from "../component/general/ChoozAppBar";
 import Logo from "../component/images/chooz_icons/logoGrey.png";
 import { border } from "@mui/system";
+import MobileDetect from "mobile-detect";
 
 const RestaurantMenuPage: React.FC = () => {
-  let { restaurantKey } = useParams();
+  const { restaurantName, restaurantKey } = useParams();
   const navigate = useNavigate();
+  const type = new MobileDetect(window.navigator.userAgent);
 
   const [descriptionExpanded, setDescriptionExpanded] = React.useState<
     string | false
@@ -43,6 +45,7 @@ const RestaurantMenuPage: React.FC = () => {
       setDescriptionExpanded(isExpanded ? panel : false);
     };
 
+  // Cha House: -N4oE-g8WbJUPYqadmWf
   // Subway pic: -N4oB-DoClsQsVBGAOVl
   // No pic: -N4oEq1Ofly59SHGifJ3
   const [restaurant, setRestaurant] = useState<Restaurant>(new Restaurant());
@@ -152,7 +155,11 @@ const RestaurantMenuPage: React.FC = () => {
                 >
                   <Box
                     height="300"
-                    width={window.innerWidth <= 1200 ? "100%" : "auto"}
+                    width={
+                      type.os() === "AndroidOS" || type.os() === "iOS"
+                        ? "100%"
+                        : "auto"
+                    }
                     component="img"
                     src={bannerURL}
                   />

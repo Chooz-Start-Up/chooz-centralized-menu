@@ -14,7 +14,7 @@ const PageNotFound: React.FC = () => {
           justifyContent="center"
           alignItems="center"
           height="100%"
-          bgcolor="#ffd7db"
+          bgcolor={choozTheme.palette.secondary.main}
         >
           <Box
             boxShadow={5}

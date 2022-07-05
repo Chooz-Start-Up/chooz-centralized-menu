@@ -1,23 +1,32 @@
-import React from "react";
-import {
-  AppBar,
-  Box,
-  Button,
-  Grid,
-  Paper,
-  ThemeProvider,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Button, ThemeProvider, Typography } from "@mui/material";
 import { choozTheme } from "../theme/theme";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate, useParams } from "react-router-dom";
-import ChoozAppBar from "../component/general/ChoozAppBar";
 import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
+import { getRestaurantByKey } from "../database/api/RestaurantApi";
+import generateLink from "../database/dynamicLink/DynamicLink";
+import MobileDetect from "mobile-detect";
 
 const WelcomePage: React.FC = () => {
-  let { restaurantKey } = useParams();
+  const { restaurantKey } = useParams();
   const navigate = useNavigate();
+  const [restaurantName, setRestaurantName] = useState("");
+  const [downloadLink, setDownloadLink] = useState("");
+  const type = new MobileDetect(window.navigator.userAgent);
+
+  useEffect(() => {
+    if (restaurantKey !== undefined) {
+      getRestaurantByKey(restaurantKey).then((restaurant) => {
+        setRestaurantName(
+          restaurant.restaurantName.replace(" ", "-").toLowerCase()
+        );
+      });
+      generateLink(restaurantKey).then((link) => {
+        setDownloadLink(link);
+        console.log(type.os());
+      });
+    }
+  }, []);
 
   if (restaurantKey === undefined) {
     navigate("/notfound");
@@ -36,24 +45,24 @@ const WelcomePage: React.FC = () => {
         >
           {/* Replacing the header */}
           <Box display="flex" justifyContent="center">
-            <Box component="img" src={LogoText} margin="2%" width="40%" />
+            <Box component="img" src={LogoText} margin="2%" width="150" />
           </Box>
-          {/* <Typography variant="h3" margin="2%" fontWeight="bold">
+          <Typography variant="h3" margin="2%" fontWeight="bold">
             Welcome to chooz!
-            </Typography> */}
+          </Typography>
 
           <Typography variant="h4" margin="2%" marginTop="6%">
-            {/* Download the app for a better experience! */}
-            The App will be availble soon... For now, view on the browser!
+            Download the app for a better experience!
+            {/* The App will be availble soon... For now, view on the browser! */}
           </Typography>
           <Typography variant="h6" margin="2%" marginTop="3%">
-            {/* Chooz is a centralized menu app that allows you to view restaurant's
+            Chooz is a centralized menu app that allows you to view restaurant's
             menus natively on your phone. At participating restaurants, scan the
             Chooz QR code to view the entire menu in a natural and intuitive
-            way. */}
-            The Chooz app will soon be available for iOS and Android...
+            way.
+            {/* The Chooz app will soon be available for iOS and Android... */}
           </Typography>
-          {/* <Button
+          <Button
             variant="contained"
             sx={{
               borderRadius: 8,
@@ -62,22 +71,23 @@ const WelcomePage: React.FC = () => {
               alignSelf: "center",
               textTransform: "none",
             }}
+            href={
+              type.os() === "AndroidOS" || type.os() === "iOS"
+                ? downloadLink
+                : "/restaurant-menu/" + restaurantName + "/" + restaurantKey
+            }
           >
             Download App
-          </Button> */}
-          <Box display="flex" justifyContent="center">
+          </Button>
+          <Box display="flex" justifyContent="center" marginTop={1}>
             <Button
-              variant="contained"
-              sx={{
-                margin: 2,
-                width: "30%",
-                height: "5%",
-                fontSize: "18",
-                padding: 1,
-              }}
-              href={"/preview/" + restaurantKey}
+              href={"/restaurant-menu/" + restaurantName + "/" + restaurantKey}
             >
-              <Typography sx={{ textTransform: "none" }}>View Menu</Typography>
+              <Typography
+                sx={{ textTransform: "none", textDecoration: "underline" }}
+              >
+                View Menu
+              </Typography>
             </Button>
           </Box>
         </Box>
