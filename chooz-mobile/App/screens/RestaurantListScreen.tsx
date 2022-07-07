@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions, View, Text, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  View,
+  Text,
+  StatusBar,
+  RefreshControl,
+} from "react-native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -16,7 +23,6 @@ import {
 import { Restaurant } from "../util/Restaurant";
 import { getRestaurantList } from "../util/RestaurantApi";
 import colors from "../constants/colors";
-import { List } from "react-native-paper";
 
 type Props = NativeStackScreenProps<
   RestaurantStackParamList,
@@ -38,6 +44,13 @@ const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
     useNavigation<NativeStackNavigationProp<RestaurantStackParamList>>();
   const [restaurantList, setRestaurantList] = useState<Array<Restaurant>>();
   const [isLoading, setLoading] = useState(true);
+  const [isRefreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    getRestaurantList(setRestaurantList, setLoading);
+    setRefreshing(false);
+  };
 
   useEffect(() => {
     getRestaurantList(setRestaurantList, setLoading);
@@ -47,7 +60,12 @@ const RestaurantListScreen: React.FC<Props> = ({ route }: Props) => {
     <>
       {isLoading && <View></View>}
       {!isLoading && (
-        <ScrollView style={styles.scrollView}>
+        <ScrollView
+          style={styles.scrollView}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
+        >
           <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
           <SectionHeader title="All Restaurants" />
           {restaurantList?.map((restaurant) => {
