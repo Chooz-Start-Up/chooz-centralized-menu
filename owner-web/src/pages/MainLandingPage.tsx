@@ -15,6 +15,8 @@ import { MainLandingPageProps, MainLandingPageState } from "./interface";
 import { choozTheme } from "../theme/theme";
 import ChoozEmailLogo from "../component/images/chooz_icons/logoRed.png";
 import { RestaurantListDisplay } from "../component/main_landing_page_components/RestaurantListDisplay";
+import AppleStore from "../component/images/app_store/Apple_Store_Screenshot.png";
+import PlayStore from "../component/images/app_store/Play_Store_Screenshot.png";
 
 class MenuEditPage extends React.Component<
   MainLandingPageProps,
@@ -76,6 +78,38 @@ class MenuEditPage extends React.Component<
               </Button>
             </Box>
           </Typography>
+
+          <Box
+            display="flex"
+            // justifyContent="space-between"
+            justifyContent="center"
+            marginTop="5%"
+            // paddingLeft="10%"
+            // paddingRight="10%"
+          >
+            <Box
+              display="flex"
+              flexDirection="column"
+              width="40%"
+              marginRight="2%"
+            >
+              <Typography variant="h5" align="center">
+                Download at Apple Store
+              </Typography>
+              <Box component="img" src={AppleStore} marginTop="1%" />
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              width="40%"
+              marginLeft="2%"
+            >
+              <Typography variant="h5" align="center">
+                Download at Play Store
+              </Typography>
+              <Box component="img" src={PlayStore} marginTop="1%" />
+            </Box>
+          </Box>
 
           <Box display="flex" justifyContent="center" marginTop="5%">
             <RestaurantListDisplay />
