@@ -14,6 +14,7 @@ import ChoozAppBar from "../component/general_componets/ChoozAppBar";
 import { MainLandingPageProps, MainLandingPageState } from "./interface";
 import { choozTheme } from "../theme/theme";
 import ChoozEmailLogo from "../component/images/chooz_icons/logoRed.png";
+import { RestaurantListDisplay } from "../component/main_landing_page_components/RestaurantListDisplay";
 
 class MenuEditPage extends React.Component<
   MainLandingPageProps,
@@ -75,6 +76,10 @@ class MenuEditPage extends React.Component<
               </Button>
             </Box>
           </Typography>
+
+          <Box display="flex" justifyContent="center" marginTop="5%">
+            <RestaurantListDisplay />
+          </Box>
 
           <Box
             display="flex"

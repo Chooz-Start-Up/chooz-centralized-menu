@@ -74,15 +74,13 @@ const WelcomePage: React.FC = () => {
             href={
               type.os() === "AndroidOS" || type.os() === "iOS"
                 ? downloadLink
-                : "/restaurant-menu/" + restaurantName + "/" + restaurantKey
+                : "/menu/" + restaurantName + "/" + restaurantKey
             }
           >
             Download App
           </Button>
           <Box display="flex" justifyContent="center" marginTop={1}>
-            <Button
-              href={"/restaurant-menu/" + restaurantName + "/" + restaurantKey}
-            >
+            <Button href={"/menu/" + restaurantName + "/" + restaurantKey}>
               <Typography
                 sx={{ textTransform: "none", textDecoration: "underline" }}
               >

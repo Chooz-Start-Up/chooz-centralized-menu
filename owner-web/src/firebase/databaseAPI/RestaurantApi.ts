@@ -307,37 +307,33 @@ export async function deleteBannerAndLogoImage(uid: string) {
  * @param setRestaurantList - a function that sets the state of restaurantList
  * @param setLoading - an optional function that sets the state of isLoading
  */
-export async function getRestaurantList(
-  setRestaurantList: Function,
-  setLoading?: Function
-) {
-  get(child(dbRef, "restaurantList"))
-    .then((snapshot) => {
-      let objList: Restaurant[] = [];
-      if (snapshot.exists()) {
-        snapshot.forEach(function (item) {
-          let itemVal = item.val();
-          objList.push(
-            new Restaurant(
-              item.key!,
-              itemVal.restaurantName,
-              itemVal.description,
-              itemVal.isPublished
-            )
-          );
-        });
+export async function getRestaurantList() {
+  return new Promise<Restaurant[]>(function (resolve, reject) {
+    get(child(dbRef, "restaurantList"))
+      .then((snapshot) => {
+        let objList: Restaurant[] = [];
+        if (snapshot.exists()) {
+          snapshot.forEach(function (item) {
+            let itemVal = item.val();
+            objList.push(
+              new Restaurant(
+                item.key!,
+                itemVal.restaurantName,
+                itemVal.description,
+                itemVal.isPublished
+              )
+            );
+          });
 
-        setRestaurantList(objList);
-        if (setLoading !== undefined) {
-          setLoading(false);
+          resolve(objList);
+        } else {
+          reject("No data available");
         }
-      } else {
-        console.error("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
 /**
@@ -560,5 +556,33 @@ async function getRestaurantMenuByKey(key: string): Promise<Array<Menu>> {
         console.error(error);
         reject("Unexpected rrror occurred");
       });
+  });
+}
+
+export async function pullLogoImageByRestaurantKey(
+  restaurantKey: string
+): Promise<string> {
+  return new Promise(function (resolve, reject) {
+    let imageURLs: string = "";
+    listAll(storageRef(storage, restaurantKey + "/logo/")).then(
+      (data) => {
+        if (data.items.length > 0) {
+          getDownloadURL(data.items[0]).then(
+            (url) => {
+              imageURLs = url;
+              resolve(imageURLs);
+            },
+            () => {
+              reject("Logo not found");
+            }
+          );
+        } else {
+          reject("Logo not found");
+        }
+      },
+      () => {
+        reject("Logo not found");
+      }
+    );
   });
 }
