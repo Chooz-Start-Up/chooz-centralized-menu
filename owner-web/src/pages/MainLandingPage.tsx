@@ -17,6 +17,8 @@ import ChoozEmailLogo from "../component/images/chooz_icons/logoRed.png";
 import { RestaurantListDisplay } from "../component/main_landing_page_components/RestaurantListDisplay";
 import AppleStore from "../component/images/app_store/Apple_Store_Screenshot.png";
 import PlayStore from "../component/images/app_store/Play_Store_Screenshot.png";
+import JacobChoi from "../component/images/profile/jacob_choi.jpg";
+import JustinGalang from "../component/images/profile/justin_galang.jpg";
 
 class MenuEditPage extends React.Component<
   MainLandingPageProps,
@@ -283,11 +285,49 @@ class MenuEditPage extends React.Component<
               <Box
                 component="img"
                 src={ChoozEmailLogo}
-                width={35}
-                height={35}
+                width={50}
+                height={50}
               />
-              <Typography fontSize={16} sx={{ marginLeft: 1, marginTop: 0.5 }}>
+              <Typography fontSize={24} sx={{ marginLeft: 1, marginTop: 0.5 }}>
                 support@choozmenu.com
+              </Typography>
+            </Box>
+          </Box>
+
+          <Typography marginTop={5} marginBottom={2} align="center">
+            Developed by
+          </Typography>
+          <Box
+            display="flex"
+            justifyContent="space-evenly"
+            marginLeft="40%"
+            width="20%"
+            marginBottom={5}
+          >
+            <Box>
+              <Box
+                component="img"
+                src={JustinGalang}
+                width={80}
+                height={80}
+                borderRadius="50%"
+                marginLeft={1.5}
+              />
+              <Typography marginTop={1} fontWeight="bold" align="center">
+                Justin Galang
+              </Typography>
+            </Box>
+
+            <Box>
+              <Box
+                component="img"
+                src={JacobChoi}
+                width={80}
+                height={80}
+                borderRadius="50%"
+              />
+              <Typography marginTop={1} fontWeight="bold" align="center">
+                Jacob Choi
               </Typography>
             </Box>
           </Box>
