@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Github Private Token
 gh_token.txt
+
+# firebase configuration
+/src/database/config
