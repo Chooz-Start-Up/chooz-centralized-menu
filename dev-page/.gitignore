@@ -26,4 +26,4 @@ yarn-error.log*
 gh_token.txt
 
 # firebase configuration
-/src/database/config
+config.ts
