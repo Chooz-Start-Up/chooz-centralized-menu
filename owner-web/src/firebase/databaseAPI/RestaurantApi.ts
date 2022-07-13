@@ -304,8 +304,6 @@ export async function deleteBannerAndLogoImage(uid: string) {
 /**
  * Used for RestaurantListScreen.tsx
  * sets the list of restaurants using the setState function passed.
- * @param setRestaurantList - a function that sets the state of restaurantList
- * @param setLoading - an optional function that sets the state of isLoading
  */
 export async function getRestaurantList() {
   return new Promise<Restaurant[]>(function (resolve, reject) {

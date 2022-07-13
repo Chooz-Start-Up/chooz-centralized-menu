@@ -20,7 +20,7 @@ import PlayStore from "../component/images/app_store/Play_Store_Screenshot.png";
 import JacobChoi from "../component/images/profile/jacob_choi.jpg";
 import JustinGalang from "../component/images/profile/justin_galang.jpg";
 
-class MenuEditPage extends React.Component<
+class MainLandingPage extends React.Component<
   MainLandingPageProps,
   MainLandingPageState
 > {
@@ -337,4 +337,4 @@ class MenuEditPage extends React.Component<
   }
 }
 
-export default MenuEditPage;
+export default MainLandingPage;

@@ -15,46 +15,43 @@ import {
 } from "firebase/storage";
 
 const dbRef = ref(getDatabase());
-const apidb = getDatabase(app);
 const storage = getStorage(app);
 
 /**
  * Used for RestaurantListScreen.tsx
  * sets the list of restaurants using the setState function passed.
- * @param setRestaurantList - a function that sets the state of restaurantList
- * @param setLoading - an optional function that sets the state of isLoading
  */
-export async function getRestaurantList(
-  setRestaurantList: Function,
-  setLoading?: Function
-) {
-  get(child(dbRef, "restaurantList"))
-    .then((snapshot) => {
-      let objList: Restaurant[] = [];
-      if (snapshot.exists()) {
-        snapshot.forEach(function (item) {
-          let itemVal = item.val();
-          objList.push(
-            new Restaurant(
-              item.key!,
-              itemVal.restaurantName,
-              itemVal.description,
-              itemVal.isPublished
-            )
-          );
-        });
+export async function getRestaurants() {
+  return new Promise<Restaurant[]>(function (resolve, reject) {
+    get(child(dbRef, "restaurants"))
+      .then((snapshot) => {
+        let objList: Restaurant[] = [];
+        if (snapshot.exists()) {
+          snapshot.forEach(function (item) {
+            let itemVal = item.val();
+            objList.push(
+              new Restaurant(
+                item.key!,
+                itemVal.restaurantName,
+                itemVal.description,
+                itemVal.isPublished,
+                itemVal.phoneNumber,
+                itemVal.ownerName,
+                itemVal.address,
+                itemVal.hours
+              )
+            );
+          });
 
-        setRestaurantList(objList);
-        if (setLoading !== undefined) {
-          setLoading(false);
+          resolve(objList);
+        } else {
+          reject("No data available");
         }
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
 /**

@@ -23,7 +23,6 @@ const WelcomePage: React.FC = () => {
       });
       generateLink(restaurantKey).then((link) => {
         setDownloadLink(link);
-        console.log(type.os());
       });
     }
   }, []);
