@@ -17,9 +17,13 @@ import { Menu } from "../util/Menu";
 import { Item } from "../util/Item";
 import { navigationRef, navigate } from "../config/rootNavigation";
 import colors from "../constants/colors";
+import { Entypo } from "@expo/vector-icons";
+import SearchScreen from "../screens/SearchScreen";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export type RestaurantStackParamList = {
   RestaurantListScreen: undefined;
+  SearchScreen: undefined;
   RestaurantScreen: {
     restaurantID: string;
   };
@@ -41,7 +45,7 @@ const RestaurantStackScreen = () => {
       <RestaurantStack.Screen
         name="RestaurantListScreen"
         component={RestaurantListScreen}
-        options={{
+        options={({ navigation }) => ({
           headerTitle: () => (
             <Image
               style={{ width: 200, height: 70 }}
@@ -59,6 +63,24 @@ const RestaurantStackScreen = () => {
           headerShown: true,
           headerTintColor: "#d11d27",
           headerTitleAlign: "center",
+          headerRight: () => (
+            <Entypo
+              onPress={() => navigation.navigate("SearchScreen")}
+              style={{ color: colors.secondaryRed, fontSize: 25 }}
+              name="magnifying-glass"
+            />
+          ),
+          headerRightContainerStyle: {
+            backgroundColor: "white",
+            alignItems: "center",
+          },
+        })}
+      />
+      <RestaurantStack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{
+          headerShown: false,
         }}
       />
       <RestaurantStack.Screen
@@ -120,62 +142,62 @@ const RestaurantStackScreen = () => {
 };
 
 const Navigation = () => {
-  const _handleUrl = (obj: any) => {
-    let url = obj.url;
-    dynamicLinks()
-      .resolveLink(url)
-      .then((resolvedData) => {
-        //If the app is passed a dynamic link - (ios)
-        if (resolvedData) {
-          let { hostname, path, queryParams } = Linking.parse(resolvedData.url);
-          let id = queryParams.id;
-          if (id) {
-            navigate("RestaurantListScreen");
-            navigate("RestaurantScreen", { restaurantID: id });
-          } else {
-            navigate("RestaurantListScreen");
-          }
-        }
-      })
-      .catch((error) => {
-        //If app is just passed a deep link - (android)
-        if (url) {
-          let { hostname, path, queryParams } = Linking.parse(url);
-          let id = queryParams.id;
-          if (id) {
-            navigate("RestaurantListScreen");
-            navigate("RestaurantScreen", { restaurantID: id });
-          } else {
-            navigate("RestaurantListScreen");
-          }
-        }
-      });
-  };
+  // const _handleUrl = (obj: any) => {
+  //   let url = obj.url;
+  //   dynamicLinks()
+  //     .resolveLink(url)
+  //     .then((resolvedData) => {
+  //       //If the app is passed a dynamic link - (ios)
+  //       if (resolvedData) {
+  //         let { hostname, path, queryParams } = Linking.parse(resolvedData.url);
+  //         let id = queryParams.id;
+  //         if (id) {
+  //           navigate("RestaurantListScreen");
+  //           navigate("RestaurantScreen", { restaurantID: id });
+  //         } else {
+  //           navigate("RestaurantListScreen");
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       //If app is just passed a deep link - (android)
+  //       if (url) {
+  //         let { hostname, path, queryParams } = Linking.parse(url);
+  //         let id = queryParams.id;
+  //         if (id) {
+  //           navigate("RestaurantListScreen");
+  //           navigate("RestaurantScreen", { restaurantID: id });
+  //         } else {
+  //           navigate("RestaurantListScreen");
+  //         }
+  //       }
+  //     });
+  // };
 
-  useEffect(() => {
-    //When app is in Background
-    Linking.addEventListener("url", _handleUrl);
+  // useEffect(() => {
+  //   //When app is in Background
+  //   Linking.addEventListener("url", _handleUrl);
 
-    //When app is closed
-    Linking.getInitialURL().then((url) => {
-      dynamicLinks()
-        .resolveLink(url)
-        .then((resolvedData) => {
-          if (resolvedData) {
-            console.log("Before");
-            let { hostname, path, queryParams } = Linking.parse(
-              resolvedData.url
-            );
-            let id = queryParams.id;
-            if (id) {
-              navigate("RestaurantScreen", { restaurantID: id });
-            } else {
-              navigate("RestaurantListScreen");
-            }
-          }
-        });
-    });
-  }, []);
+  //   //When app is closed
+  //   Linking.getInitialURL().then((url) => {
+  //     dynamicLinks()
+  //       .resolveLink(url)
+  //       .then((resolvedData) => {
+  //         if (resolvedData) {
+  //           console.log("Before");
+  //           let { hostname, path, queryParams } = Linking.parse(
+  //             resolvedData.url
+  //           );
+  //           let id = queryParams.id;
+  //           if (id) {
+  //             navigate("RestaurantScreen", { restaurantID: id });
+  //           } else {
+  //             navigate("RestaurantListScreen");
+  //           }
+  //         }
+  //       });
+  //   });
+  // }, []);
   return (
     <NavigationContainer ref={navigationRef}>
       <RestaurantStackScreen />

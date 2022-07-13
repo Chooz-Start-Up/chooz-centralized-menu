@@ -243,6 +243,7 @@ export async function getRestaurantByKey(key: string): Promise<Restaurant> {
       });
   });
 }
+
 export async function pullBannerImage(restaurantKey: string): Promise<string> {
   return new Promise(function (resolve, reject) {
     let imageURLs: string = "";

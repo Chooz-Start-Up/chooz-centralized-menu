@@ -23,7 +23,14 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === "ios" ? 17 : 14,
     fontWeight: "bold",
   },
-  description: {
+  menuDescription: {
+    marginTop: 3,
+    marginBottom: 5,
+    backgroundColor: "white",
+    fontSize: Platform.OS === "ios" ? 15 : 12,
+    color: "grey",
+  },
+  itemDescription: {
     marginTop: 3,
     marginBottom: 5,
     marginLeft: 10,
@@ -127,7 +134,7 @@ export const RestaurantListItem = ({
         )}
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.description} numberOfLines={2}>
+          <Text style={styles.menuDescription} numberOfLines={2}>
             {description}
           </Text>
         </View>
@@ -149,7 +156,7 @@ export const MenuItem = ({ item, onPress }: { item: Item; onPress: any }) => {
         <View style={styles.textContainer}>
           <Text style={styles.itemTextTitle}>{item.itemName}</Text>
           {item.description ? (
-            <Text style={styles.description} numberOfLines={2}>
+            <Text style={styles.itemDescription} numberOfLines={2}>
               {item.description}
             </Text>
           ) : null}
