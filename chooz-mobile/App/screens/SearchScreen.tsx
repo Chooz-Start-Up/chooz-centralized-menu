@@ -8,15 +8,7 @@ import {
 } from "react-native";
 import "firebase/firestore";
 import "firebase/firestore";
-import {
-  getDatabase,
-  ref,
-  get,
-  child,
-  push,
-  update,
-  set,
-} from "firebase/database";
+import { getDatabase, ref, get, child } from "firebase/database";
 
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -26,8 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { RestaurantStackParamList } from "../config/navigation";
 import colors from "../constants/colors";
-import { RestaurantListItem, SectionHeader } from "../components/RowItem";
-import { getRestaurantList } from "../util/RestaurantApi";
+import { RestaurantListItem } from "../components/RowItem";
 import { getStorage } from "firebase/storage";
 import { app } from "../data/database";
 import { Restaurant } from "../util/Restaurant";

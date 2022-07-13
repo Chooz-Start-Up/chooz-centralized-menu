@@ -6,19 +6,15 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import { Entypo } from "@expo/vector-icons";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { List } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-import { RestaurantListItem, RowSeparator } from "../components/RowItem";
 import colors from "../constants/colors.js";
 import { RestaurantStackParamList } from "../config/navigation";
 import HorizontalList from "../components/HorizontalList";
-import { IMenu, Menu } from "../util/Menu";
 import { Item } from "../util/Item";
 import CustomAccordion from "../components/CustomAccordion";
 

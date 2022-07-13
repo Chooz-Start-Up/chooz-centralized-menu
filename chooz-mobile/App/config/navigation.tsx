@@ -12,14 +12,12 @@ import TestScreen from "../screens/Test";
 import RestaurantScreen from "../screens/RestaurantScreen";
 import RestaurantListScreen from "../screens/RestaurantListScreen";
 import TestPushDataScreen from "../screens/TestPushDataScreen";
-import { Restaurant } from "../util/Restaurant";
 import { Menu } from "../util/Menu";
 import { Item } from "../util/Item";
-import { navigationRef, navigate } from "../config/rootNavigation";
+import { navigationRef } from "../config/rootNavigation";
 import colors from "../constants/colors";
 import { Entypo } from "@expo/vector-icons";
 import SearchScreen from "../screens/SearchScreen";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 export type RestaurantStackParamList = {
   RestaurantListScreen: undefined;
