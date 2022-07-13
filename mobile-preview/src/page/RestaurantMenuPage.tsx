@@ -214,7 +214,9 @@ const RestaurantMenuPage: React.FC = () => {
                   <Typography fontWeight="bold">Description</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography variant="h6">{restaurant.description}</Typography>
+                  <Typography variant="h6" style={{ whiteSpace: "pre-line" }}>
+                    {restaurant.description}
+                  </Typography>
                 </AccordionDetails>
               </Accordion>
 
@@ -395,7 +397,9 @@ const RestaurantMenuPage: React.FC = () => {
                                     {item.description !== "" && (
                                       <AccordionDetails>
                                         <Divider sx={{ marginBottom: 2 }} />
-                                        <Typography>
+                                        <Typography
+                                          style={{ whiteSpace: "pre-line" }}
+                                        >
                                           {item.description}
                                         </Typography>
                                       </AccordionDetails>

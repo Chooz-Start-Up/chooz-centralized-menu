@@ -387,6 +387,7 @@ class ProfilePanel extends React.Component<
                 <Box width="80%">
                   <Typography
                     sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                    style={{ whiteSpace: "pre-line" }}
                   >
                     {this.state.description}
                   </Typography>

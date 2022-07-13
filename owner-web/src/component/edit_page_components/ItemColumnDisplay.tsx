@@ -17,6 +17,7 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
 ) => {
   const [isPriceFocused, setIsPriceFocused] = useState(false);
   const [localPriceField, setLocalPriceField] = useState("");
+  console.log(props.categoryDescription);
 
   useEffect(() => {
     setLocalPriceField(parseFloat(props.item.price.toString()).toFixed(2));
@@ -53,7 +54,7 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
   return (
     <Fade in={true} exit={false} mountOnEnter unmountOnExit timeout={275}>
       {/* For future additional implementations, making the display scrollable */}
-      <Box maxHeight={500} overflow="auto">
+      <Box maxHeight={600} overflow="auto">
         <Typography variant="h5" align="center">
           {props.item.name}
         </Typography>
@@ -159,7 +160,13 @@ const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
                 Category Description:
               </Typography>
 
-              <Typography fontSize={16} align="left" color="grey.500">
+              <Typography
+                variant="body1"
+                fontSize={16}
+                align="left"
+                color="grey.500"
+                style={{ whiteSpace: "pre-line" }}
+              >
                 {props.categoryDescription}
               </Typography>
             </Box>
