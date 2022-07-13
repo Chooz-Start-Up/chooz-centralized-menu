@@ -334,24 +334,6 @@ class ProfilePanel extends React.Component<
                     </Typography>
                   </Box>
                 </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <Box width="40%">
-                    <Typography>Address: </Typography>
-                  </Box>
-
-                  <Box width="50%">
-                    <Typography
-                      sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
-                    >
-                      {this.state.address}
-                    </Typography>
-                  </Box>
-                </Box>
 
                 <Box
                   sx={{
@@ -368,6 +350,31 @@ class ProfilePanel extends React.Component<
                       sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
                     >
                       {this.state.phoneNumber}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Box width="40%">
+                    <Typography>Address: </Typography>
+                  </Box>
+
+                  <Box width="50%">
+                    <Typography
+                      sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
+                    >
+                      {this.state.address.split("\n", 4)[0] +
+                        ", " +
+                        this.state.address.split("\n", 4)[1] +
+                        ", " +
+                        this.state.address.split("\n", 4)[2] +
+                        ", " +
+                        this.state.address.split("\n", 4)[3]}
                     </Typography>
                   </Box>
                 </Box>

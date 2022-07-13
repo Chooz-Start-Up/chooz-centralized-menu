@@ -17,6 +17,7 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import DateTimeInput from "./DateTimeInput";
 import { EditProfileButtonWithDialogProps } from "./interface";
+import { AddressInput } from "./AddressInput";
 
 const EditProfileButtonWithDialog: React.FC<
   EditProfileButtonWithDialogProps
@@ -183,11 +184,11 @@ const EditProfileButtonWithDialog: React.FC<
   const onDescriptionChange = (event: any) => {
     descriptionUpdate(event.target.value);
   };
-  const onAddressChange = (event: any) => {
-    addressUpdate(event.target.value);
-  };
   const onPhoneNumberChange = (event: any) => {
     phoneNumberUpdate(event.target.value);
+  };
+  const onAddressChange = (input: string) => {
+    addressUpdate(input);
   };
 
   const canClickSave = (): boolean => {
@@ -294,21 +295,6 @@ const EditProfileButtonWithDialog: React.FC<
               fullWidth
               margin="normal"
               required
-              id="address"
-              label="Address"
-              variant="standard"
-              error={addressValidationText !== ""}
-              helperText={addressValidationText}
-              onChange={onAddressChange}
-              defaultValue={originalAddress}
-            />
-          </Box>
-
-          <Box>
-            <TextField
-              fullWidth
-              margin="normal"
-              required
               id="phoneNumber"
               label="Phone Number"
               variant="standard"
@@ -316,6 +302,25 @@ const EditProfileButtonWithDialog: React.FC<
               helperText={phoneNumberValidationText}
               onChange={onPhoneNumberChange}
               defaultValue={originalPhoneNumber}
+            />
+          </Box>
+
+          <Box>
+            {/* <TextField
+              fullWidth
+              margin="normal"
+              required
+              id="address"
+              label="Address"
+              variant="standard"
+              error={addressValidationText !== ""}
+              helperText={addressValidationText}
+              onChange={onAddressChange}
+              defaultValue={originalAddress}
+            /> */}
+            <AddressInput
+              address={originalAddress}
+              onAddressChange={onAddressChange}
             />
           </Box>
 

@@ -99,3 +99,8 @@ export interface UploadDeleteImageButtonWithDialogProps {
   handleUploadAgreeClick(): any;
   handleDeleteAgreeClick(): any;
 }
+
+export interface AddressInputProps {
+  address: string;
+  onAddressChange(input: string): any;
+}
