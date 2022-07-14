@@ -398,26 +398,18 @@ class ProfilePanel extends React.Component<
                 </Typography>
                 <Divider sx={{ marginBottom: 2 }} />
 
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <Box width="40%">
-                    {this.state.hours.split("\n", 7).map((day, i) => (
+                {this.state.hours.split("\n", 7).map((day, i) => (
+                  <Box display="flex" justifyContent="space-between">
+                    <Box>
                       <Typography key={i}>{day.split(" ", 1)[0]}</Typography>
-                    ))}
-                  </Box>
-
-                  <Box width="50%">
-                    {this.state.hours.split("\n", 7).map((day, i) => (
-                      <Typography key={i}>
+                    </Box>
+                    <Box width="60%">
+                      <Typography key={i} align="left">
                         {day.substring(day.split(" ", 1)[0].length)}
                       </Typography>
-                    ))}
+                    </Box>
                   </Box>
-                </Box>
+                ))}
 
                 <Box
                   display="flex"
