@@ -103,7 +103,13 @@ export async function getRestaurantMenuByKey(
                   )
                 );
               });
-              categories.push(new Category(category["_categoryName"], items));
+              categories.push(
+                new Category(
+                  category["_categoryName"],
+                  items,
+                  category["_description"]
+                )
+              );
             });
             menus.push(new Menu(menu["_menuName"], categories));
           });

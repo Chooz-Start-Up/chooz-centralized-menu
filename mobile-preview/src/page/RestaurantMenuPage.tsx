@@ -3,19 +3,14 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  AppBar,
   Avatar,
   Box,
-  Button,
   Divider,
   Fade,
-  Grid,
-  Slide,
   ThemeProvider,
   Typography,
 } from "@mui/material";
 import { choozTheme } from "../theme/theme";
-import AdbIcon from "@mui/icons-material/Adb";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   getRestaurantByKey,
@@ -313,7 +308,6 @@ const RestaurantMenuPage: React.FC = () => {
                           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography
                               variant="h6"
-                              marginBottom="2%"
                               fontWeight="bold"
                               textAlign="left"
                             >
@@ -321,6 +315,15 @@ const RestaurantMenuPage: React.FC = () => {
                             </Typography>
                           </AccordionSummary>
                           <AccordionDetails>
+                            <Typography
+                              variant="body1"
+                              marginBottom="5%"
+                              textAlign="left"
+                              style={{ whiteSpace: "pre-line" }}
+                              color="grey.600"
+                            >
+                              {category.description}
+                            </Typography>
                             {category.items.map((item, itemIndex) => (
                               <div key={itemIndex}>
                                 <Box
