@@ -19,6 +19,8 @@ import AppleStore from "../component/images/app_store/Apple_Store_Screenshot.png
 import PlayStore from "../component/images/app_store/Play_Store_Screenshot.png";
 import JacobChoi from "../component/images/profile/jacob_choi.jpg";
 import JustinGalang from "../component/images/profile/justin_galang.jpg";
+import AppPlayStore from "../component/images/app_store/app_play_store.jpg";
+import LogoText from "../component/images/chooz_icons/logoRed.png";
 
 class MainLandingPage extends React.Component<
   MainLandingPageProps,
@@ -81,7 +83,7 @@ class MainLandingPage extends React.Component<
             </Box>
           </Typography>
 
-          <Box
+          {/* <Box
             display="flex"
             // justifyContent="space-between"
             justifyContent="center"
@@ -110,6 +112,32 @@ class MainLandingPage extends React.Component<
                 Download at Play Store
               </Typography>
               <Box component="img" src={PlayStore} marginTop="1%" />
+            </Box>
+          </Box> */}
+          <Typography
+            variant="h4"
+            align="center"
+            fontWeight="bold"
+            sx={{ marginTop: 10, marginBottom: 2 }}
+          >
+            Download Our App!
+          </Typography>
+          <Box display="flex" justifyContent="center">
+            <Box component="img" src={AppPlayStore} width={200} />
+            <Box
+              boxShadow={5}
+              borderRadius={5}
+              marginLeft={5}
+              marginTop={1.5}
+              width={100}
+              height={100}
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+            >
+              <Box display="flex" justifyContent="center">
+                <Box component="img" src={LogoText} width={75} height={75} />
+              </Box>
             </Box>
           </Box>
 

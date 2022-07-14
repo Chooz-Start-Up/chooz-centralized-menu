@@ -23,8 +23,8 @@ export const RestaurantListDisplay: React.FC = () => {
       justifyContent="center"
       width="30%"
     >
-      <Typography variant="h4" align="center">
-        Participating Restaurants
+      <Typography variant="h4" align="center" fontWeight="bold">
+        Local Restaurants
       </Typography>
       <Box
         bgcolor={choozTheme.palette.secondary.light}
