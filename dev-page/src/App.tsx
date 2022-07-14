@@ -18,6 +18,7 @@ import {
   logout,
   signInWithGoogle,
 } from "./database/authentication/firebaseAuthentication";
+import { GenerateQRByLinkPanel } from "./component/panel/GenerateQRByLinkPanel";
 
 const App: React.FC = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -56,6 +57,11 @@ const App: React.FC = () => {
           <Tab
             label="Claim Restaurant Tool"
             {...tabPanelProps(0)}
+            sx={{ textTransform: "none", width: 100 }}
+          />
+          <Tab
+            label="Generate QR Link Tool"
+            {...tabPanelProps(1)}
             sx={{ textTransform: "none", width: 100 }}
           />
         </Tabs>
@@ -124,6 +130,9 @@ const App: React.FC = () => {
               </Box>
             </Box>
           )}
+        </TabPanel>
+        <TabPanel value={tabIndex} index={1}>
+          <GenerateQRByLinkPanel />
         </TabPanel>
       </Box>
     </ThemeProvider>
