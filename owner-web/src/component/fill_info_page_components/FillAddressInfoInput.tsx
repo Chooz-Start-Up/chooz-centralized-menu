@@ -10,36 +10,17 @@ import {
 } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
-import { AddressInputProps } from "./interface";
+import { FillAddressInfoInputProps } from "./interface";
 
-export const AddressInput: React.FC<AddressInputProps> = (
-  props: AddressInputProps
+export const FillAddressInfoInput: React.FC<FillAddressInfoInputProps> = (
+  props: FillAddressInfoInputProps
 ) => {
-  const parsedAddress = props.address.split("\n", 4);
-  const [street, setStreet] = useState(
-    parsedAddress.length === 4
-      ? parsedAddress[0].indexOf("Food Truck") !== -1
-        ? parsedAddress[0].substring("Food Truck - ".length)
-        : parsedAddress[0]
-      : ""
-  );
-  const [city, setCity] = useState(
-    parsedAddress.length === 4 ? parsedAddress[1] : ""
-  );
-  const [state, setState] = useState(
-    parsedAddress.length === 4 ? parsedAddress[2] : ""
-  );
-  const [zipcode, setZipcode] = useState(
-    parsedAddress.length === 4 ? parsedAddress[3] : ""
-  );
+  const [street, setStreet] = useState(" ");
+  const [city, setCity] = useState(" ");
+  const [state, setState] = useState(" ");
+  const [zipcode, setZipcode] = useState(" ");
 
-  const [isFoodTruck, setIsFoodTruck] = useState(
-    parsedAddress.length === 4
-      ? parsedAddress[0].indexOf("Food Truck") !== -1
-        ? true
-        : false
-      : false
-  );
+  const [isFoodTruck, setIsFoodTruck] = useState(false);
 
   useEffect(() => {
     updateAddress();
@@ -181,7 +162,7 @@ export const AddressInput: React.FC<AddressInputProps> = (
         label={isFoodTruck ? "Location Description" : "Street"}
         variant="standard"
         fullWidth
-        defaultValue={street}
+        defaultValue={""}
         onChange={onStreetChange}
         error={street === ""}
         helperText={street === "" ? "Street cannot be empty." : ""}
@@ -192,8 +173,8 @@ export const AddressInput: React.FC<AddressInputProps> = (
         id="city"
         label="City"
         variant="standard"
-        sx={{ width: "45%" }}
-        defaultValue={city}
+        sx={{ width: "40%" }}
+        defaultValue={""}
         onChange={onCityChange}
         error={city === ""}
         helperText={city === "" ? "City cannot be empty." : ""}
@@ -201,8 +182,8 @@ export const AddressInput: React.FC<AddressInputProps> = (
       <Select
         variant="standard"
         id="state"
-        sx={{ width: "45%", marginLeft: "10%", marginTop: 3 }}
-        defaultValue={state}
+        sx={{ width: "30%", marginLeft: "5%", marginTop: 3 }}
+        defaultValue={""}
         displayEmpty
         MenuProps={MenuProps}
         onChange={onStateChange}
@@ -223,8 +204,8 @@ export const AddressInput: React.FC<AddressInputProps> = (
         id="zipcode"
         label="Zip Code"
         variant="standard"
-        sx={{ width: "45%" }}
-        defaultValue={zipcode}
+        sx={{ width: "20%", marginLeft: "5%" }}
+        defaultValue={""}
         onChange={onZipcodeChange}
         error={zipcode === ""}
         helperText={zipcode === "" ? "Zip code cannot be empty." : ""}

@@ -22,6 +22,7 @@ import {
 } from "../firebase/databaseAPI/RestaurantApi";
 import { Restaurant } from "../firebase/databaseAPI/Restaurant";
 import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
+import { FillAddressInfoInput } from "../component/fill_info_page_components/FillAddressInfoInput";
 
 const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
   props: FillRestaurantInfoPageProps
@@ -107,8 +108,8 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
   const onDescriptionChange = (event: any) => {
     setDescription(event.target.value);
   };
-  const onAddressChange = (event: any) => {
-    setAddress(event.target.value);
+  const onAddressChange = (input: string) => {
+    setAddress(input);
   };
   const onPhoneNumberChange = (event: any) => {
     setPhoneNumber(event.target.value);
@@ -163,7 +164,7 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
   return (
     <ThemeProvider theme={choozTheme}>
       <ChoozAppBar />
-      <Box height="115vh" bgcolor={choozTheme.palette.secondary.main}>
+      <Box height="140vh" bgcolor={choozTheme.palette.secondary.main}>
         <Box display="flex" justifyContent="center" height="85%">
           <Box display="flex" flexDirection="column" justifyContent="center">
             <Box
@@ -182,7 +183,7 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
                 Centralized Menu App
               </Typography>
 
-              <Box sx={{ height: 525 }}>
+              <Box sx={{ height: 700 }}>
                 <TextField
                   fullWidth
                   margin="normal"
@@ -224,17 +225,6 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
                   fullWidth
                   margin="normal"
                   required
-                  id="address"
-                  label="Address"
-                  variant="standard"
-                  error={addressValidationText !== ""}
-                  helperText={addressValidationText}
-                  onChange={onAddressChange}
-                />
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  required
                   id="phoneNumber"
                   label="Phone Number"
                   variant="standard"
@@ -242,6 +232,7 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
                   helperText={phoneNumberValidationText}
                   onChange={onPhoneNumberChange}
                 />
+                <FillAddressInfoInput onAddressChange={onAddressChange} />
               </Box>
 
               <Box

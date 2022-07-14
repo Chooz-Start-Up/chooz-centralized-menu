@@ -306,18 +306,6 @@ const EditProfileButtonWithDialog: React.FC<
           </Box>
 
           <Box>
-            {/* <TextField
-              fullWidth
-              margin="normal"
-              required
-              id="address"
-              label="Address"
-              variant="standard"
-              error={addressValidationText !== ""}
-              helperText={addressValidationText}
-              onChange={onAddressChange}
-              defaultValue={originalAddress}
-            /> */}
             <AddressInput
               address={originalAddress}
               onAddressChange={onAddressChange}
