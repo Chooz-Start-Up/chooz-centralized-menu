@@ -167,7 +167,7 @@ export const GenerateQRByLinkPanel: React.FC = () => {
           </Button>
         </Box>
         <Typography sx={{ marginTop: 1 }}>
-          Add m.choozmenu.com extensions
+          Add extensions (for m.choozmenu.com/)
         </Typography>
         <Box display="flex">
           <Button
@@ -198,7 +198,9 @@ export const GenerateQRByLinkPanel: React.FC = () => {
             Add: list/
           </Button>
         </Box>
-        <Typography sx={{ marginTop: 1 }}>Add city info</Typography>
+        <Typography sx={{ marginTop: 1 }}>
+          Add city info (for m.choozmenu.com/list/)
+        </Typography>
         <Box display="flex">
           <TextField
             margin="dense"
