@@ -15,11 +15,12 @@ import { MainLandingPageProps, MainLandingPageState } from "./interface";
 import { choozTheme } from "../theme/theme";
 import ChoozEmailLogo from "../component/images/chooz_icons/logoRed.png";
 import { RestaurantListDisplay } from "../component/main_landing_page_components/RestaurantListDisplay";
-import AppleStore from "../component/images/app_store/Apple_Store_Screenshot.png";
-import PlayStore from "../component/images/app_store/Play_Store_Screenshot.png";
+
 import JacobChoi from "../component/images/profile/jacob_choi.jpg";
 import JustinGalang from "../component/images/profile/justin_galang.jpg";
 import AppPlayStore from "../component/images/app_store/app_play_store.jpg";
+import AppStore from "../component/images/app_store/app_store.jpg";
+import PlayStore from "../component/images/app_store/play_store.jpg";
 import LogoText from "../component/images/chooz_icons/logoRed.png";
 
 class MainLandingPage extends React.Component<
@@ -123,12 +124,27 @@ class MainLandingPage extends React.Component<
             Download Our App!
           </Typography>
           <Box display="flex" justifyContent="center">
-            <Box component="img" src={AppPlayStore} width={200} />
+            {/* <Box component="img" src={AppPlayStore} width={200} /> */}
+            {/* https://play.google.com/store/apps/details?id=com.chooz.choozmobile */}
+            <Box display="flex" flexDirection="column">
+              <Button
+                href="https://apps.apple.com/ph/app/chooz-menu/id1630258641"
+                target="_blank"
+              >
+                <Box component="img" src={AppStore} width={200} />
+              </Button>
+              <Button
+                href="https://play.google.com/store/apps/details?id=com.chooz.choozmobile"
+                target="_blank"
+              >
+                <Box component="img" src={PlayStore} width={200} />
+              </Button>
+            </Box>
             <Box
               boxShadow={5}
               borderRadius={5}
               marginLeft={5}
-              marginTop={1.5}
+              marginTop={2}
               width={100}
               height={100}
               display="flex"
