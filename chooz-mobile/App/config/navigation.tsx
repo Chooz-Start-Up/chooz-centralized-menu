@@ -32,7 +32,7 @@ export type RestaurantStackParamList = {
   ItemScreen: {
     item: Item;
   };
-  Test: undefined;
+  TestScreen: undefined;
   TestPushDataScreen: undefined;
 };
 
@@ -123,7 +123,7 @@ const RestaurantStackScreen = () => {
         }}
       />
       <RestaurantStack.Screen
-        name="Test"
+        name="TestScreen"
         component={TestScreen}
         options={{
           title: "",

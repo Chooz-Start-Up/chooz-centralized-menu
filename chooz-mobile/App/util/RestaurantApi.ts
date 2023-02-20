@@ -1,3 +1,5 @@
+import { Restaurant } from "./Restaurant";
+import { app, db } from "../data/database";
 import "firebase/firestore";
 import {
   getDatabase,
@@ -8,10 +10,6 @@ import {
   update,
   set,
 } from "firebase/database";
-import { Restaurant } from "./Restaurant";
-import { app, db } from "../data/database";
-import { Menu } from "./Menu";
-import MenuScreen from "../screens/MenuScreen";
 import {
   uploadBytes,
   ref as storageRef,
@@ -20,6 +18,11 @@ import {
   deleteObject,
   getStorage,
 } from "firebase/storage";
+import * as Location from "expo-location";
+import { getDistance } from "geolib";
+import { Alert } from "react-native";
+import { array } from "prop-types";
+import { jsonEval } from "@firebase/util";
 
 const dbRef = ref(getDatabase());
 const storage = getStorage(app);
@@ -95,6 +98,134 @@ export async function getRestaurantList(
     .catch((error) => {
       console.error(error);
     });
+}
+
+/**
+ * Used for RestaurantListScreen.tsx
+ * sets the list of restaurants based on the location of the user using the setState function passed.
+ * @param setRestaurantList - a function that sets the state of restaurantList
+ * @param setLoading - an optional function that sets the state of isLoading
+ */
+export async function getRestaurantListByUserLocation(
+  setRestaurantList: Function,
+  userLocation: Location.LocationObject,
+  setLoading?: Function
+) {
+  console.log("IN API CALL");
+  get(child(dbRef, "restaurants"))
+    .then(async (snapshot) => {
+      let objList: Restaurant[] = [];
+      if (snapshot.exists()) {
+        snapshot.forEach((item) => {
+          let itemVal = item.val();
+
+          if (itemVal.isPublished) {
+            objList.push(
+              new Restaurant(
+                item.key!,
+                itemVal.restaurantName,
+                itemVal.description,
+                itemVal.isPublished,
+                itemVal.phoneNumber,
+                itemVal.ownerName,
+                itemVal.address
+              )
+            );
+          }
+
+          //80000 meters = 50 miles
+        });
+        let restaurantsInRange: Restaurant[];
+        await processRestaurantArray(userLocation, objList)
+          .then((restaurants) => {
+            restaurantsInRange = restaurants;
+          })
+          .catch(() => {
+            restaurantsInRange = objList;
+          });
+        console.log("AFTER PROCESSING");
+        setRestaurantList(restaurantsInRange);
+        if (setLoading !== undefined) {
+          setLoading(false);
+        }
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+async function processRestaurantArray(
+  userLocation: Location.LocationObject,
+  publishedRestaurants: any
+): Promise<Restaurant[]> {
+  console.log("USER LOCATION: " + userLocation);
+  return new Promise(async function (resolve, reject) {
+    let processedRestaurantArray: Restaurant[] = [];
+    await Promise.all(
+      await publishedRestaurants.map(async (restaurant) => {
+        let restaurantLocation;
+        await Location.geocodeAsync(cleanAddress(restaurant._address))
+          .then((location) => {
+            restaurantLocation = location;
+          })
+          .catch(() => {
+            console.log("No Location Calculated.");
+          });
+
+        //80000 meters = 50 miles
+
+        if (inRange(userLocation, restaurant, restaurantLocation, 80000)) {
+          processedRestaurantArray.push(restaurant);
+        }
+        resolve(processedRestaurantArray);
+      })
+    );
+    console.log("FINISH RESTAURANT ARR");
+  });
+}
+
+function inRange(
+  userLocation: Location.LocationObject,
+  restaurant: any,
+  restaurantLocation: Location.LocationGeocodedLocation[],
+  maxRange?: number
+): boolean {
+  if (restaurantLocation) {
+    return (
+      getDistance(userLocation.coords, {
+        latitude: restaurantLocation.at(0).latitude,
+        longitude: restaurantLocation.at(0).longitude,
+      }) < maxRange
+    );
+  } else {
+    console.log("PROBLEM");
+  }
+}
+
+/**
+ * cleans the address that is pulled from db. Deciphers whether it is a food truck or not
+ * @param uncleanAddress
+ * @returns
+ */
+function cleanAddress(uncleanAddress: string): string {
+  let tokens = uncleanAddress.split("\n");
+  let cleanAddress = "";
+  if (!tokens[0].includes("Food Truck - ")) {
+    let address = tokens[0];
+    let city = tokens[1];
+    let state = tokens[2];
+    let zip = tokens[3];
+    cleanAddress = `${address} ${city} ${state} ${zip}`;
+  } else {
+    let city = tokens[1];
+    let state = tokens[2];
+    let zip = tokens[3];
+    cleanAddress = `${city} ${state} ${zip}`;
+  }
+  return cleanAddress;
 }
 
 /**

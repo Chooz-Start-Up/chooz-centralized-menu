@@ -182,6 +182,7 @@ const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
     });
   }, []);
 
+  let [address, city, state, zip] = restaurant.address.split("\n");
   return (
     <>
       {!isLoading && (
@@ -274,7 +275,9 @@ const RestaurantScreen: React.FC<Props> = ({ route }: Props) => {
 
             <View style={styles.addressView}>
               <Text style={styles.headerText}>Address</Text>
-              <Text style={styles.bodyText}>{restaurant.address}</Text>
+              <Text style={styles.bodyText}>
+                {`${address}, ${city}, ${state}, ${zip}`}
+              </Text>
             </View>
 
             <View style={styles.separator} />
