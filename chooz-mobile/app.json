@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "scheme": "myapp",
+    "name": "chooz",
+    "slug": "chooz",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./App/assets/images/brand/splash_logo_red.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/e99154ed-9f00-4133-835f-b2b72e1989e0"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "buildNumber": "20",
+      "bundleIdentifier": "com.chooz.choozmobile",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow Expo experiences to use your camera",
+        "FirebaseDynamicLinksCustomDomains": ["https://choozmenu.com/mobile"]
+      },
+
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "associatedDomains": ["applinks:choozmenu.com"]
+    },
+    "android": {
+      "package": "com.chooz.choozmobile",
+      "versionCode": 18,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "googleServicesFile": "./google-services.json",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "choozmenu.com",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["@react-native-firebase/app"],
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}

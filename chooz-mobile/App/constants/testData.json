@@ -1,0 +1,67 @@
+{
+  "restaurants": {
+    "restaurantA": {
+      "id": "001250071",
+      "title": "Restaurant A",
+      "address": "914 S Wabash St",
+      "menus": {
+        "Breakfast": {
+          "Categories": {
+            "Appetizers": {
+              "Items": {
+                "Item1": {
+                  "title": "Item 1"
+                },
+                "Item2": {
+                  "title": "Item 1"
+                },
+                "Item3": {
+                  "title": "Item 1"
+                }
+              }
+            },
+            "Entrees": {
+              "Item1": {
+                "title": "Item 1"
+              },
+              "Item2": {
+                "title": "Item 1"
+              },
+              "Item3": {
+                "title": "Item 1"
+              }
+            }
+          }
+        },
+        "Lunch": {
+          "Categories": {
+            "Appetizers": {
+              "Items": {
+                "Item1": {
+                  "title": "Item 1"
+                },
+                "Item2": {
+                  "title": "Item 1"
+                },
+                "Item3": {
+                  "title": "Item 1"
+                }
+              }
+            },
+            "Entrees": {
+              "Item1": {
+                "title": "Item 1"
+              },
+              "Item2": {
+                "title": "Item 1"
+              },
+              "Item3": {
+                "title": "Item 1"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
