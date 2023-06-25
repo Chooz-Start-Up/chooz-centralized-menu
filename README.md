@@ -1,1 +1,1 @@
-# chooz-centralized-menu
+# Chooz
