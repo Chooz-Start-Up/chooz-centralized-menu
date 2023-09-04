@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, ThemeProvider, Typography, Alert } from "@mui/material";
+import { Box, Button, ThemeProvider, Theme, StyledEngineProvider, Typography, Alert } from "@mui/material";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
 import { VerifyEmailPageProps } from "./interface";
 import { choozTheme } from "../theme/theme";
@@ -13,6 +13,13 @@ import { Restaurant } from "../firebase/databaseAPI/Restaurant";
 import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
 import { Menu } from "../firebase/databaseAPI/Menu";
 import defaultMenu from "../firebase/authentication/defaultMenu.json";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
   props: VerifyEmailPageProps
@@ -78,8 +85,8 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
     );
   };
 
-  return (
-    <>
+  return <>
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={choozTheme}>
         <Box height="100%" bgcolor={choozTheme.palette.secondary.main}>
           <ChoozAppBar />
@@ -143,8 +150,8 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = (
           </Box>
         </Box>
       </ThemeProvider>
-    </>
-  );
+    </StyledEngineProvider>
+  </>;
 };
 
 export default VerifyEmailPage;

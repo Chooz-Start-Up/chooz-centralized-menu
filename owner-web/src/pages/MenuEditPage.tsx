@@ -1,5 +1,14 @@
 import React from "react";
-import { Box, Fade, Tab, Tabs, ThemeProvider, Typography } from "@mui/material";
+import {
+  Box,
+  Fade,
+  Tab,
+  Tabs,
+  ThemeProvider,
+  Theme,
+  StyledEngineProvider,
+  Typography,
+} from "@mui/material";
 import TabPanel from "../component/buttons/TabPanel";
 import { MenuColumnList } from "../component/edit_page_components/MenuColumnList";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
@@ -16,6 +25,13 @@ import {
 } from "../firebase/databaseAPI/RestaurantApi";
 import { auth } from "../firebase/authentication/firebaseAuthentication";
 import UnpublishAndEditButtonWithDialog from "../component/buttons/UnpublishAndEditButtonWithDialog";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 class MenuEditPage extends React.Component<
   MenuEditPageProp,
@@ -159,8 +175,8 @@ class MenuEditPage extends React.Component<
   };
 
   render() {
-    return (
-      <>
+    return <>
+      <StyledEngineProvider injectFirst>
         <ThemeProvider theme={choozTheme}>
           <ChoozAppBar />
           <Box
@@ -281,8 +297,8 @@ class MenuEditPage extends React.Component<
             </TabPanel>
           </Box>
         </ThemeProvider>
-      </>
-    );
+      </StyledEngineProvider>
+    </>;
   }
 }
 

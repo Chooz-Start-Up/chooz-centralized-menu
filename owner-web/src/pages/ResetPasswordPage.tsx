@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   ThemeProvider,
+  Theme,
+  StyledEngineProvider,
   Typography,
   Alert,
   TextField,
@@ -17,6 +19,13 @@ import {
 import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
 import { useParams } from "react-router-dom";
 import { signOut } from "firebase/auth";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
   props: ResetPasswordPageProps
@@ -67,126 +76,128 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (
   };
 
   return (
-    <ThemeProvider theme={choozTheme}>
-      <Box height="100%" bgcolor={choozTheme.palette.secondary.main}>
-        <ChoozAppBar />
-        <Box display="flex" justifyContent="center" height="85%" margin={3}>
-          <Box display="flex" flexDirection="column" justifyContent="center">
-            <Box
-              boxShadow={5}
-              sx={{
-                width: 450,
-                height: errorMessage === "" && !success ? 380 : 420,
-                paddingTop: 2,
-                paddingBottom: userEmail !== undefined ? 4 : 2,
-              }}
-              bgcolor={choozTheme.palette.secondary.light}
-              textAlign="center"
-            >
-              <Box component="img" src={LogoText} margin="2%" width="25%" />
-              <Typography sx={{ color: "grey.600", fontSize: 18 }}>
-                Centralized Menu App
-              </Typography>
-
-              {errorMessage !== "" && (
-                <Alert severity="error" sx={{ justifyContent: "center" }}>
-                  Error: {errorMessage}
-                </Alert>
-              )}
-
-              {success && (
-                <Alert severity="success" sx={{ justifyContent: "center" }}>
-                  A reset email has been sent! Please reset your password
-                  through the email link and try logging in again.
-                </Alert>
-              )}
-
-              <Box justifyContent="center">
-                <Typography
-                  sx={{
-                    color: "grey.600",
-                    fontSize: 18,
-                    marginTop: errorMessage === "" && !success ? 5 : 3,
-                    marginRight: 2,
-                    marginLeft: 2,
-                  }}
-                >
-                  {userEmail !== undefined
-                    ? 'Please click the "Reset Password" button to reset your password.'
-                    : "Please enter your account email."}
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={choozTheme}>
+        <Box height="100%" bgcolor={choozTheme.palette.secondary.main}>
+          <ChoozAppBar />
+          <Box display="flex" justifyContent="center" height="85%" margin={3}>
+            <Box display="flex" flexDirection="column" justifyContent="center">
+              <Box
+                boxShadow={5}
+                sx={{
+                  width: 450,
+                  height: errorMessage === "" && !success ? 380 : 420,
+                  paddingTop: 2,
+                  paddingBottom: userEmail !== undefined ? 4 : 2,
+                }}
+                bgcolor={choozTheme.palette.secondary.light}
+                textAlign="center"
+              >
+                <Box component="img" src={LogoText} margin="2%" width="25%" />
+                <Typography sx={{ color: "grey.600", fontSize: 18 }}>
+                  Centralized Menu App
                 </Typography>
 
-                <TextField
-                  disabled={success || userEmail !== undefined}
-                  defaultValue={userEmail !== undefined ? userEmail : ""}
-                  onChange={onEmailChange}
-                  label="Email"
-                  sx={{ marginTop: 3, width: 350 }}
-                />
+                {errorMessage !== "" && (
+                  <Alert severity="error" sx={{ justifyContent: "center" }}>
+                    Error: {errorMessage}
+                  </Alert>
+                )}
 
-                <Box display="flex" justifyContent="center">
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="center"
+                {success && (
+                  <Alert severity="success" sx={{ justifyContent: "center" }}>
+                    A reset email has been sent! Please reset your password
+                    through the email link and try logging in again.
+                  </Alert>
+                )}
+
+                <Box justifyContent="center">
+                  <Typography
+                    sx={{
+                      color: "grey.600",
+                      fontSize: 18,
+                      marginTop: errorMessage === "" && !success ? 5 : 3,
+                      marginRight: 2,
+                      marginLeft: 2,
+                    }}
                   >
-                    {!success && (
-                      <Button
-                        variant="contained"
-                        onClick={onResetPasswordClick}
-                        sx={{
-                          marginTop: 3,
-                          textTransform: "none",
-                          width: "150px",
-                        }}
-                      >
-                        Reset Password
-                      </Button>
-                    )}
-                    {success && (
-                      <Button
-                        variant="contained"
-                        href="/login/"
-                        sx={{
-                          marginTop: 3,
-                          width: "150px",
-                          textTransform: "none",
-                        }}
-                      >
-                        Go back to Login
-                      </Button>
-                    )}
-                    {userEmail !== undefined && !success ? (
-                      <Button
-                        href="/edit"
-                        sx={{
-                          textDecoration: "underline",
-                          textTransform: "none",
-                          width: "150px",
-                        }}
-                      >
-                        Go back to Profile
-                      </Button>
-                    ) : (
-                      <Button
-                        href="/login"
-                        sx={{
-                          textDecoration: "underline",
-                          textTransform: "none",
-                          width: "150px",
-                        }}
-                      >
-                        Go back to Login
-                      </Button>
-                    )}
+                    {userEmail !== undefined
+                      ? 'Please click the "Reset Password" button to reset your password.'
+                      : "Please enter your account email."}
+                  </Typography>
+
+                  <TextField
+                    disabled={success || userEmail !== undefined}
+                    defaultValue={userEmail !== undefined ? userEmail : ""}
+                    onChange={onEmailChange}
+                    label="Email"
+                    sx={{ marginTop: 3, width: 350 }}
+                  />
+
+                  <Box display="flex" justifyContent="center">
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="center"
+                    >
+                      {!success && (
+                        <Button
+                          variant="contained"
+                          onClick={onResetPasswordClick}
+                          sx={{
+                            marginTop: 3,
+                            textTransform: "none",
+                            width: "150px",
+                          }}
+                        >
+                          Reset Password
+                        </Button>
+                      )}
+                      {success && (
+                        <Button
+                          variant="contained"
+                          href="/login/"
+                          sx={{
+                            marginTop: 3,
+                            width: "150px",
+                            textTransform: "none",
+                          }}
+                        >
+                          Go back to Login
+                        </Button>
+                      )}
+                      {userEmail !== undefined && !success ? (
+                        <Button
+                          href="/edit"
+                          sx={{
+                            textDecoration: "underline",
+                            textTransform: "none",
+                            width: "150px",
+                          }}
+                        >
+                          Go back to Profile
+                        </Button>
+                      ) : (
+                        <Button
+                          href="/login"
+                          sx={{
+                            textDecoration: "underline",
+                            textTransform: "none",
+                            width: "150px",
+                          }}
+                        >
+                          Go back to Login
+                        </Button>
+                      )}
+                    </Box>
                   </Box>
                 </Box>
               </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };
 

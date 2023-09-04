@@ -10,6 +10,7 @@
     "@mui/icons-material": "^5.8.2",
     "@mui/material": "^5.8.2",
     "@mui/styled-engine-sc": "^5.8.0",
+    "@mui/styles": "^5.14.7",
     "@mui/system": "^5.8.2",
     "@mui/x-date-pickers": "^5.0.0-alpha.5",
     "@react-native-firebase/dynamic-links": "^15.0.0",

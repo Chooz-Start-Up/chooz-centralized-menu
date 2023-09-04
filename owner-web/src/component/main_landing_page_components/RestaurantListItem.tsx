@@ -38,7 +38,7 @@ export const RestaurantListItem: React.FC<RestaurantListItemProps> = (
           src={logoSrc === "" ? Logo : logoSrc}
           width={50}
           height={50}
-          borderRadius={10}
+          borderRadius="10px"
         />
         <Typography sx={{ marginLeft: 2, marginTop: 1.5 }}>
           {props.restaurant.restaurantName}

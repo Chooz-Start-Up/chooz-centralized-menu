@@ -12,6 +12,8 @@ import {
   Grid,
   Typography,
   ThemeProvider,
+  Theme,
+  StyledEngineProvider,
 } from "@mui/material/";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import { AccessQRButtonProps } from "./interface";
@@ -21,6 +23,13 @@ import { QRCode } from "react-qrcode-logo";
 import ChoozIcon from "../images/chooz_icons/logoRed_bgWhiteCircular.png";
 import { toPng } from "html-to-image";
 import { choozTheme } from "../../theme/theme";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 const AccessQRButton: React.FC<AccessQRButtonProps> = (
   props: AccessQRButtonProps
@@ -68,8 +77,8 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
       });
   };
 
-  return (
-    <>
+  return <>
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={choozTheme}>
         <Button
           variant="contained"
@@ -173,8 +182,8 @@ const AccessQRButton: React.FC<AccessQRButtonProps> = (
           </DialogActions>
         </Dialog>
       </ThemeProvider>
-    </>
-  );
+    </StyledEngineProvider>
+  </>;
 };
 
 export default AccessQRButton;

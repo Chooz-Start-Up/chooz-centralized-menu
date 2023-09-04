@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   ThemeProvider,
+  Theme,
+  StyledEngineProvider,
   Typography,
   TextField,
   Divider,
@@ -26,6 +28,13 @@ import {
 } from "../firebase/authentication/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
 import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
   const navigate = useNavigate();
@@ -112,8 +121,8 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
     );
   };
 
-  return (
-    <>
+  return <>
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={choozTheme}>
         <Box height="110%" bgcolor={choozTheme.palette.secondary.main}>
           <ChoozAppBar />
@@ -158,10 +167,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
                       type={isPasswordVisibile ? "text" : "password"}
                       endAdornment={
                         <InputAdornment position="end">
-                          <IconButton
-                            onClick={handleClickShowPassword}
-                            edge="end"
-                          >
+                          <IconButton onClick={handleClickShowPassword} edge="end" size="large">
                             {!isPasswordVisibile ? (
                               <VisibilityOff />
                             ) : (
@@ -230,8 +236,8 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
           </Box>
         </Box>
       </ThemeProvider>
-    </>
-  );
+    </StyledEngineProvider>
+  </>;
 };
 
 export default LoginPage;

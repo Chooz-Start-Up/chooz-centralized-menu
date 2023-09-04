@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   ThemeProvider,
+  Theme,
+  StyledEngineProvider,
   Typography,
   TextField,
   Dialog,
@@ -23,6 +25,13 @@ import {
 import { Restaurant } from "../firebase/databaseAPI/Restaurant";
 import LogoText from "../component/images/chooz_icons/logoRed_textBlack_vertical.png";
 import { FillAddressInfoInput } from "../component/fill_info_page_components/FillAddressInfoInput";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
   props: FillRestaurantInfoPageProps
@@ -162,139 +171,141 @@ const FillRestaurantInfoPage: React.FC<FillRestaurantInfoPageProps> = (
   };
 
   return (
-    <ThemeProvider theme={choozTheme}>
-      <ChoozAppBar />
-      <Box height="140vh" bgcolor={choozTheme.palette.secondary.main}>
-        <Box display="flex" justifyContent="center" height="85%">
-          <Box display="flex" flexDirection="column" justifyContent="center">
-            <Box
-              boxShadow={5}
-              sx={{ width: 500, height: "auto" }}
-              bgcolor="white"
-              textAlign="center"
-              marginTop="20%"
-              paddingLeft={5}
-              paddingRight={5}
-              paddingTop={1}
-              paddingBottom={3}
-            >
-              <Box component="img" src={LogoText} margin="2%" width="25%" />
-              <Typography sx={{ color: "grey.600", fontSize: 18 }}>
-                Centralized Menu App
-              </Typography>
-
-              <Box sx={{ height: 700 }}>
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  required
-                  id="ownerName"
-                  label="Owner Name"
-                  variant="standard"
-                  error={ownerNameValidationText !== ""}
-                  helperText={ownerNameValidationText}
-                  onChange={onOwnerNameChange}
-                  defaultValue=""
-                />
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  required
-                  id="restaurantName"
-                  label="Restaurant Name"
-                  variant="standard"
-                  error={restaurantNameValidationText !== ""}
-                  helperText={restaurantNameValidationText}
-                  onChange={onRestaurantNameChange}
-                />
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  required
-                  id="description"
-                  label="Description"
-                  variant="outlined"
-                  multiline
-                  minRows={3}
-                  maxRows={3}
-                  error={descriptionValidationText !== ""}
-                  helperText={descriptionValidationText}
-                  onChange={onDescriptionChange}
-                />
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  required
-                  id="phoneNumber"
-                  label="Phone Number"
-                  variant="standard"
-                  error={phoneNumberValidationText !== ""}
-                  helperText={phoneNumberValidationText}
-                  onChange={onPhoneNumberChange}
-                />
-                <FillAddressInfoInput onAddressChange={onAddressChange} />
-              </Box>
-
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={choozTheme}>
+        <ChoozAppBar />
+        <Box height="140vh" bgcolor={choozTheme.palette.secondary.main}>
+          <Box display="flex" justifyContent="center" height="85%">
+            <Box display="flex" flexDirection="column" justifyContent="center">
               <Box
-                display="flex"
-                justifyContent="flex-end"
-                sx={{ marginTop: 3 }}
+                boxShadow={5}
+                sx={{ width: 500, height: "auto" }}
+                bgcolor="white"
+                textAlign="center"
+                marginTop="20%"
+                paddingLeft={5}
+                paddingRight={5}
+                paddingTop={1}
+                paddingBottom={3}
               >
-                <Button
-                  onClick={handleOpen}
-                  variant="outlined"
-                  sx={{ marginRight: 1, textTransform: "none" }}
+                <Box component="img" src={LogoText} margin="2%" width="25%" />
+                <Typography sx={{ color: "grey.600", fontSize: 18 }}>
+                  Centralized Menu App
+                </Typography>
+
+                <Box sx={{ height: 700 }}>
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    required
+                    id="ownerName"
+                    label="Owner Name"
+                    variant="standard"
+                    error={ownerNameValidationText !== ""}
+                    helperText={ownerNameValidationText}
+                    onChange={onOwnerNameChange}
+                    defaultValue=""
+                  />
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    required
+                    id="restaurantName"
+                    label="Restaurant Name"
+                    variant="standard"
+                    error={restaurantNameValidationText !== ""}
+                    helperText={restaurantNameValidationText}
+                    onChange={onRestaurantNameChange}
+                  />
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    required
+                    id="description"
+                    label="Description"
+                    variant="outlined"
+                    multiline
+                    minRows={3}
+                    maxRows={3}
+                    error={descriptionValidationText !== ""}
+                    helperText={descriptionValidationText}
+                    onChange={onDescriptionChange}
+                  />
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    required
+                    id="phoneNumber"
+                    label="Phone Number"
+                    variant="standard"
+                    error={phoneNumberValidationText !== ""}
+                    helperText={phoneNumberValidationText}
+                    onChange={onPhoneNumberChange}
+                  />
+                  <FillAddressInfoInput onAddressChange={onAddressChange} />
+                </Box>
+
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  sx={{ marginTop: 3 }}
                 >
-                  Skip for now
-                </Button>
-                <Button
-                  onClick={onSubmit}
-                  variant="contained"
-                  sx={{ textTransform: "none" }}
-                >
-                  Submit
-                </Button>
+                  <Button
+                    onClick={handleOpen}
+                    variant="outlined"
+                    sx={{ marginRight: 1, textTransform: "none" }}
+                  >
+                    Skip for now
+                  </Button>
+                  <Button
+                    onClick={onSubmit}
+                    variant="contained"
+                    sx={{ textTransform: "none" }}
+                  >
+                    Submit
+                  </Button>
+                </Box>
               </Box>
             </Box>
-          </Box>
 
-          <Dialog
-            open={open}
-            keepMounted
-            onClose={handleCancel}
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle>Warning</DialogTitle>
-            <DialogContent>
-              <DialogContentText
-                id="alert-dialog-slide-description"
-                color="black"
-              >
-                You will not be able to publish your menu if you do not fill in
-                the necessary information. You will be able to fill in your
-                information on the profile page.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                variant="outlined"
-                onClick={handleCancel}
-                sx={{ textTransform: "none" }}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="contained"
-                onClick={handleOkay}
-                sx={{ textTransform: "none" }}
-              >
-                Okay
-              </Button>
-            </DialogActions>
-          </Dialog>
+            <Dialog
+              open={open}
+              keepMounted
+              onClose={handleCancel}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle>Warning</DialogTitle>
+              <DialogContent>
+                <DialogContentText
+                  id="alert-dialog-slide-description"
+                  color="black"
+                >
+                  You will not be able to publish your menu if you do not fill in
+                  the necessary information. You will be able to fill in your
+                  information on the profile page.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  variant="outlined"
+                  onClick={handleCancel}
+                  sx={{ textTransform: "none" }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleOkay}
+                  sx={{ textTransform: "none" }}
+                >
+                  Okay
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };
 

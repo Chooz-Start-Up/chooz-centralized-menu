@@ -1,4 +1,6 @@
-import { createTheme } from "@mui/material";
+import { createTheme, Theme } from '@mui/material/styles';
+import "@mui/styles";
+
 import "../fonts/stylesheet.css";
 
 export const choozTheme = createTheme({

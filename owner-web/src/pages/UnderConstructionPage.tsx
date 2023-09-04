@@ -2,6 +2,8 @@ import React from "react";
 import {
   Box,
   ThemeProvider,
+  Theme,
+  StyledEngineProvider,
   Typography,
   AppBar,
   Grid,
@@ -13,9 +15,16 @@ import AdbIcon from "@mui/icons-material/Adb";
 import JacobChoi from "../component/images/profile/jacob_choi.jpg";
 import JustinGalang from "../component/images/profile/justin_galang.jpg";
 
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+
 const UnderConstructionPage: React.FC = () => {
-  return (
-    <>
+  return <>
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={choozTheme}>
         <AppBar position="static">
           <Grid>
@@ -110,8 +119,8 @@ const UnderConstructionPage: React.FC = () => {
           </Box>
         </Box>
       </ThemeProvider>
-    </>
-  );
+    </StyledEngineProvider>
+  </>;
 };
 
 export default UnderConstructionPage;

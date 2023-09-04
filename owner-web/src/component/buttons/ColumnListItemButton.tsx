@@ -6,14 +6,23 @@ import {
   ListItem,
   ListItemButton,
   ThemeProvider,
+  Theme,
+  StyledEngineProvider,
   Typography,
 } from "@mui/material/";
 import { ColumnListGeneralButtonProps } from "./interface";
 import DeleteButtonWithWarningDialog from "./DeleteButtonWithWarningDialog";
 import EditMenuButtonWithDialog from "./EditMenuButtonWithDialog";
 import { Draggable } from "react-beautiful-dnd";
-import { makeStyles } from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
 import { choozTheme } from "../../theme/theme";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
   props: ColumnListGeneralButtonProps

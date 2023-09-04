@@ -8,6 +8,8 @@ import {
   Divider,
   Grid,
   ThemeProvider,
+  Theme,
+  StyledEngineProvider,
   Typography,
 } from "@mui/material";
 import ChoozAppBar from "../component/general_componets/ChoozAppBar";
@@ -23,6 +25,13 @@ import AppStore from "../component/images/app_store/app_store.jpg";
 import PlayStore from "../component/images/app_store/play_store.jpg";
 import LogoText from "../component/images/chooz_icons/logoRed.png";
 
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+
 class MainLandingPage extends React.Component<
   MainLandingPageProps,
   MainLandingPageState
@@ -34,8 +43,8 @@ class MainLandingPage extends React.Component<
   }
 
   render() {
-    return (
-      <>
+    return <>
+      <StyledEngineProvider injectFirst>
         <ThemeProvider theme={choozTheme}>
           <ChoozAppBar />
           <Box
@@ -142,7 +151,7 @@ class MainLandingPage extends React.Component<
             </Box>
             <Box
               boxShadow={5}
-              borderRadius={5}
+              borderRadius="5px"
               marginLeft={5}
               marginTop={2}
               width={100}
@@ -376,8 +385,8 @@ class MainLandingPage extends React.Component<
             </Box>
           </Box>
         </ThemeProvider>
-      </>
-    );
+      </StyledEngineProvider>
+    </>;
   }
 }
 
