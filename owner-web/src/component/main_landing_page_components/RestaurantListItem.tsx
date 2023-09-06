@@ -3,7 +3,6 @@ import { Box, ListItemButton, Typography } from "@mui/material";
 import { pullLogoImageByRestaurantKey } from "../../firebase/databaseAPI/RestaurantApi";
 import Logo from "../images/chooz_icons/logoGrey.png";
 import { RestaurantListItemProps } from "./interface";
-import { choozTheme } from "../../theme/theme";
 
 export const RestaurantListItem: React.FC<RestaurantListItemProps> = (
   props: RestaurantListItemProps

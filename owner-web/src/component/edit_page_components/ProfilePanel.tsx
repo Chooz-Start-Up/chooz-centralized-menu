@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Divider, Avatar, Button, Fade } from "@mui/material";
+import { Box, Typography, Divider, Button, Fade } from "@mui/material";
 import { ProfilePanelProps, ProfilePanelState } from "./interface";
 import EditProfileButtonWithDialog from "../buttons/EditProfileButtonWithDilogue";
 import { Restaurant } from "../../firebase/databaseAPI/Restaurant";
@@ -8,7 +8,6 @@ import {
   pushProfile,
 } from "../../firebase/databaseAPI/RestaurantApi";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
-import { choozTheme } from "../../theme/theme";
 
 class ProfilePanel extends React.Component<
   ProfilePanelProps,

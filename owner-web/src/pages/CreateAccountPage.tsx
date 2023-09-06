@@ -37,7 +37,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
   props: CreateAccountPageProps
 ) => {
   const navigate = useNavigate();
-  const { isPasswordVisibile, handleClickShowPassword } = props;
+  const { isPasswordVisibile } = props;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -243,7 +243,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
                   variant="outlined"
                   sx={{ width: "70%", fontSize: 20, textTransform: "none" }}
                 >
-                  <img src={GoogleIcon} width="10%" height="10%" />
+                  <img src={GoogleIcon} width="10%" height="10%" alt="google-icon"/>
                   <Typography marginLeft={1}>Continue with Google</Typography>
                 </Button>
 
@@ -257,7 +257,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = (
                     textTransform: "none",
                   }}
                 >
-                  <img src={FacebookIcon} width="10%" height="10%" />
+                  <img src={FacebookIcon} width="10%" height="10%" alt="facebook-icon" />
                   <Typography marginLeft={1}>Continue with Facebook</Typography>
                 </Button>
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography, Divider, Alert, Fade, Avatar } from "@mui/material";
 import {
   deleteBannerAndLogoImage,
-  getRestaurantKey,
   pullBannerImageByUser,
   pullLogoImageByUser,
   pushBannerImage,

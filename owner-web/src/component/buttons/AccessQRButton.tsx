@@ -6,8 +6,6 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
-  IconButton,
-  Tooltip,
   Box,
   Grid,
   Typography,
@@ -15,7 +13,6 @@ import {
   Theme,
   StyledEngineProvider,
 } from "@mui/material/";
-import QrCode2Icon from "@mui/icons-material/QrCode2";
 import { AccessQRButtonProps } from "./interface";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
 import { pullDynamicLink } from "../../firebase/databaseAPI/DynamicLinkAPI";

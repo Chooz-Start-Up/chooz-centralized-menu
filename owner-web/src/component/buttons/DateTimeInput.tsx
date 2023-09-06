@@ -184,7 +184,6 @@ class DateTimeInput extends React.Component<
   };
 
   render() {
-    const {} = this.props;
     return (
       <>
         <Box display="flex" justifyContent="space-between">

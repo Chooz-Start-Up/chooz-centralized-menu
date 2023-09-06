@@ -6,7 +6,7 @@ import AuthRoute from "./firebase/authentication/AuthRoute";
 import { firebaseConfig } from "./firebase/config/config";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import FillRestaurantInfoPage from "./pages/FillRestaurantInfoPage";
-import UnderConstructionPage from "./pages/UnderConstructionPage";
+// import UnderConstructionPage from "./pages/UnderConstructionPage";
 import LoginPage from "./pages/LoginPage";
 import MainLandingPage from "./pages/MainLandingPage";
 import MenuEditPage from "./pages/MenuEditPage";

@@ -12,7 +12,7 @@ import { UnpublishAndEditButtonWithDialogProps } from "./interface";
 const UnpublishAndEditButtonWithDialog: React.FC<
   UnpublishAndEditButtonWithDialogProps
 > = (props: UnpublishAndEditButtonWithDialogProps) => {
-  const { isPublished, isLoading, onUnpublishEditClick } = props;
+  const { isPublished, onUnpublishEditClick } = props;
 
   const [open, setOpen] = React.useState(false);
 

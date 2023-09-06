@@ -1,4 +1,4 @@
-import { createTheme, Theme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import "@mui/styles";
 
 import "../fonts/stylesheet.css";

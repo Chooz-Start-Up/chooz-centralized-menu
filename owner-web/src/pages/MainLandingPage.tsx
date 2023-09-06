@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Divider,
-  Grid,
   ThemeProvider,
   Theme,
   StyledEngineProvider,
@@ -20,7 +19,6 @@ import { RestaurantListDisplay } from "../component/main_landing_page_components
 
 import JacobChoi from "../component/images/profile/jacob_choi.jpg";
 import JustinGalang from "../component/images/profile/justin_galang.jpg";
-import AppPlayStore from "../component/images/app_store/app_play_store.jpg";
 import AppStore from "../component/images/app_store/app_store.jpg";
 import PlayStore from "../component/images/app_store/play_store.jpg";
 import LogoText from "../component/images/chooz_icons/logoRed.png";

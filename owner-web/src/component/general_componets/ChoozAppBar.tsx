@@ -1,10 +1,8 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import AdbIcon from "@mui/icons-material/Adb";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { ChoozAppBarProps } from "./interface";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";

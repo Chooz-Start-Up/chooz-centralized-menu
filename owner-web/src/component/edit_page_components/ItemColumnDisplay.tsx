@@ -10,7 +10,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const ItemColumnDisplay: React.FC<ItemColumnDisplayProps> = (
   props: ItemColumnDisplayProps

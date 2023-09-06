@@ -14,7 +14,6 @@ import { PublishButtonProps } from "./interface";
 import { useState } from "react";
 import { pullRestaurantMenuByUser } from "../../firebase/databaseAPI/RestaurantApi";
 import { auth } from "../../firebase/authentication/firebaseAuthentication";
-import { choozTheme } from "../../theme/theme";
 import { QRCode } from "react-qrcode-logo";
 import { pullDynamicLink } from "../../firebase/databaseAPI/DynamicLinkAPI";
 import { toPng } from "html-to-image";

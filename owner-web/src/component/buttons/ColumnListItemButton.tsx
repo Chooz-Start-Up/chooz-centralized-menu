@@ -1,22 +1,15 @@
 import * as React from "react";
 import {
   Box,
-  createTheme,
-  Grid,
   ListItem,
   ListItemButton,
-  ThemeProvider,
   Theme,
-  StyledEngineProvider,
   Typography,
 } from "@mui/material/";
 import { ColumnListGeneralButtonProps } from "./interface";
 import DeleteButtonWithWarningDialog from "./DeleteButtonWithWarningDialog";
 import EditMenuButtonWithDialog from "./EditMenuButtonWithDialog";
 import { Draggable } from "react-beautiful-dnd";
-import makeStyles from '@mui/styles/makeStyles';
-import { choozTheme } from "../../theme/theme";
-
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -50,14 +43,6 @@ const ColumnListItemButton: React.FC<ColumnListGeneralButtonProps> = (
       setSelectedColumnIndex(index);
     }
   };
-
-  const useStyles = makeStyles({
-    draggingListItem: {
-      background: choozTheme.palette.secondary.main,
-    },
-  });
-
-  const classes = useStyles();
 
   return (
     <>

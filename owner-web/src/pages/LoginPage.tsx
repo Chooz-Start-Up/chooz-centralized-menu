@@ -209,7 +209,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
                   variant="outlined"
                   sx={{ width: "70%", fontSize: 20, textTransform: "none" }}
                 >
-                  <img src={GoogleIcon} width="10%" height="10%" />
+                  <img src={GoogleIcon} width="10%" height="10%" alt="google-icon"/>
                   <Typography marginLeft={1}>Continue with Google</Typography>
                 </Button>
                 <Button
@@ -222,7 +222,7 @@ const LoginPage: React.FC<LoginPageProps> = (props: LoginPageProps) => {
                     textTransform: "none",
                   }}
                 >
-                  <img src={FacebookIcon} width="10%" height="10%" />
+                  <img src={FacebookIcon} width="10%" height="10%" alt="facebook-icon"/>
                   <Typography marginLeft={1}>Continue with Facebook</Typography>
                 </Button>
                 <Typography fontSize="medium" sx={{ marginTop: 4 }}>
